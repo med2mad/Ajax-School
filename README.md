@@ -1,4 +1,4 @@
-# front
+# AJAX Heavens
 
 ## Project setup
 ```
