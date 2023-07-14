@@ -1,5 +1,5 @@
 require('dotenv').config();
-const port = process.env.PORT;
+const port = process.env.mysqlPORT;
 // Import required packages
 const express = require('express');
 const cors = require('cors');
@@ -30,7 +30,6 @@ app.get('/', async (req, res) => {
 });
 //Insert
 app.post('/', async (req, res) => {
-  console.log(req.body);  
   con.query("INSERT INTO users (name, age) VALUES ('"+ req.body.name +"', "+ req.body.age +")", (err, data)=>{
     res.json(data)
   })
@@ -38,16 +37,16 @@ app.post('/', async (req, res) => {
 //Update
 app.put('/:id', async (req, res) => {
     con.query("UPDATE users SET name = '"+ req.body.name +"', age = '"+ req.body.age +"' WHERE id='"+ req.params.id +"'", (err, data)=>{
-    res.json(data)
+      res.json(data)
   })
 });
 //Delete
 app.delete('/:id', (req, res) => {
     con.query("DELETE FROM users WHERE id='"+ req.params.id +"'", (err, data)=>{
-    res.json(data);
+      res.json(data);
   });
 });
 //404
 app.use((req, res) => {
-  res.status(404).json("404 , no routes bitches !")
+  res.status(404).json("404 , no routes !")
 });

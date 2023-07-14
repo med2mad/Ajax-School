@@ -7,15 +7,15 @@
 <script>
 export default {
   methods: {
-      fget(url,bucket,p){ 
-        fetch(url)
+      fget(uri,bucket,p){ 
+        fetch(uri)
         .then((response)=> {if(response.ok){ return response.json() } else {throw new Error("[!response.ok]")} })
         .then((data)=>{ bucket[p] = data })
         .catch((err)=>{ bucket[p] = 'err: ' + err.message })
       },
-      async fgetw(url){
+      async fgetw(uri){
         try {
-          const response = await fetch(url)
+          const response = await fetch(uri)
           if(!response.ok){throw new Error("[!response.ok]")}
           const data = await response.json()
           return data

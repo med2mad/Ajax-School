@@ -57,5 +57,5 @@ app.delete('/:id', (req, res) => {
 });
 //404
 app.use((req, res) => {
-  res.status(404).json("404 , no routes bitches !")
+  res.status(404).json("404 , no routes !")
 });

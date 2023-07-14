@@ -9,7 +9,7 @@ import axios from "axios";
 export default {
   methods: {
       fget(uri, bucket,p){ 
-        axios.get('text.html')
+        axios.get(uri)
         .then((response)=>{bucket[p] = response.data; })
         .catch((err)=>{bucket[p] = 'err: ' + err.message})
       },
