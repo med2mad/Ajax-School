@@ -17,7 +17,6 @@ const client = new Client({
   password: "5432",
   database: "test"
 })
-
 client.connect().then((err) => {
     if (err){console.log("'PostgreSQL' initial connection error");}
     else{app.listen(port, ()=>{console.log("PostgreSQL Port: " + port);});}
@@ -26,7 +25,7 @@ client.connect().then((err) => {
 //Routes (API endpoints)
 //Get
 app.get('/', async (req, res) => {
-  client.query("SELECT * FROM users", (err, rows)=>{
+  client.query("SELECT * FROM users LIMIT 1", (err, rows)=>{
     res.send(rows.rows)
   })
 });
