@@ -28,7 +28,8 @@ export default{
                     {title:'JSON Server', uri:'http://localhost:3000/users?_limit=1', _id:'id'},
                     {title:'Mysql DB', uri:'http://localhost:5020/', _id:'id'},
                     {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id'},
-                    {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id'}
+                    {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id'},
+                    {title:'JSON File', uri:'j.json', _id:'id'}
                     ]
                 }
             },
