@@ -8,10 +8,10 @@
 import axios from "axios";
 export default {
   methods: {
-      fget(uri, bucket,p){ 
+      fget(uri, bucket){ 
         axios.get(uri)
-        .then((response)=>{bucket[p] = response.data; })
-        .catch((err)=>{bucket[p] = 'err: ' + err.message})
+        .then((response)=>{bucket.t = response.data; })
+        .catch((err)=>{bucket.t = 'err: ' + err.message})
       },
       async fgetw(uri){
         try {

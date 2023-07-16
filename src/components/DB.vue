@@ -7,9 +7,9 @@
         <h2>No Data !! </h2>
     </div>
     <div v-else>
-        <h2 v-if="bucket.t">[Asynchronously] : {{ bucket.t }}</h2>
+        <h2 v-if="bucket.t">[Asynchronously {{timeT}}ms] : {{ bucket.t }}</h2>
         <h2 v-else>Loading .... </h2>
-        <h2 v-if="bucket.w">[Synchronously] : {{ bucket.w }}</h2>
+        <h2 v-if="bucket.w">[Synchronously {{timeW}}ms] : {{ bucket.w }}</h2>
         <h2 v-else>Loading .... </h2>
     </div>
 </template>
@@ -22,17 +22,22 @@ export default{
 
     data(){return{
                 bucket:{t:'', w:''},
+                timeT:'', timeW:''
                 }
             },
 
     mounted(){
         //pass empty objects by reference to get promise result(FAST) 
-        this.$emit('mountGet', this.bucket);
+        let time0 = performance.now();
+            this.$emit('mountGet', this.bucket);
+        this.timeT = (performance.now() - time0).toFixed(2); 
         
         //get function's return value(SLOW)
-        (async ()=>{
-            this.$emit('mountGetw', this.bucket);
-        })(); //async self invoking
+        time0 = performance.now();
+            (async ()=>{
+                this.$emit('mountGetw', this.bucket);
+            })(); //async self invoking
+        this.timeW = (performance.now() - time0).toFixed(2);
     }
 }
 </script>

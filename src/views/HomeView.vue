@@ -21,5 +21,5 @@
 
   <h2>What is What ?</h2>
   <p>AJAX, is a web developpement technique, to manipulate data asynchronously, using javascript (and XML but no one does any more, we use JSON instead).</p>
-
+  <p>The app also calculates the time that takes sync and Async request to move on to the next reauest (not the actual request time).</p>
 </template>

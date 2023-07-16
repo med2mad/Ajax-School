@@ -7,17 +7,17 @@
 <script>
 export default {
   methods: {
-      fget(uri, bucket,p){ 
+      fget(uri, bucket){ 
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
         if (xhr.status===200){
-            bucket[p] = JSON.parse(xhr.responseText);
+            bucket.t = JSON.parse(xhr.responseText);
             }
         }
         xhr.open("GET", uri, true);
         xhr.send();
       },
-      fgetw(uri,bucket,p){
+      fgetw(uri){
         return "Can't use Await !!"
       },
 

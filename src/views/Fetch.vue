@@ -7,11 +7,11 @@
 <script>
 export default {
   methods: {
-      fget(uri,bucket,p){ 
+      fget(uri,bucket){ 
         fetch(uri)
         .then((response)=> {if(response.ok){ return response.json() } else {throw new Error("[!response.ok]")} })
-        .then((data)=>{ bucket[p] = data })
-        .catch((err)=>{ bucket[p] = 'err: ' + err.message })
+        .then((data)=>{ bucket.t = data; })
+        .catch((err)=>{ bucket.t = 'err: ' + err.message })
       },
       async fgetw(uri){
         try {
