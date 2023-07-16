@@ -5,7 +5,7 @@
     <h1>{{title}}</h1>
     <p class="comment"><slot name="comment">default</slot></p>
 
-    <DB v-for="item in this.DBs" :key="item._id" :title="item.title" :_id="item._id" 
+    <DB v-for="item in this.DBs" :key="item._id" :title="item.title" :_id="item._id" :ppd="item.ppd"
                                     @mountGet="(bucket)=>{fget(item.uri, bucket);}" 
                                     @mountGetw="async(bucket)=>{bucket.w = await this.fgetw(item.uri);}" 
                                         @clickPost="PostClick(item.uri)" 
@@ -25,11 +25,11 @@ export default{
     data(){return{
                 vname:'', vage:'', showpopup:false,
                 DBs:[
-                    {title:'Mysql DB', uri:'http://localhost:5020/', _id:'id'},
-                    {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id'},
-                    {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id'},
-                    {title:'JSON Server', uri:'http://localhost:3000/users?_limit=1', _id:'id'},
-                    {title:'JSON File', uri:'j.json', _id:'id'}//in the public folder
+                    {title:'Mysql DB', uri:'http://localhost:5020/', _id:'id', ppd:true},
+                    {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id', ppd:true},
+                    {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id', ppd:true},
+                    {title:'JSON Server', uri:'http://localhost:3000/users?_limit=1', _id:'id', ppd:true},
+                    {title:'JSON File', uri:'j.json', _id:'id', ppd:false}//in the public folder
                     ]
                 }
             },
