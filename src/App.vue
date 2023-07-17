@@ -4,6 +4,7 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/xhr">XHR</router-link> |
     <router-link to="/fetch">Fetch</router-link> |
+    <router-link to="/jquery">JQuery</router-link> |
     <router-link to="/axios">Axios</router-link>
   </nav>
   <router-view />

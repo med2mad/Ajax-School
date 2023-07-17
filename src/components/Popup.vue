@@ -6,18 +6,16 @@
     </div>
 </template>
 
-
 <script>
-
-
 
 export default{
     emits:['close']
 }
+
 </script> 
 
-
 <style>
+
 .popup{
     position:fixed;
     top:0;

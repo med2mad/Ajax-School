@@ -24,7 +24,7 @@ export default {
       fpost(uri, body){
          axios.post(uri,body)
         .then((response)=>{console.log(response.data);})
-        .catch((err)=>{console.log('err: ' + err.message)})
+        .catch((err)=>{console.error(err.message)})
       },
 
       fput(uri, body){
@@ -36,7 +36,7 @@ export default {
       fdelete(uri){
         axios.delete(uri)
         .then((response)=>{console.log(response.data);})
-        .catch((err)=>{console.log('err: ' + err.message)})
+        .catch((err)=>{console.error(err.message)})
       }
   }
 }

@@ -18,14 +18,23 @@ export default {
         xhr.send();
       },
       fgetw(uri){
-        return "Can't use Await !!"
+        let r; //cannot return directly (for some reason !!!)
+        const xhr = new XMLHttpRequest();
+        xhr.onload=function(){
+        if (xhr.status===200){
+            r=JSON.parse(xhr.responseText); 
+            }
+        }
+        xhr.open("GET", uri, false);
+        xhr.send();
+        return r;
       },
 
       fpost(uri, body){
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
         if (xhr.status===200){
-            console.log("inserted"); 
+            console.log("Inserted"); 
             }
         }
         xhr.open("POST", uri, true);
