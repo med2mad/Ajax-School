@@ -1,7 +1,7 @@
 <template>
     <h2 class="title">
         {{title}}
-        <div v-if="ppd"><button class="post" @click="this.$emit('clickPost')">POST</button> | <button class="put" @click="this.$emit('clickPut', bucket.t[0][_id])">PUT</button> | <button class="delete" @click="this.$emit('clickDelete', bucket.t[0][_id])">DELETE</button></div>
+        <div><button class="post" @click="this.$emit('clickPost')">POST</button> | <button class="put" @click="this.$emit('clickPut', bucket.t[0][_id])">PUT</button> | <button class="delete" @click="this.$emit('clickDelete', bucket.t[0][_id])">DELETE</button></div>
     </h2>
     <div v-if="bucket.t && bucket.t.length===0">
         <h2>No Data !! </h2>
@@ -16,7 +16,7 @@
 
 <script>
 export default{
-    props: { title:{type:String}, _id:{type:String}, ppd:{type:Boolean} },
+    props: { title:{type:String}, _id:{type:String}, file:{type:Boolean} },
 
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
 

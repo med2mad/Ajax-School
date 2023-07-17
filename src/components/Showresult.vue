@@ -5,9 +5,9 @@
     <h1>{{title}}</h1>
     <p class="comment"><slot name="comment">default</slot></p>
 
-    <DB v-for="item in this.DBs" :key="item._id" :title="item.title" :_id="item._id" :ppd="item.ppd"
-                                    @mountGet="(bucket)=>{fget(item.uri, bucket);}" 
-                                    @mountGetw="async(bucket)=>{bucket.w = await this.fgetw(item.uri);}" 
+    <DB v-for="item in this.DBs" :key="item._id" :title="item.title" :_id="item._id" 
+                                    @mountGet="(bucket)=>{ fget(item.jserver?item.uri+'?_limit=1':item.uri, bucket);}" 
+                                    @mountGetw="async(bucket)=>{bucket.w = await this.fgetw(item.jserver?item.uri+'?_limit=1':item.uri);}" 
                                         @clickPost="PostClick(item.uri)" 
                                         @clickPut="(id)=>{PutClick(item.uri, id);}" 
                                         @clickDelete="(id)=>{DeleteClick(item.uri, id);}" 
@@ -25,11 +25,11 @@ export default{
     data(){return{
                 vname:'', vage:'', showpopup:false,
                 DBs:[
-                    {title:'Mysql DB', uri:'http://localhost:5020/', _id:'id', ppd:true},
-                    {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id', ppd:true},
-                    {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id', ppd:true},
-                    {title:'JSON Server', uri:'http://localhost:3000/users?_limit=1', _id:'id', ppd:true},
-                    {title:'JSON File', uri:'j.json', _id:'id', ppd:false}//in the public folder
+                    {title:'Mysql DB', uri:'http://localhost:5020/', _id:'id', jserver:false},
+                    {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id', jserver:false},
+                    {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id', jserver:false},
+                    {title:'JSON Server', uri:'http://localhost:3000/Resource1/'/*'?_limit=1' (limit in the loop instead to not include in buttons)*/ , _id:'id', jserver:true},
+                    // {title:'JSON File', uri:'j.json', _id:'id', file:true, jserver:false}//in the public folder
                     ]
                 }
             },
@@ -47,7 +47,7 @@ export default{
             
         DeleteClick(uri, p){this.fdelete(uri + p);} ,
 
-        closepopup(){this.showpopup = false}
+        closepopup(){this.showpopup = false},
         }
 }
 </script>
