@@ -1,13 +1,13 @@
 <template>
-    <Popup v-if="showpopup" @close="closepopup"/>
+    <Popup v-if="showpopup" @close="closepopup" :text="popuptext"/>
     name: <input type="text" v-model="vname"> | age: <input type="number" v-model="vage">
 
     <h1>{{title}}</h1>
     <p class="comment"><slot name="comment">default</slot></p>
 
-    <DB v-for="item in this.DBs" :key="item._id" :title="item.title" :_id="item._id" 
-                                    @mountGet="(bucket)=>{ fget(item.jserver?item.uri+'?_limit=1':item.uri, bucket);}" 
-                                    @mountGetw="async(bucket)=>{bucket.w = await this.fgetw(item.jserver?item.uri+'?_limit=1':item.uri);}" 
+    <DB v-for="item in this.DBs" :key="item.title" :title="item.title" :_id="item._id" :fake="item.fake"
+                                    @mountGet="(bucket)=>{ fget(item.limit?item.uri+'?_limit=1':item.uri, bucket);}" 
+                                    @mountGetw="async(bucket)=>{bucket.w = await this.fgetw(item.limit?item.uri+'?_limit=1':item.uri);}" 
                                         @clickPost="PostClick(item.uri)" 
                                         @clickPut="(id)=>{PutClick(item.uri, id);}" 
                                         @clickDelete="(id)=>{DeleteClick(item.uri, id);}" 
@@ -23,31 +23,37 @@ export default{
             },
 
     data(){return{
-                vname:'', vage:'', showpopup:false,
+                vname:'', vage:'', showpopup:false, popuptext:'',
                 DBs:[
-                    {title:'Mysql DB', uri:'http://localhost:5020/', _id:'id', jserver:false},
-                    {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id', jserver:false},
-                    {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id', jserver:false},
-                    {title:'JSON Server', uri:'http://localhost:3000/Resource1/'/*'?_limit=1' (limit in the loop instead to not include in buttons)*/ , _id:'id', jserver:true},
-                    // {title:'JSON File', uri:'j.json', _id:'id', file:true, jserver:false}//in the public folder
+                    {title:'Mysql DB', uri:'http://localhost:5020/', _id:'id', limit:false, fake:false},
+                    {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id', limit:false, fake:false},
+                    {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id', limit:false, fake:false},
+                    {title:'JSON Server', uri:'http://localhost:3000/Resource1/'/*'?_limit=1' (limit in the loop instead to not include in buttons)*/ , _id:'id', limit:true, fake:false},
+                    {title:'jsonplaceholder.typicode.com', uri:'https://jsonplaceholder.typicode.com/albums/69' , _id:'id', limit:false, fake:true},
+                    //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just uri:'j.json') */, _id:'id', limit:false}//in the public folder
                     ]
                 }
             },
 
     methods:{
         PostClick(uri){ 
-            if(this.vname==="" || this.vage===""){this.showpopup = true}
+            if(this.popuptext){this.showpopup = true}
             else{this.fpost(uri, {"name":this.vname, "age":this.vage});}
             } ,
 
         PutClick(uri, p){ 
-            if(this.vname==="" || this.vage===""){this.showpopup = true}
+            if(this.dataCheck()){this.showpopup = true}
             else{this.fput(uri + p, {"name":this.vname, "age":this.vage});}
             } ,
             
         DeleteClick(uri, p){this.fdelete(uri + p);} ,
 
-        closepopup(){this.showpopup = false},
+        closepopup(){this.showpopup = false} ,
+
+        dataCheck(){
+            if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !'; return true;}
+            else if(!Number.isInteger(this.vage)){this.popuptext='Insert Integer Age !'; return true;}
+            }
         }
 }
 </script>

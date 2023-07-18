@@ -1,7 +1,7 @@
 <template>
     <div class="popup" @click.self="this.$emit('close')">
         <div class="innerpopup">
-            <h1>Insert Data !!!</h1>
+            <h1>{{text}}</h1>
         </div>
     </div>
 </template>
@@ -9,7 +9,8 @@
 <script>
 
 export default{
-    emits:['close']
+    emits:['close'],
+    props:['text']
 }
 
 </script> 

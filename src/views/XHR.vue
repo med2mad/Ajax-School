@@ -17,17 +17,20 @@ export default {
         xhr.open("GET", uri, true);
         xhr.send();
       },
-      fgetw(uri){
-        let r; //cannot return directly (for some reason !!!)
-        const xhr = new XMLHttpRequest();
-        xhr.onload=function(){
-        if (xhr.status===200){
-            r=JSON.parse(xhr.responseText); 
-            }
-        }
-        xhr.open("GET", uri, false);
-        xhr.send();
-        return r;
+      fgetw(uri){ 
+        //sorry! sync XHR not allowed any more (XMLHttpRequest and JQuery both use it)
+        //freezes browser and throws warning "synchronous xmlhttprequest on the main thread is deprecated")
+        
+        // let r; //cannot return directly (for some reason !!!)
+        // const xhr = new XMLHttpRequest();
+        // xhr.onload=function(){
+        // if (xhr.status===200){
+        //     r=JSON.parse(xhr.responseText); 
+        //     }
+        // }
+        // xhr.open("GET", uri, false);
+        // xhr.send();
+        // return r;
       },
 
       fpost(uri, body){
