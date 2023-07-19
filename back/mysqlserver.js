@@ -22,9 +22,9 @@ con.connect((err) => {
 });
 
 //Routes (API endpoints)
-//Get
+//Get All
 app.get('/', async (req, res) => {
-  con.query('SELECT * FROM users LIMIT 1', (err, rows)=>{
+  con.query('SELECT * FROM users LIMIT '+req.query._limit, (err, rows)=>{
     res.json(rows)
   })
 });

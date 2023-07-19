@@ -11,7 +11,7 @@ export default {
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
         if (xhr.status===200){
-            bucket.t = JSON.parse(xhr.responseText);
+            bucket.a = JSON.parse(xhr.responseText);
             }
         }
         xhr.open("GET", uri, true);
@@ -30,7 +30,7 @@ export default {
         // }
         // xhr.open("GET", uri, false);
         // xhr.send();
-        // return r;
+        return false;// return r;
       },
 
       fpost(uri, body){

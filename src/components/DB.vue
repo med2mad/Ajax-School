@@ -1,17 +1,18 @@
 <template>
     <h2 class="title">
         {{title}}
-        <div v-if="!fake"><button class="post" @click="this.$emit('clickPost')">POST</button> | <button class="put" @click="this.$emit('clickPut', bucket.t[0][_id])">PUT</button> | <button class="delete" @click="this.$emit('clickDelete', bucket.t[0][_id])">DELETE</button></div>
+        <div v-if="!fake"><button class="post" @click="this.$emit('clickPost')">POST</button> | <button class="put" @click="this.$emit('clickPut', bucket.a[0][_id])">PUT</button> | <button class="delete" @click="this.$emit('clickDelete', bucket.a[0][_id])">DELETE</button></div>
         <div v-else>Fake API (No POST / PUT / DELETE)</div>
     </h2>
-    <div v-if="bucket.t && bucket.t.length===0">
+    <div v-if="bucket.a && bucket.a.length===0">
         <h2>No Data !! </h2>
     </div>
     <div v-else>
-        <h2 v-if="bucket.t">[Asynchronously {{timeT}}ms] : {{ bucket.t }}</h2>
-        <h2 v-else>Loading .... </h2>
-        <h2 v-if="bucket.w">[Synchronously {{timeW}}ms] : {{ bucket.w }}</h2>
-        <h2 v-else>Loading .... </h2>
+        <h2 >{{ bucket.a || bucket.s || 'Loading ....' }}</h2>
+        <h2>
+            [{{timeA || 'Calculating ...'}}ms Asynchronously]
+            [{{timeS || 'Calculating ...'}}ms Synchronously]
+        </h2>
     </div>
 </template>
 
@@ -22,8 +23,8 @@ export default{
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
 
     data(){return{
-                bucket:{t:'', w:''},
-                timeT:'', timeW:''
+                bucket:{a:'', s:''},
+                timeA:'', timeS:''
                 }
             },
 
@@ -31,14 +32,14 @@ export default{
         //pass empty objects by reference to get promise result(FAST) 
         let time0 = performance.now();
             this.$emit('mountGet', this.bucket);
-        this.timeT = (performance.now() - time0).toFixed(2); 
+        this.timeA = (performance.now() - time0).toFixed(2); 
         
         //get function's return value(SLOW)
         time0 = performance.now();
             (async ()=>{
                 this.$emit('mountGetw', this.bucket);
             })(); //async self invoking
-        this.timeW = (performance.now() - time0).toFixed(2);
+        this.timeS = (performance.now() - time0).toFixed(2);
     }
 }
 </script>

@@ -10,14 +10,14 @@ export default {
   methods: {
       fget(uri, bucket){ 
         $.ajax({url:uri , method:'GET', dataType:'json'})
-          .done(function(response){ bucket.t = response; });
+          .done(function(response){ bucket.a = response; });
       },
       fgetw(uri){
         //sorry! sync XHR not allowed any more (XMLHttpRequest and JQuery both use it)
         //freezes browser and throws warning "synchronous xmlhttprequest on the main thread is deprecated")
         
         // let r =  $.ajax({url:uri, async: false , method:'GET', dataType:'json'});
-        // return r;
+        return false;// return r;
       },
 
       fpost(uri, body){

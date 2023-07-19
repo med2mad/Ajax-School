@@ -23,9 +23,9 @@ client.connect().then((err) => {
 })
 
 //Routes (API endpoints)
-//Get
+//Get All
 app.get('/', async (req, res) => {
-  client.query("SELECT * FROM users LIMIT 1", (err, rows)=>{
+  client.query("SELECT * FROM users LIMIT "+req.query._limit, (err, rows)=>{
     res.send(rows.rows)
   })
 });

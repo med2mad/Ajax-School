@@ -1,13 +1,14 @@
 <template>
     <Popup v-if="showpopup" @close="closepopup" :text="popuptext"/>
-    name: <input type="text" v-model="vname"> | age: <input type="number" v-model="vage">
+        limit: <input type="number" v-model="vlimit"> <br>
+        name: <input type="text" v-model="vname"> | age: <input type="number" v-model="vage">
 
     <h1>{{title}}</h1>
     <p class="comment"><slot name="comment">default</slot></p>
 
-    <DB v-for="item in this.DBs" :key="item.title" :title="item.title" :_id="item._id" :fake="item.fake"
-                                    @mountGet="(bucket)=>{ fget(item.limit?item.uri+'?_limit=1':item.uri, bucket);}" 
-                                    @mountGetw="async(bucket)=>{bucket.w = await this.fgetw(item.limit?item.uri+'?_limit=1':item.uri);}" 
+    <DB v-for="item in DBs" :key="item.title+vlimit" :title="item.title" :_id="item._id" :fake="item.fake"
+                                    @mountGet="(bucket)=>{fget(item.uri+'?_limit='+vlimit, bucket);}" 
+                                    @mountGetw="async(bucket)=>{bucket.s = await fgetw(item.uri+'?_limit='+vlimit);}" 
                                         @clickPost="PostClick(item.uri)" 
                                         @clickPut="(id)=>{PutClick(item.uri, id);}" 
                                         @clickDelete="(id)=>{DeleteClick(item.uri, id);}" 
@@ -23,14 +24,14 @@ export default{
             },
 
     data(){return{
-                vname:'', vage:'', showpopup:false, popuptext:'',
+                vname:'', vage:'', vlimit:1, showpopup:false, popuptext:'', render:true,
                 DBs:[
-                    {title:'Mysql DB', uri:'http://localhost:5020/', _id:'id', limit:false, fake:false},
-                    {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id', limit:false, fake:false},
-                    {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id', limit:false, fake:false},
-                    {title:'JSON Server', uri:'http://localhost:3000/Resource1/'/*'?_limit=1' (limit in the loop instead to not include in buttons)*/ , _id:'id', limit:true, fake:false},
-                    {title:'jsonplaceholder.typicode.com', uri:'https://jsonplaceholder.typicode.com/albums/69' , _id:'id', limit:false, fake:true},
-                    //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just uri:'j.json') */, _id:'id', limit:false}//in the public folder
+                    {title:'Mysql DB', uri:'http://localhost:5020/', _id:'id', fake:false},
+                    {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id', fake:false},
+                    {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id', fake:false},
+                    {title:'JSON Server', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false},
+                    {title:'jsonplaceholder.typicode.com', uri:'https://jsonplaceholder.typicode.com/albums/69' , _id:'id', fake:true},
+                    //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id'}//in the public folder
                     ]
                 }
             },

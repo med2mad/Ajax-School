@@ -10,8 +10,8 @@ export default {
   methods: {
       fget(uri, bucket){ 
         axios.get(uri)
-        .then((response)=>{bucket.t = response.data; })
-        .catch((err)=>{bucket.t = 'err: ' + err.message})
+        .then((response)=>{bucket.a = response.data; })
+        .catch((err)=>{bucket.a = 'err: ' + err.message})
       },
       async fgetw(uri){
         try {

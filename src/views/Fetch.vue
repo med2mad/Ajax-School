@@ -10,8 +10,8 @@ export default {
       fget(uri,bucket){ 
         fetch(uri)
         .then((response)=> {if(response.ok){ return response.json() } else {throw new Error("[!response.ok]")} })
-        .then((data)=>{ bucket.t = data; })
-        .catch((err)=>{ bucket.t = 'err: ' + err.message })
+        .then((data)=>{ bucket.a = data; })
+        .catch((err)=>{ bucket.a = 'err: ' + err.message })
       },
       async fgetw(uri){
         try {
