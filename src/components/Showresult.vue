@@ -1,14 +1,14 @@
 <template>
     <Popup v-if="showpopup" @close="closepopup" :text="popuptext"/>
-        limit: <input type="number" v-model="vlimit"> <br>
+        limit: <input type="number" min="0" v-model="vlimit"> <br>
         name: <input type="text" v-model="vname"> | age: <input type="number" v-model="vage">
 
     <h1>{{title}}</h1>
     <p class="comment"><slot name="comment">default</slot></p>
 
     <DB v-for="item in DBs" :key="item.title+vlimit" :title="item.title" :_id="item._id" :fake="item.fake"
-                                    @mountGet="(bucket)=>{fget(item.uri+'?_limit='+vlimit, bucket);}" 
-                                    @mountGetw="async(bucket)=>{bucket.s = await fgetw(item.uri+'?_limit='+vlimit);}" 
+                                    @mountGet="(bucket)=>{fget(item.uri+'?_limit='+((Number.isInteger(vlimit)&&vlimit>=0)?vlimit:0), bucket);}" 
+                                    @mountGetw="async(bucket)=>{bucket.s = await fgetw(item.uri+'?_limit='+((Number.isInteger(vlimit)&&vlimit>=0)?vlimit:0));}" 
                                         @clickPost="PostClick(item.uri)" 
                                         @clickPut="(id)=>{PutClick(item.uri, id);}" 
                                         @clickDelete="(id)=>{DeleteClick(item.uri, id);}" 
@@ -30,7 +30,7 @@ export default{
                     {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id', fake:false},
                     {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id', fake:false},
                     {title:'JSON Server', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false},
-                    {title:'jsonplaceholder.typicode.com', uri:'https://jsonplaceholder.typicode.com/albums/69' , _id:'id', fake:true},
+                    {title:'jsonplaceholder.typicode.com', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true},
                     //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id'}//in the public folder
                     ]
                 }

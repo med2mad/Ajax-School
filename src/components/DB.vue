@@ -8,9 +8,17 @@
         <h2>No Data !! </h2>
     </div>
     <div v-else>
-        <h2 >{{ bucket.a || bucket.s || 'Loading ....' }}</h2>
+        <div v-if="bucket.a" >
+            <table>
+                <tr v-for="row in bucket.a" :key="row[_id]">
+                    <td>Id : </td> <td>{{row[_id]}}</td> <td>Name : </td> <td>{{row.name}}</td> <td>Age : </td> <td>{{row.age || Math.floor(Math.random()*100)}}</td>
+                </tr>
+            </table>
+        </div>
+        <div v-else >Loading ....</div>
+
         <h2>
-            [{{timeA || 'Calculating ...'}}ms Asynchronously]
+            [{{timeA || 'Calculating ...'}}ms Asynchronously] | 
             [{{timeS || 'Calculating ...'}}ms Synchronously]
         </h2>
     </div>
@@ -40,7 +48,7 @@ export default{
                 this.$emit('mountGetw', this.bucket);
             })(); //async self invoking
         this.timeS = (performance.now() - time0).toFixed(2);
-    }
+    },
 }
 </script>
 

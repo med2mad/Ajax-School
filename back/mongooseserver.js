@@ -29,9 +29,12 @@ const usersModel = mongoose.model('users', usersSchema, 'users');
 //Routes (API endpoints)
 //Get All
 app.get('/', (req, res) => {
-  usersModel.find().limit(req.query._limit).then((data)=>{
-    res.json(data);
-  });
+  if(req.query._limit==0){res.json([]);}
+  else{
+    usersModel.find().limit(req.query._limit).then((data)=>{
+      res.json(data);
+    });
+  }
 });
 //Insert
 app.post('/', (req, res) => {
