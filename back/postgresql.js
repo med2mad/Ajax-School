@@ -19,19 +19,20 @@ const client = new Client({
 })
 client.connect().then((err) => {
     if (err){console.log("'PostgreSQL' initial connection error");}
-    else{app.listen(port, ()=>{console.log("PostgreSQL Port: " + port);});}
+    else{app.listen(port, ()=>{console.log("PostgreSQL Port: " + port);
+  });}
 })
 
 //Routes (API endpoints)
 //Get All
 app.get('/', async (req, res) => {
-  client.query("SELECT * FROM users LIMIT "+req.query._limit, (err, rows)=>{
+  client.query("SELECT * FROM users ORDER BY id DESC LIMIT "+req.query._limit, (err, rows)=>{
     res.send(rows.rows)
   })
 });
 //Insert
 app.post('/', async (req, res) => {
-  client.query("INSERT INTO users (id, name, age) VALUES ("+Math.random()*10000+", '"+ req.body.name +"', "+ req.body.age +")", (err, data)=>{    
+  client.query("INSERT INTO users (name, age) VALUES ('"+ req.body.name +"', "+ req.body.age +")", (err, data)=>{    
     res.json(data)
   })
 });

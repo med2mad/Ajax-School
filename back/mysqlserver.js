@@ -24,7 +24,7 @@ con.connect((err) => {
 //Routes (API endpoints)
 //Get All
 app.get('/', async (req, res) => {
-  con.query('SELECT * FROM users ORDER BY id column1 LIMIT '+req.query._limit, (err, rows)=>{
+  con.query('SELECT * FROM users ORDER BY id DESC LIMIT '+req.query._limit, (err, rows)=>{
     res.json(rows)
   })
 });

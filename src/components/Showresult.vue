@@ -7,8 +7,8 @@
     <p class="comment"><slot name="comment">default</slot></p>
 
     <DB v-for="item in DBs" :key="item.title+vlimit+refresh" :title="item.title" :_id="item._id" :fake="item.fake"
-                                    @mountGet="(bucket)=>{fget(item.uri+'?_limit='+((Number.isInteger(vlimit)&&vlimit>=0)?vlimit:0), bucket);}" 
-                                    @mountGetw="async(bucket)=>{bucket.s = await fgetw(item.uri+'?_limit='+((Number.isInteger(vlimit)&&vlimit>=0)?vlimit:0));}" 
+                                    @mountGet="(bucket)=>{fget(makeUri(item.uri), bucket);}" 
+                                    @mountGetw="async(bucket)=>{bucket.s = await fgetw(makeUri(item.uri));}" 
                                         @clickPost="PostClick(item.uri); refresh += 1;" 
                                         @clickPut="(id)=>{ popuptext=''; if(!id){popuptext='select'} PutClick(item.uri, id); refresh += 1; }"
                                         @clickDelete="(id)=>{ popuptext=''; if(!id){popuptext='select'} DeleteClick(item.uri, id); refresh += 1; }"
@@ -56,8 +56,14 @@ export default{
 
         dataCheck(){
             this.popuptext='';
-            if (this.vname=="" || this.vage==""){this.popuptext='Insert Data !'; return true;}
+            if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !'; return true;}
             else if (!Number.isInteger(this.vage)){this.popuptext='Insert Integer Age !'; return true;}
+            },
+
+        makeUri(uri){
+                uri += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);
+                uri += '&_sort=id&_order=desc'; //fake and jsonServer
+                return uri;
             }
         }
 }

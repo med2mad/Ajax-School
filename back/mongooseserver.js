@@ -21,7 +21,9 @@ mongoose.connect('mongodb://localhost:27017/medDB', {useNewUrlParser: true, useU
 // Define a schema for the 'users' collection
 const usersSchema = new mongoose.Schema({
   name: String,
-  age: Number
+  age: Number,
+  timestamp:{type:Date,
+            default: function(){return new Date()}}
 });
 // Create a Mongoose model based on the schema
 const usersModel = mongoose.model('users', usersSchema, 'users');
@@ -31,7 +33,7 @@ const usersModel = mongoose.model('users', usersSchema, 'users');
 app.get('/', (req, res) => {
   if(req.query._limit==0){res.json([]);}
   else{
-    usersModel.find().limit(req.query._limit).then((data)=>{
+    usersModel.find().sort({"timestamp":-1}).limit(req.query._limit).then((data)=>{
       res.json(data);
     });
   }

@@ -12,7 +12,7 @@
             <form id="form">
             <table>
                 <tr v-for="row in bucket.a" :key="row[_id]">
-                    <td v-if="!fake"> <input type="radio" name="db" :id="row[_id]" v-model="rowId" :value="row[_id]"> </td>  <label :for="row[_id]"> <td>Id : </td> <td>{{row[_id]}}</td> <td>Name : </td> <td>{{row.name}}</td> <td>Age : </td> <td>{{row.age || Math.floor(Math.random()*100)}}</td> </label>
+                    <td v-if="!fake"> <input type="radio" name="db" :id="row[_id]" v-model="rowId" :value="row[_id]"> </td>  <label :for="row[_id]"> <td>Id : </td> <td>{{row[_id]}}</td> <td>Name : </td> <td>{{row.name}}</td> <td>Age : </td> <td>{{ !fake?row.age:Math.floor(Math.random()*100) }}</td> </label>
                 </tr>
             </table>
             </form>
