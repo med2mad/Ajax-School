@@ -1,7 +1,7 @@
 <template>
     <h2 class="title">
         {{title}}
-        <div v-if="!fake"><button class="post" @click="this.$emit('clickPost')">POST</button> | <button class="put" @click="this.$emit('clickPut', bucket.a[0][_id])">PUT</button> | <button class="delete" @click="this.$emit('clickDelete', bucket.a[0][_id])">DELETE</button></div>
+        <div v-if="!fake"><button class="post" @click="this.$emit('clickPost')">POST</button> | <button class="put" @click="this.$emit('clickPut', rowId)">PUT</button> | <button class="delete" @click="this.$emit('clickDelete', rowId)">DELETE</button></div>
         <div v-else>Fake API (No POST / PUT / DELETE)</div>
     </h2>
     <div v-if="bucket.a && bucket.a.length===0">
@@ -9,11 +9,13 @@
     </div>
     <div v-else>
         <div v-if="bucket.a" >
+            <form id="form">
             <table>
                 <tr v-for="row in bucket.a" :key="row[_id]">
-                    <td>Id : </td> <td>{{row[_id]}}</td> <td>Name : </td> <td>{{row.name}}</td> <td>Age : </td> <td>{{row.age || Math.floor(Math.random()*100)}}</td>
+                    <td v-if="!fake"> <input type="radio" name="db" :id="row[_id]" v-model="rowId" :value="row[_id]"> </td>  <label :for="row[_id]"> <td>Id : </td> <td>{{row[_id]}}</td> <td>Name : </td> <td>{{row.name}}</td> <td>Age : </td> <td>{{row.age || Math.floor(Math.random()*100)}}</td> </label>
                 </tr>
             </table>
+            </form>
         </div>
         <div v-else >Loading ....</div>
 
@@ -31,8 +33,9 @@ export default{
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
 
     data(){return{
-                bucket:{a:'', s:''},
-                timeA:'', timeS:''
+                bucket:{a:'', s:'', refresh:''},
+                timeA:'', timeS:'',
+                rowId:''
                 }
             },
 
