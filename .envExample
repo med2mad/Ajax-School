@@ -1,0 +1,3 @@
+mysqlPORT=5020
+mongoosePORT=5030
+postgreSQLPORT=5040

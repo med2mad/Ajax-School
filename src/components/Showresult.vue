@@ -6,13 +6,13 @@
     <h1>{{title}}</h1>
     <p class="comment"><slot name="comment">default</slot></p>
 
-    <DB v-for="item in DBs" :key="item.title+vlimit+refresh" :title="item.title" :_id="item._id" :fake="item.fake"
+    <DB v-for="item in DBs" :key="item.title+item.refresh+vlimit" :title="item.title" :_id="item._id" :fake="item.fake"
                                     @mountGet="(bucket)=>{fget(makeUri(item.uri), bucket);}" 
                                     @mountGetw="async(bucket)=>{bucket.s = await fgetw(makeUri(item.uri));}" 
-                                        @clickPost="PostClick(item.uri); refresh += 1;" 
-                                        @clickPut="(id)=>{ popuptext=''; if(!id){popuptext='select'} PutClick(item.uri, id); refresh += 1; }"
-                                        @clickDelete="(id)=>{ popuptext=''; if(!id){popuptext='select'} DeleteClick(item.uri, id); refresh += 1; }"
-    />
+                                        @clickPost="PostClick(item.uri); item.refresh *= -1;" 
+                                        @clickPut="(id)=>{ popuptext=''; if(!id){popuptext='select'} PutClick(item.uri, id); item.refresh *= -1; }"
+                                        @clickDelete="(id)=>{ popuptext=''; if(!id){popuptext='select'} DeleteClick(item.uri, id); item.refresh *= -1; }"
+    ></DB>
 </template>
 
 <script>
@@ -23,15 +23,15 @@ export default{
             },
 
     data(){return{
-                vname:'', vage:'', vlimit:1, refresh:'',
+                vname:'', vage:'', vlimit:1,
                 showpopup:false, popuptext:'', 
                 DBs:[
-                    {title:'Mysql DB', uri:'http://localhost:5020/', _id:'id', fake:false},
-                    {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id', fake:false},
-                    {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id', fake:false},
-                    {title:'JSON Server', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false},
-                    {title:'jsonplaceholder.typicode.com', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true},
-                    //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id'}//in the public folder
+                    {title:'Mysql DB', uri:'http://localhost:5020/', _id:'id', fake:false, refresh:1},
+                    {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id', fake:false, refresh:1},
+                    {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id', fake:false, refresh:1},
+                    {title:'JSON Server', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, refresh:1},
+                    {title:'jsonplaceholder.typicode.com', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true, refresh:1},
+                    //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id', fake:false, refresh:1}//in the public folder
                     ]
                 }
             },
@@ -57,7 +57,7 @@ export default{
         dataCheck(){
             this.popuptext='';
             if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !'; return true;}
-            else if (!Number.isInteger(this.vage)){this.popuptext='Insert Integer Age !'; return true;}
+            else if (!Number.isInteger(this.vage) || this.vage==="e" || this.vage<0){this.popuptext='Insert Positive Integer Age !'; return true;}
             },
 
         makeUri(uri){
