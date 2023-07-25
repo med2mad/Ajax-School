@@ -10,6 +10,7 @@ app.use(express.json());
 
 // Connect to Mysql2
 const mysql = require('mysql2');
+const { queuePostFlushCb } = require('vue');
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -24,7 +25,10 @@ con.connect((err) => {
 //Routes (API endpoints)
 //Get All
 app.get('/', async (req, res) => {
-  con.query('SELECT * FROM users ORDER BY id DESC LIMIT '+req.query._limit, (err, rows)=>{
+  let q ="SELECT * FROM users WHERE name LIKE '%"+ req.query._name +"%'";
+  if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
+  q += " ORDER BY id DESC LIMIT "+req.query._limit;
+  con.query(q, (err, rows)=>{
     res.json(rows)
   })
 });

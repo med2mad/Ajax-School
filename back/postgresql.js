@@ -10,6 +10,7 @@ app.use(express.json());
 
 // Connect to PostgreSQL
 const {Client} = require('pg');
+const { queuePostFlushCb } = require('vue');
 const client = new Client({
   host: "localhost",
   user: "postgres",
@@ -26,7 +27,10 @@ client.connect().then((err) => {
 //Routes (API endpoints)
 //Get All
 app.get('/', async (req, res) => {
-  client.query("SELECT * FROM users ORDER BY id DESC LIMIT "+req.query._limit, (err, rows)=>{
+  let q ="SELECT * FROM users WHERE name LIKE '%"+ req.query._name +"%'";
+  if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
+  q += " ORDER BY id DESC LIMIT "+req.query._limit;
+  client.query(q, (err, rows)=>{
     res.send(rows.rows)
   })
 });

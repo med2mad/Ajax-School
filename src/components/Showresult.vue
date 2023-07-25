@@ -1,17 +1,16 @@
 <template>
-    <Popup v-if="showpopup" @close="closepopup" :text="popuptext"/>
-        limit: <input type="number" min="0" v-model="vlimit" name="limit"> <br>
-        name: <input type="text" v-model="vname" name="name"> | age: <input type="number" v-model="vage" name="age">
+    Limit: <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"> <br>
+    Name: <input type="text" v-model="vname" name="name" autocomplete="off"> | Age: <input type="number" v-model="vage" name="age" autocomplete="off">
 
     <h1>{{title}}</h1>
     <p class="comment"><slot name="comment">default</slot></p>
 
-    <DB v-for="item in DBs" :key="item.title+item.refresh+vlimit" :title="item.title" :_id="item._id" :fake="item.fake"
-                                    @mountGet="(bucket)=>{fget(makeUri(item.uri), bucket);}" 
-                                    @mountGetw="async(bucket)=>{bucket.s = await fgetw(makeUri(item.uri));}" 
-                                        @clickPost="PostClick(item.uri); item.refresh *= -1;" 
-                                        @clickPut="(id)=>{ popuptext=''; if(!id){popuptext='select'} PutClick(item.uri, id); item.refresh *= -1; }"
-                                        @clickDelete="(id)=>{ popuptext=''; if(!id){popuptext='select'} DeleteClick(item.uri, id); item.refresh *= -1; }"
+    <DB v-for="item in DBs" :key="item.title+item.refresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake"
+                                    @mountGet="(bucket)=>{fget(makeGetUri(item.uri), bucket);}" 
+                                    @mountGetw="async(bucket)=>{bucket.s = await fgetw(makeGetUri(item.uri));}" 
+                                        @clickPost="(ppname, ppage)=>{ PostClick(item.uri, ppname, ppage); item.refresh *= -1; }" 
+                                        @clickPut="(id, ppname, ppage)=>{ PutClick(item.uri, id, ppname, ppage); item.refresh *= -1; }"
+                                        @clickDelete="(id)=>{ DeleteClick(item.uri, id); item.refresh *= -1; }"
     ></DB>
 </template>
 
@@ -23,8 +22,7 @@ export default{
             },
 
     data(){return{
-                vname:'', vage:'', vlimit:1,
-                showpopup:false, popuptext:'', 
+                vname:'', vage:'', vlimit:10,
                 DBs:[
                     {title:'Mysql DB', uri:'http://localhost:5020/', _id:'id', fake:false, refresh:1},
                     {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id', fake:false, refresh:1},
@@ -37,32 +35,29 @@ export default{
             },
 
     methods:{
-        PostClick(uri){ 
-            if(this.dataCheck()){this.showpopup = true}
-            else{this.fpost(uri, {"name":this.vname, "age":this.vage});}
+        PostClick(uri, ppname, ppage){ 
+                this.fpost(uri, {"name":ppname, "age":ppage});
             } ,
 
-        PutClick(uri, id){ 
-            if(this.popuptext || this.dataCheck()){this.showpopup = true}
-            else{this.fput(uri + id, {"name":this.vname, "age":this.vage});}
+        PutClick(uri, id, ppname, ppage){
+                this.fput(uri + id, {"name":ppname, "age":ppage});
             } ,
             
         DeleteClick(uri, id){
-            if(this.popuptext){this.showpopup = true}
-            else{this.fdelete(uri + id);}
+                this.fdelete(uri + id);
             } ,
 
-        closepopup(){this.showpopup = false} ,
-
-        dataCheck(){
-            this.popuptext='';
-            if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !'; return true;}
-            else if (!Number.isInteger(this.vage) || this.vage==="e" || this.vage<0){this.popuptext='Insert Positive Integer Age !'; return true;}
-            },
-
-        makeUri(uri){
+        makeGetUri(uri){
                 uri += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);
                 uri += '&_sort=id&_order=desc'; //fake and jsonServer
+                uri += '&_name='+this.vname;
+                uri += '&name_like='+this.vname; //fake 
+                if (Number.isInteger(this.vage) && this.vage!=="e")
+                {
+                    uri += '&_age='+this.vage;
+                    uri += '&age_gte='+this.vage; //jsonServer (no like)
+                    uri += '&age_lte='+this.vage; //jsonServer (no like)
+                }
                 return uri;
             }
         }

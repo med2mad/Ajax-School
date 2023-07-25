@@ -1,8 +1,12 @@
 <template>
+    <Popup v-if="showpopup" @close="closepopup" :text="popuptext"/>
     <h2 class="title">
         {{title}}
-        <div v-if="!fake"><button class="post" @click="this.$emit('clickPost')">POST</button> | <button class="put" @click="this.$emit('clickPut', rowId)">PUT</button> | <button class="delete" @click="this.$emit('clickDelete', rowId)">DELETE</button></div>
-        <div v-else>Fake API (No POST / PUT / DELETE)</div>
+        <div v-if="!fake">
+            Name: <input type="text" v-model="vname" name="name" autocomplete="off"> | Age: <input type="number" v-model="vage" name="age" autocomplete="off"> <br>
+            <button class="post" @click="handlePost">POST</button> | <button class="put" @click="handlePut">PUT</button> | <button class="delete" @click="handleDelete">DELETE</button>
+        </div>
+        <div v-else>Fake API (No POST/PUT/DELETE)</div>
     </h2>
     <div v-if="bucket.a && bucket.a.length===0">
         <h2>No Data !! </h2>
@@ -12,7 +16,11 @@
             <form id="form">
             <table>
                 <tr v-for="row in bucket.a" :key="row[_id]">
-                    <td v-if="!fake"> <input type="radio" name="db" :id="row[_id]" v-model="rowId" :value="row[_id]"> </td>  <label :for="row[_id]"> <td>Id : </td> <td>{{row[_id]}}</td> <td>Name : </td> <td>{{row.name}}</td> <td>Age : </td> <td>{{ !fake?row.age:Math.floor(Math.random()*100) }}</td> </label>
+                    <td v-if="!fake"> <input type="radio" name="db" :id="row[_id]" v-model="rowId" :value="row[_id]"> </td>
+                    <label :for="row[_id]">
+                        <td>Id : </td> <td>{{row[_id]}}</td> <td>Name : </td> <td>{{row.name}}</td> 
+                        <td>{{!fake?'Age : ':''}}</td><td>{{!fake?row.age:''}}</td>
+                    </label>
                 </tr>
             </table>
             </form>
@@ -33,11 +41,42 @@ export default{
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
 
     data(){return{
-                bucket:{a:'', s:'', refresh:''},
+                bucket:{a:'', s:''},
                 timeA:'', timeS:'',
-                rowId:''
+                rowId:'',
+                vname:'', vage:'',
+                showpopup:false, popuptext:'', 
                 }
             },
+
+    methods:{
+        handlePost(){
+            if(this.dataCheck()){this.showpopup = true}
+            else{this.$emit('clickPost', this.vname, this.vage)}
+        },
+
+        handlePut(){
+            this.popuptext='';
+            if(!this.rowId){this.popuptext='select';}
+            if(this.popuptext || this.dataCheck()){this.showpopup = true}//this.popuptext || for needing to select
+            else{this.$emit('clickPut', this.rowId, this.vname, this.vage)}
+        },
+        
+        handleDelete(){
+            this.popuptext='';
+            if(!this.rowId){this.popuptext='select';}
+            if(this.popuptext){this.showpopup = true}//this.popuptext || for needing to select
+            else{this.$emit('clickDelete', this.rowId)}
+        },
+
+        closepopup(){this.showpopup = false},
+        
+        dataCheck(){
+            this.popuptext='';
+            if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !'; return true;}
+            else if (!Number.isInteger(this.vage) || this.vage==="e" || this.vage<0){this.popuptext='Insert Positive Integer Age !'; return true;}
+        }
+    },
 
     mounted(){
         //pass empty objects by reference to get promise result(FAST) 
