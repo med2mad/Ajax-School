@@ -33,7 +33,9 @@ const usersModel = mongoose.model('users', usersSchema, 'users');
 app.get('/', (req, res) => {
   if(req.query._limit==0){res.json([]);}
   else{
-    usersModel.find().sort({"timestamp":-1}).limit(req.query._limit).then((data)=>{
+    let q = {"name":{ $regex: '.*' + req.query._name + '.*' }};
+    if (req.query._age) {q.age = req.query._age;}
+    usersModel.find(q).sort({"timestamp":-1}).limit(req.query._limit).then((data)=>{
       res.json(data);
     });
   }
