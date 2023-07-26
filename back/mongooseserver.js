@@ -28,7 +28,7 @@ const usersSchema = new mongoose.Schema({
 // Create a Mongoose model based on the schema
 const usersModel = mongoose.model('users', usersSchema, 'users');
 
-//Routes (API endpoints) 
+//API Routes (API endpoints) 
 //Get All
 app.get('/', (req, res) => {
   if(req.query._limit==0){res.json([]);}

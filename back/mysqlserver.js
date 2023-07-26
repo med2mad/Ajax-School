@@ -7,10 +7,10 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 // Connect to Mysql2
 const mysql = require('mysql2');
-const { queuePostFlushCb } = require('vue');
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -22,7 +22,7 @@ con.connect((err) => {
   else{app.listen(port, ()=>{console.log("'Mysyql' Port: " + port);});}
 });
 
-//Routes (API endpoints)
+//API Routes (API endpoints)
 //Get All
 app.get('/', async (req, res) => {
   let q ="SELECT * FROM users WHERE name LIKE '%"+ req.query._name +"%'";

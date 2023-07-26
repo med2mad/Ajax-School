@@ -24,7 +24,7 @@ client.connect().then((err) => {
   });}
 })
 
-//Routes (API endpoints)
+//API Routes (API endpoints)
 //Get All
 app.get('/', async (req, res) => {
   let q ="SELECT * FROM users WHERE name LIKE '%"+ req.query._name +"%'";
