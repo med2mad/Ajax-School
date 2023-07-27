@@ -6,8 +6,8 @@ const cors = require('cors');
 // Create an Express application
 const app = express();
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.json()); //use req.body to get data from ajax requests
+app.use(express.urlencoded({extended:true})); //use req.body as $_POST[ ] (<form> values)
 
 // Connect to Mysql2
 const mysql = require('mysql2');
@@ -25,9 +25,9 @@ con.connect((err) => {
 //API Routes (API endpoints)
 //Get All
 app.get('/', async (req, res) => {
-  let q ="SELECT * FROM users WHERE name LIKE '%"+ req.query._name +"%'";
-  if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
-  q += " ORDER BY id DESC LIMIT "+req.query._limit;
+  let q ="SELECT * FROM users WHERE name LIKE '%"+ req.query.name +"%'";
+  if (req.query.age) {q += " AND age = '"+ req.query.age +"'";}
+  q += " ORDER BY id DESC LIMIT "+ req.query._limit;
   con.query(q, (err, rows)=>{
     res.json(rows)
   })
