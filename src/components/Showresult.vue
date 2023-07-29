@@ -48,16 +48,17 @@ export default{
             } ,
 
         makeGetUri(uri){
-                uri += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);
-                uri += '&_sort=id&_order=desc'; //fake and jsonServer
-                uri += '&_name='+this.vname;
-                uri += '&name_like='+this.vname; //fake 
+                uri += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);//fake/jsonServer use _limit
+                uri += '&_name='+this.vname; //named _name not(name) for not to clash with fake/jsonServer
+                uri += '&name_like='+this.vname; //fake/jsonServer
                 if (Number.isInteger(this.vage) && this.vage!=="e")
                 {
-                    uri += '&_age='+this.vage;
+                    uri += '&_age='+this.vage;//named _age not(age) for not to clash with fake/jsonServer
                     uri += '&age_gte='+this.vage; //jsonServer (no like)
                     uri += '&age_lte='+this.vage; //jsonServer (no like)
                 }
+                uri += '&_sort=id&_order=desc'; //fake/jsonServer use _sort and _order
+                
                 return uri;
             }
         }

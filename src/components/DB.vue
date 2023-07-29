@@ -4,7 +4,7 @@
         {{title}}
         <div v-if="!fake">
             Name: <input type="text" v-model="vname" name="name" autocomplete="off"> | Age: <input type="number" v-model="vage" name="age" autocomplete="off"> <br>
-            <button class="post" @click="handlePost">POST</button> | <button class="put" @click="handlePut">PUT</button> | <button class="delete" @click="handleDelete">DELETE</button>
+            <button href="noajax.html" class="post" @click="handlePost">POST</button> | <button class="put" @click="handlePut">PUT</button> | <button class="delete" @click="handleDelete">DELETE</button>
         </div>
         <div v-else>Fake API (No POST/PUT/DELETE)</div>
     </h2>
@@ -67,7 +67,7 @@ export default{
             if(!this.rowId){this.popuptext='select';}
             if(this.popuptext){this.showpopup = true}//this.popuptext || for needing to select
             else{this.$emit('clickDelete', this.rowId)}
-        },
+        }, 
 
         closepopup(){this.showpopup = false},
         

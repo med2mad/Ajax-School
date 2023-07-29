@@ -1,0 +1,74 @@
+
+    <p>
+    The app is using techniques that do not refresh or redirect to a page , like : <br>
+    - Vue router Links <br>
+    - ajax requests <br>
+    - anchor tags and Form tags with submit buttons that got their default behaviour prevented <br>
+    - button tags, and text-input tags with no Form tag (no submit button), for user-action and retreiving values <br>
+    </p>
+    <p>
+    in here the same thing is done using old school techniques<br>
+    - anchor tags<br>
+    - Forms tags with submit buttons<br>
+    - manualy redirecting if default is prevented (see script below)<br>
+    
+    </p>
+    ----------------GET------------------- <br>
+    <a href="http://localhost:5020/?_name=&_age=7&_limit=10">LINK</a>
+    
+    <form method="GET" action="http://localhost:5020/"><!--query parameters (/?name=) are ignored in Forms-->
+        <input type="hidden" name="_name" value=""><!--instead use inputs (received as query parameters (because method="GET")), or use a route parameter on the back end (action="http://localhost:5020/7")-->
+        <input type="hidden" name="_age" value="7"> 
+        <input type="hidden" name="_limit" value="10">
+        <input type="submit">
+    </form>
+    
+    -----------------POST---------------- <br>
+    <form id="frmid" method="POST" action="http://localhost:5020/">
+        Name : <input type="text" name="name"><br>
+        Age : <input type="number" name="age"><br>
+        <input type="submit">
+    </form>
+    
+    -----------------PUT---------------- <br>
+    <form method="POST" action="http://localhost:5020/29"> <!--no PUT method in Forms (use any other to receive the request)-->
+        Name : <input type="text" name="name"><br>
+        Age : <input type="number" name="age"><br>
+        <input type="submit">
+    </form>
+    
+    -----------------DELETE---------------- <br>
+    <a href="http://localhost:5020/30">LINK</a>
+    
+    <form method="GET" action="http://localhost:5020/29"> <!--no DELETE method in Forms (use any other to receive the request)-->
+        Id : <input type="number" name="id"><br>
+        <input type="submit">
+    </form>
+    
+    ---------------------------------
+    
+    <script>
+    window.onload=function(){
+
+        let frm = document.getElementById('frmid')
+
+        frm.onsubmit=(e)=>{
+            e.preventDefault();
+    
+            //instead of getting inputs one by one (getelementById().value)
+            let fd = new FormData(frm); //use FormData
+            let usp = new URLSearchParams(fd);//or use URLSearchParams
+
+            fetch('http://localhost:5020/', {
+                method: "POST", 
+
+                //headers: {"Content-Type":"application/json"},
+                //body: JSON.stringify(Object.fromEntries(fd))
+                body: usp //with URLSearchParams no need for headers
+              })
+            .then((response)=> {return response.json()})
+            .then((data)=>{console.log(data);})
+            .catch((err)=>{console.log('err: ' + err.message)})
+        }
+    };
+    </script>
