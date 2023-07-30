@@ -10,8 +10,7 @@
     in here the same thing is done using old school techniques<br>
     - anchor tags<br>
     - Forms tags with submit buttons<br>
-    - manualy redirecting if default is prevented (see script below)<br>
-    
+    - manualy redirecting if default behaviour is prevented (see script below)<br>
     </p>
     ----------------GET------------------- <br>
     <a href="http://localhost:5020/?_name=&_age=7&_limit=10">LINK</a>
@@ -24,9 +23,10 @@
     </form>
     
     -----------------POST---------------- <br>
-    <form id="frmid" method="POST" action="http://localhost:5020/">
+    <form id="frmid" method="POST" action="http://localhost:5020/" enctype="multipart/form-data">
         Name : <input type="text" name="name"><br>
         Age : <input type="number" name="age"><br>
+        file : <input type="file"  name="file" id="file"><br>
         <input type="submit">
     </form>
     
@@ -48,27 +48,29 @@
     ---------------------------------
     
     <script>
-    window.onload=function(){
+    // window.onload=function(){
 
-        let frm = document.getElementById('frmid')
+    //     let frm = document.getElementById('frmid');
+        
+    //     frm.onsubmit=(e)=>{
+    //         e.preventDefault(); 
+            
+    //         //instead of getting <Form> inputs one by one (getelementById().value)
+    //         let fd = new FormData(frm); //use FormData
+    //         let x = document.getElementById('file'); //for files
+    //         fd.append('sile',x.files[0],'fileName') //for files
+    //         // let usp = new URLSearchParams(fd);//or use URLSearchParams
 
-        frm.onsubmit=(e)=>{
-            e.preventDefault();
-    
-            //instead of getting inputs one by one (getelementById().value)
-            let fd = new FormData(frm); //use FormData
-            let usp = new URLSearchParams(fd);//or use URLSearchParams
+    //         fetch('http://localhost:5020/', {
+    //             method: "POST", 
 
-            fetch('http://localhost:5020/', {
-                method: "POST", 
-
-                //headers: {"Content-Type":"application/json"},
-                //body: JSON.stringify(Object.fromEntries(fd))
-                body: usp //with URLSearchParams no need for headers
-              })
-            .then((response)=> {return response.json()})
-            .then((data)=>{console.log(data);})
-            .catch((err)=>{console.log('err: ' + err.message)})
-        }
-    };
+    //             headers: {"Content-Type":"application/json"},
+    //             body: JSON.stringify(Object.fromEntries(fd))
+    //             // body: usp //with URLSearchParams no need for headers
+    //           })
+    //         .then((response)=> {return response.json()})
+    //         .then((data)=>{console.log(data);})
+    //         .catch((err)=>{console.log('err: ' + err.message)})
+    //     }
+    // };
     </script>

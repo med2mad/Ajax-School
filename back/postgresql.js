@@ -6,11 +6,11 @@ const cors = require('cors');
 // Create an Express application
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); //req.body gets data from ajax requests payload
+app.use(express.urlencoded({extended:true})); //req.body gets <form> values
 
 // Connect to PostgreSQL
 const {Client} = require('pg');
-const { queuePostFlushCb } = require('vue');
 const client = new Client({
   host: "localhost",
   user: "postgres",

@@ -3,11 +3,13 @@ const port = process.env.mysqlPORT;
 // Import required packages
 const express = require('express');
 const cors = require('cors');
+var efu = require('express-fileupload');
 // Create an Express application
 const app = express();
 app.use(cors());
 app.use(express.json()); //req.body gets data from ajax requests payload
 app.use(express.urlencoded({extended:true})); //req.body gets <form> values
+app.use(efu());
 
 // Connect to Mysql2
 const mysql = require('mysql2');
@@ -34,6 +36,7 @@ app.get('/', async (req, res) => {
 });
 //Insert
 app.post('/', async (req, res) => {
+console.log(req.files);  
   con.query("INSERT INTO users (name, age) VALUES ('"+ req.body.name +"', "+ req.body.age +")", (err, data)=>{
     res.json(data)
   })
