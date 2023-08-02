@@ -3,10 +3,11 @@ const port = process.env.mysqlPORT;
 // Import required packages
 const express = require('express');
 const cors = require('cors');
+//---------------multer
 const multer = require('multer');
-let n;
+let randomImgName;
 const strg = multer.diskStorage({ destination:'./uploads', //can give a function which makes it create the folder if doesn't exist
-                                  filename: function(req,file,callback){n = Date.now()+file.originalname; callback(null,n);}
+                                  filename: function(req,file,callback){randomImgName = Date.now()+file.originalname; callback(null,randomImgName);}
                                 });
 const uploads = multer({storage:strg, fileFilter:function(req, file, cb){fileCheck(file, cb)}});
 function fileCheck(file, cb) {
@@ -14,7 +15,7 @@ function fileCheck(file, cb) {
     {cb("Error: Only Images!");}
   else {return cb(null, true);}
 }
-
+//---------------multer
 // Create an Express application
 const app = express();
 app.use(cors());
@@ -46,14 +47,18 @@ app.get('/', async (req, res) => {
 });
 //Insert
 app.post('/', async (req, res) => {
-  con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ n +"')", (err, data)=>{
-    n='';
+  con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ randomImgName +"')", (err, data)=>{
+    //---------------multer
+    randomImgName='';
+    //---------------multer
     res.json(data)
   })
 });
+//---------------multer
 app.post('/upload', uploads.single("photo"), async (req, res) => {
   res.json('uploaded')
 });
+//---------------multer
 //Update
 app.put('/:id', async (req, res) => {
     con.query("UPDATE users SET name = '"+ req.body.name +"', age = '"+ req.body.age +"' WHERE id='"+ req.params.id +"'", (err, data)=>{

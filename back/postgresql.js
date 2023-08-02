@@ -3,6 +3,19 @@ const port = process.env.postgreSQLPORT;
 // Import required packages
 const express = require('express');
 const cors = require('cors');
+
+const multer = require('multer');
+let randomImgName;
+const strg = multer.diskStorage({ destination:'./uploads', //can give a function which makes it create the folder if doesn't exist
+                                  filename: function(req,file,callback){randomImgName = Date.now()+file.originalname; callback(null,randomImgName);}
+                                });
+const uploads = multer({storage:strg, fileFilter:function(req, file, cb){fileCheck(file, cb)}});
+function fileCheck(file, cb) {
+  if (file.mimetype.split("/")[0]!=="image")
+    {cb("Error: Only Images!");}
+  else {return cb(null, true);}
+}
+
 // Create an Express application
 const app = express();
 app.use(cors());
@@ -36,9 +49,13 @@ app.get('/', async (req, res) => {
 });
 //Insert
 app.post('/', async (req, res) => {
-  client.query("INSERT INTO users (name, age) VALUES ('"+ req.body.name +"', "+ req.body.age +")", (err, data)=>{    
+  client.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', "+ req.body.age +", '"+ randomImgName +"')", (err, data)=>{    
+    randomImgName='';
     res.json(data)
   })
+});
+app.post('/upload', uploads.single("photo"), async (req, res) => {
+  res.json('uploaded')
 });
 //Update
 app.put('/:id', async (req, res) => {

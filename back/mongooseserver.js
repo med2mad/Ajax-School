@@ -3,6 +3,19 @@ const port = process.env.mongoosePORT;
 // Import required packages
 const express = require('express');
 const cors = require('cors');
+
+const multer = require('multer');
+let randomImgName;
+const strg = multer.diskStorage({ destination: function(req,file,callback){callback(null,'./uploads');}, 
+                                  filename: function(req,file,callback){randomImgName = Date.now()+file.originalname; callback(null,randomImgName);}
+                                });
+const uploads = multer({storage:strg, fileFilter:function(req, file, cb){fileCheck(file, cb)}});
+function fileCheck(file, cb) {
+  if (file.mimetype.split("/")[0]!=="image")
+      {cb("Error: Only Images!");}
+  else {return cb(null, true);}
+}
+
 // Create an Express application
 const app = express();
 app.use(cors());
@@ -23,6 +36,7 @@ mongoose.connect('mongodb://localhost:27017/medDB', {useNewUrlParser: true, useU
 const usersSchema = new mongoose.Schema({
   name: String,
   age: Number,
+  photo: String,
   timestamp:{type:Date,
             default: function(){return new Date()}}
 });
@@ -43,10 +57,15 @@ app.get('/', (req, res) => {
 });
 //Insert
 app.post('/', (req, res) => {
+  req.body.photo=randomImgName;
   const row = new usersModel(req.body);
   row.save().then((data)=>{
+    randomImgName='';
     res.json(data)
   });
+});
+app.post('/upload', uploads.single("photo"), async (req, res) => {
+  res.json('uploaded')
 });
 //Update
 app.put('/:id', (req, res) => {

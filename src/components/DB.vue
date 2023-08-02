@@ -57,7 +57,7 @@ export default{
                 const fd = new FormData();
                 fd.append('photo', this.selectedFile,  this.selectedFile.name)
                 try {
-                    await axios.post('http://localhost:5020/upload',fd);
+                    await axios.post('http://localhost:5040/upload',fd);
                 } catch (error) {
                     this.popuptext='Photo not valid !'; this.showpopup = true; err=1;
                 }
