@@ -24,12 +24,13 @@
     
     -----------------POST---------------- <br>
     <form id="frmid" method="POST" action="http://localhost:5020/" enctype="multipart/form-data">
-        Name : <input type="text" name="name"><br>
+        Name : <input type="text" name="name" autocomplete="off"><br>
         Age : <input type="number" name="age"><br>
         file : <input type="file" id="file" multiple name="nameAttribute"><br>
         <input type="submit">
     </form>
     
+    <button id="btn">ok</button>
     -----------------PUT---------------- <br>
     <form method="POST" action="http://localhost:5020/29"> <!--no PUT method in Forms (use any other to receive the request)-->
         Name : <input type="text" name="name"><br>
@@ -50,21 +51,21 @@
     <script>
     // window.onload=function(){
 
-    //     let frm = document.getElementById('frmid');
+    //     let btn = document.getElementById('btn');
         
-    //     frm.onsubmit=(e)=>{
-    //         e.preventDefault(); 
-            
+    //     btn.onclick=(e)=>{
+    //         let frm = document.getElementById('frmid');
+
     //         //instead of getting <Form> inputs one by one (getelementById().value)
     //         let fd = new FormData(frm); //use FormData
     //         let usp = new URLSearchParams(fd);//or use URLSearchParams (does not support file upload)
 
-    //         //----------------method #1 (supports express-fileupload)-------------------------------
+    //         //----------------method #1 (supports fileupload)-------------------------------
     //         axios.post('http://localhost:5020/',fd)
     //         .then((response)=>{console.log(response.data);})
     //         .catch((err)=>{console.error(err.message)})
 
-    //         //---------------method #2 (does not support express-fileupload)-------------------------
+    //         //---------------method #2 (does not support fileupload)-------------------------
     //         // fetch('http://localhost:5020/', {
     //         //     method: "POST", 
 

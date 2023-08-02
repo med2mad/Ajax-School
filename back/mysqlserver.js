@@ -3,13 +3,23 @@ const port = process.env.mysqlPORT;
 // Import required packages
 const express = require('express');
 const cors = require('cors');
+const multer = require('multer');
+let n;
+const strg = multer.diskStorage({ destination:'./uploads', //can give a function which makes it create the folder if doesn't exist
+                                  filename: function(req,file,callback){n = Date.now()+file.originalname; callback(null,n);}
+                                });
+const uploads = multer({storage:strg, fileFilter:function(req, file, cb){fileCheck(file, cb)}});
+function fileCheck(file, cb) {
+  if (file.mimetype.split("/")[0]!=="image")
+    {cb("Error: Only Images!");}
+  else {return cb(null, true);}
+}
 
 // Create an Express application
 const app = express();
 app.use(cors());
 app.use(express.json()); //req.body gets data from ajax requests payload
 app.use(express.urlencoded({extended:true})); //req.body gets <form> values
-
 
 // Connect to Mysql2
 const mysql = require('mysql2');
@@ -35,18 +45,14 @@ app.get('/', async (req, res) => {
   })
 });
 //Insert
-
-const multer = require('multer');
-const strg = multer.diskStorage({ destination: function(req,file,callback){callback(null,'./');},
-                                  filename: function(req,file,callback){callback(null,file.originalname);}
-                                });
-const uploads = multer({storage:strg});
-
-app.post('/', uploads.array("nameAttribute") , async (req, res) => {
-console.log(req.file.originalname);
-  con.query("INSERT INTO users (name, age) VALUES ('"+ req.body.name +"', "+ req.body.age +")", (err, data)=>{
+app.post('/', async (req, res) => {
+  con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ n +"')", (err, data)=>{
+    n='';
     res.json(data)
   })
+});
+app.post('/upload', uploads.single("photo"), async (req, res) => {
+  res.json('uploaded')
 });
 //Update
 app.put('/:id', async (req, res) => {

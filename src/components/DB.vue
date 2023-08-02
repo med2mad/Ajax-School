@@ -4,7 +4,8 @@
         {{title}}
         <div v-if="!fake">
             Name: <input type="text" v-model="vname" name="name" autocomplete="off"> | Age: <input type="number" v-model="vage" name="age" autocomplete="off"> <br>
-            <button href="noajax.html" class="post" @click="handlePost">POST</button> | <button class="put" @click="handlePut">PUT</button> | <button class="delete" @click="handleDelete">DELETE</button>
+            Photo: <input type="file" accept="image/*" @change="onFileSelected"> <img id="photo" :src="selectedImgPath" alt="" width="100" height="100" > <button @click="selectedFile='';selectedImgPath='';">remove</button> <br>
+            <button class="post" @click="handlePost">POST</button> | <button class="put" @click="handlePut">PUT</button> | <button class="delete" @click="handleDelete">DELETE</button>
         </div>
         <div v-else>Fake API (No POST/PUT/DELETE)</div>
     </h2>
@@ -14,18 +15,16 @@
     <div v-else>
         <div v-if="bucket.a" >
             <form id="form">
-            <table>
-                <tr v-for="row in bucket.a" :key="row[_id]">
-                    <td v-if="!fake"> <input type="radio" name="db" :id="row[_id]" v-model="rowId" :value="row[_id]"> </td>
-                    <label :for="row[_id]">
-                        <td>Id : </td> <td>{{row[_id]}}</td> <td>Name : </td> <td>{{row.name}}</td> 
-                        <td>{{!fake?'Age : ':''}}</td><td>{{!fake?row.age:''}}</td>
-                    </label>
+            <table border="solid">
+                <tr><td></td><td>#</td><td>User Id</td><td>Name</td><td v-if="!fake">Age</td><td>Photo</td></tr>
+                <tr v-for="(user,i) in bucket.a" :class="{selected:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id])">
+                    <td v-if="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td><td v-else>X</td>
+                    <td>{{i+1}}</td><td>{{user[_id]}}</td> <td>{{user.name}}</td> <td v-if="!fake">{{user.age}}</td><td>{{user.photo}}</td>
                 </tr>
             </table>
             </form>
         </div>
-        <div v-else >Loading ....</div>
+        <div v-else>Loading ....</div>
 
         <h2>
             [{{timeA || 'Calculating ...'}}ms Asynchronously] | 
@@ -35,39 +34,60 @@
 </template>
 
 <script>
+import axios from 'axios' //to upload photos
+
 export default{
     props: { title:{type:String}, _id:{type:String}, fake:{type:Boolean}, },
 
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
-
+ 
     data(){return{
                 bucket:{a:'', s:''},
                 timeA:'', timeS:'',
-                rowId:'',
-                vname:'', vage:'',
+                selectedId:'', 
+                vname:'', vage:'', selectedFile:'', selectedImgPath:'',
                 showpopup:false, popuptext:'', 
                 }
             },
 
     methods:{
-        handlePost(){
-            if(this.dataCheck()){this.showpopup = true}
-            else{this.$emit('clickPost', this.vname, this.vage)}
+        async handlePost(){
+            let err=0;
+            if (this.selectedFile) {
+                const fd = new FormData();
+                fd.append('photo', this.selectedFile,  this.selectedFile.name)
+                try {
+                    await axios.post('http://localhost:5020/upload',fd);
+                } catch (error) {
+                    this.popuptext='Photo not valid !'; this.showpopup = true; err=1;
+                }
+            }
+            if(!err){
+                if(this.dataCheck()){this.showpopup = true}
+                else{this.$emit('clickPost', this.vname, this.vage)}
+            }
         },
 
         handlePut(){
             this.popuptext='';
-            if(!this.rowId){this.popuptext='select';}
+            if(!this.selectedId){this.popuptext='select';}
             if(this.popuptext || this.dataCheck()){this.showpopup = true}//this.popuptext || for needing to select
-            else{this.$emit('clickPut', this.rowId, this.vname, this.vage)}
+            else{this.$emit('clickPut', this.selectedId, this.vname, this.vage)}
         },
         
         handleDelete(){
             this.popuptext='';
-            if(!this.rowId){this.popuptext='select';}
-            if(this.popuptext){this.showpopup = true}//this.popuptext || for needing to select
-            else{this.$emit('clickDelete', this.rowId)}
+            if(!this.selectedId){this.popuptext='select';}
+            if(this.popuptext){this.showpopup = true}//this.popuptext for needing to select
+            else{this.$emit('clickDelete', this.selectedId)}
         }, 
+
+        onFileSelected(e){
+            if (e.target.files[0]) {
+                this.selectedFile = e.target.files[0];
+                this.selectedImgPath=URL.createObjectURL(this.selectedFile);
+            }
+        },
 
         closepopup(){this.showpopup = false},
         
@@ -75,7 +95,11 @@ export default{
             this.popuptext='';
             if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !'; return true;}
             else if (!Number.isInteger(this.vage) || this.vage==="e" || this.vage<0){this.popuptext='Insert Positive Integer Age !'; return true;}
-        }
+        },
+
+        selectUser(id){
+          this.selectedId = id;
+        },
     },
 
     mounted(){
@@ -118,5 +142,13 @@ export default{
     }
     h2 .delete{
     background-color:rgb(221, 72, 72);
+    }
+
+    .selected{
+    background-color:yellow;
+    }
+
+    #photo{
+        object-fit:contain ;
     }
 </style>
