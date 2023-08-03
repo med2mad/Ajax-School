@@ -5,7 +5,7 @@
     <h1>{{title}}</h1>
     <p class="comment"><slot name="comment">default</slot></p>
 
-    <DB v-for="item in DBs" :key="item.title+item.refresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake"
+    <DB v-for="item in DBs" :key="item.title+item.refresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake" :uri="item.uri"
                                     @mountGet="(bucket)=>{fget(makeGetUri(item.uri), bucket);}" 
                                     @mountGetw="async(bucket)=>{bucket.s = await fgetw(makeGetUri(item.uri));}" 
                                         @clickPost="(ppname, ppage)=>{ PostClick(item.uri, ppname, ppage); item.refresh *= -1; }" 

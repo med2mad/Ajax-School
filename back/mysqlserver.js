@@ -3,19 +3,19 @@ const port = process.env.mysqlPORT;
 // Import required packages
 const express = require('express');
 const cors = require('cors');
-//---------------multer
+const fs = require('fs');
 const multer = require('multer');
 let randomImgName;
-const strg = multer.diskStorage({ destination:'./uploads', //can give a function which makes it create the folder if doesn't exist
-                                  filename: function(req,file,callback){randomImgName = Date.now()+file.originalname; callback(null,randomImgName);}
+const strg = multer.diskStorage({ destination: function(req,file,callback){fs.mkdirSync('./uploads', {recursive:true}); callback(null,'./uploads');}, 
+                                  filename: function(req,file,callback){randomImgName =file.originalname+Date.now()+file.originalname; callback(null,randomImgName);}
                                 });
 const uploads = multer({storage:strg, fileFilter:function(req, file, cb){fileCheck(file, cb)}});
 function fileCheck(file, cb) {
-  if (file.mimetype.split("/")[0]!=="image")
+  if(file.mimetype.split("/")[0]!=="image")
     {cb("Error: Only Images!");}
   else {return cb(null, true);}
 }
-//---------------multer
+
 // Create an Express application
 const app = express();
 app.use(cors());
@@ -37,7 +37,7 @@ con.connect((err) => {
 
 //API Routes (API endpoints)
 //Get All
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
   let q ="SELECT * FROM users WHERE name LIKE '%"+ req.query._name +"%'";
   if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
   q += " ORDER BY id DESC LIMIT "+ req.query._limit;
@@ -46,21 +46,17 @@ app.get('/', async (req, res) => {
   })
 });
 //Insert
-app.post('/', async (req, res) => {
+app.post('/', (req, res) => {
   con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ randomImgName +"')", (err, data)=>{
-    //---------------multer
     randomImgName='';
-    //---------------multer
     res.json(data)
   })
 });
-//---------------multer
-app.post('/upload', uploads.single("photo"), async (req, res) => {
-  res.json('uploaded')
+app.post('/upload', uploads.single("photo"), (req, res) => {
+  res.json({newPhotoName:randomImgName})//optional (just to receive the new file name)
 });
-//---------------multer
 //Update
-app.put('/:id', async (req, res) => {
+app.put('/:id', (req, res) => {
     con.query("UPDATE users SET name = '"+ req.body.name +"', age = '"+ req.body.age +"' WHERE id='"+ req.params.id +"'", (err, data)=>{
       res.json(data)
   })

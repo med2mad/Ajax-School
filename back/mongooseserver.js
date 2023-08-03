@@ -3,16 +3,16 @@ const port = process.env.mongoosePORT;
 // Import required packages
 const express = require('express');
 const cors = require('cors');
-
+const fs = require('fs');
 const multer = require('multer');
 let randomImgName;
-const strg = multer.diskStorage({ destination: function(req,file,callback){callback(null,'./uploads');}, 
-                                  filename: function(req,file,callback){randomImgName = Date.now()+file.originalname; callback(null,randomImgName);}
+const strg = multer.diskStorage({ destination: function(req,file,callback){fs.mkdirSync('./uploads', {recursive:true}); callback(null,'./uploads');}, 
+                                  filename: function(req,file,callback){randomImgName =file.originalname+Date.now()+file.originalname; callback(null,randomImgName);}
                                 });
 const uploads = multer({storage:strg, fileFilter:function(req, file, cb){fileCheck(file, cb)}});
 function fileCheck(file, cb) {
-  if (file.mimetype.split("/")[0]!=="image")
-      {cb("Error: Only Images!");}
+  if(file.mimetype.split("/")[0]!=="image")
+    {cb("Error: Only Images!");}
   else {return cb(null, true);}
 }
 
@@ -64,8 +64,8 @@ app.post('/', (req, res) => {
     res.json(data)
   });
 });
-app.post('/upload', uploads.single("photo"), async (req, res) => {
-  res.json('uploaded')
+app.post('/upload', uploads.single("photo"), (req, res) => {
+  res.json({newPhotoName:randomImgName})//optional (just to receive the new file name)
 });
 //Update
 app.put('/:id', (req, res) => {

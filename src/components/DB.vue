@@ -1,5 +1,5 @@
 <template>
-    <Popup v-if="showpopup" @close="closepopup" :text="popuptext"/>
+    <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext"/>
     <h2 class="title">
         {{title}}
         <div v-if="!fake">
@@ -37,7 +37,7 @@
 import axios from 'axios' //to upload photos
 
 export default{
-    props: { title:{type:String}, _id:{type:String}, fake:{type:Boolean}, },
+    props: { title:{type:String}, _id:{type:String}, fake:{type:Boolean}, uri:{type:String},  },
 
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  
@@ -52,20 +52,8 @@ export default{
 
     methods:{
         async handlePost(){
-            let err=0;
-            if (this.selectedFile) {
-                const fd = new FormData();
-                fd.append('photo', this.selectedFile,  this.selectedFile.name)
-                try {
-                    await axios.post('http://localhost:5040/upload',fd);
-                } catch (error) {
-                    this.popuptext='Photo not valid !'; this.showpopup = true; err=1;
-                }
-            }
-            if(!err){
-                if(this.dataCheck()){this.showpopup = true}
-                else{this.$emit('clickPost', this.vname, this.vage)}
-            }
+            if(await this.dataCheck()){this.showpopup = true}
+            else{this.$emit('clickPost', this.vname, this.vage)}
         },
 
         handlePut(){
@@ -89,16 +77,26 @@ export default{
             }
         },
 
-        closepopup(){this.showpopup = false},
-        
-        dataCheck(){
-            this.popuptext='';
-            if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !'; return true;}
-            else if (!Number.isInteger(this.vage) || this.vage==="e" || this.vage<0){this.popuptext='Insert Positive Integer Age !'; return true;}
-        },
-
         selectUser(id){
           this.selectedId = id;
+        },
+        
+        async dataCheck(){
+            this.popuptext='';
+            
+            if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !'; }
+            else if (!Number.isInteger(this.vage) || this.vage==="e" || this.vage<0){this.popuptext='Insert Positive Integer Age !'; }
+            else if (this.selectedFile) {
+                const fd = new FormData();
+                fd.append('photo', this.selectedFile,  this.selectedFile.name)
+                try {
+                    await axios.post(this.uri+'upload',fd);
+                } catch (error) {
+                    this.popuptext='Photo not valid !'; 
+                }
+            }
+            
+            return this.popuptext;
         },
     },
 
