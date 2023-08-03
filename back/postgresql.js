@@ -3,18 +3,6 @@ const port = process.env.postgreSQLPORT;
 // Import required packages
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
-const multer = require('multer');
-let randomImgName;
-const strg = multer.diskStorage({ destination: function(req,file,callback){fs.mkdirSync('./uploads', {recursive:true}); callback(null,'./uploads');}, 
-                                  filename: function(req,file,callback){randomImgName =file.originalname+Date.now()+file.originalname; callback(null,randomImgName);}
-                                });
-const uploads = multer({storage:strg, fileFilter:function(req, file, cb){fileCheck(file, cb)}});
-function fileCheck(file, cb) {
-  if(file.mimetype.split("/")[0]!=="image")
-    {cb("Error: Only Images!");}
-  else {return cb(null, true);}
-}
 
 // Create an Express application
 const app = express();
@@ -54,17 +42,13 @@ app.get('/', (req, res) => {
 });
 //Insert
 app.post('/', (req, res) => {
-  client.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', "+ req.body.age +", '"+ randomImgName +"')", (err, data)=>{    
-    randomImgName='';
+  client.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', "+ req.body.age +", '"+ req.body.photo +"')", (err, data)=>{    
     res.json(data)
   })
 });
-app.post('/upload', uploads.single("photo"), (req, res) => {
-  res.json({newPhotoName:randomImgName})//optional (just to receive the new file name)
-});
 //Update
 app.put('/:id', (req, res) => {
-  client.query("UPDATE users SET name='"+ req.body.name +"', age = '"+ req.body.age +"' WHERE id='"+ req.params.id +"'", (err, data)=>{
+  client.query("UPDATE users SET name='"+ req.body.name +"', age = '"+ req.body.age +"', photo = '"+ req.body.photo +"' WHERE id='"+ req.params.id +"'", (err, data)=>{
     res.json(data)
   })
 });

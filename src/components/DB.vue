@@ -16,10 +16,10 @@
         <div v-if="bucket.a" >
             <form id="form">
             <table border="solid">
-                <tr><td></td><td>#</td><td>User Id</td><td>Name</td><td v-if="!fake">Age</td><td>Photo</td></tr>
+                <tr><td v-if="!fake"></td><td>#</td><td>User Id</td><td>Name</td><td v-if="!fake">Age</td><td v-if="!fake">Photo</td></tr>
                 <tr v-for="(user,i) in bucket.a" :class="{selected:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id])">
-                    <td v-if="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td><td v-else>X</td>
-                    <td>{{i+1}}</td><td>{{user[_id]}}</td> <td>{{user.name}}</td> <td v-if="!fake">{{user.age}}</td><td>{{user.photo}}</td>
+                    <td v-if="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
+                    <td>{{i+1}}</td><td>{{user[_id]}}</td> <td>{{user.name}}</td> <td v-if="!fake">{{user.age}}</td><td v-if="!fake">{{user.photo}}</td>
                 </tr>
             </table>
             </form>
@@ -45,38 +45,34 @@ export default{
                 bucket:{a:'', s:''},
                 timeA:'', timeS:'',
                 selectedId:'', 
-                vname:'', vage:'', selectedFile:'', selectedImgPath:'',
+                vname:'', vage:'', newFileName:'',
+                selectedFile:'', selectedImgPath:'',
                 showpopup:false, popuptext:'', 
                 }
             },
-
+//why this.vname, this.vage, this.newFileName (not one body 
     methods:{
         async handlePost(){
             if(await this.dataCheck()){this.showpopup = true}
-            else{this.$emit('clickPost', this.vname, this.vage)}
+            else{this.$emit('clickPost', this.vname, this.vage, this.newFileName)}
         },
-
-        handlePut(){
+ //why this.popuptext
+        async handlePut(){
             this.popuptext='';
             if(!this.selectedId){this.popuptext='select';}
-            if(this.popuptext || this.dataCheck()){this.showpopup = true}//this.popuptext || for needing to select
-            else{this.$emit('clickPut', this.selectedId, this.vname, this.vage)}
+            if(!this.selectedId || await this.dataCheck()){this.showpopup = true}//this.popuptext || for needing to select
+            else{this.$emit('clickPut', this.selectedId, this.vname, this.vage, this.newFileName)}
         },
-        
         handleDelete(){
-            this.popuptext='';
-            if(!this.selectedId){this.popuptext='select';}
-            if(this.popuptext){this.showpopup = true}//this.popuptext for needing to select
+            if(!this.selectedId){this.popuptext='select';this.showpopup = true}
             else{this.$emit('clickDelete', this.selectedId)}
         }, 
-
         onFileSelected(e){
             if (e.target.files[0]) {
                 this.selectedFile = e.target.files[0];
                 this.selectedImgPath=URL.createObjectURL(this.selectedFile);
             }
         },
-
         selectUser(id){
           this.selectedId = id;
         },
@@ -90,7 +86,8 @@ export default{
                 const fd = new FormData();
                 fd.append('photo', this.selectedFile,  this.selectedFile.name)
                 try {
-                    await axios.post(this.uri+'upload',fd);
+                    const response = await axios.post('http://localhost:5999/upload',fd);
+                    this.newFileName = response.data.newPhotoName;
                 } catch (error) {
                     this.popuptext='Photo not valid !'; 
                 }

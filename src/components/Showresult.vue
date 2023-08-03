@@ -8,8 +8,8 @@
     <DB v-for="item in DBs" :key="item.title+item.refresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake" :uri="item.uri"
                                     @mountGet="(bucket)=>{fget(makeGetUri(item.uri), bucket);}" 
                                     @mountGetw="async(bucket)=>{bucket.s = await fgetw(makeGetUri(item.uri));}" 
-                                        @clickPost="(ppname, ppage)=>{ PostClick(item.uri, ppname, ppage); item.refresh *= -1; }" 
-                                        @clickPut="(id, ppname, ppage)=>{ PutClick(item.uri, id, ppname, ppage); item.refresh *= -1; }"
+                                        @clickPost="(ppname, ppage, ppphoto)=>{ PostClick(item.uri, ppname, ppage, ppphoto); item.refresh += 1; }" 
+                                        @clickPut="(id, ppname, ppage, ppphoto)=>{ PutClick(item.uri, id, ppname, ppage, ppphoto); item.refresh += 1; }"
                                         @clickDelete="(id)=>{ DeleteClick(item.uri, id); item.refresh *= -1; }"
     ></DB>
 </template>
@@ -35,12 +35,12 @@ export default{
             },
 
     methods:{
-        PostClick(uri, ppname, ppage){ 
-                this.fpost(uri, {"name":ppname, "age":ppage});
+        PostClick(uri, ppname, ppage, ppphoto){ 
+                this.fpost(uri, {"name":ppname, "age":ppage, "photo":ppphoto});
             } ,
 
-        PutClick(uri, id, ppname, ppage){
-                this.fput(uri + id, {"name":ppname, "age":ppage});
+        PutClick(uri, id, ppname, ppage, ppphoto){
+                this.fput(uri + id, {"name":ppname, "age":ppage, "photo":ppphoto});
             } ,
             
         DeleteClick(uri, id){
