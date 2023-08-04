@@ -6,11 +6,11 @@
     <p class="comment"><slot name="comment">default</slot></p>
 
     <DB v-for="item in DBs" :key="item.title+item.refresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake" :uri="item.uri"
-                                    @mountGet="(bucket)=>{fget(makeGetUri(item.uri), bucket);}" 
-                                    @mountGetw="async(bucket)=>{bucket.s = await fgetw(makeGetUri(item.uri));}" 
-                                        @clickPost="(ppname, ppage, ppphoto)=>{ PostClick(item.uri, ppname, ppage, ppphoto); item.refresh += 1; }" 
-                                        @clickPut="(id, ppname, ppage, ppphoto)=>{ PutClick(item.uri, id, ppname, ppage, ppphoto); item.refresh += 1; }"
-                                        @clickDelete="(id)=>{ DeleteClick(item.uri, id); item.refresh *= -1; }"
+                                    @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
+                                    @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
+                                        @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket);}" 
+                                        @clickPut="(id, body)=>{this.fput(item.uri + id, body);}"
+                                        @clickDelete="(id)=>{this.fdelete(item.uri + id); item.refresh *= -1;}"
     ></DB>
 </template>
 
@@ -24,7 +24,7 @@ export default{
     data(){return{
                 vname:'', vage:'', vlimit:10,
                 DBs:[
-                    {title:'Mysql DB', uri:'http://localhost:5020/', _id:'id', fake:false, refresh:1},
+                    {title:'Mysql', uri:'http://localhost:5020/', _id:'id', fake:false, refresh:1},
                     {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id', fake:false, refresh:1},
                     {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id', fake:false, refresh:1},
                     {title:'JSON Server', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, refresh:1},
@@ -35,19 +35,7 @@ export default{
             },
 
     methods:{
-        PostClick(uri, ppname, ppage, ppphoto){ 
-                this.fpost(uri, {"name":ppname, "age":ppage, "photo":ppphoto});
-            } ,
-
-        PutClick(uri, id, ppname, ppage, ppphoto){
-                this.fput(uri + id, {"name":ppname, "age":ppage, "photo":ppphoto});
-            } ,
-            
-        DeleteClick(uri, id){
-                this.fdelete(uri + id);
-            } ,
-
-        makeGetUri(uri){
+        getUri(uri){
                 uri += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);//fake/jsonServer use _limit
                 uri += '&_name='+this.vname; //named _name not(name) for not to clash with fake/jsonServer
                 uri += '&name_like='+this.vname; //fake/jsonServer

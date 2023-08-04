@@ -97,15 +97,9 @@
       "id": 35
     },
     {
-      "name": "-1",
-      "age": -1,
-      "photo": "",
-      "id": 36
-    },
-    {
-      "name": "zxc",
-      "age": 1,
-      "photo": "",
+      "name": "4",
+      "age": 4,
+      "photo": "cover html_css.jpg1691101905705cover html_css.jpg",
       "id": 37
     },
     {
@@ -113,12 +107,6 @@
       "age": 3,
       "photo": "bastion.jpg1691097043760bastion.jpg",
       "id": 38
-    },
-    {
-      "name": "222222222",
-      "age": 22222222,
-      "photo": "",
-      "id": 39
     },
     {
       "name": "333333333",
@@ -151,9 +139,9 @@
       "id": 44
     },
     {
-      "name": "123",
-      "age": 123,
-      "photo": "fk.jpg1691097032075fk.jpg",
+      "name": "66",
+      "age": 66,
+      "photo": "leghdaichm@gmail.png1691102008811leghdaichm@gmail.png",
       "id": 45
     },
     {
@@ -161,6 +149,12 @@
       "age": 99,
       "photo": "fk.jpg1691091527505fk.jpg",
       "id": 46
+    },
+    {
+      "name": "33",
+      "age": 33,
+      "photo": "hskplogo.png1691101918426hskplogo.png",
+      "id": 47
     }
   ],
   "Resource2": [

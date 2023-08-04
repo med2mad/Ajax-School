@@ -15,12 +15,16 @@
     <div v-else>
         <div v-if="bucket.a" >
             <form id="form">
-            <table border="solid">
-                <tr><td v-if="!fake"></td><td>#</td><td>User Id</td><td>Name</td><td v-if="!fake">Age</td><td v-if="!fake">Photo</td></tr>
-                <tr v-for="(user,i) in bucket.a" :class="{selected:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id])">
-                    <td v-if="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
-                    <td>{{i+1}}</td><td>{{user[_id]}}</td> <td>{{user.name}}</td> <td v-if="!fake">{{user.age}}</td><td v-if="!fake">{{user.photo}}</td>
+            <table border="solid" :id="'tbl'+title">
+                <thead>
+                <tr id="tr1"><th v-if="!fake"></th><th>#</th><th>User Id</th><th>Name</th><th v-if="!fake">Age</th><th v-if="!fake">Photo</th></tr>
+                </thead>
+                <tbody>
+                <tr v-for="user in bucket.a" :class="{selected:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
+                    <td v-show="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
+                    <td></td><td>{{user[_id]}}</td> <td :ref="'name'+user[_id]">{{user.name}}</td> <td :ref="'age'+user[_id]" v-if="!fake">{{user.age}}</td><td :ref="'photo'+user[_id]" v-if="!fake">{{user.photo}}</td>
                 </tr>
+                </tbody>
             </table>
             </form>
         </div>
@@ -45,28 +49,33 @@ export default{
                 bucket:{a:'', s:''},
                 timeA:'', timeS:'',
                 selectedId:'', 
-                vname:'', vage:'', newFileName:'',
+                vname:'', vage:'', newFileName:'', //why newFileName
                 selectedFile:'', selectedImgPath:'',
                 showpopup:false, popuptext:'', 
                 }
             },
-//why this.vname, this.vage, this.newFileName (not one body 
+
     methods:{
         async handlePost(){
-            if(await this.dataCheck()){this.showpopup = true}
-            else{this.$emit('clickPost', this.vname, this.vage, this.newFileName)}
+            if(await this.dataCheck()){this.showpopup = true;}
+            else{this.$emit('clickPost', {"name":this.vname, "age":this.vage, "photo":this.newFileName}, this.bucket);}
         },
- //why this.popuptext
         async handlePut(){
-            this.popuptext='';
-            if(!this.selectedId){this.popuptext='select';}
-            if(!this.selectedId || await this.dataCheck()){this.showpopup = true}//this.popuptext || for needing to select
-            else{this.$emit('clickPut', this.selectedId, this.vname, this.vage, this.newFileName)}
+            if(!this.selectedId){this.popuptext='select'; this.showpopup = true;}
+            else if(await this.dataCheck()){this.showpopup = true;}
+            else{
+                    this.$emit('clickPut', this.selectedId, {"name":this.vname, "age":this.vage, "photo":this.newFileName});
+                    
+                    this.$refs['name'+this.selectedId][0].innerHTML = this.vname;
+                    this.$refs['age'+this.selectedId][0].innerHTML = this.vage; //remove name att from tags
+                    this.$refs['photo'+this.selectedId][0].innerHTML = this.newFileName;
+                }
         },
         handleDelete(){
-            if(!this.selectedId){this.popuptext='select';this.showpopup = true}
-            else{this.$emit('clickDelete', this.selectedId)}
+            if(!this.selectedId){this.popuptext='select';this.showpopup = true;}
+            else{this.$emit('clickDelete', this.selectedId); this.refreshTbl+=1;}
         }, 
+
         onFileSelected(e){
             if (e.target.files[0]) {
                 this.selectedFile = e.target.files[0];
@@ -74,7 +83,22 @@ export default{
             }
         },
         selectUser(id){
-          this.selectedId = id;
+            this.selectedId = id;
+            // let newTr = document.createElement("tr");        
+            // let newTd = document.createElement("td");
+            // let newTdName = document.createElement("tdName");
+            // newTdName.innerHTML="";
+            // newTr.append(newTdName);newTr.append(newTd);newTr.append(newTd);newTr.append(newTd);newTr.append(newTd);newTr.append(newTd);
+            // let tr = document.getElementById("tr1");
+            // let tbl = document.getElementById("tbl1");
+
+            // tbl.insertBefore(newTr, tr.nextSibling);
+
+            // let x = '<tr :class="{selected:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">';
+            // x += '<td v-if="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>';
+            // x += '<td>{{i+1}}</td><td>{{user[_id]}}</td> <td :ref="' + "'name'" + '+user[_id]">{{user.name}}</td> <td :ref="'+"'age'"+'+user[_id]" v-if="!fake">{{user.age}}</td><td :ref="'+"'photo'"+'+user[_id]" v-if="!fake">{{user.photo}}</td>';
+            // x += '</tr>';
+
         },
         
         async dataCheck(){
@@ -144,6 +168,16 @@ export default{
     }
 
     #photo{
-        object-fit:contain ;
+    object-fit:contain ;
+    }
+
+    table {
+        counter-reset: row-num-1;
+    }
+    table tr {
+        counter-increment: row-num;
+    }
+    table tbody tr td:nth-child(2)::before {
+        content: counter(row-num);
     }
 </style>
