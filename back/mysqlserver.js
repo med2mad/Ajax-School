@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 //Insert
 app.post('/', (req, res) => {
   con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ req.body.photo +"')", (err, data)=>{
-    res.json(data)
+    res.json(data.insertId)
   })
 });
 //Update
@@ -48,7 +48,7 @@ app.put('/:id', (req, res) => {
 //Delete
 app.delete('/:id', (req, res) => {
     con.query("DELETE FROM users WHERE id='"+ req.params.id +"'", (err, data)=>{
-      res.json(data);
+      res.send(data);
   });
 });
 //404

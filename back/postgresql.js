@@ -36,14 +36,14 @@ app.get('/', (req, res) => {
   let q ="SELECT * FROM users WHERE name LIKE '%"+ req.query._name +"%'";
   if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
   q += " ORDER BY id DESC LIMIT "+req.query._limit;
-  client.query(q, (err, rows)=>{
-    res.send(rows.rows)
+  client.query(q, (err, data)=>{
+    res.json(data.rows)
   })
 });
 //Insert
 app.post('/', (req, res) => {
-  client.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', "+ req.body.age +", '"+ req.body.photo +"')", (err, data)=>{    
-    res.json(data)
+  client.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', "+ req.body.age +", '"+ req.body.photo +"') RETURNING id;", (err, data)=>{    
+    res.json(data.rows[0].id)
   })
 });
 //Update

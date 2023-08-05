@@ -4,7 +4,7 @@ const port = process.env.multerPORT;
 const fs = require('fs');
 const multer = require('multer');
 let randomImgName;
-const strg = multer.diskStorage({ destination: function(req,file,callback){fs.mkdirSync('./uploads', {recursive:true}); callback(null,'./uploads');}, 
+const strg = multer.diskStorage({ destination: function(req,file,callback){fs.mkdirSync('./public/uploads', {recursive:true}); callback(null,'./public/uploads');}, 
                                   filename: function(req,file,callback){randomImgName =file.originalname+Date.now()+file.originalname; callback(null,randomImgName);}
                                 });
 const uploads = multer({storage:strg, fileFilter:function(req, file, cb){fileCheck(file, cb)}});

@@ -8,7 +8,7 @@
     <DB v-for="item in DBs" :key="item.title+item.refresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake" :uri="item.uri"
                                     @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
                                     @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
-                                        @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket);}" 
+                                        @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
                                         @clickPut="(id, body)=>{this.fput(item.uri + id, body);}"
                                         @clickDelete="(id)=>{this.fdelete(item.uri + id); item.refresh *= -1;}"
     ></DB>

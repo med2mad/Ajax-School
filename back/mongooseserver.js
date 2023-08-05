@@ -38,7 +38,7 @@ app.get('/', async (req, res) => {
   else{
     let q = {"name":{ $regex: '.*' + req.query._name + '.*' }};
     if (req.query._age) {q.age = req.query._age;}
-    usersModel.find(q).sort({"timestamp":-1}).limit(req.query._limit).then((data)=>{
+    usersModel.find(q).sort({"timestamp":-1}).select("-timestamp -__v").limit(req.query._limit).then((data)=>{
       res.json(data);
     });
   }
@@ -47,7 +47,7 @@ app.get('/', async (req, res) => {
 app.post('/', (req, res) => {
   const row = new usersModel(req.body);
   row.save().then((data)=>{
-    res.json(data)
+    res.json(data._id)
   });
 });
 //Update
