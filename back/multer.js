@@ -1,5 +1,5 @@
 require('dotenv').config();
-const port = process.env.multerPORT;
+const port = process.env.multerPORT || process.argv[2] || 5999;
 // Import required packages
 const fs = require('fs');
 const multer = require('multer');

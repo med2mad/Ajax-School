@@ -1,5 +1,5 @@
 require('dotenv').config();
-const port = process.env.postgreSQLPORT;
+const port = process.env.postgreSQLPORT || process.argv[2] || 5030;
 // Import required packages
 const express = require('express');
 const cors = require('cors');

@@ -1,5 +1,5 @@
 require('dotenv').config();
-const port = process.env.mongoosePORT;
+const port = process.env.mongoosePORT || process.argv[2] || 5020;//get port from 
 // Import required packages
 const express = require('express');
 const cors = require('cors');

@@ -1,5 +1,5 @@
 require('dotenv').config();
-const port = process.env.mysqlPORT;
+const port = process.env.mysqlPORT || process.argv[2] || 5010;
 // Import required packages
 const express = require('express');
 const cors = require('cors');

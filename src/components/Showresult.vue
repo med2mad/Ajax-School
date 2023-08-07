@@ -5,12 +5,12 @@
     <h1>{{title}}</h1>
     <p class="comment"><slot name="comment">default</slot></p>
 
-    <DB v-for="item in DBs" :key="item.title+item.refresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake" :uri="item.uri"
+    <DB v-for="item in DBs" :key="item.title+item.deleteRefresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake" :uri="item.uri"
                                     @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
                                     @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
                                         @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
-                                        @clickPut="(id, body)=>{this.fput(item.uri + id, body);}"
-                                        @clickDelete="(id)=>{this.fdelete(item.uri + id); item.refresh *= -1;}"
+                                        @clickPut="(id, body)=>{this.fput(item.uri, id, body);}"
+                                        @clickDelete="(id)=>{this.fdelete(item.uri + id); item.deleteRefresh *= -1;}"
     ></DB>
 </template>
 
@@ -24,12 +24,12 @@ export default{
     data(){return{
                 vname:'', vage:'', vlimit:10,
                 DBs:[
-                    {title:'Mysql', uri:'http://localhost:5020/', _id:'id', fake:false, refresh:1},
-                    {title:'Mongoose', uri:'http://localhost:5030/', _id:'_id', fake:false, refresh:1},
-                    {title:'PostgreSQL', uri:'http://localhost:5040/', _id:'id', fake:false, refresh:1},
-                    {title:'JSON Server', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, refresh:1},
-                    {title:'jsonplaceholder.typicode.com', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true, refresh:1},
-                    //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id', fake:false, refresh:1}//in the public folder
+                    {title:'Mysql', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1},
+                    {title:'Mongoose', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1},
+                    {title:'PostgreSQL', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1},
+                    {title:'JSON Server', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1},
+                    {title:'Fake API', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true, deleteRefresh:1},
+                    //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id', fake:false, deleteRefresh:1}//in the public folder
                     ]
                 }
             },

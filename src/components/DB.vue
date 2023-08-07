@@ -4,10 +4,10 @@
         {{title}}
         <div v-if="!fake">
             Name: <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"> | Age: <input type="number" v-model="vage" name="age" autocomplete="off"> <br>
-            Photo: <input type="file" class="custom-file-input" ref="inpfile" accept="image/*" @change="onFileSelected"> <img src="" ref="img" alt="img" width="100" height="100" > <button @click="handleRemove">remove</button> <br>
+            Photo: <input type="file" class="custom-file-input" ref="inpfile" accept="image/*" @change="onFileChange"> <img ref="img" alt="img" width="100" height="100"> <button @click="remove">remove</button> <br>
             <button class="post" @click="handlePost">POST</button> | <button class="put" @click="handlePut">PUT</button> | <button class="delete" @click="handleDelete">DELETE</button>
         </div>
-        <div v-else>Fake API (No POST/PUT/DELETE)</div>
+        <div v-else>jsonplaceholder.typicode.com</div>
     </h2>
     <div v-if="bucket.a && bucket.a.length===0">
         <h2>No Data !! </h2>
@@ -20,7 +20,7 @@
                 <tr v-for="user in bucket.a" :class="{selected:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
                     <td v-show="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
                     <td> -</td><td>{{user[_id]}}</td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="!fake" :ref="'trAge'+user[_id]">{{user.age}}</td>
-                    <td v-if="!fake"><img width="50" height="50" :src="'./uploads/'+user.photo" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
+                    <td v-if="!fake"><img v-show="user.photo" width="50" height="50" :src="'./uploads/'+user.photo" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
                 </tr>
             </table>
             </form>
@@ -28,8 +28,7 @@
         <div v-else>Loading ....</div>
 
         <h2>
-            [{{timeA + 'ms Asynchronously'|| 'Calculating ...'}}] | 
-            [{{timeS + 'ms Synchronously'|| 'Calculating ...'}}]
+            [{{bucket.timeF + 'ms'|| 'Calculating ...'}}] | 
         </h2>
     </div>
 </template>
@@ -43,10 +42,10 @@ export default{
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  
     data(){return{
-                bucket:{a:'', s:''},
-                timeA:'', timeS:'',
+                bucket:{timeF:'',time0:0, a:'', s:''},
+                timeS:0,
                 selectedId:'',
-                vname:'', vage:'', photoRandomName:'',
+                vname:'', vage:'', multerRandomPhotoName:'', photoObject:null,
                 showpopup:false, popuptext:'', 
                 }
             },
@@ -55,64 +54,72 @@ export default{
         async handlePost(){
             if(await this.dataCheck()){this.showpopup = true;}
             else{
-                this.$emit('clickPost', {"name":this.vname, "age":this.vage, "photo":this.photoRandomName}, this.bucket);
-                this.handleRemove();
+                this.$emit('clickPost', {"name":this.vname, "age":this.vage, "photo":this.multerRandomPhotoName}, this.bucket);
+                this.remove();
                 }
         },
         async handlePut(){
             if(!this.selectedId){this.popuptext='select'; this.showpopup = true;}
             else if(await this.dataCheck()){this.showpopup = true;}
             else{
-                    this.$emit('clickPut', this.selectedId, {"name":this.vname, "age":this.vage, "photo":this.photoRandomName});
-                    
-                    this.$refs['trName'+this.selectedId][0].innerHTML = this.vname;
-                    this.$refs['trAge'+this.selectedId][0].innerHTML = this.vage;
-                    this.$refs['trImg'+this.selectedId][0].src = this.$refs.img.scr;
-                    
-                    
-                    
-                    // this.$refs['photo'+this.selectedId][0].innerHTML = this.photoRandomName;
+                this.$emit('clickPut', this.selectedId, {"name":this.vname, "age":this.vage, "photo":this.multerRandomPhotoName});
+                
+                for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to change
+                    if(this.bucket.a[i][this._id]==this.selectedId)
+                    {
+                        this.bucket.a[i].name = this.vname;
+                        this.bucket.a[i].age = this.vage;
+                        this.bucket.a[i].photo = this.multerRandomPhotoName;
+                    }
                 }
+
+                this.remove();
+            }
         },
         handleDelete(){
             if(!this.selectedId){this.popuptext='select';this.showpopup = true;}
             else{this.$emit('clickDelete', this.selectedId);}
-        }, 
+        },
 
         selectUser(id){
             this.selectedId = id;
-            const src = this.$refs['trImg'+this.selectedId][0].src;
+            let src = this.$refs['trImg'+id][0].src;
 
-            this.vname = this.$refs['trName'+this.selectedId][0].innerHTML;
-            this.vage = this.$refs['trAge'+this.selectedId][0].innerHTML;
+            this.vname = this.$refs['trName'+id][0].innerHTML;
+            this.vage = this.$refs['trAge'+id][0].innerHTML;
+
+            this.photoObject=null;
+            this.$refs.inpfile.value= null;
             this.$refs.img.src = src;
-            this.photoRandomName = src.split("/")[src.split("/").length-1];
-       },
-        handleRemove(){
+            this.multerRandomPhotoName = src?src.split("/")[src.split("/").length-1]:''; 
+        },
+        remove(){
             this.vname='';
             this.vage='';
-            this.photoRandomName='';
+            this.multerRandomPhotoName='';
+            this.$refs.img.src='';
+            this.photoObject=null;
+            this.$refs.inpfile.value= null;
         },
-        onFileSelected(e){
+        onFileChange(e){
             if (e.target.files[0]) { //e.target.files is the same as this.$refs.inpfile.files
-                this.$refs.img.src = URL.createObjectURL(e.target.files[0]);
-                this.photoRandomName = URL.createObjectURL(e.target.files[0]);
+                this.photoObject = e.target.files[0];
+                this.$refs.img.src = URL.createObjectURL(this.photoObject);
             }
         },
 
         async dataCheck(){
             this.popuptext='';
-            
             if(this.vage!==""){this.vage=Number.parseInt(this.vage)}
 
             if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !';}
             else if (!Number.isInteger(this.vage) || this.vage<0){this.popuptext='Insert Positive Integer Age !'; }
-            else if (this.$refs.inpfile.files[0]) {
+            else if (this.photoObject) {
                 const fd = new FormData();
-                fd.append('photo', this.$refs.inpfile.files[0] , this.$refs.inpfile.files[0].name)
+                fd.append('photo', this.photoObject , this.photoObject.name)
                 try {
                     const response = await axios.post('http://localhost:5999/upload',fd);
-                    this.photoRandomName = response.data.newPhotoName;
+                    this.multerRandomPhotoName = response.data.newPhotoName;
                 } catch (error) {
                     this.popuptext='Photo not valid !'; 
                 }
@@ -124,16 +131,12 @@ export default{
 
     mounted(){
         //pass empty objects by reference to get promise result(FAST) 
-        let time0 = performance.now();
-            this.$emit('mountGet', this.bucket);
-        this.timeA = (performance.now() - time0).toFixed(2); 
+        this.$emit('mountGet', this.bucket);
         
         //get function's return value(SLOW)
-        time0 = performance.now();
-            (async ()=>{
-                this.$emit('mountGetw', this.bucket);
-            })(); //async self invoking
-        this.timeS = (performance.now() - time0).toFixed(2);
+        (async ()=>{
+            this.$emit('mountGetw', this.bucket);
+        })(); //async self invoking
     },
 }
 </script>
