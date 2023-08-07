@@ -3,7 +3,8 @@
     <h2 class="title">
         {{title}}
         <div v-if="!fake">
-            Name: <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"> | Age: <input type="number" v-model="vage" name="age" autocomplete="off"> <br>
+            Name: <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"> | 
+            Age: <input type="number" v-model="vage" name="age" autocomplete="off"  onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" > <br>
             Photo: <input type="file" class="custom-file-input" ref="inpfile" accept="image/*" @change="onFileChange"> <img ref="img" alt="img" width="100" height="100"> <button @click="remove">remove</button> <br>
             <button class="post" @click="handlePost">POST</button> | <button class="put" @click="handlePut">PUT</button> | <button class="delete" @click="handleDelete">DELETE</button>
         </div>
@@ -110,7 +111,6 @@ export default{
 
         async dataCheck(){
             this.popuptext='';
-            if(this.vage!==""){this.vage=Number.parseInt(this.vage)}
 
             if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !';}
             else if (!Number.isInteger(this.vage) || this.vage<0){this.popuptext='Insert Positive Integer Age !'; }

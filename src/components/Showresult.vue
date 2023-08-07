@@ -1,6 +1,6 @@
 <template>
     Limit: <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"> <br>
-    Name: <input type="text" v-model="vname" name="name" autocomplete="off"> | Age: <input type="number" v-model="vage" name="age" autocomplete="off">
+    Name: <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"> | Age: <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
 
     <h1>{{title}}</h1>
     <p class="comment"><slot name="comment">default</slot></p>
@@ -11,7 +11,7 @@
                                         @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
                                         @clickPut="(id, body)=>{this.fput(item.uri, id, body);}"
                                         @clickDelete="(id)=>{this.fdelete(item.uri + id); item.deleteRefresh *= -1;}"
-    ></DB>
+     ></DB>
 </template>
 
 <script>
