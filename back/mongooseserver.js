@@ -14,7 +14,7 @@ app.use(express.urlencoded({extended:true})); //req.body gets <form> values
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/medDB', {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
-    app.listen(port, () => {console.log('Mongoose Port: ' + port);});
+    app.listen(port, () => {console.log("'Mongoose' Port: " + port);});
   })
   .catch((err) => {
     console.log('Mongoose initial connextion error: ', err);

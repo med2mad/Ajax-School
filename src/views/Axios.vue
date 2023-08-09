@@ -26,7 +26,7 @@ export default {
       },
       
       fpost(uri, body, bucket, limit){
-         axios.post(uri,body)
+        axios.post(uri,body)
         .then((response) => {
                 const id = response.data.id?response.data.id:response.data; //json-Server responds with an object
                 bucket.a.unshift({"id":id, "_id":id, "name":body.name, "age":body.age, "photo":body.photo});

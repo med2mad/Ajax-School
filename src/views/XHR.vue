@@ -8,11 +8,13 @@
 export default {
   methods: {
       fget(uri, bucket){ 
+        let time0 = performance.now();
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
         if (xhr.status===200){
-            bucket.a = JSON.parse(xhr.responseText);
-            }
+                            bucket.timeF = (performance.now() - time0).toFixed(2);  
+                            bucket.a = JSON.parse(xhr.responseText);
+                            }
         }
         xhr.open("GET", uri, true);
         xhr.send();
@@ -37,7 +39,7 @@ export default {
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
         if (xhr.status===200){
-            console.log("Inserted"); 
+            console.log("Inserted"); //#TODO (auto insert row)
             }
         }
         xhr.open("POST", uri, true);

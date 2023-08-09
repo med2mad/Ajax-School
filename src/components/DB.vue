@@ -111,7 +111,8 @@ export default{
 
         async dataCheck(){
             this.popuptext='';
-
+            if (!Number.isInteger(this.vage)){this.vage = Number.parseInt(this.vage);}
+            
             if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !';}
             else if (!Number.isInteger(this.vage) || this.vage<0){this.popuptext='Insert Positive Integer Age !'; }
             else if (this.photoObject) {
