@@ -24,4 +24,4 @@ pnpm-debug.log*
 
 uploads
 cmds
-jsonserver.json
+cmds/jsonserver.json
