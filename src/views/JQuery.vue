@@ -26,8 +26,9 @@ export default {
       },
 
       fpost(uri, body, bucket, limit){
-        $.ajax({type:'post', url: uri+'?callback=?', contentType: "application/json", data: JSON.stringify(body)})
-        .done(function(response){ //#TODO get last inserted id (JSONServer+jQuery problem)
+        $.ajax({type:'post', url:uri+'?callback=?', contentType:"application/json", data:JSON.stringify(body)})
+        .done(function(response){ //#TODO get last inserted id using GET (JSONServer+jQuery problem)
+                  console.log(response);
                   const id = response.id?response.id:response; //json-Server responds with an object
                   bucket.a.unshift({"id":id, "_id":id, "name":body.name, "age":body.age, "photo":body.photo});
                   if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
@@ -35,12 +36,12 @@ export default {
       },
 
       fput(uri, body){
-        $.ajax({type:'put', url: uri+'?callback=?', contentType: "application/json", data: JSON.stringify(body)})
+        $.ajax({type:'put', url:uri+'?callback=?', contentType:"application/json", data:JSON.stringify(body)})
         .done( function(response){console.log(response);} );
       },
       
       fdelete(uri){
-        $.ajax({type:'delete', url: uri+'?callback=?'})
+        $.ajax({type:'delete', url:uri+'?callback=?'})
         .done( function(response){console.log(response);} );
       }
   }

@@ -77,7 +77,7 @@ export default{
                 this.remove();
             }
         },
-        handleDelete(){
+        handleDelete(){ //#TODO table needs to get the last inserted row after delete, instead of refreshing
             if(!this.selectedId){this.popuptext='select';this.showpopup = true;}
             else{this.$emit('clickDelete', this.selectedId);}
         },
