@@ -35,8 +35,8 @@ export default {
         .catch((err) => {console.error(err.message)})
       },
 
-      fput(uri, id, body){
-        axios.put(uri + id, body)
+      fput(uri, body){
+        axios.put(uri, body)
           .then((response) => {console.log(response);})
           .catch((err) => {console.error(err);});
       },

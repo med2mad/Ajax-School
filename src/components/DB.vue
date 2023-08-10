@@ -84,15 +84,16 @@ export default{
 
         selectUser(id){
             this.selectedId = id;
-            let src = this.$refs['trImg'+id][0].src;
-
             this.vname = this.$refs['trName'+id][0].innerHTML;
-            this.vage = this.$refs['trAge'+id][0].innerHTML;
-
             this.photoObject=null;
-            this.$refs.inpfile.value= null;
-            this.$refs.img.src = src;
-            this.multerRandomPhotoName = src?src.split("/")[src.split("/").length-1]:''; 
+            
+            if (!this.fake) { //fake has no PPD
+                this.$refs.inpfile.value= null;
+                this.vage = this.$refs['trAge'+id][0].innerHTML;
+                let src = this.$refs['trImg'+id][0].src;
+                this.$refs.img.src = src;
+                this.multerRandomPhotoName = src?src.split("/")[src.split("/").length-1]:''; 
+            }
         },
         remove(){
             this.vname='';

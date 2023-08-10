@@ -35,8 +35,7 @@ export default {
           })
         .then((response)=> {return response.json()})
         .then((data)=>{
-          console.log(data);
-                const id = data.id?data.id:data; //json-Server responds with an object (data.data)
+                const id = data.id?data.id:data; //json-Server responds with an object
                 bucket.a.unshift({"id":id, "_id":id, "name":body.name, "age":body.age, "photo":body.photo});
                 if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
               })

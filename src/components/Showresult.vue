@@ -9,8 +9,8 @@
                                     @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
                                     @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
                                         @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
-                                        @clickPut="(id, body)=>{this.fput(item.uri, id, body);}"
-                                        @clickDelete="(id)=>{this.fdelete(item.uri + id); item.deleteRefresh *= -1;}"
+                                        @clickPut="(id, body)=>{this.fput(item.uri+id, body);}"
+                                        @clickDelete="(id)=>{this.fdelete(item.uri+id); item.deleteRefresh *= -1;}"
      ></DB>
 </template>
 

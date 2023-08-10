@@ -35,13 +35,15 @@ export default {
         return false;// return r;
       },
 
-      fpost(uri, body){
+      fpost(uri, body, bucket, limit){
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
-        if (xhr.status===200){
-            console.log("Inserted"); //#TODO (auto insert row)
-            }
-        }
+          //if (xhr.status===201){//not sure what status code is for POST request
+              const id = JSON.parse(xhr.responseText).id?JSON.parse(xhr.responseText).id:JSON.parse(xhr.responseText); //json-Server responds with an object
+              bucket.a.unshift({"id":id, "_id":id, "name":body.name, "age":body.age, "photo":body.photo});
+              if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
+            //}
+          }
         xhr.open("POST", uri, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify(body));
@@ -50,9 +52,9 @@ export default {
       fput(uri, body){
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
-        if (xhr.status===200){
-            console.log("Updated"); 
-            }
+          //if (xhr.status===201){//not sure what status code is for PUT request
+            console.log(xhr.response);
+            //} 
         }
         xhr.open("PUT", uri, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
@@ -62,9 +64,9 @@ export default {
       fdelete(uri){
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
-        if (xhr.status===200){
+        //if (xhr.status===201){ //not sure what status code is for Delete request
             console.log("Deleted"); 
-            }
+            //}
         }
         xhr.open("DELETE", uri, true);
         xhr.send();

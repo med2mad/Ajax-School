@@ -6,6 +6,7 @@
 
 <script>
 import $ from "jquery";
+
 export default {
   methods: {
       fget(uri, bucket){ 
@@ -26,10 +27,10 @@ export default {
 
       fpost(uri, body, bucket, limit){
         $.ajax({type:'post', url: uri+'?callback=?', contentType: "application/json", data: JSON.stringify(body)})
-        .done( function(response){
-                const id = response.data.id?response.data.id:response.data; //json-Server responds with an object (data.data)
-                bucket.a.unshift({"id":id, "_id":id, "name":body.name, "age":body.age, "photo":body.photo});
-                if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
+        .done(function(response){ //#TODO get last inserted id (JSONServer+jQuery problem)
+                  const id = response.id?response.id:response; //json-Server responds with an object
+                  bucket.a.unshift({"id":id, "_id":id, "name":body.name, "age":body.age, "photo":body.photo});
+                  if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
           } );
       },
 

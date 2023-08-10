@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended:true})); //req.body gets <form> values
 // Connect to Mysql2
 const mysql = require('mysql2');
 var con = mysql.createConnection({
-  host: "localhost",
+  host: "localhost", 
   user: "root",
   password: "",
   database: "sqlDB"
@@ -54,4 +54,4 @@ app.delete('/:id', (req, res) => {
 //404
 app.use((req, res) => {
   res.status(404).json("404 , no routes !")
-});
+}); 
