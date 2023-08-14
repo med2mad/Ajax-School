@@ -1,5 +1,7 @@
 <template>
-    <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext"/>
+<transition>
+    <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
+</transition>
     <h2 class="title">
         {{title}}
         <div v-if="!fake">
@@ -20,7 +22,7 @@
                 <tr><th v-if="!fake"></th><th>#</th><th>User Id</th><th>Name</th><th v-if="!fake">Age</th><th v-if="!fake">Photo</th></tr>
                 <tr v-for="user in bucket.a" :class="{selected:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
                     <td v-show="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
-                    <td> -</td><td>{{user[_id]}}</td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="!fake" :ref="'trAge'+user[_id]">{{user.age}}</td>
+                    <td></td><td>{{user[_id]}}</td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="!fake" :ref="'trAge'+user[_id]">{{user.age}}</td>
                     <td v-if="!fake"><img v-show="user.photo" width="50" height="50" :src="'./uploads/'+user.photo" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
                 </tr>
             </table>
@@ -44,7 +46,6 @@ export default{
  
     data(){return{
                 bucket:{timeF:'',time0:0, a:'', s:''},
-                timeS:0,
                 selectedId:'',
                 vname:'', vage:'', multerRandomPhotoName:'', photoObject:null,
                 showpopup:false, popuptext:'', 
@@ -60,7 +61,7 @@ export default{
                 }
         },
         async handlePut(){
-            if(!this.selectedId){this.popuptext='select'; this.showpopup = true;}
+            if(!this.selectedId){this.popuptext='Select User !'; this.showpopup = true;}
             else if(await this.dataCheck()){this.showpopup = true;}
             else{
                 this.$emit('clickPut', this.selectedId, {"name":this.vname, "age":this.vage, "photo":this.multerRandomPhotoName});
@@ -78,7 +79,7 @@ export default{
             }
         },
         handleDelete(){ //#TODO table needs to get the last inserted row after delete, instead of refreshing
-            if(!this.selectedId){this.popuptext='select';this.showpopup = true;}
+            if(!this.selectedId){this.popuptext='Select User !';this.showpopup = true;}
             else{this.$emit('clickDelete', this.selectedId);}
         },
 
@@ -186,5 +187,54 @@ export default{
     }
     table tr td:nth-child(2)::before {
     content: counter(rowNumber);
+    }
+
+    /*------------------- animate popup--(using Transition)-------------*/
+    /* .p-enter-from{
+        transform: translateY(-25px);
+        opacity: 0;
+    }
+    .p-enter-active{
+        transition-property: transform , opacity;
+        transition-duration: 250ms;
+        transition-timing-function: ease-in;
+    }
+    .p-enter-to{
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .p-leave-from{
+        transform: translateY(0);
+        opacity: 1;
+    }
+    .p-leave-active{
+        transition-property: transform , opacity;
+        transition-duration: 250ms;
+        transition-timing-function: ease-in;
+    }
+    .p-leave-to{
+        transform: translateY(-25px);
+        opacity: 0;
+    } */
+    /*-------------- animate popup--(using @keyframes)-------------*/
+    @keyframes anim{
+        0%{transform: translateY(-50px); opacity: 0;}
+        50%{transform: translateY(10px); opacity: 1;}
+        100%{transform: translateY(0); opacity: 1;}
+    }
+    .v-enter-active{
+        animation: anim;
+        animation-duration: 250ms;
+        animation-timing-function: ease-out;
+    }
+
+    @keyframes anim2{
+        100%{transform: translateY(-25px); opacity: 0;}
+    }
+    .v-leave-active{
+        animation: anim2;
+        animation-duration: 150ms;
+        animation-timing-function: ease-out;
     }
 </style>

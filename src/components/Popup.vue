@@ -19,10 +19,10 @@ export default{
 
 .popup{
     position:fixed;
-    top:0;
-    left:0;
-    bottom:0;
-    right:0;
+    top:-20px;
+    left:-20px;
+    bottom:-20px;
+    right:-20px;
     background-color: rgba(128, 128, 128, 0.637);
     
     display: flex;
@@ -34,6 +34,14 @@ export default{
     border:red solid;
     padding: 32px;
     color: #2c3e50;
-        border-radius: 10px;
+    border-radius: 10px;
 }
+
+/* @keyframes anim {
+    0%{transform: translateY(-25px); opacity: 0;}
+    100%{transform: translateY(0); opacity: 1;}
+}
+.innerpopup{
+    animation: anim 250ms;
+} */
 </style>
