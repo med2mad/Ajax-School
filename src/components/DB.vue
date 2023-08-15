@@ -1,38 +1,60 @@
 <template>
-<transition>
-    <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
-</transition>
-    <h2 class="title">
-        {{title}}
-        <div v-if="!fake">
-            Name: <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"> | 
-            Age: <input type="number" v-model="vage" name="age" autocomplete="off"  onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" > <br>
-            Photo: <input type="file" class="custom-file-input" ref="inpfile" accept="image/*" @change="onFileChange"> <img ref="img" alt="img" width="100" height="100"> <button @click="remove">remove</button> <br>
-            <button class="post" @click="handlePost">POST</button> | <button class="put" @click="handlePut">PUT</button> | <button class="delete" @click="handleDelete">DELETE</button>
-        </div>
-        <div v-else>jsonplaceholder.typicode.com</div>
-    </h2>
-    <div v-if="bucket.a && bucket.a.length===0">
-        <h2>No Data !! </h2>
-    </div>
-    <div v-else>
-        <div v-if="bucket.a" >
-            <form id="form">
-            <table border="solid">
-                <tr><th v-if="!fake"></th><th>#</th><th>User Id</th><th>Name</th><th v-if="!fake">Age</th><th v-if="!fake">Photo</th></tr>
-                <tr v-for="user in bucket.a" :class="{selected:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
-                    <td v-show="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
-                    <td></td><td>{{user[_id]}}</td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="!fake" :ref="'trAge'+user[_id]">{{user.age}}</td>
-                    <td v-if="!fake"><img v-show="user.photo" width="50" height="50" :src="'./uploads/'+user.photo" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
-                </tr>
-            </table>
-            </form>
-        </div>
-        <div v-else>Loading ....</div>
+    <transition>
+        <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
+    </transition>
+    <h2 class="title">{{title}}</h2>
+    <div class="db">
 
-        <h2>
-            [{{bucket.timeF + 'ms'|| 'Calculating ...'}}] | 
-        </h2>
+        <div class="db1">
+            <div v-if="bucket.a && bucket.a.length===0">
+                <h2>No Data !! </h2>
+            </div>
+            <div v-else>
+                <div v-if="bucket.a" >
+                    <form id="form">
+                    <table border="solid" cellspacing="1">
+                        <tr><th v-if="!fake"></th><th>#</th><th>User Id</th><th>Name</th><th v-if="!fake">Age</th><th v-if="!fake">Photo</th></tr>
+                        <tr v-for="user in bucket.a" :class="{selected:user[_id]==selectedId}" class="datarow" :key="user[_id]" @click="selectUser(user[_id]);">
+                            <td v-show="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
+                            <td></td><td>{{user[_id]}}</td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="!fake" :ref="'trAge'+user[_id]">{{user.age}}</td>
+                            <td v-if="!fake"><img v-show="user.photo" width="50" height="50" :src="'./uploads/'+user.photo" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
+                        </tr>
+                    </table>
+                    </form>
+                </div>
+                <div v-else>Loading ....</div>
+
+                <h2>
+                    [{{bucket.timeF + 'ms'|| 'Calculating ...'}}] | 
+                </h2>
+            </div>
+        </div>
+
+        <div class="db2">
+        <div class="div">
+            <div class="flex" v-if="!fake">
+                <table cellpadding="10">
+                    <tr> <td>Name:</td> <td><input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"></td> </tr>
+                    <tr class="age"> <td>Age:</td> <td><input type="number" v-model="vage" name="age" autocomplete="off"  onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" ></td></tr>
+                    <tr>
+                    <td colspan="2">
+                        Photo: <br>
+                        <input type="file" class="custom-file-input" ref="inpfile" accept="image/*" @change="onFileChange"><br>
+                        <img ref="img" alt="img" class="img"><br>
+                        <button @click="remove">remove</button>
+                    </td>
+                    </tr>
+                </table>
+                <div class="btn">
+                    <div class="post" @click="handlePost"></div>
+                    <div class="put" @click="handlePut"></div>
+                    <div class="delete" @click="handleDelete"></div>
+                </div>
+            </div>
+            <div v-else>jsonplaceholder.typicode.com</div>
+        </div>
+        </div>
+
     </div>
 </template>
 
@@ -146,46 +168,119 @@ export default{
 
 <style>
     .title{
-    background-color:#42b983;
-    border: solid black;
-    margin-top: 40px;
+        background-color:#42b983;
+        border: solid black;
+        margin-top: 40px;
     }
 
-    h2 button{
-    font-weight: bold;
-    color: #2c3e50;
-    padding: 4px 7px;
-    border-radius: 10px;
-    font-size: 75%;
-        margin: 1px;
+    .age{
+        border-top: solid 1px;
+        border-bottom: solid 1px;
     }
 
-    h2 .post{
-    background-color: rgb(107, 221, 72);
+    .db{
+        display: flex;
+        gap: 10px;
     }
-    h2 .put{
-    background-color: rgb(87, 72, 221);  
+
+    .db1 .datarow{
+        height: 50px;
+        text-align: center;
     }
-    h2 .delete{
-    background-color:rgb(221, 72, 72);
+
+    .db1 .datarow img{
+        border-radius: 20px;
+        border: solid 1px;
+        background-color: black;
+    }
+    .db2{
+        background-image: linear-gradient(45deg , blue 25% , rgb(168, 168, 236) 50%, blue  ) ;
+        border-radius: 10px;
+        width:500px;
+        height:500px;
+        display: flex;
+    }
+    .db2 .div{
+        margin: auto;
+    }
+    .db2 table{
+        border-collapse: collapse;
+    }
+    .db2 .div .flex{
+        display: flex;
+        width:120%;
+        background-color: black;
+        border : solid 1px;
+        border-radius: 20px;
+    }
+
+    .db2 table td .img{
+        min-width: 250px;max-width: 250px;
+        min-height: 250px;max-height: 250px;
+        background-color:rgb(112, 112, 112);
+        border: solid 1px;
+        border-radius: 10px;
+    }
+    
+    .btn{
+        background-color: rgb(112, 112, 112);
+        border-radius:20px;
+        border-left:solid 1px;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 0.5fr;
+        width:100%;
+    }
+    .btn div{
+        border-radius: 10px;
+        margin-left:-100%;
+        transition-property: transform;
+        transition-duration: 250ms;
+        border: solid 2px;
+    }
+
+    .btn div:hover{
+        transform: translateX(25%);
+    }
+
+    .btn .post{
+        background-color: rgb(107, 221, 72);
+        background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\uploads\post.jpg");
+        background-repeat: no-repeat;
+        background-position: 90% center;
+    }
+    .btn .put{
+        background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\uploads\put.jpg");
+        background-repeat: no-repeat;
+        background-position: 90% center;
+        background-color: rgb(87, 72, 221);  
+    }
+    .btn .delete{
+        background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\uploads\delete.jpg");
+        background-repeat: no-repeat;
+        background-position: 90% center;
+        background-color:rgb(245, 57, 58);
     }
 
     .selected{
     background-color:yellow;
     }
-
+    td{
+        border-radius:10px;
+    }
     img{
     object-fit:contain ;
+    vertical-align: bottom;
     }
 
     /* # automatically numbered rows */
-    table {
+    .db1 table {
     counter-reset: rowNumber -1;
     }
-    table tr {
+    .db1 table tr {
     counter-increment: rowNumber;
     }
-    table tr td:nth-child(2)::before {
+    .db1 table tr td:nth-child(2)::before {
     content: counter(rowNumber);
     }
 

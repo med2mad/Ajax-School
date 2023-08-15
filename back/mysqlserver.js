@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
   q += " ORDER BY id DESC LIMIT "+ req.query._limit;
   con.query(q, (err, rows)=>{
     res.json(rows)
-  })
+  }) 
 });
 //Insert
 app.post('/', (req, res) => {
