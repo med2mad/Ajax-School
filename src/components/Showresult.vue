@@ -24,10 +24,10 @@ export default{
     data(){return{
                 vname:'', vage:'', vlimit:10,
                 DBs:[
-                    {title:'Mysql', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1},
-                    {title:'Mongoose', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1},
-                    {title:'PostgreSQL', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1},
-                    {title:'JSON Server', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1},
+                    {title:'mysql.png', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1},
+                    {title:'mongodb.png', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1},
+                    {title:'postgresql.png', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1},
+                    {title:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1},
                     {title:'Fake API', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true, deleteRefresh:1},
                     //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id', fake:false, deleteRefresh:1}//in the public folder
                     ]

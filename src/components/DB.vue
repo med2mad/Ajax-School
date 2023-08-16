@@ -2,7 +2,8 @@
     <transition>
         <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
     </transition>
-    <h2 class="title">{{title}}</h2>
+    <div class="title"> <img v-if="!fake" :src="title" class="titleFake" alt="title"> <div v-else class="titleFake"> <p>Fake API<br/><span>jsonplaceholder.typicode.com</span></p> </div> </div>
+    
     <div class="db">
 
         <div class="db1">
@@ -12,12 +13,12 @@
             <div v-else>
                 <div v-if="bucket.a" >
                     <form id="form">
-                    <table border="solid" cellspacing="1">
-                        <tr><th v-if="!fake"></th><th>#</th><th>User Id</th><th>Name</th><th v-if="!fake">Age</th><th v-if="!fake">Photo</th></tr>
-                        <tr v-for="user in bucket.a" :class="{selected:user[_id]==selectedId}" class="datarow" :key="user[_id]" @click="selectUser(user[_id]);">
-                            <td v-show="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
+                    <table cellspacing="4">
+                        <tr><th v-if="!fake" class="noback"></th><th  class="radio">#</th><th>User Id</th><th>Name</th><th v-if="!fake">Age</th><th v-if="!fake">Photo</th></tr>
+                        <tr v-for="user in bucket.a" :class="{selected:user[_id]==selectedId, notselected:user[_id]==selectedId}" class="datarow" :key="user[_id]" @click="selectUser(user[_id]);">
+                            <td v-show="!fake" class="radio"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
                             <td></td><td>{{user[_id]}}</td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="!fake" :ref="'trAge'+user[_id]">{{user.age}}</td>
-                            <td v-if="!fake"><img v-show="user.photo" width="50" height="50" :src="'./uploads/'+user.photo" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
+                            <td v-if="!fake"><img v-show="user.photo" :src="'./uploads/'+user.photo" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
                         </tr>
                     </table>
                     </form>
@@ -25,14 +26,13 @@
                 <div v-else>Loading ....</div>
 
                 <h2>
-                    [{{bucket.timeF + 'ms'|| 'Calculating ...'}}] | 
+                    [{{bucket.timeF + 'ms'|| 'Calculating ...'}}]
                 </h2>
             </div>
         </div>
 
         <div class="db2">
-        <div class="div">
-            <div class="flex" v-if="!fake">
+            <div class="flex div" v-if="!fake">
                 <table cellpadding="10">
                     <tr> <td>Name:</td> <td><input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"></td> </tr>
                     <tr class="age"> <td>Age:</td> <td><input type="number" v-model="vage" name="age" autocomplete="off"  onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" ></td></tr>
@@ -51,8 +51,7 @@
                     <div class="delete" @click="handleDelete"></div>
                 </div>
             </div>
-            <div v-else>jsonplaceholder.typicode.com</div>
-        </div>
+            <div v-else class="flex div"> jsonplaceholder.typicode.com</div>
         </div>
 
     </div>
@@ -171,8 +170,18 @@ export default{
         background-color:#42b983;
         border: solid black;
         margin-top: 40px;
+        height: 15vh;
+        display:flex;
+        padding: 5px;
     }
-
+    .title img{
+        height: 100%;
+    }
+    .title .titleFake{
+        margin: auto;
+        font-size: 7vh;
+        text-align: center;
+    }
     .age{
         border-top: solid 1px;
         border-bottom: solid 1px;
@@ -183,18 +192,57 @@ export default{
         gap: 10px;
     }
 
-    .db1 .datarow{
-        height: 50px;
-        text-align: center;
+    .db1 table{
+        border:solid 4px;
+    }
+    .db1 table td{
+        border: solid 2px;
+        /* background-color: white; */
+        font-weight: bold;
+    }
+    .db1 table th{
+        background-color: rgb(0, 17, 110);    
+        color: white;
+        border: none;
+        font-size: 1rem;
+        padding: 10px 10px;
+    }
+.radio{
+        background-color: rgb(0, 17, 110);    
+        color:white;
+         padding: 10px 10px;
+}
+    .selected{
+        border-color:yellow;
+        background-color: yellow;
+    }
+    .db1 table .selected{
+        border-color:yellow;
+    }
+        .notselected{
+        border-color:white;
     }
 
-    .db1 .datarow img{
-        border-radius: 20px;
-        border: solid 1px;
-        background-color: black;
+    .db1 .datarow{
+        height: 50px;
+        background-color: yellow;
+        border-color:yellow;
     }
+    .db1 .datarow td{
+        padding: 0px;
+    }
+    .db1 .datarow td img{
+        border-radius: 20px;
+        border: solid 2px;
+        background-color: black;
+        width: 50px;
+        height: 50px;
+    }
+.db1 table .noback{
+   background-color: inherit;
+}
     .db2{
-        background-image: linear-gradient(45deg , blue 25% , rgb(168, 168, 236) 50%, blue  ) ;
+        background-image: linear-gradient(45deg , gray 25% , rgb(168, 168, 236) 50%, gray  ) ;
         border-radius: 10px;
         width:500px;
         height:500px;
@@ -206,9 +254,9 @@ export default{
     .db2 table{
         border-collapse: collapse;
     }
-    .db2 .div .flex{
+    .db2 .flex{
         display: flex;
-        width:120%;
+        width:75%;
         background-color: black;
         border : solid 1px;
         border-radius: 20px;
@@ -229,7 +277,7 @@ export default{
         overflow: hidden;
         display: grid;
         grid-template-columns: 0.5fr;
-        width:100%;
+        width:20%;
     }
     .btn div{
         border-radius: 10px;
@@ -238,81 +286,45 @@ export default{
         transition-duration: 250ms;
         border: solid 2px;
     }
-
     .btn div:hover{
         transform: translateX(25%);
     }
 
     .btn .post{
         background-color: rgb(107, 221, 72);
-        background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\uploads\post.jpg");
+        background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\post.jpg");
         background-repeat: no-repeat;
         background-position: 90% center;
     }
     .btn .put{
-        background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\uploads\put.jpg");
+        background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\put.jpg");
         background-repeat: no-repeat;
         background-position: 90% center;
         background-color: rgb(87, 72, 221);  
     }
     .btn .delete{
-        background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\uploads\delete.jpg");
+        background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\delete.jpg");
         background-repeat: no-repeat;
         background-position: 90% center;
         background-color:rgb(245, 57, 58);
     }
 
-    .selected{
-    background-color:yellow;
-    }
     td{
         border-radius:10px;
     }
     img{
-    object-fit:contain ;
-    vertical-align: bottom;
+        object-fit: contain;
+        vertical-align: bottom;
+    }
+    p{
+        margin: 0;
+    }
+    p span {
+        font-size: 75%;
+        font-weight: bold;
     }
 
-    /* # automatically numbered rows */
-    .db1 table {
-    counter-reset: rowNumber -1;
-    }
-    .db1 table tr {
-    counter-increment: rowNumber;
-    }
-    .db1 table tr td:nth-child(2)::before {
-    content: counter(rowNumber);
-    }
-
-    /*------------------- animate popup--(using Transition)-------------*/
-    /* .p-enter-from{
-        transform: translateY(-25px);
-        opacity: 0;
-    }
-    .p-enter-active{
-        transition-property: transform , opacity;
-        transition-duration: 250ms;
-        transition-timing-function: ease-in;
-    }
-    .p-enter-to{
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    .p-leave-from{
-        transform: translateY(0);
-        opacity: 1;
-    }
-    .p-leave-active{
-        transition-property: transform , opacity;
-        transition-duration: 250ms;
-        transition-timing-function: ease-in;
-    }
-    .p-leave-to{
-        transform: translateY(-25px);
-        opacity: 0;
-    } */
-    /*-------------- animate popup--(using @keyframes)-------------*/
+    /*-------------- animate popup--(using @keyframes) -------------*/
     @keyframes anim{
         0%{transform: translateY(-50px); opacity: 0;}
         50%{transform: translateY(10px); opacity: 1;}
@@ -321,7 +333,6 @@ export default{
     .v-enter-active{
         animation: anim;
         animation-duration: 250ms;
-        animation-timing-function: ease-out;
     }
 
     @keyframes anim2{
@@ -330,6 +341,16 @@ export default{
     .v-leave-active{
         animation: anim2;
         animation-duration: 150ms;
-        animation-timing-function: ease-out;
+    }
+    
+    /* ------------- automatically numbered rows -------------*/
+    .db1 table {
+    counter-reset: rowNumber -1;
+    }
+    .db1 table tr {
+    counter-increment: rowNumber;
+    }
+    .db1 table tr td:nth-child(2)::before {
+    content: counter(rowNumber);
     }
 </style>

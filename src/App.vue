@@ -1,6 +1,6 @@
 <template>
 
-  <div><router-link to="/">Ajax Paradise</router-link></div>
+  <div class="logo"><router-link to="/"> <img src="logo.png" alt="logo"> </router-link></div>
 
   <nav>
     <router-link to="/xhr">XHR</router-link> |
@@ -20,7 +20,7 @@ body{background-color: #eaf2fb;}
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
+  text-align: center;
   color: #2c3e50;
 }
 
@@ -44,4 +44,10 @@ color: white;
 cursor: default;
 }
 
+.logo{
+  height:15vh;
+}
+.logo img{
+    height: 100%;
+}
 </style>
