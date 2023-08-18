@@ -2,7 +2,7 @@
     <transition>
         <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
     </transition>
-    <div class="title"> <img v-if="!fake" :src="title" class="titleFake" alt="title"> <div v-else class="titleFake"> <p>Fake API<br/><span>jsonplaceholder.typicode.com</span></p> </div> </div>
+    <div class="title"> <img v-if="!fake" :src="title" alt="title"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
     
     <div class="db">
 
@@ -12,16 +12,16 @@
             </div>
             <div v-else>
                 <div v-if="bucket.a" >
-                    <form id="form">
-                    <table cellspacing="4">
-                        <tr><th v-if="!fake" class="noback"></th><th  class="radio">#</th><th>User Id</th><th>Name</th><th v-if="!fake">Age</th><th v-if="!fake">Photo</th></tr>
-                        <tr v-for="user in bucket.a" :class="{selected:user[_id]==selectedId, notselected:user[_id]==selectedId}" class="datarow" :key="user[_id]" @click="selectUser(user[_id]);">
-                            <td v-show="!fake" class="radio"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
-                            <td></td><td>{{user[_id]}}</td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="!fake" :ref="'trAge'+user[_id]">{{user.age}}</td>
-                            <td v-if="!fake"><img v-show="user.photo" :src="'./uploads/'+user.photo" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
-                        </tr>
-                    </table>
-                    </form>
+                <form>
+                <table cellspacing="4">
+                    <tr><th v-if="!fake"></th><th>#</th><th>User Id</th><th>Name</th><th v-if="!fake">Age</th><th v-if="!fake">Photo</th></tr>
+                    <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
+                        <td v-show="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
+                        <td></td><td>{{user[_id]}}</td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="!fake" :ref="'trAge'+user[_id]">{{user.age}}</td>
+                        <td v-if="!fake"><img v-show="user.photo" :src="'./uploads/'+user.photo" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
+                    </tr>
+                </table>
+                </form>
                 </div>
                 <div v-else>Loading ....</div>
 
@@ -32,26 +32,28 @@
         </div>
 
         <div class="db2">
-            <div class="flex div" v-if="!fake">
-                <table cellpadding="10">
-                    <tr> <td>Name:</td> <td><input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"></td> </tr>
-                    <tr class="age"> <td>Age:</td> <td><input type="number" v-model="vage" name="age" autocomplete="off"  onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" ></td></tr>
-                    <tr>
+        <div class="form" v-if="!fake">
+            <div class="data">
+            <table cellpadding="15">
+                <tr> <td>Name:</td> <td><input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"></td> </tr>
+                <tr class="agetr"> <td>Age:</td> <td><input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" ></td></tr>
+                <tr>
                     <td colspan="2">
                         Photo: <br>
-                        <input type="file" class="custom-file-input" ref="inpfile" accept="image/*" @change="onFileChange"><br>
+                        <input type="file" ref="inpfile" accept="image/*" @change="onFileChange"><br>
                         <img ref="img" alt="img" class="img"><br>
                         <button @click="remove">remove</button>
                     </td>
-                    </tr>
-                </table>
-                <div class="btn">
-                    <div class="post" @click="handlePost"></div>
-                    <div class="put" @click="handlePut"></div>
-                    <div class="delete" @click="handleDelete"></div>
-                </div>
+                </tr>
+            </table>
             </div>
-            <div v-else class="flex div"> jsonplaceholder.typicode.com</div>
+            <div class="btn">
+                <div class="post" @click="handlePost"></div>
+                <div class="put" @click="handlePut"></div>
+                <div class="delete" @click="handleDelete"></div>
+            </div>
+        </div>
+        <div v-else class="form">jsonplaceholder.typicode.com</div>
         </div>
 
     </div>
@@ -167,117 +169,94 @@ export default{
 
 <style>
     .title{
-        background-color:#42b983;
+        background-image: linear-gradient(45deg , white 5% , #42b983 50%, white  ) ;
         border: solid black;
-        margin-top: 40px;
         height: 15vh;
-        display:flex;
         padding: 5px;
     }
     .title img{
         height: 100%;
-    }
-    .title .titleFake{
         margin: auto;
-        font-size: 7vh;
-        text-align: center;
-    }
-    .age{
-        border-top: solid 1px;
-        border-bottom: solid 1px;
     }
 
     .db{
-        display: flex;
-        gap: 10px;
+        background-image: linear-gradient(90deg , #eaf2fb , #8a8a8a , #eaf2fb ) ;
+        /* justify-content:center; */
+        /* flex-wrap: wrap; */
+        /* overflow: auto; */ 
+        display: flex; /* align .db1|.db2 */
     }
-
+    
     .db1 table{
-        border:solid 4px;
+        border: solid 4px;
+        background-color: white;
     }
     .db1 table td{
         border: solid 2px;
-        /* background-color: white; */
         font-weight: bold;
+        border-radius:10px;
+        padding: 0px 5px;
     }
-    .db1 table th{
-        background-color: rgb(0, 17, 110);    
-        color: white;
-        border: none;
-        font-size: 1rem;
-        padding: 10px 10px;
-    }
-.radio{
-        background-color: rgb(0, 17, 110);    
-        color:white;
-         padding: 10px 10px;
-}
-    .selected{
-        border-color:yellow;
-        background-color: yellow;
-    }
-    .db1 table .selected{
-        border-color:yellow;
-    }
-        .notselected{
-        border-color:white;
-    }
-
-    .db1 .datarow{
-        height: 50px;
-        background-color: yellow;
-        border-color:yellow;
-    }
-    .db1 .datarow td{
-        padding: 0px;
-    }
-    .db1 .datarow td img{
+    .db1 table td img{
         border-radius: 20px;
         border: solid 2px;
         background-color: black;
         width: 50px;
         height: 50px;
     }
-.db1 table .noback{
-   background-color: inherit;
-}
-    .db2{
-        background-image: linear-gradient(45deg , gray 25% , rgb(168, 168, 236) 50%, gray  ) ;
-        border-radius: 10px;
-        width:500px;
-        height:500px;
-        display: flex;
+    .db1 table th{
+        background-color: rgb(0, 17, 110);    
+        color: white;
+        border-radius: 7px;
+        padding: 10px;
     }
-    .db2 .div{
-        margin: auto;
+    
+    .db1 table .datarow{
+        background-color: yellow;
+        height: 50px;
     }
-    .db2 table{
-        border-collapse: collapse;
-    }
-    .db2 .flex{
-        display: flex;
-        width:75%;
-        background-color: black;
-        border : solid 1px;
-        border-radius: 20px;
+    .db1 table .selectedrow {
+        background-color: orange;
     }
 
-    .db2 table td .img{
-        min-width: 250px;max-width: 250px;
+    .db2 .form{
+        background-color: black;
+        border: solid 1px;
+        border-radius: 20px;
+        min-width:350px;
+        display: flex; /* align .data|.btn */
+    }
+
+    .data{
+        margin-left:10px;
+        margin-right:10px;
+    }
+    .data table{
+        border-collapse: collapse;
+    }
+    .data table .agetr{
+        border-top: solid 1px;
+        border-bottom: solid 1px;
+    }
+    .data table img{
+        min-width: 250px; max-width: 250px;
         min-height: 250px;max-height: 250px;
-        background-color:rgb(112, 112, 112);
+        background-color:gray;
         border: solid 1px;
         border-radius: 10px;
     }
-    
+    .data table input{
+        background-color:gray;
+    }
+
     .btn{
-        background-color: rgb(112, 112, 112);
+        background-color: gray;
         border-radius:20px;
         border-left:solid 1px;
         overflow: hidden;
-        display: grid;
-        grid-template-columns: 0.5fr;
         width:20%;
+        display: grid; /* align buttons */
+        grid-template-columns: 0.5fr;
     }
     .btn div{
         border-radius: 10px;
@@ -297,31 +276,21 @@ export default{
         background-position: 90% center;
     }
     .btn .put{
+        background-color: rgb(87, 72, 221);  
         background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\put.jpg");
         background-repeat: no-repeat;
         background-position: 90% center;
-        background-color: rgb(87, 72, 221);  
     }
     .btn .delete{
+        background-color:rgb(245, 57, 58);
         background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\delete.jpg");
         background-repeat: no-repeat;
         background-position: 90% center;
-        background-color:rgb(245, 57, 58);
     }
 
-    td{
-        border-radius:10px;
-    }
     img{
         object-fit: contain;
         vertical-align: bottom;
-    }
-    p{
-        margin: 0;
-    }
-    p span {
-        font-size: 75%;
-        font-weight: bold;
     }
 
     /*-------------- animate popup--(using @keyframes) -------------*/
