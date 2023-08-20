@@ -1,7 +1,8 @@
 <template>
-    <transition>
+    <transition name="popup">
         <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
     </transition>
+
     <div class="title"> <img v-if="!fake" :src="title" alt="title"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
     
     <div class="db">
@@ -15,11 +16,13 @@
                 <form>
                 <table cellspacing="4">
                     <tr><th v-if="!fake"></th><th>#</th><th>User Id</th><th>Name</th><th v-if="!fake">Age</th><th v-if="!fake">Photo</th></tr>
+                    <transition-group name="table">
                     <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
                         <td v-show="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
                         <td></td><td>{{user[_id]}}</td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="!fake" :ref="'trAge'+user[_id]">{{user.age}}</td>
                         <td v-if="!fake"><img v-show="user.photo" :src="'./uploads/'+user.photo" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
                     </tr>
+                    </transition-group>
                 </table>
                 </form>
                 </div>
@@ -39,10 +42,11 @@
                 <tr class="agetr"> <td>Age:</td> <td><input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" ></td></tr>
                 <tr>
                     <td colspan="2">
-                        Photo: <br>
-                        <input type="file" ref="inpfile" accept="image/*" @change="onFileChange"><br>
-                        <img ref="img" alt="img" class="img"><br>
+                        <span onclick="document.getElementById('inpfile').click();">Photo :</span>
+                        <img ref="img" onclick="document.getElementById('inpfile').click();" alt="img" class="img" src="user.jpg"><br>
+                        <button onclick="document.getElementById('inpfile').click();">Browse...</button> | 
                         <button @click="remove">remove</button>
+                        <input type="file" id="inpfile" ref="inpfile" accept="image/*" @change="onFileChange" style="display:none;"><br>
                     </td>
                 </tr>
             </table>
@@ -92,9 +96,11 @@ export default{
                 for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to change
                     if(this.bucket.a[i][this._id]==this.selectedId)
                     {
-                        this.bucket.a[i].name = this.vname;
-                        this.bucket.a[i].age = this.vage;
-                        this.bucket.a[i].photo = this.multerRandomPhotoName;
+let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
+  this.bucket.a[i] = b;
+                        // this.bucket.a[i].name = this.vname;
+                        // this.bucket.a[i].age = this.vage;
+                        // this.bucket.a[i].photo = this.multerRandomPhotoName;
                     }
                 }
 
@@ -136,7 +142,7 @@ export default{
 
         async dataCheck(){
             this.popuptext='';
-            if (!Number.isInteger(this.vage)){this.vage = Number.parseInt(this.vage);}
+            if (this.vname!=="" && !Number.isInteger(this.vage)){this.vage = Number.parseInt(this.vage);}
             
             if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !';}
             else if (!Number.isInteger(this.vage) || this.vage<0){this.popuptext='Insert Positive Integer Age !'; }
@@ -170,7 +176,7 @@ export default{
 <style>
     .title{
         background-image: linear-gradient(45deg , white 5% , #42b983 50%, white  ) ;
-        border: solid black;
+        border: solid 4px;
         height: 15vh;
         padding: 5px;
     }
@@ -181,14 +187,29 @@ export default{
 
     .db{
         background-image: linear-gradient(90deg , #eaf2fb , #8a8a8a , #eaf2fb ) ;
-        /* justify-content:center; */
-        /* flex-wrap: wrap; */
-        /* overflow: auto; */ 
+        justify-content:center;
         display: flex; /* align .db1|.db2 */
+
+        flex-wrap: wrap-reverse;
+        gap: 20px;
+
+
     }
     
+    .db1{
+        overflow: auto;
+        max-height: 500px;
+    }
+
+    .db1 h2{
+        background-color: white;
+        border: solid 4px;
+        border-radius: 10px;
+    }
+
     .db1 table{
         border: solid 4px;
+        border-radius: 10px;
         background-color: white;
     }
     .db1 table td{
@@ -209,6 +230,7 @@ export default{
         color: white;
         border-radius: 7px;
         padding: 10px;
+        white-space: nowrap;
     }
     
     .db1 table .datarow{
@@ -219,75 +241,80 @@ export default{
         background-color: orange;
     }
 
+.db2{
+    margin: auto 0px;
+}
+
     .db2 .form{
         background-color: black;
-        border: solid 1px;
+        /* box-shadow: 0px 0px 15px 10px ; */
+        border:  solid 4px white  ;
         border-radius: 20px;
         min-width:350px;
+        
         display: flex; /* align .data|.btn */
     }
 
-    .data{
+    .form .data{
         margin-left:10px;
         margin-right:10px;
     }
-    .data table{
+    .form .data table{
         border-collapse: collapse;
+        color:white;
     }
-    .data table .agetr{
+    .form .data table .agetr{
         border-top: solid 1px;
         border-bottom: solid 1px;
     }
-    .data table img{
+    .form .data table img{
         min-width: 250px; max-width: 250px;
         min-height: 250px;max-height: 250px;
         background-color:gray;
         border: solid 1px;
         border-radius: 10px;
     }
-    .data table input{
-        background-color:gray;
+    .form .data table input{
+        background-color:white;
     }
 
-    .btn{
-        background-color: gray;
+    .form .btn{
+        /* background-color: gray; */
+        background-image: linear-gradient(45deg, gray 20%, rgb(226, 226, 226)) ;
         border-radius:20px;
+        border:solid 4px black;
         border-left:solid 1px;
         overflow: hidden;
         width:20%;
         display: grid; /* align buttons */
         grid-template-columns: 0.5fr;
     }
-    .btn div{
+    .form .btn div{
         border-radius: 10px;
-        margin-left:-100%;
         transition-property: transform;
         transition-duration: 250ms;
         border: solid 2px;
+        background-repeat: no-repeat;
+        background-position: 90% center;
+        margin-left:-100%;
     }
-    .btn div:hover{
+    .form .btn div:hover{
         transform: translateX(25%);
     }
 
     .btn .post{
         background-color: rgb(107, 221, 72);
         background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\post.jpg");
-        background-repeat: no-repeat;
-        background-position: 90% center;
     }
     .btn .put{
         background-color: rgb(87, 72, 221);  
         background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\put.jpg");
-        background-repeat: no-repeat;
-        background-position: 90% center;
     }
     .btn .delete{
         background-color:rgb(245, 57, 58);
         background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\delete.jpg");
-        background-repeat: no-repeat;
-        background-position: 90% center;
     }
-
+    
     img{
         object-fit: contain;
         vertical-align: bottom;
@@ -299,19 +326,26 @@ export default{
         50%{transform: translateY(10px); opacity: 1;}
         100%{transform: translateY(0); opacity: 1;}
     }
-    .v-enter-active{
-        animation: anim;
-        animation-duration: 250ms;
+    .popup-enter-active{
+        animation: anim 250ms;
     }
-
+    .popup-leave-active{
+        animation: anim 250ms reverse;
+    }
+    /*-------------- animate tables--(using @keyframes) -------------*/
     @keyframes anim2{
-        100%{transform: translateY(-25px); opacity: 0;}
+        0%{transform: translateX(-100px); opacity: 0;}
     }
-    .v-leave-active{
-        animation: anim2;
-        animation-duration: 150ms;
+    .table-enter-active{
+        animation: anim2 300ms ease-in;
     }
-    
+    .table-move{ /* the rows that automatically move down when row added */
+        transition: transform 300ms ease-in;
+    }
+    .table-leave-active{ /* not having the leaving row else table will have limit+1 and pushes down title of next DB */
+        position:absolute;
+        opacity: 0;
+    }
     /* ------------- automatically numbered rows -------------*/
     .db1 table {
     counter-reset: rowNumber -1;
