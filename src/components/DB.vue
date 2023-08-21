@@ -3,10 +3,10 @@
         <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
     </transition>
 
-    <div class="title"> <img v-if="!fake" :src="title" alt="title"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
-    
     <div class="db">
 
+        <div class="title"> <img v-if="!fake" :src="title" alt="title"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
+    
         <div class="db1">
             <div v-if="bucket.a && bucket.a.length===0">
                 <h2>No Data !! </h2>
@@ -27,25 +27,24 @@
                 </form>
                 </div>
                 <div v-else>Loading ....</div>
-
-                <h2>
-                    [{{bucket.timeF + 'ms'|| 'Calculating ...'}}]
-                </h2>
             </div>
+            <h2>
+                [{{bucket.timeF + 'ms'||'Calculating ...'}}]
+            </h2>
         </div>
 
         <div class="db2">
         <div class="form" v-if="!fake">
             <div class="data">
-            <table cellpadding="15">
-                <tr> <td>Name:</td> <td><input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"></td> </tr>
-                <tr class="agetr"> <td>Age:</td> <td><input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" ></td></tr>
+            <table cellspacing="0">
+                <tr><td id="name">Name:<input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"></td></tr>
+                <tr class="agetr"><td id="age2">Age:<input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
                 <tr>
-                    <td colspan="2">
-                        <span onclick="document.getElementById('inpfile').click();">Photo :</span>
-                        <img ref="img" onclick="document.getElementById('inpfile').click();" alt="img" class="img" src="user.jpg"><br>
-                        <button onclick="document.getElementById('inpfile').click();">Browse...</button> | 
-                        <button @click="remove">remove</button>
+                    <td>
+                        <span onclick="document.getElementById('inpfile').click();">Photo :</span><br>
+                        <img ref="img" alt="img" onclick="document.getElementById('inpfile').click();" class="img" src="user.jpg"><br>
+                        <input type="button" onclick="document.getElementById('inpfile').click();" value="Browse Photo...">
+                        <input type="button" value="Remove Photo" @click="remove">
                         <input type="file" id="inpfile" ref="inpfile" accept="image/*" @change="onFileChange" style="display:none;"><br>
                     </td>
                 </tr>
@@ -179,11 +178,14 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
         border: solid 4px;
         height: 15vh;
         padding: 5px;
+
     }
     .title img{
         height: 100%;
         margin: auto;
     }
+
+
 
     .db{
         background-image: linear-gradient(90deg , #eaf2fb , #8a8a8a , #eaf2fb ) ;
@@ -198,13 +200,16 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
     
     .db1{
         overflow: auto;
-        max-height: 500px;
+        max-height: 650px;
     }
 
     .db1 h2{
         background-color: white;
         border: solid 4px;
         border-radius: 10px;
+        margin:0px;
+        padding: 0px;
+        font-size: 1.2rem;
     }
 
     .db1 table{
@@ -241,32 +246,39 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
         background-color: orange;
     }
 
-.db2{
-    margin: auto 0px;
-}
+    .db2{
+        margin: auto 0px; /* vertical center */
+    }
 
     .db2 .form{
-        background-color: black;
-        /* box-shadow: 0px 0px 15px 10px ; */
-        border:  solid 4px white  ;
+        background-color: white;
+        box-shadow: 0px 0px 20px black;
         border-radius: 20px;
         min-width:350px;
-        
+        border:  solid 4px white  ;
         display: flex; /* align .data|.btn */
     }
 
     .form .data{
-        margin-left:10px;
-        margin-right:10px;
+        font-size: 1.5rem;
+        /* margin-left:10px;
+        margin-right:10px; */
+        color:black;
     }
-    .form .data table{
-        border-collapse: collapse;
-        color:white;
+    .form .data table td{
+        /* border-collapse: collapse; */
+        padding:15px;
+        border-radius: 20px 0px 0px 20px;
+
     }
-    .form .data table .agetr{
-        border-top: solid 1px;
-        border-bottom: solid 1px;
+    .form .data table tr td{
+        background-color: rgb(209, 209, 209);
     }
+.agetr td{
+        border-bottom: solid 4px white;
+        border-top: solid 4px white;
+}
+
     .form .data table img{
         min-width: 250px; max-width: 250px;
         min-height: 250px;max-height: 250px;
@@ -276,14 +288,17 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
     }
     .form .data table input{
         background-color:white;
+        height: 130%;
+        width:100%;
+        border-radius: 10px;
+        font-size: 1.2rem;
     }
 
     .form .btn{
-        /* background-color: gray; */
-        background-image: linear-gradient(45deg, gray 20%, rgb(226, 226, 226)) ;
-        border-radius:20px;
-        border:solid 4px black;
-        border-left:solid 1px;
+        background-color: rgb(73, 73, 73);
+        /* background-image: linear-gradient(90deg, rgb(70, 70, 70) 30%,rgb(192, 192, 192)) ; */
+        border-radius: 0px 20px 20px 0px;
+        border-left:solid 1px black;
         overflow: hidden;
         width:20%;
         display: grid; /* align buttons */
