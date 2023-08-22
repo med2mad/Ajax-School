@@ -176,16 +176,13 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
     .title{
         background-image: linear-gradient(45deg , white 5% , #42b983 50%, white  ) ;
         border: solid 4px;
-        height: 15vh;
-        padding: 5px;
-
+        padding: 3px;
+        display: grid; 
+        align-items: center; 
     }
     .title img{
-        height: 100%;
-        margin: auto;
+        width: 100px;
     }
-
-
 
     .db{
         background-image: linear-gradient(90deg , #eaf2fb , #8a8a8a , #eaf2fb ) ;
@@ -221,20 +218,27 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
         border: solid 2px;
         font-weight: bold;
         border-radius:10px;
-        padding: 0px 5px;
+        padding: 0px 1px;
     }
     .db1 table td img{
-        border-radius: 20px;
-        border: solid 2px;
+        border-radius: 10px;
+  
         background-color: black;
         width: 50px;
         height: 50px;
+        margin: 0px;
+       padding: 0px;
+       /* position:relative;
+        top:0;
+        left:0;
+z-index: 1; */
+
     }
     .db1 table th{
         background-color: rgb(0, 17, 110);    
         color: white;
         border-radius: 7px;
-        padding: 10px;
+        padding: 5px;
         white-space: nowrap;
     }
     

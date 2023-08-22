@@ -1,7 +1,5 @@
 <template>
-  <Showresult title="Axios" :fget="fget" :fgetw="fgetw" :fpost="fpost" :fput="fput" :fdelete="fdelete">
-      <template v-slot:comment>//Requires installing "axios" module in the client side (using CDN link or installing throught CLI [npm])</template>
-  </Showresult>
+  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fput="fput" :fdelete="fdelete" />
 </template>
 
 <script>

@@ -1,22 +1,33 @@
 <template>
-    Limit: <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"> <br>
-    Name: <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"> | Age: <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
-
-    <h1>{{title}}</h1>
-    <p class="comment"><slot name="comment">default</slot></p>
+    <div class="wrapper">
+        <div class="header">
+            <router-link to="/"><img src="logo.png" alt="logo"></router-link>
+            <nav>
+                <router-link to="/xhr">XHR</router-link> | 
+                <router-link to="/jquery">JQuery</router-link> |
+                <router-link to="/fetch">Fetch</router-link> |
+                <router-link to="/axios">Axios</router-link>
+            </nav>
+            <div class="fliter">
+                Limit: <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"><br>
+                Name: <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
+                Age: <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
+            </div>
+        </div>
+    </div>
 
     <DB v-for="item in DBs" :key="item.title+item.deleteRefresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake" :uri="item.uri"
-                                    @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
-                                    @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
-                                        @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
-                                        @clickPut="(id, body)=>{this.fput(item.uri+id, body);}"
-                                        @clickDelete="(id)=>{this.fdelete(item.uri+id); item.deleteRefresh *= -1;}"
+                        @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
+                        @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
+                            @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
+                            @clickPut="(id, body)=>{this.fput(item.uri+id, body);}"
+                            @clickDelete="(id)=>{this.fdelete(item.uri+id); item.deleteRefresh *= -1;}"
      ></DB>
 </template>
 
 <script>
 export default{
-    props: {title:{type:String}, fpost:{type:Function},
+    props: {fpost:{type:Function},
             fput:{type:Function}, fdelete:{type:Function},
             fget:{type:Function}, fgetw:{type:Function}
             },
@@ -24,10 +35,10 @@ export default{
     data(){return{
                 vname:'', vage:'', vlimit:10,
                 DBs:[
-                    {title:'mysql.png', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1},
-                    {title:'mongodb.png', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1},
-                    {title:'postgresql.png', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1},
-                    {title:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1},
+                    {title:'mysql2.png', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1},
+                    {title:'mongodb2.png', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1},
+                    {title:'postgresql2.png', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1},
+                    {title:'jsonserver2.png', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1},
                     {title:'Fake API', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true, deleteRefresh:1},
                     //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id', fake:false, deleteRefresh:1}//in the public folder
                     ]
@@ -54,14 +65,52 @@ export default{
 </script>
 
 <style>
-    h1{
-    margin: 10px;
+    .wrapper{
+        height: 75px;
+        width: 100%;
+        position: fixed;
+        background-color: #eaf2fb;
+        z-index: 10;
+        top:0px;
+        left:0;
+    }
+    .header{
+        width: 100%;
+        display:flex;
+        justify-content: space-between;
+        position: fixed;
+        top:0px;
+        left:0;
+         z-index: 11;
+    }
+    .header img{
+        height: 75px;
+
+    }
+    .header nav{
+        margin: auto 0;
+    }
+    .header .fliter{
+        text-align: right;
+        margin: auto 0;
     }
 
-    .comment{
-    color: rgba(0, 255, 0, 0.500);
-    text-decoration: underline;
-    font-style: italic;
-    margin: 0;
+
+    nav {
+        padding: 30px;
+    }
+    nav a {
+        background-color: rgb(218, 218, 218);
+        font-weight: bold;
+        color: #2c3e50;
+        text-decoration: none;
+        cursor: hand;
+        padding: 15px;
+        border-radius: 10px;
+    }
+    nav a.router-link-exact-active {
+        background-color: #42b983;
+        color: white;
+        cursor: default;
     }
 </style>

@@ -1,7 +1,5 @@
 <template>
-  <Showresult title="JQuery" :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput">
-      <template v-slot:comment>//Require installing "Cors" on the server side using CLI [npm i cors]</template>
-  </Showresult>
+  <Showresult title="JQuery" :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" />
 </template>
 
 <script>

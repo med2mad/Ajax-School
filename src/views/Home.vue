@@ -1,8 +1,9 @@
 <template>
 
-  <h1 ref="h1">Home</h1>
+  <div class="logo"> <router-link to="/"><img src="logo.png" alt="logo"></router-link> </div>
 
-  <h2>Welcome</h2>
+  <h1>Welcome</h1>
+
   <p>Welcome to "AJAX Heavens".</p>
 
   <p>This web site's goal is to show off my technical skills by using the excuse 
@@ -16,47 +17,15 @@
   </p>
 
   <p>
-    <button @click="move">btn</button>
-    So...amm......enjoy ^ ^ . <br>
+    So....amm......enjoy ^ ^ . <br>
+        <router-link to="/xhr">XHR</router-link> |
+        <router-link to="/jquery">JQuery</router-link> |
+        <router-link to="/fetch">Fetch</router-link> |
+        <router-link to="/axios">Axios</router-link>
   </p>
 
-  <h2>What is What ?</h2>
+  <h1>What is What ?</h1>
   <p>AJAX, is a web developpement technique, to manipulate data asynchronously, using javascript (and XML but no one does any more, we use JSON instead).</p>
   <p>The app also calculates requests time (sync and async), which shows the diffrence in timing between the different dataBases.</p>
   <p>(note : the time calculation actually calculates the bloking/freezing time , not the actual request time, , which shows the superiority of the Asynchronous way)</p>
-
- <ul ref="ul">
-      <li v-for="user in users" :ref="user" :key="user" @click="remove(user)">{{user}}</li>
-</ul>
-
 </template>
-
-
-<script>
-export default {
-  data(){
-    return{
-      users:['user1','user2','user3','user4']
-    }
-  },
-
-  methods:{
-    remove(user){
-
-      // this.users=this.users.filter(p=>p!==user);
-this.$refs["ul"].style.fontSize ='5rem';
- 
-    },
-    move(g){
-      // this.$refs.li.style.fontSize ='5rem';
-      // this.users.unshift('qlwkej');
-    }
-  }
-}
-</script>
-
-<style >
-li {
-  transition:all 500ms;
-}
-</style>
