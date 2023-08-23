@@ -1,28 +1,32 @@
 <template>
-    <div class="wrapper">
-        <div class="header">
-            <router-link to="/"><img src="logo.png" alt="logo"></router-link>
+    <header>
+            <div class=".logo"><router-link to="/"><img src="logo.png" alt="logo"></router-link></div>
             <nav>
                 <router-link to="/xhr">XHR</router-link> | 
                 <router-link to="/jquery">JQuery</router-link> |
                 <router-link to="/fetch">Fetch</router-link> |
                 <router-link to="/axios">Axios</router-link>
             </nav>
-            <div class="fliter">
-                Limit: <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"><br>
-                Name: <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
-                Age: <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
-            </div>
+    </header>
+    <main>
+        <div class="fliter">
+            Limit: <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"><br>
+            Name: <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
+            Age: <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
         </div>
-    </div>
-
-    <DB v-for="item in DBs" :key="item.title+item.deleteRefresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake" :uri="item.uri"
-                        @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
-                        @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
-                            @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
-                            @clickPut="(id, body)=>{this.fput(item.uri+id, body);}"
-                            @clickDelete="(id)=>{this.fdelete(item.uri+id); item.deleteRefresh *= -1;}"
-     ></DB>
+        <div>
+            <DB v-for="item in DBs" :key="item.title+item.deleteRefresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake" :uri="item.uri"
+                                @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
+                                @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
+                                    @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
+                                    @clickPut="(id, body)=>{this.fput(item.uri+id, body);}"
+                                    @clickDelete="(id)=>{this.fdelete(item.uri+id); item.deleteRefresh *= -1;}"
+            ></DB>
+        </div>
+    </main>
+    <footer>
+        footer
+    </footer>
 </template>
 
 <script>
@@ -35,11 +39,11 @@ export default{
     data(){return{
                 vname:'', vage:'', vlimit:10,
                 DBs:[
-                    {title:'mysql2.png', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1},
-                    {title:'mongodb2.png', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1},
-                    {title:'postgresql2.png', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1},
-                    {title:'jsonserver2.png', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1},
+                    {title:'mysql.png', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1},
+                    {title:'postgresql.png', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1},
+                    {title:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1},
                     {title:'Fake API', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true, deleteRefresh:1},
+                    {title:'mongodb.png', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1},
                     //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id', fake:false, deleteRefresh:1}//in the public folder
                     ]
                 }
@@ -65,39 +69,46 @@ export default{
 </script>
 
 <style>
-    .wrapper{
-        height: 75px;
-        width: 100%;
-        position: fixed;
-        background-color: #eaf2fb;
-        z-index: 10;
-        top:0px;
-        left:0;
+    main{
+        padding: 100px 0px;
+        display: flex;
     }
-    .header{
-        width: 100%;
+
+    header{
         display:flex;
         justify-content: space-between;
+
+        width: 100%;
         position: fixed;
+ height: 100px;
         top:0px;
         left:0;
-         z-index: 11;
+        /* background-color: #eaf2fb; */
+        background-color: gray;
+        z-index: 100;
     }
-    .header img{
-        height: 75px;
 
+    header .logo{
+margin: auto 0;
     }
-    .header nav{
-        margin: auto 0;
-    }
-    .header .fliter{
-        text-align: right;
-        margin: auto 0;
+
+    header img{
+       height: 75px;
+        justify-items: center ;
+        vertical-align: middle;
+         margin: auto 0;
+
+         position:relative;
+        top:10%;
+        left:0;
+z-index: 1;
+
     }
 
 
     nav {
         padding: 30px;
+        margin: auto 0;
     }
     nav a {
         background-color: rgb(218, 218, 218);

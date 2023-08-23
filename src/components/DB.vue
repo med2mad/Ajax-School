@@ -2,46 +2,49 @@
     <transition name="popup">
         <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
     </transition>
+    
+        <div class="title"> <img v-if="!fake" :src="title" alt="title"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
 
     <div class="db">
 
-        <div class="title"> <img v-if="!fake" :src="title" alt="title"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
-    
         <div class="db1">
-            <div v-if="bucket.a && bucket.a.length===0">
-                <h2>No Data !! </h2>
-            </div>
-            <div v-else>
-                <div v-if="bucket.a" >
-                <form>
-                <table cellspacing="4">
-                    <tr><th v-if="!fake"></th><th>#</th><th>User Id</th><th>Name</th><th v-if="!fake">Age</th><th v-if="!fake">Photo</th></tr>
-                    <transition-group name="table">
-                    <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
-                        <td v-show="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
-                        <td></td><td>{{user[_id]}}</td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="!fake" :ref="'trAge'+user[_id]">{{user.age}}</td>
-                        <td v-if="!fake"><img v-show="user.photo" :src="'./uploads/'+user.photo" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
-                    </tr>
-                    </transition-group>
-                </table>
-                </form>
+            <div class="table1">
+                <div v-if="bucket.a && bucket.a.length===0">
+                    <h2>No Data !! </h2>
                 </div>
-                <div v-else>Loading ....</div>
+                <div v-else>
+                    <div v-if="bucket.a" >
+                    <form>
+                    <table cellspacing="2">
+                        <tr><th v-if="!fake"></th><th>#</th><th>User Id</th><th>Name</th><th v-if="!fake">Age</th><th v-if="!fake">Photo</th></tr>
+                        <transition-group name="table">
+                        <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
+                            <td v-show="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
+                            <td></td><td>{{user[_id]}}</td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="!fake" :ref="'trAge'+user[_id]">{{user.age}}</td>
+                            <td v-if="!fake"><img v-show="user.photo" :src="'./uploads/'+user.photo" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
+                        </tr>
+                        </transition-group>
+                    </table>
+                    </form>
+                    </div>
+                    <div v-else>Loading ....</div>
+
+                </div>
+
             </div>
-            <h2>
-                [{{bucket.timeF + 'ms'||'Calculating ...'}}]
-            </h2>
+                                                <h2>
+                    [{{bucket.timeF + ' ms'||'Calculating ...'}}]
+                </h2>
         </div>
 
         <div class="db2">
         <div class="form" v-if="!fake">
             <div class="data">
             <table cellspacing="0">
-                <tr><td id="name">Name:<input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"></td></tr>
+                <tr><td id="name">Name:<input type="text" v-model="vname" name="name" maxlength ="40" autocomplete="off" spellcheck="false"></td></tr>
                 <tr class="agetr"><td id="age2">Age:<input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
                 <tr>
                     <td>
-                        <span onclick="document.getElementById('inpfile').click();">Photo :</span><br>
                         <img ref="img" alt="img" onclick="document.getElementById('inpfile').click();" class="img" src="user.jpg"><br>
                         <input type="button" onclick="document.getElementById('inpfile').click();" value="Browse Photo...">
                         <input type="button" value="Remove Photo" @click="remove">
@@ -173,61 +176,47 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
 </script>
 
 <style>
+    
     .title{
         background-image: linear-gradient(45deg , white 5% , #42b983 50%, white  ) ;
         border: solid 4px;
         padding: 3px;
-        display: grid; 
-        align-items: center; 
+        text-align: center;
     }
     .title img{
-        width: 100px;
+        height:100px;
     }
 
     .db{
         background-image: linear-gradient(90deg , #eaf2fb , #8a8a8a , #eaf2fb ) ;
-        justify-content:center;
         display: flex; /* align .db1|.db2 */
-
+        justify-content:space-between;
+        padding: 50px 0px;
         flex-wrap: wrap-reverse;
-        gap: 20px;
-
-
-    }
-    
-    .db1{
-        overflow: auto;
-        max-height: 650px;
-    }
-
-    .db1 h2{
-        background-color: white;
-        border: solid 4px;
-        border-radius: 10px;
-        margin:0px;
-        padding: 0px;
-        font-size: 1.2rem;
+        /* gap: 20px; */
     }
 
     .db1 table{
         border: solid 4px;
-        border-radius: 10px;
+        border-bottom:none;
+        border-radius: 10px 10px 0px 0px;
         background-color: white;
     }
     .db1 table td{
         border: solid 2px;
         font-weight: bold;
         border-radius:10px;
-        padding: 0px 1px;
+        padding: 0px 5px;
+        background-image: linear-gradient(90deg ,rgb(255, 255, 236) 0%, rgb(255, 255, 120) 30%, rgb(255, 255, 120) 80%, rgb(255, 255, 225) 100% ) ;
     }
     .db1 table td img{
         border-radius: 10px;
-  
+        border:solid 1px;
         background-color: black;
-        width: 50px;
-        height: 50px;
-        margin: 0px;
-       padding: 0px;
+        width: 40px;
+        height: 40px;
+        /* margin: 0px;
+       padding: 0px; */
        /* position:relative;
         top:0;
         left:0;
@@ -243,45 +232,57 @@ z-index: 1; */
     }
     
     .db1 table .datarow{
-        background-color: yellow;
-        height: 50px;
+        /* background-color: rgb(255, 255, 71); */
+        
+        height: 40px;
     }
     .db1 table .selectedrow {
         background-color: orange;
     }
 
+    .db1 h2{
+        background-color: white;
+        border: solid 4px;
+        
+        border-radius: 0px 0px 10px 10px;
+        margin:0px;
+        padding: 0px;
+        font-size: 1.2rem;
+    }
+
     .db2{
         margin: auto 0px; /* vertical center */
+
     }
 
     .db2 .form{
         background-color: white;
-        box-shadow: 0px 0px 20px black;
+        /* box-shadow: 0px 0px 20px black; */
         border-radius: 20px;
-        min-width:350px;
+        /* min-width:350px; */
         border:  solid 4px white  ;
         display: flex; /* align .data|.btn */
     }
 
     .form .data{
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         /* margin-left:10px;
         margin-right:10px; */
         color:black;
     }
     .form .data table td{
         /* border-collapse: collapse; */
-        padding:15px;
+        padding:9px;
         border-radius: 20px 0px 0px 20px;
 
     }
     .form .data table tr td{
-        background-color: rgb(209, 209, 209);
+        background-color: rgb(114, 114, 114);
     }
-.agetr td{
+    .agetr td{
         border-bottom: solid 4px white;
         border-top: solid 4px white;
-}
+    }
 
     .form .data table img{
         min-width: 250px; max-width: 250px;
@@ -304,7 +305,7 @@ z-index: 1; */
         border-radius: 0px 20px 20px 0px;
         border-left:solid 1px black;
         overflow: hidden;
-        width:20%;
+        width:15%;
         display: grid; /* align buttons */
         grid-template-columns: 0.5fr;
     }
@@ -339,6 +340,11 @@ z-index: 1; */
         vertical-align: bottom;
     }
 
+.table1{
+    max-width: 500px;
+    max-height: 550px;
+    overflow: auto;
+}
     /*-------------- animate popup--(using @keyframes) -------------*/
     @keyframes anim{
         0%{transform: translateY(-50px); opacity: 0;}
