@@ -8,22 +8,24 @@
                 <router-link to="/axios">Axios</router-link>
             </nav>
     </header>
-    <main>
-        <div class="fliter">
-            Limit: <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"><br>
-            Name: <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
-            Age: <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
-        </div>
-        <div>
-            <DB v-for="item in DBs" :key="item.title+item.deleteRefresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake" :uri="item.uri"
+
+    <div class="fliter">
+        Limit: <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"><br>
+        Name: <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
+        Age: <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
+    </div>
+
+        <main>
+            <DB v-for="item in DBs" :key="item.title+item.deleteRefresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake" :uri="item.uri" :color="item.color"
                                 @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
                                 @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
                                     @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
                                     @clickPut="(id, body)=>{this.fput(item.uri+id, body);}"
                                     @clickDelete="(id)=>{this.fdelete(item.uri+id); item.deleteRefresh *= -1;}"
             ></DB>
-        </div>
-    </main>
+        </main>
+
+
     <footer>
         footer
     </footer>
@@ -39,12 +41,12 @@ export default{
     data(){return{
                 vname:'', vage:'', vlimit:10,
                 DBs:[
-                    {title:'mysql.png', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1},
-                    {title:'postgresql.png', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1},
-                    {title:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1},
-                    {title:'Fake API', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true, deleteRefresh:1},
-                    {title:'mongodb.png', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1},
-                    //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id', fake:false, deleteRefresh:1}//in the public folder
+                    {title:'mysql.png', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1, color:'blue'},
+                    {title:'postgresql.png', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1, color:'green'},
+                    {title:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1, color:'black'},
+                    {title:'Fake API', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true, deleteRefresh:1, color:'white'},
+                    {title:'mongodb.png', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1, color:'pink'},
+                    //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id', fake:false, deleteRefresh:1, color:'black'}//in the public folder
                     ]
                 }
             },
@@ -69,23 +71,53 @@ export default{
 </script>
 
 <style>
+
     main{
-        padding: 100px 0px;
-        display: flex;
+margin-top: 75px;
+        margin-left: 200px;
+        
+        overflow: hidden;
     }
 
+    .fliter{
+        position: fixed;
+      
+        font-weight: bold;
+        top:75px;
+        left:0;
+        text-align: center;
+
+height: 100%;
+        width:200px;
+        
+        border-right: solid 3px ;
+
+/* background-color: black; */
+        color:black;
+        background-image: linear-gradient(90deg,#787878 0%,
+                                                #b5b5b5 25%,
+                                                #e3e3e3 50%,
+                                                #b5b5b5 75%,
+                                                #787878 100%
+                                            ) ;
+
+    }
+.fliter input{
+    border-radius: 20px;
+}
     header{
         display:flex;
         justify-content: space-between;
 
         width: 100%;
         position: fixed;
- height: 100px;
+ height: 75px;
         top:0px;
         left:0;
         /* background-color: #eaf2fb; */
-        background-color: gray;
+        background-color: white;
         z-index: 100;
+        border-bottom: solid 4px;
     }
 
     header .logo{
@@ -93,7 +125,7 @@ margin: auto 0;
     }
 
     header img{
-       height: 75px;
+       height: 60px;
         justify-items: center ;
         vertical-align: middle;
          margin: auto 0;
@@ -111,17 +143,22 @@ z-index: 1;
         margin: auto 0;
     }
     nav a {
-        background-color: rgb(218, 218, 218);
-        font-weight: bold;
-        color: #2c3e50;
+        background-color: #f44336;
+
+        color: white;
         text-decoration: none;
         cursor: hand;
         padding: 15px;
         border-radius: 10px;
     }
+    nav a:hover {
+        background-color: #d32f2f;
+    }
     nav a.router-link-exact-active {
         background-color: #42b983;
         color: white;
         cursor: default;
+                font-weight: bold;
+                padding: 20px;
     }
 </style>
