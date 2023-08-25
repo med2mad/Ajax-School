@@ -29,3 +29,9 @@
   <p>The app also calculates requests time (sync and async), which shows the diffrence in timing between the different dataBases.</p>
   <p>(note : the time calculation actually calculates the bloking/freezing time , not the actual request time, , which shows the superiority of the Asynchronous way)</p>
 </template>
+
+<style scoped>
+.logo img{
+  width:500px;
+}
+</style>

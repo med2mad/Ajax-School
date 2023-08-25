@@ -30,7 +30,7 @@
                     <div v-else>Loading ....</div>
                 </div>
             </div>
-            <h2>
+            <h2 :class="{'green':bucket.timeF<100, 'orange':bucket.timeF>=100 && bucket.timeF<200, 'red':bucket.timeF>=200}">
                 [{{bucket.timeF + ' ms'||'Calculating ...'}}]
             </h2>
         </div>
@@ -177,9 +177,11 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
     
     .title{
         background-image: linear-gradient(45deg , white 5% , #42b983 50%, white  ) ;
-        border: solid 4px;
+        border: solid 4px #2c3e50;
         padding: 3px;
         text-align: center;
+        width:80%;
+        margin:auto;
     }
     .title img{
         height:75px;
@@ -192,7 +194,7 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
         display: flex; /* align .db1|.db2 */
         justify-content: center;
         padding: 10px 0px 25px 0px;
-        flex-wrap: wrap-reverse;
+        flex-wrap: wrap;
         gap: 10px;
         /* background-color: ; */
     }
@@ -205,12 +207,16 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
     .green{
         background-color: green;
     }
-    .pink{
-        background-color: pink;
-    }
     .red{
         background-color: red;
     }
+    .orange{
+        background-color: orange;
+    }
+    .pink{
+        background-color: pink;
+    }
+    
     .black{
         background-color: black;
     }
@@ -262,7 +268,7 @@ z-index: 1; */
     }
 
     .db1 h2{
-        background-color: white;
+
         border: solid 4px;
         
         border-radius: 0px 0px 10px 10px;

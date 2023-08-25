@@ -1,18 +1,39 @@
 <template>
     <header>
-            <div class=".logo"><router-link to="/"><img src="logo.png" alt="logo"></router-link></div>
+        <p>Test DataBase Speed using:</p>
+        
             <nav>
-                <router-link to="/xhr">XHR</router-link> | 
-                <router-link to="/jquery">JQuery</router-link> |
-                <router-link to="/fetch">Fetch</router-link> |
-                <router-link to="/axios">Axios</router-link>
+                <router-link to="/xhr">XHR</router-link>|
+                <router-link to="/jquery">JQuery</router-link>|
+                <router-link to="/fetch">Fetch</router-link>|
+                <router-link to="/axios">Axios</router-link>|
             </nav>
     </header>
 
-    <div class="fliter">
-        Limit: <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"><br>
-        Name: <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
-        Age: <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
+    <div class="filter">
+        <div class="logo"><router-link to="/"><img src="logo.png" alt="logo"></router-link></div>
+        
+<hr>
+
+        <h2 class="h2">Filter :</h2>
+        Name<input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
+        Age<input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
+    
+        <div class="limit">
+         </div>
+
+           <h2>Limit :</h2>
+            <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"><br>
+
+
+        <div class="limit">
+         </div>
+        <h2>Legend :</h2>
+        <table cellspacing="6">
+            <tr><td class="green"></td><td>Under <br> 100 ms</td></tr>
+            <tr><td class="orange"></td><td>Between 100 ms <br> and 200 ms</td></tr>
+            <tr><td class="red"></td><td>Above <br> 200 ms</td></tr>
+        </table>
     </div>
 
         <main>
@@ -73,23 +94,53 @@ export default{
 <style>
 
     main{
-margin-top: 75px;
+        margin-top: 75px;
         margin-left: 200px;
-        
+        min-width: 425px;
         overflow: hidden;
     }
 
-    .fliter{
+    header{
+    font-family: 'Roboto', sans-serif;
+        width: 100%;
         position: fixed;
-      
+        gap:0px;
+    height: 75px;
+        top: 0px;
+    left: 0px;
+        /* background-color: #eaf2fb; */
+        background-color: rgb(36, 36, 36);
+          /* background-image: linear-gradient(45deg ,#42b983 0%, white 50%  ) ; */
+       /* background-image: linear-gradient(45deg ,white 0%, black 50%  ) ; */
+
+        border-bottom: solid 4px;
+
+        z-index: 200;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+header p{
+    color: white;
+    font-size: clamp( 0.2rem , 4vw + 0.2rem , 3rem );
+    text-decoration: solid underline;
+    margin:0px;
+}
+    .filter{
+        position: fixed;
+      font-family: 'Roboto', sans-serif;
         font-weight: bold;
         top:75px;
         left:0;
-        text-align: center;
+
 
 height: 100%;
         width:200px;
-        
+padding-top: 5px;
+
         border-right: solid 3px ;
 
 /* background-color: black; */
@@ -102,63 +153,79 @@ height: 100%;
                                             ) ;
 
     }
-.fliter input{
+.filter input{
     border-radius: 20px;
 }
-    header{
-        display:flex;
-        justify-content: space-between;
+   
+.filter h2{
+    margin-bottom: 0px;
+    color:brown;
+    font-size: 1.5rem;
+}
 
-        width: 100%;
-        position: fixed;
- height: 75px;
-        top:0px;
-        left:0;
-        /* background-color: #eaf2fb; */
-        background-color: white;
-        z-index: 100;
-        border-bottom: solid 4px;
-    }
 
-    header .logo{
-margin: auto 0;
-    }
+.filter img{
+      height: 90px;
+    background-color: white;
+border-radius: 10px;
 
-    header img{
-       height: 60px;
-        justify-items: center ;
-        vertical-align: middle;
-         margin: auto 0;
+}
 
-         position:relative;
-        top:10%;
-        left:0;
-z-index: 1;
+.filter .logo{
+border-bottom: solid 2px black;
+padding: 10px 0px;
+background-color:black;
+border: solid 1px white;
+border-radius: 10px;
+}
 
-    }
-
+.filter table td{
+    text-align: left;
+    min-width: 40px;
+}
 
     nav {
-        padding: 30px;
-        margin: auto 0;
+white-space: nowrap;
+        padding: 30px 0px;
     }
     nav a {
-        background-color: #f44336;
-
-        color: white;
+        background-color: white;
+ font-weight: bold;
+        color: black;
         text-decoration: none;
         cursor: hand;
-        padding: 15px;
+        padding: 10px;
         border-radius: 10px;
+        box-shadow: #787878 4px 4px 1px;
     }
     nav a:hover {
-        background-color: #d32f2f;
+        background-color: #cfcece;
     }
     nav a.router-link-exact-active {
-        background-color: #42b983;
+        background-color: #d32f2f;
         color: white;
         cursor: default;
-                font-weight: bold;
-                padding: 20px;
+        font-weight: bold;
+        padding: 20px;
+        border-radius: 50px;
+        font-size: 1.2rem;
+        box-shadow:none;
     }
+
+    
+.limit{
+    border-bottom: solid 1px brown;
+    width : 75%;
+    padding-bottom: 10px;
+    margin: auto;
+    padding: 10px 0px;
+}
+
+hr{
+    color: brown;
+    width:50%;
+}
+.h2{
+    margin-top:5px;
+}
 </style>
