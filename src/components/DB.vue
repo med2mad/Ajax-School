@@ -3,7 +3,7 @@
         <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
     </transition>
     
-    <div class="title"> <img v-if="!fake" :src="title" alt="title"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
+    <div class="title"> <img v-if="!fake" :src="'DBsImages\\'+title" alt="title"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
 
     <div class="db" :class="color">
 
@@ -304,7 +304,7 @@ z-index: 1; */
 
     }
     .form .data table tr td{
-        background-color: rgb(114, 114, 114);
+        background-color: rgb(196, 196, 196);
     }
     .agetr td{
         border-bottom: solid 4px white;
@@ -328,7 +328,7 @@ z-index: 1; */
 
     .form .btn{
         background-color: rgb(73, 73, 73);
-        /* background-image: linear-gradient(90deg, rgb(70, 70, 70) 30%,rgb(192, 192, 192)) ; */
+        /* background-image: linear-gradient(90deg, rgb(0, 0, 0) 30%,rgb(128, 128, 128)) ; */
         border-radius: 0px 20px 20px 0px;
         border-left:solid 1px black;
         overflow: hidden;

@@ -6,11 +6,11 @@
                 <router-link to="/xhr">XHR</router-link>|
                 <router-link to="/jquery">JQuery</router-link>|
                 <router-link to="/fetch">Fetch</router-link>|
-                <router-link to="/axios">Axios</router-link>|
+                <router-link to="/axios">Axios</router-link>
             </nav>
     </header>
 
-    <div class="filter">
+    <div class="side">
         <div class="logo"><router-link to="/"><img src="logo.png" alt="logo"></router-link></div>
         
 <hr>
@@ -48,7 +48,16 @@
 
 
     <footer>
-        footer
+        <div>
+            <span>Filter</span><br>
+            Name<input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false">
+            Age<input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
+        </div>
+        <div>
+            <span>Limit</span>
+            <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off">
+            <!-- <p>Created by "Mohammad LEGHDAICH" in 2023, for portfolio purpose only</p> -->
+        </div>
     </footer>
 </template>
 
@@ -92,6 +101,50 @@ export default{
 </script>
 
 <style>
+@font-face {
+    font-family: JlsspacegothicRnc-n2zY;
+    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\JlsspacegothicRnc-n2zY.otf');
+}
+@font-face {
+    font-family: Roboto-Light;
+    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Roboto-Light.ttf');
+}  
+.side h2{font-family:  Roboto-Light;
+    margin-bottom: 0px;
+    color:brown;
+}
+
+header p{font-family:  JlsspacegothicRnc-n2zY;
+    color: white;
+    font-size: clamp( 0.2rem , 4vw + 0.2rem , 3rem );
+    
+
+    margin:0px;
+    font-style: italic;
+    font-weight: bold;
+    text-shadow: 0px 0px 9px blue;
+}
+    header{
+        width: 100%;
+        position: fixed;
+        gap:0px;
+    height: 75px;
+        top: 0px;
+    left: 0px;
+        /* background-color: black; */
+        /* background-color: rgb(36, 36, 36); */
+          background-image: linear-gradient(180deg ,rgb(26, 26, 26),white      ) ;
+       /* background-image: linear-gradient(45deg ,white 0%, black 50%  ) ; */
+
+box-shadow: 0px 0px 9px blue;
+        z-index: 200;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+border-bottom: solid 4px black;
+    }
 
     main{
         margin-top: 75px;
@@ -100,51 +153,24 @@ export default{
         overflow: hidden;
     }
 
-    header{
-    font-family: 'Roboto', sans-serif;
-        width: 100%;
-        position: fixed;
-        gap:0px;
-    height: 75px;
-        top: 0px;
-    left: 0px;
-        /* background-color: #eaf2fb; */
-        background-color: rgb(36, 36, 36);
-          /* background-image: linear-gradient(45deg ,#42b983 0%, white 50%  ) ; */
-       /* background-image: linear-gradient(45deg ,white 0%, black 50%  ) ; */
-
-        border-bottom: solid 4px;
-
-        z-index: 200;
-
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-    }
-
-header p{
-    color: white;
-    font-size: clamp( 0.2rem , 4vw + 0.2rem , 3rem );
-    text-decoration: solid underline;
-    margin:0px;
-}
-    .filter{
+    .side{
+        
         position: fixed;
       font-family: 'Roboto', sans-serif;
-        font-weight: bold;
+
         top:75px;
         left:0;
 
+       overflow: auto;
 
-height: 100%;
+border-radius: 0 0 40px 0px;
         width:200px;
 padding-top: 5px;
 
         border-right: solid 3px ;
-
+ border-bottom: solid 1px ;
 /* background-color: black; */
-        color:black;
+
         background-image: linear-gradient(90deg,#787878 0%,
                                                 #b5b5b5 25%,
                                                 #e3e3e3 50%,
@@ -153,25 +179,21 @@ padding-top: 5px;
                                             ) ;
 
     }
-.filter input{
+.side input{
     border-radius: 20px;
 }
-   
-.filter h2{
-    margin-bottom: 0px;
-    color:brown;
-    font-size: 1.5rem;
-}
 
 
-.filter img{
+
+.side img{
       height: 90px;
-    background-color: white;
+    /* background-color: rgb(219, 219, 219); */
+    background-image: linear-gradient(90deg , white 10% , #949494 50%, white  ) ;
 border-radius: 10px;
 
 }
 
-.filter .logo{
+.side .logo{
 border-bottom: solid 2px black;
 padding: 10px 0px;
 background-color:black;
@@ -179,30 +201,35 @@ border: solid 1px white;
 border-radius: 10px;
 }
 
-.filter table td{
+.side table td{
     text-align: left;
     min-width: 40px;
 }
 
     nav {
 white-space: nowrap;
-        padding: 30px 0px;
+        padding: 30px 10px;
     }
     nav a {
-        background-color: white;
+        /* background-color: white; */
+            background-image: linear-gradient(180deg , white 10% , #949494 50%, white  ) ;
  font-weight: bold;
         color: black;
         text-decoration: none;
         cursor: hand;
         padding: 10px;
+
         border-radius: 10px;
         box-shadow: #787878 4px 4px 1px;
+        
     }
     nav a:hover {
         background-color: #cfcece;
+         background-image: linear-gradient(180deg , white 10% , #dd6060 50%, white  ) ;
     }
     nav a.router-link-exact-active {
         background-color: #d32f2f;
+         background-image: linear-gradient(180deg , white 10% , #ee2727 50%, white  ) ;
         color: white;
         cursor: default;
         font-weight: bold;
@@ -210,6 +237,7 @@ white-space: nowrap;
         border-radius: 50px;
         font-size: 1.2rem;
         box-shadow:none;
+        box-shadow: #787878 4px 4px 1px;
     }
 
     
@@ -228,4 +256,48 @@ hr{
 .h2{
     margin-top:5px;
 }
+
+footer{
+    display: none;
+    background-image: linear-gradient(180deg,#787878 0%,
+                                            #b5b5b5 25%,
+                                            #e3e3e3 50%,
+                                            #b5b5b5 75%,
+                                            #787878 100%
+                                        ) ;
+    border-top: solid 2px black;
+    border-radius: 20px 20px 0px 0px ;
+    
+}
+footer span{
+color:brown;
+}
+    footer:first-child{
+    border: solid 4px;
+}
+
+@media only screen and (max-width: 600px){
+    .side{
+        display: none;
+    }
+    main{
+        margin:auto;
+        padding-top: 70px;
+           padding-bottom: 50px;
+    }
+    footer{
+
+
+display:block;
+width: 100%;
+        position:fixed;
+    bottom: 0;
+    height:60px;
+    }
+
+}
+
+
+
 </style>
+ 
