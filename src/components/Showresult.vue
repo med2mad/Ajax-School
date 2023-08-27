@@ -71,12 +71,12 @@ export default{
     data(){return{
                 vname:'', vage:'', vlimit:10,
                 DBs:[
-                    {title:'mysql.png', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1, color:'blue'},
-                    {title:'postgresql.png', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1, color:'green'},
-                    {title:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1, color:'black'},
-                    {title:'Fake API', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true, deleteRefresh:1, color:'white'},
-                    {title:'mongodb.png', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1, color:'pink'},
-                    //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id', fake:false, deleteRefresh:1, color:'black'}//in the public folder
+                    {title:'mysql.png', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1, key:'blue'},
+                    {title:'postgresql.png', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1, key:'green'},
+                    {title:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1, key:'black'},
+                    {title:'Fake API', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true, deleteRefresh:1, key:'white'},
+                    {title:'mongodb.png', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1, key:'pink'},
+                    //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id', fake:false, deleteRefresh:1, key:'black'}//in the public folder
                     ]
                 }
             },
