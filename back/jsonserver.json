@@ -373,12 +373,6 @@
       "id": 105
     },
     {
-      "name": "333333333",
-      "age": 333333333,
-      "photo": "3333333.jpg16916625257413333333.jpg",
-      "id": 106
-    },
-    {
       "name": "2",
       "age": 2,
       "photo": "",
@@ -403,12 +397,6 @@
       "id": 111
     },
     {
-      "name": "22",
-      "age": 2222,
-      "photo": "Future Diary - Yuno Gasai.jpg1691664886820Future Diary - Yuno Gasai.jpg",
-      "id": 114
-    },
-    {
       "name": "1",
       "age": 1,
       "photo": "bastion.jpg1691665332005bastion.jpg",
@@ -427,28 +415,10 @@
       "id": 117
     },
     {
-      "name": "33",
-      "age": 3333,
-      "photo": "SETO tumblr_inline_osu1qdxMjs1sku8xc_500.png1691665593914SETO tumblr_inline_osu1qdxMjs1sku8xc_500.png",
-      "id": 118
-    },
-    {
-      "name": "12",
-      "age": 122,
-      "photo": "Evolution of the PS.png1691666913603Evolution of the PS.png",
-      "id": 119
-    },
-    {
       "name": "3",
       "age": 3,
       "photo": "",
       "id": 120
-    },
-    {
-      "name": "234",
-      "age": 234,
-      "photo": "the-king-of-fighters-xiii.png1692076993711the-king-of-fighters-xiii.png",
-      "id": 121
     }
   ],
   "Resource2": [

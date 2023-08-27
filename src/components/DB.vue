@@ -7,14 +7,17 @@
 
     <div class="db" :class="color">
 
-        <div class="time" :class="{'green':bucket.timeF<100, 'orange':bucket.timeF>=100 && bucket.timeF<200, 'red':bucket.timeF>=200}">
-            <div>
-            [{{bucket.timeF + ' ms'||'Calculating ...'}}]
-            </div>
-        </div>
-
         <div class="db1">
-            <div>
+
+            <div class="time" :class="{'green':bucket.timeF<100, 'orange':bucket.timeF>=100 && bucket.timeF<200, 'red':bucket.timeF>=200}">
+                <div>
+                [{{bucket.timeF + ' ms'||'Calculating ...'}}]
+                </div>
+            </div>
+
+
+            
+            <div :class="{'green':bucket.timeF<100, 'orange':bucket.timeF>=100 && bucket.timeF<200, 'red':bucket.timeF>=200}">
                 <div v-if="bucket.a && bucket.a.length===0">
                     <h2>No Data !! </h2>
                 </div>
@@ -43,14 +46,14 @@
         <div class="form" v-if="!fake">
             <div class="data">
             <table cellspacing="0">
-                <tr><td id="name">Name:<input type="text" v-model="vname" name="name" maxlength ="30" autocomplete="off" spellcheck="false"></td></tr>
+                <tr><td id="name">Name:<input type="text" v-model="vname" name="name" maxlength ="25" autocomplete="off" spellcheck="false"></td></tr>
                 <tr class="agetr"><td id="age2">Age:<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
                 <tr>
                     <td>
-                        <img ref="img" alt="img" onclick="document.getElementById('inpfile').click();" class="img" src="user.jpg"><br>
-                        <input type="button" onclick="document.getElementById('inpfile').click();" value="Browse Photo...">
+                        <img ref="img" alt="img" @click="$refs[key].click();" class="img" src="user.jpg"><br>
+                        <input type="button" @click="$refs[key].click();" value="Browse Photo...">
                         <input type="button" value="Remove Photo" @click="remove">
-                        <input type="file" id="inpfile" ref="inpfile" accept="image/*" @change="onFileChange" style="display:none;"><br>
+                        <input type="file" :id="key" :ref="key" accept="image/*" @change="onFileChange" style="display:none;"><br>
                     </td>
                 </tr>
             </table>
@@ -71,7 +74,7 @@
 import axios from 'axios' //upload photos
 
 export default{
-    props: { title:{type:String}, _id:{type:String}, fake:{type:Boolean}, uri:{type:String},  color:{type:String}, },
+    props: { title:{type:String}, _id:{type:String}, fake:{type:Boolean}, uri:{type:String},  key:{type:String}, },
 
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  
@@ -163,6 +166,7 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
             
             return this.popuptext;
         },
+
     },
 
     mounted(){
@@ -178,7 +182,8 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
 </script>
 
 <style>
-    
+
+
     .title{
         background-image: linear-gradient(45deg , white 5% , #42b983 50%, white  ) ;
         /* background-image: linear-gradient(180deg , #252525 , white  ) ; */
@@ -204,18 +209,33 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
         /* background-color: ; */
     }
 
+    .db .time{
+
+        border: solid 4px;
+        border-right: none;
+        border-radius: 10px 0px 0px 10px;
+        margin:0px;
+        padding: 0px;
+        font-size: 1.2rem;
+        height:100%;
+
+width:30px;
+    }
+
+    
+        .db .time div{
+            transform: rotateZ(90deg) translateX(100%);
+            white-space: nowrap;
+        }
+
+
 .db1{
      max-height: 500px;
      overflow: auto;
-
+display:flex;
 }
 
-    .blue{
-        /* background-image: linear-gradient(90deg , rgb(163, 163, 253) , rgb(56, 56, 255) , rgb(163, 163, 253)  ) ; */
-        /* background: radial-gradient( white ,rgb(255, 202, 117)  ); */
 
-        /* background-color: blue; */
-    }
     .green{
         background-color: green;
     }
@@ -228,8 +248,9 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
 
     .db1 table{
         border: solid 4px;
+        border-left: none;
         border-bottom:none;
-        border-radius: 10px 10px 0px 0px;
+        border-radius: 0px 10px 0px 0px;
         background-color: white;
          
     }
@@ -271,21 +292,6 @@ z-index: 1; */
         background-color: orange;
     }
 
-    .db .time{
-
-        border: solid 4px;
-        
-        border-radius: 0px 0px 10px 10px;
-        margin:0px;
-        padding: 0px;
-        font-size: 1.2rem;
-
-  position: sticky;
-  top: 0;
-  align-self: flex-start;
-
-
-    }
 
     .db2{
        
