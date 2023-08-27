@@ -31,7 +31,18 @@
 </template>
 
 <style scoped>
+
+
 .logo img{
-  width:500px;
+  background-image: linear-gradient(180deg , rgb(133, 133, 133) , white  ) ;
+  border-radius: 10px;
+  width:50%
 }
+
+.logo {
+  padding: 10px 0px;
+  background-color:black;
+  border-radius: 10px;
+}
+
 </style>

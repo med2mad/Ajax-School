@@ -31,7 +31,7 @@
         <h2>Legend :</h2>
         <table cellspacing="6">
             <tr><td class="green"></td><td>Under <br> 100 ms</td></tr>
-            <tr><td class="orange"></td><td>Between 100 ms <br> and 200 ms</td></tr>
+            <tr><td class="orange"></td><td>Between 100 <br> and 200 ms</td></tr>
             <tr><td class="red"></td><td>Above <br> 200 ms</td></tr>
         </table>
     </div>
@@ -48,13 +48,13 @@
 
 
     <footer>
-        <div>
-            <span>Filter</span><br>
-            Name<input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false">
-            Age<input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
+        <div class="footer1">
+            <span>Filter :</span><br>
+            Name : <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false">
+            | Age : <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
         </div>
-        <div>
-            <span>Limit</span>
+        <div class="footer2">
+            <span>Limit : </span>
             <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off">
             <!-- <p>Created by "Mohammad LEGHDAICH" in 2023, for portfolio purpose only</p> -->
         </div>
@@ -148,8 +148,7 @@ border-bottom: solid 4px black;
 
     main{
         margin-top: 75px;
-        margin-left: 200px;
-        min-width: 425px;
+        margin-left: 185px;
         overflow: hidden;
     }
 
@@ -161,10 +160,12 @@ border-bottom: solid 4px black;
         top:75px;
         left:0;
 
+height: 85vh;
+
        overflow: auto;
 
 border-radius: 0 0 40px 0px;
-        width:200px;
+        width:180px;
 padding-top: 5px;
 
         border-right: solid 3px ;
@@ -183,27 +184,29 @@ padding-top: 5px;
     border-radius: 20px;
 }
 
-
-
 .side img{
-      height: 90px;
-    /* background-color: rgb(219, 219, 219); */
-    background-image: linear-gradient(90deg , white 10% , #949494 50%, white  ) ;
-border-radius: 10px;
-
+    height: 90px;
+    width: 150px;
 }
 
 .side .logo{
-border-bottom: solid 2px black;
-padding: 10px 0px;
-background-color:black;
+
+padding: 5px 0px;
+background-color: black ;
 border: solid 1px white;
 border-radius: 10px;
 }
 
+
+
+
+
 .side table td{
     text-align: left;
     min-width: 40px;
+}
+.side table td:first-child{
+    border:solid 1px;
 }
 
     nav {
@@ -270,34 +273,42 @@ footer{
     
 }
 footer span{
-color:brown;
+color:brown;font-weight: bold;
 }
-    footer:first-child{
-    border: solid 4px;
+footer input{
+     border-radius: 20px;
 }
-
-@media only screen and (max-width: 600px){
+footer .footer1{   padding-bottom:2px; border-radius: 20px 20px 0px 0px ;
+        background-image: linear-gradient(180deg,#787878 0%,
+                                            #b5b5b5 25%,
+                                            #e3e3e3 50%,
+                                            #b5b5b5 75%,
+                                            #787878 100%
+                                        ) ;
+}
+footer .footer2{ height:20px; padding-top:6px; border-top: solid 1px;
+        background-image: linear-gradient(180deg,#787878 0%,
+                                            #b5b5b5 25%,
+                                            #e3e3e3 50%,
+                                            #b5b5b5 75%,
+                                            #787878 100%
+                                        ) ;
+}
+@media only screen and (max-width: 650px){
     .side{
         display: none;
     }
     main{
         margin:auto;
         padding-top: 70px;
-           padding-bottom: 50px;
+        padding-bottom: 50px;
     }
     footer{
-
-
-display:block;
-width: 100%;
+        display:block;
+        width: 100%;
         position:fixed;
-    bottom: 0;
-    height:60px;
+        bottom: 0;
+        height:72px;
     }
-
 }
-
-
-
 </style>
- 

@@ -7,6 +7,12 @@
 
     <div class="db" :class="color">
 
+        <div class="time" :class="{'green':bucket.timeF<100, 'orange':bucket.timeF>=100 && bucket.timeF<200, 'red':bucket.timeF>=200}">
+            <div>
+            [{{bucket.timeF + ' ms'||'Calculating ...'}}]
+            </div>
+        </div>
+
         <div class="db1">
             <div>
                 <div v-if="bucket.a && bucket.a.length===0">
@@ -30,9 +36,7 @@
                     <div v-else>Loading ....</div>
                 </div>
             </div>
-            <h2 :class="{'green':bucket.timeF<100, 'orange':bucket.timeF>=100 && bucket.timeF<200, 'red':bucket.timeF>=200}">
-                [{{bucket.timeF + ' ms'||'Calculating ...'}}]
-            </h2>
+
         </div>
 
         <div class="db2">
@@ -177,19 +181,20 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
     
     .title{
         background-image: linear-gradient(45deg , white 5% , #42b983 50%, white  ) ;
+        /* background-image: linear-gradient(180deg , #252525 , white  ) ; */
         border: solid 4px #2c3e50;
         padding: 3px;
         text-align: center;
-        width:80%;
         margin:auto;
+        border-radius: 0px 0px 20px 20px;
     }
     .title img{
         height:75px;
     }
 
     .db{
-        /* background-image: linear-gradient(90deg , #eaf2fb , #8a8a8a , #eaf2fb ) ; */
-        background: radial-gradient( #eaf2fb  , rgb(177, 177, 177) , #eaf2fb );
+        background-image: linear-gradient(90deg , #eaf2fb , #8a8a8a , #eaf2fb ) ;
+        /* background: radial-gradient( #eaf2fb  , rgb(177, 177, 177) , #eaf2fb ); */
 
         display: flex; /* align .db1|.db2 */
         justify-content: center;
@@ -198,6 +203,13 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
         gap: 10px;
         /* background-color: ; */
     }
+
+.db1{
+     max-height: 500px;
+     overflow: auto;
+
+}
+
     .blue{
         /* background-image: linear-gradient(90deg , rgb(163, 163, 253) , rgb(56, 56, 255) , rgb(163, 163, 253)  ) ; */
         /* background: radial-gradient( white ,rgb(255, 202, 117)  ); */
@@ -213,21 +225,13 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
     .orange{
         background-color: orange;
     }
-    .pink{
-        background-color: pink;
-    }
-    
-    .black{
-        background-color: black;
-    }
-    .white{
-        background-color: white;
-    }
+
     .db1 table{
         border: solid 4px;
         border-bottom:none;
         border-radius: 10px 10px 0px 0px;
         background-color: white;
+         
     }
     .db1 table td{
         border: solid 2px;
@@ -267,7 +271,7 @@ z-index: 1; */
         background-color: orange;
     }
 
-    .db1 h2{
+    .db .time{
 
         border: solid 4px;
         
@@ -275,6 +279,12 @@ z-index: 1; */
         margin:0px;
         padding: 0px;
         font-size: 1.2rem;
+
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+
+
     }
 
     .db2{

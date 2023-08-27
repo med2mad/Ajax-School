@@ -3,7 +3,10 @@
 </template>
 
 <style >
-  body{background-color: #eaf2fb;}
+  body{
+    background-color: #eaf2fb;
+    
+    }
 
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;

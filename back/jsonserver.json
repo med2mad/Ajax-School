@@ -97,30 +97,6 @@
       "id": 35
     },
     {
-      "name": "4",
-      "age": 4,
-      "photo": "cover html_css.jpg1691101905705cover html_css.jpg",
-      "id": 37
-    },
-    {
-      "name": "3",
-      "age": 3,
-      "photo": "bastion.jpg1691097043760bastion.jpg",
-      "id": 38
-    },
-    {
-      "name": "333333333",
-      "age": 333333,
-      "photo": "bastion.jpg1691087504633bastion.jpg",
-      "id": 40
-    },
-    {
-      "name": "44444444",
-      "age": 44444,
-      "photo": "bastion.jpg1691087532309bastion.jpg",
-      "id": 41
-    },
-    {
       "name": "rrrrrrrr",
       "age": 4,
       "photo": "",
@@ -473,12 +449,6 @@
       "age": 234,
       "photo": "the-king-of-fighters-xiii.png1692076993711the-king-of-fighters-xiii.png",
       "id": 121
-    },
-    {
-      "name": "234",
-      "age": 234,
-      "photo": "soul cheater.jpg1692077011094soul cheater.jpg",
-      "id": 122
     }
   ],
   "Resource2": [
