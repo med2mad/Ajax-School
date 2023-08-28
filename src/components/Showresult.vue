@@ -1,6 +1,6 @@
 <template>
     <header>
-        <p>Test DataBase Speed using:</p>
+        <p><router-link to="/">Test DataBase Speed using:</router-link></p>
         
             <nav>
                 <router-link to="/xhr">XHR</router-link>|
@@ -16,8 +16,8 @@
 <hr>
 
         <h2 class="h2">Filter :</h2>
-        Name<input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
-        Age<input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
+        Name <br> <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
+        Age <br> <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
     
         <div class="limit">
          </div>
@@ -28,16 +28,17 @@
 
         <div class="limit">
          </div>
+
         <h2>Legend :</h2>
-        <table cellspacing="6">
-            <tr><td class="green"></td><td>Under <br> 100 ms</td></tr>
-            <tr><td class="orange"></td><td>Between 100 <br> and 200 ms</td></tr>
-            <tr><td class="red"></td><td>Above <br> 200 ms</td></tr>
+        <table class="legend" cellspacing="6">
+            <tr><td><div class="green"></div></td><td>Under <br> 100 ms</td></tr>
+            <tr><td><div class="orange"></div></td><td>Between 100 <br> and 200 ms</td></tr>
+            <tr><td ><div class="red"></div></td><td>Above <br> 200 ms</td></tr>
         </table>
     </div>
 
         <main>
-            <DB v-for="item in DBs" :key="item.title+item.deleteRefresh+vlimit+vname+vage" :title="item.title" :_id="item._id" :fake="item.fake" :uri="item.uri" :color="item.color"
+            <DB v-for="item in DBs" :key="item.dblogofile+item.deleteRefresh+vlimit+vname+vage" :dblogofile="item.dblogofile" :_id="item._id" :fake="item.fake" :uri="item.uri" 
                                 @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
                                 @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
                                     @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
@@ -71,12 +72,12 @@ export default{
     data(){return{
                 vname:'', vage:'', vlimit:10,
                 DBs:[
-                    {title:'mysql.png', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1, key:'blue'},
-                    {title:'postgresql.png', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1, key:'green'},
-                    {title:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1, key:'black'},
-                    {title:'Fake API', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true, deleteRefresh:1, key:'white'},
-                    {title:'mongodb.png', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1, key:'pink'},
-                    //{title:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id', fake:false, deleteRefresh:1, key:'black'}//in the public folder
+                    {dblogofile:'mysql.png', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1},
+                    {dblogofile:'postgresql.png', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1},
+                    {dblogofile:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1},
+                    {dblogofile:'Fake API', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true, deleteRefresh:1},
+                    {dblogofile:'mongodb.png', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1},
+                    //{dblogofile:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id', fake:false, deleteRefresh:1}//in the public folder
                     ]
                 }
             },
@@ -114,7 +115,7 @@ export default{
     color:brown;
 }
 
-header p{font-family:  JlsspacegothicRnc-n2zY;
+header p a{font-family:  JlsspacegothicRnc-n2zY;
     color: white;
     font-size: clamp( 0.2rem , 4vw + 0.2rem , 3rem );
     
@@ -166,7 +167,7 @@ height: 85vh;
 
 border-radius: 0 0 40px 0px;
         width:180px;
-padding-top: 5px;
+padding-top: 0px;
 
         border-right: solid 3px ;
  border-bottom: solid 1px ;
@@ -182,6 +183,7 @@ padding-top: 5px;
     }
 .side input{
     border-radius: 20px;
+    text-align: center;
 }
 
 .side img{
@@ -191,22 +193,24 @@ padding-top: 5px;
 
 .side .logo{
 
-padding: 5px 0px;
 background-color: black ;
 border: solid 1px white;
 border-radius: 10px;
 }
 
+.side hr{margin: 15px auto;}
 
+.side h2{margin-top: 15px;}
 
-
-
-.side table td{
+.side .legend td{
     text-align: left;
-    min-width: 40px;
+    min-width: 20px;
 }
-.side table td:first-child{
-    border:solid 1px;
+
+.side .legend tr td div{
+width:20px;
+height:20px;
+border:solid 1px;
 }
 
     nav {
