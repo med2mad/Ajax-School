@@ -3,28 +3,26 @@
         <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
     </transition>
     
-    <div class="title"> <img v-if="!fake" :src="'DBsImages\\'+title" alt="title"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
+    <div class="title"> <img v-if="!fake" :src="'DBsImages\\'+dblogofile" alt="DB logo"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
 
     <div class="db" :class="color">
 
         <div class="db1">
 
             <div class="time" :class="{'green':bucket.timeF<100, 'orange':bucket.timeF>=100 && bucket.timeF<200, 'red':bucket.timeF>=200}">
-                <div>
-                [{{bucket.timeF + ' ms'||'Calculating ...'}}]
+                <div v-if="bucket.timeF">
+                    <span class="timef">{{bucket.timeF}}</span><span class="ms">ms</span>
                 </div>
             </div>
 
-
-            
-            <div :class="{'green':bucket.timeF<100, 'orange':bucket.timeF>=100 && bucket.timeF<200, 'red':bucket.timeF>=200}">
-                <div v-if="bucket.a && bucket.a.length===0">
-                    <h2>No Data !! </h2>
+            <div class="data">
+                <div class="nodata" v-if="bucket.a && bucket.a.length===0">
+                    <h2>No Data!!</h2>
                 </div>
                 <div v-else>
                     <div v-if="bucket.a" >
                     <form>
-                    <table cellspacing="4">
+                    <table cellspacing="2">
                         <tr><th v-if="!fake"></th><th>#</th><th>Name</th><th v-if="!fake">Age</th><th v-if="!fake">Photo</th></tr>
                         <transition-group name="table">
                         <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
@@ -45,15 +43,15 @@
         <div class="db2">
         <div class="form" v-if="!fake">
             <div class="data">
-            <table cellspacing="0">
+            <table>
                 <tr><td id="name">Name:<input type="text" v-model="vname" name="name" maxlength ="25" autocomplete="off" spellcheck="false"></td></tr>
                 <tr class="agetr"><td id="age2">Age:<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
                 <tr>
                     <td>
-                        <img ref="img" alt="img" @click="$refs[key].click();" class="img" src="user.jpg"><br>
-                        <input type="button" @click="$refs[key].click();" value="Browse Photo...">
+                        <img ref="img" alt="img" @click="$refs[dblogofile].click();" class="img" src="user.jpg"><br>
+                        <input type="button" @click="$refs[dblogofile].click();" value="Browse Photo...">
                         <input type="button" value="Remove Photo" @click="remove">
-                        <input type="file" :id="key" :ref="key" accept="image/*" @change="onFileChange" style="display:none;"><br>
+                        <input type="file" :id="dblogofile" :ref="dblogofile" accept="image/*" @change="onFileChange" style="display:none;"><br>
                     </td>
                 </tr>
             </table>
@@ -74,7 +72,7 @@
 import axios from 'axios' //upload photos
 
 export default{
-    props: { title:{type:String}, _id:{type:String}, fake:{type:Boolean}, uri:{type:String},  key:{type:String}, },
+    props: { dblogofile:{type:String}, _id:{type:String}, fake:{type:Boolean}, uri:{type:String}, },
 
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  
@@ -125,7 +123,7 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
             this.photoObject=null;
             
             if (!this.fake) { //fake has no PPD
-                this.$refs.inpfile.value= null;
+                this.$refs[this.dblogofile].value= null;
                 this.vage = this.$refs['trAge'+id][0].innerHTML;
                 let src = this.$refs['trImg'+id][0].src;
                 this.$refs.img.src = src;
@@ -188,7 +186,7 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
         background-image: linear-gradient(45deg , white 5% , #42b983 50%, white  ) ;
         /* background-image: linear-gradient(180deg , #252525 , white  ) ; */
         border: solid 4px #2c3e50;
-        padding: 3px;
+        padding: 1px;
         text-align: center;
         margin:auto;
         border-radius: 0px 0px 20px 20px;
@@ -203,61 +201,67 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
 
         display: flex; /* align .db1|.db2 */
         justify-content: center;
-        padding: 10px 0px 25px 0px;
+        align-items : start;
+
+        padding: 2px 0px 25px 0px;
         flex-wrap: wrap;
         gap: 10px;
         /* background-color: ; */
     }
 
-    .db .time{
-
+    .db .db1{display:flex; /* align .time|.data */
+        max-height: 500px;
+        min-height: 90px; /* No Data !! shows timeF out of boundies */
+        border-radius: 10px 10px 10px 10px;
         border: solid 4px;
-        border-right: none;
-        border-radius: 10px 0px 0px 10px;
+    }
+
+    .db1 .time{
+ border-radius: 5px 0px 0px 5px;
+       border-right: solid 4px;
         margin:0px;
         padding: 0px;
         font-size: 1.2rem;
-        height:100%;
+
 
 width:30px;
+
     }
 
     
-        .db .time div{
-            transform: rotateZ(90deg) translateX(100%);
+        .db1 .time div{
+            transform: rotateZ(90deg) translateX(30%);
             white-space: nowrap;
         }
+        .db1 .time .timef{
+            font-weight: bold;
+        }
+        .db1 .time .ms{
+            font-size: 0.8rem;
+        }
 
-
-.db1{
-     max-height: 500px;
-     overflow: auto;
-display:flex;
+.db1 .data{
+        overflow: auto;
+        border-radius: 0px 5px 5px 0px;
 }
 
-
-    .green{
-        background-color: green;
-    }
-    .red{
-        background-color: red;
-    }
-    .orange{
-        background-color: orange;
-    }
+.db1 .data .nodata h2{ /* center "No DATA !!" */
+    position:relative;
+    top: 25px;
+}
 
     .db1 table{
-        border: solid 4px;
+        
         border-left: none;
         border-bottom:none;
-        border-radius: 0px 10px 0px 0px;
+  
         background-color: white;
          
     }
     .db1 table td{
         border: solid 2px;
         font-weight: bold;
-        border-radius:10px;
+        border-radius:7px;
         padding: 0px 5px;
         /* background-image: linear-gradient(90deg ,rgb(255, 255, 236) 0%, rgb(255, 255, 120) 30%, rgb(255, 255, 120) 80%, rgb(255, 255, 225) 100% ) ; */
     }
@@ -284,19 +288,16 @@ z-index: 1; */
     }
     
     .db1 table .datarow{
-        background-color: rgb(255, 255, 71);
-
+        background-color: rgb(255, 255, 130);
         height: 40px;
+    }
+    .db1 table .datarow:nth-child(odd){
+        background-color: rgb(255, 255, 190);
     }
     .db1 table .selectedrow {
         background-color: orange;
     }
 
-
-    .db2{
-       
-
-    }
 
     .db2 .form{
         background-color: white;
@@ -378,11 +379,6 @@ z-index: 1; */
         background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\delete.jpg");
     }
     
-    img{
-        object-fit: contain;
-        vertical-align: bottom;
-    }
-
     /*-------------- animate popup--(using @keyframes) -------------*/
     @keyframes anim{
         0%{transform: translateY(-50px); opacity: 0;}
@@ -419,4 +415,17 @@ z-index: 1; */
     .db1 table tr td:nth-child(2)::before {
     content: counter(rowNumber);
     }
+
+
+    
+    .green{
+        background-color: green;
+    }
+    .red{
+        background-color: red;
+    }
+    .orange{
+        background-color: orange;
+    }
+
 </style>
