@@ -48,7 +48,13 @@ app.put('/:id', (req, res) => {
 //Delete
 app.delete('/:id', (req, res) => {
     con.query("DELETE FROM users WHERE id='"+ req.params.id +"'", (err, data)=>{
-      res.send(data);
+
+      // res.send(data);
+
+      con.query("SELECT * FROM users WHERE id < '"+ req.params.id +"' AND id>MAX(id) LIMIT 1", (err, rows)=>{
+        res.json(rows)
+      }) 
+
   });
 });
 //404

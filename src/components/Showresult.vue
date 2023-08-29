@@ -158,9 +158,6 @@ border-bottom: solid 4px black;
         position: fixed;
       font-family: 'Roboto', sans-serif;
 
-        top:75px;
-        left:0;
-
 height: 85vh;
 
        overflow: auto;
@@ -198,13 +195,14 @@ border: solid 1px white;
 border-radius: 10px;
 }
 
-.side hr{margin: 15px auto;}
+.side hr{margin: 10px auto 10px auto; width:80%;}
 
-.side h2{margin-top: 15px;}
+.side h2{margin-top: 15px; }
 
 .side .legend td{
     text-align: left;
     min-width: 20px;
+
 }
 
 .side .legend tr td div{

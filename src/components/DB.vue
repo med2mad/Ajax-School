@@ -5,7 +5,7 @@
     
     <div class="title"> <img v-if="!fake" :src="'DBsImages\\'+dblogofile" alt="DB logo"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
 
-    <div class="db" :class="color">
+    <div class="db">
 
         <div class="db1">
 
@@ -101,11 +101,11 @@ export default{
                 for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to change
                     if(this.bucket.a[i][this._id]==this.selectedId)
                     {
-let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
-  this.bucket.a[i] = b;
-                        // this.bucket.a[i].name = this.vname;
-                        // this.bucket.a[i].age = this.vage;
-                        // this.bucket.a[i].photo = this.multerRandomPhotoName;
+// let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
+//   this.bucket.a[i] = b;
+                        this.bucket.a[i].name = this.vname;
+                        this.bucket.a[i].age = this.vage;
+                        this.bucket.a[i].photo = this.multerRandomPhotoName;
                     }
                 }
 
@@ -136,10 +136,10 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
             this.multerRandomPhotoName='';
             this.$refs.img.src='';
             this.photoObject=null;
-            this.$refs.inpfile.value= null;
+            this.$refs[this.dblogofile].value= null;
         },
         onFileChange(e){
-            if (e.target.files[0]) { //e.target.files is the same as this.$refs.inpfile.files
+            if (e.target.files[0]) { //e.target.files is the same as this.$refs.[this.dblogofile].files
                 this.photoObject = e.target.files[0];
                 this.$refs.img.src = URL.createObjectURL(this.photoObject);
             }
@@ -214,6 +214,9 @@ let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
         min-height: 90px; /* No Data !! shows timeF out of boundies */
         border-radius: 10px 10px 10px 10px;
         border: solid 4px;
+        
+        background-color: white;
+         
     }
 
     .db1 .time{
@@ -255,19 +258,17 @@ width:30px;
         border-left: none;
         border-bottom:none;
   
-        background-color: white;
-         
     }
     .db1 table td{
         border: solid 2px;
         font-weight: bold;
-        border-radius:7px;
+        border-radius:5px;
         padding: 0px 5px;
         /* background-image: linear-gradient(90deg ,rgb(255, 255, 236) 0%, rgb(255, 255, 120) 30%, rgb(255, 255, 120) 80%, rgb(255, 255, 225) 100% ) ; */
     }
     .db1 table td img{
-        border-radius: 10px;
-        border:solid 1px;
+
+
         background-color: black;
         width: 40px;
         height: 40px;
@@ -279,14 +280,17 @@ width:30px;
 z-index: 1; */
 
     }
+    
     .db1 table th{
         background-color: rgb(0, 17, 110);    
         color: white;
         border-radius: 7px;
         padding: 5px;
         white-space: nowrap;
+        position:sticky;
+        top:2px;
     }
-    
+
     .db1 table .datarow{
         background-color: rgb(255, 255, 130);
         height: 40px;
@@ -294,10 +298,14 @@ z-index: 1; */
     .db1 table .datarow:nth-child(odd){
         background-color: rgb(255, 255, 190);
     }
-    .db1 table .selectedrow {
-        background-color: orange;
-    }
 
+    .db1 table .selectedrow:nth-child(odd) td , 
+    .db1 table .selectedrow:nth-child(even) td {
+
+        background-color: rgb(184, 255, 184);
+        color:green;
+        box-shadow: 0px 0px 1px 1px green;
+    }
 
     .db2 .form{
         background-color: white;
@@ -393,15 +401,15 @@ z-index: 1; */
     }
     /*-------------- animate tables--(using @keyframes) -------------*/
     @keyframes anim2{
-        0%{transform: translateX(-100px); opacity: 0;}
+        0%{transform: translateY(-100px); opacity: 0;}
     }
     .table-enter-active{
         animation: anim2 300ms ease-in;
     }
-    .table-move{ /* the rows that automatically move down when row added */
-        transition: transform 300ms ease-in;
-    }
-    .table-leave-active{ /* not having the leaving row else table will have limit+1 and pushes down title of next DB */
+    /* .table-move{ the rows that automatically move down when row added */
+        /* transition: transform 300ms ease-in; */
+    /* } */
+    .table-leave-active{ /* not having the leaving row, else table will have limit+1 and pushes down title of next DB */
         position:absolute;
         opacity: 0;
     }
