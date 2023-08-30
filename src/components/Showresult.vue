@@ -1,6 +1,6 @@
 <template>
     <header>
-        <p><router-link to="/">Test DataBase Speed using:</router-link></p>
+        <p><router-link to="/">Test Speed using:</router-link></p>
         
             <nav>
                 <router-link to="/xhr">XHR</router-link>|
@@ -160,7 +160,7 @@ border-bottom: solid 4px black;
 
 height: 85vh;
 
-       overflow: auto;
+overflow: auto ;
 
 border-radius: 0 0 40px 0px;
         width:180px;
@@ -197,7 +197,7 @@ border-radius: 10px;
 
 .side hr{margin: 10px auto 10px auto; width:80%;}
 
-.side h2{margin-top: 15px; }
+.side h2{margin-top: 2vh; }
 
 .side .legend td{
     text-align: left;
@@ -249,13 +249,12 @@ white-space: nowrap;
 .limit{
     border-bottom: solid 1px brown;
     width : 75%;
-    padding-bottom: 10px;
     margin: auto;
-    padding: 10px 0px;
+    padding: 2vh 0px;
 }
 
 hr{
-    color: brown;
+
     width:50%;
 }
 .h2{

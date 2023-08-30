@@ -28,7 +28,7 @@
                         <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
                             <td v-show="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
                             <td></td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="!fake" :ref="'trAge'+user[_id]">{{user.age}}</td>
-                            <td v-if="!fake"><img v-show="user.photo" :src="'./uploads/'+user.photo" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
+                            <td v-if="!fake"><img :src="'./uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
                         </tr>
                         </transition-group>
                     </table>
@@ -41,25 +41,25 @@
         </div>
 
         <div class="db2">
-        <div class="form" v-if="!fake">
+        <div class="form" v-if="!fake"> 
             <div class="data">
             <table>
                 <tr><td id="name">Name:<input type="text" v-model="vname" name="name" maxlength ="25" autocomplete="off" spellcheck="false"></td></tr>
                 <tr class="agetr"><td id="age2">Age:<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
                 <tr>
                     <td>
-                        <img ref="img" alt="img" @click="$refs[dblogofile].click();" class="img" src="user.jpg"><br>
+                        <img ref="img" alt="img" @click="$refs[dblogofile].click();" class="img" src="uploads/user.jpg"><br>
                         <input type="button" @click="$refs[dblogofile].click();" value="Browse Photo...">
-                        <input type="button" value="Remove Photo" @click="remove">
+                        <input type="button" value="Remove Photo" @click="removePhoto">
                         <input type="file" :id="dblogofile" :ref="dblogofile" accept="image/*" @change="onFileChange" style="display:none;"><br>
                     </td>
                 </tr>
             </table>
             </div>
             <div class="btn">
-                <div class="post" @click="handlePost"></div>
-                <div class="put" @click="handlePut"></div>
-                <div class="delete" @click="handleDelete"></div>
+                <div class="post ppd" @click="handlePost"> <div class="flash"></div> </div>
+                <div class="put ppd" @click="handlePut"> <div class="flash"></div> </div>
+                <div class="delete ppd" @click="handleDelete"> <div class="flash"></div> </div>
             </div>
         </div>
         <div v-else class="form">jsonplaceholder.typicode.com</div>
@@ -89,7 +89,7 @@ export default{
             if(await this.dataCheck()){this.showpopup = true;}
             else{
                 this.$emit('clickPost', {"name":this.vname, "age":this.vage, "photo":this.multerRandomPhotoName}, this.bucket);
-                this.remove();
+                this.clear();
                 }
         },
         async handlePut(){
@@ -109,7 +109,7 @@ export default{
                     }
                 }
 
-                this.remove();
+                this.clear();
             }
         },
         handleDelete(){ //#TODO table needs to get the last inserted row after delete, instead of refreshing
@@ -130,11 +130,17 @@ export default{
                 this.multerRandomPhotoName = src?src.split("/")[src.split("/").length-1]:''; 
             }
         },
-        remove(){
+        removePhoto(){
+            this.multerRandomPhotoName='';
+            this.$refs.img.src='./uploads/user.jpg';
+            this.photoObject=null;
+            this.$refs[this.dblogofile].value= null;
+        },
+        clear(){
             this.vname='';
             this.vage='';
             this.multerRandomPhotoName='';
-            this.$refs.img.src='';
+            this.$refs.img.src='./uploads/user.jpg';
             this.photoObject=null;
             this.$refs[this.dblogofile].value= null;
         },
@@ -201,7 +207,7 @@ export default{
 
         display: flex; /* align .db1|.db2 */
         justify-content: center;
-        align-items : start;
+
 
         padding: 2px 0px 25px 0px;
         flex-wrap: wrap;
@@ -272,6 +278,8 @@ width:30px;
         background-color: black;
         width: 40px;
         height: 40px;
+        border-left: solid 1px;
+        border-right: solid 1px;
         /* margin: 0px;
        padding: 0px; */
        /* position:relative;
@@ -361,7 +369,7 @@ z-index: 1; */
         display: grid; /* align buttons */
         grid-template-columns: 0.5fr;
     }
-    .form .btn div{
+    .form .btn .ppd{
         border-radius: 10px;
         transition-property: transform;
         transition-duration: 250ms;
@@ -435,5 +443,27 @@ z-index: 1; */
     .orange{
         background-color: orange;
     }
+
+
+
+
+.ppd{
+    overflow: hidden;
+}
+
+.flash {
+		position: relative;
+        transform: rotateZ(45deg);
+		top: -100px;
+		left: -40px;
+        width: 40px;
+        height: 100px;
+        background-image:  linear-gradient(135deg , rgba(255, 255, 255, 0) , #ffffff 50%, rgba(255, 255, 255, 0)  ) ;
+ 		transition: top 250ms, left 250ms ;
+	}
+
+.ppd:hover .flash{
+   left: 100%; top:100%;
+}
 
 </style>
