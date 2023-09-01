@@ -38,12 +38,12 @@
     </div>
 
         <main>
-            <DB v-for="item in DBs" :key="item.dblogofile+item.deleteRefresh+vlimit+vname+vage" :dblogofile="item.dblogofile" :_id="item._id" :fake="item.fake" :uri="item.uri" 
+            <DB v-for="item in DBs" :key="item.db+vlimit+vname+vage" :dblogofile="item.dblogofile" :_id="item._id" :db="item.db" :uri="item.uri" 
                                 @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
                                 @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
                                     @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
-                                    @clickPut="(id, body)=>{this.fput(item.uri+id, body);}"
-                                    @clickDelete="(id)=>{this.fdelete(item.uri+id); item.deleteRefresh *= -1;}"
+                                    @clickPut="(selectedId, body)=>{this.fput(item.uri+selectedId, body);}"
+                                    @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item.uri+selectedId, lastTableId, bucket, item.db);}"
             ></DB>
         </main>
 
@@ -72,12 +72,12 @@ export default{
     data(){return{
                 vname:'', vage:'', vlimit:10,
                 DBs:[
-                    {dblogofile:'mysql.png', uri:'http://localhost:5010/', _id:'id', fake:false, deleteRefresh:1},
-                    {dblogofile:'postgresql.png', uri:'http://localhost:5030/', _id:'id', fake:false, deleteRefresh:1},
-                    {dblogofile:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id', fake:false, deleteRefresh:1},
-                    {dblogofile:'Fake API', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id', fake:true, deleteRefresh:1},
-                    {dblogofile:'mongodb.png', uri:'http://localhost:5020/', _id:'_id', fake:false, deleteRefresh:1},
-                    //{dblogofile:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id', fake:false, deleteRefresh:1}//in the public folder
+                    {db:'mysql', dblogofile:'mysql.png', uri:'http://localhost:5010/', _id:'id'},
+                    {db:'mogoose', dblogofile:'mongodb.png', uri:'http://localhost:5020/', _id:'timestamp'},
+                    {db:'postgresql', dblogofile:'postgresql.png', uri:'http://localhost:5030/', _id:'id'},
+                    {db:'jsonserver', dblogofile:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id'},
+                    {db:'fake', dblogofile:'fake', uri:'https://jsonplaceholder.typicode.com/users/', _id:'id'},
+                    //{db:'file', dblogofile:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id'}//in the public folder
                     ]
                 }
             },
@@ -90,8 +90,7 @@ export default{
                 if (Number.isInteger(this.vage) && this.vage!=="e")
                 {
                     uri += '&_age='+this.vage;//named _age not(age) for not to clash with fake/jsonServer
-                    uri += '&age_gte='+this.vage; //jsonServer (no like)
-                    uri += '&age_lte='+this.vage; //jsonServer (no like)
+                    uri += '&age_gte='+this.vage;    uri += '&age_lte='+this.vage;    //jsonServer (no like)
                 }
                 uri += '&_sort=id&_order=desc'; //fake/jsonServer use _sort and _order
                 
@@ -158,7 +157,7 @@ border-bottom: solid 4px black;
         position: fixed;
       font-family: 'Roboto', sans-serif;
 
-height: 85vh;
+height: 80vh;
 
 overflow: auto ;
 
@@ -202,7 +201,7 @@ border-radius: 10px;
 .side .legend td{
     text-align: left;
     min-width: 20px;
-
+    font-size: 0.9rem;
 }
 
 .side .legend tr td div{
@@ -250,7 +249,7 @@ white-space: nowrap;
     border-bottom: solid 1px brown;
     width : 75%;
     margin: auto;
-    padding: 2vh 0px;
+    padding: 10px 0px;
 }
 
 hr{

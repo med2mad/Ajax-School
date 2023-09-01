@@ -3,7 +3,7 @@
         <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
     </transition>
     
-    <div class="title"> <img v-if="!fake" :src="'DBsImages\\'+dblogofile" alt="DB logo"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
+    <div class="title"> <img v-if="db!='fake'" :src="'DBsImages\\'+dblogofile" alt="DB logo"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
 
     <div class="db">
 
@@ -23,12 +23,12 @@
                     <div v-if="bucket.a" >
                     <form>
                     <table cellspacing="2">
-                        <tr><th v-if="!fake"></th><th>#</th><th>Name</th><th v-if="!fake">Age</th><th v-if="!fake">Photo</th></tr>
+                        <tr><th v-if="db!='fake'"></th><th>#</th><th>id</th><th>Name</th><th v-if="db!='fake'">Age</th><th v-if="db!='fake'">Photo</th></tr>
                         <transition-group name="table">
                         <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
-                            <td v-show="!fake"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
-                            <td></td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="!fake" :ref="'trAge'+user[_id]">{{user.age}}</td>
-                            <td v-if="!fake"><img :src="'./uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
+                            <td v-show="db!='fake'"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
+                            <td></td><td>{{user[_id]}}</td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="db!='fake'" :ref="'trAge'+user[_id]">{{user.age}}</td>
+                            <td v-if="db!='fake'"><img :src="'./uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
                         </tr>
                         </transition-group>
                     </table>
@@ -41,17 +41,17 @@
         </div>
 
         <div class="db2">
-        <div class="form" v-if="!fake"> 
+        <div class="form" v-if="db!='fake'"> 
             <div class="data">
             <table>
                 <tr><td id="name">Name:<input type="text" v-model="vname" name="name" maxlength ="25" autocomplete="off" spellcheck="false"></td></tr>
                 <tr class="agetr"><td id="age2">Age:<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
                 <tr>
                     <td>
-                        <img ref="img" alt="img" @click="$refs[dblogofile].click();" class="img" src="uploads/user.jpg"><br>
-                        <input type="button" @click="$refs[dblogofile].click();" value="Browse Photo...">
+                        <img ref="img" alt="img" @click="$refs[db].click();" class="img" src="uploads/user.jpg"><br>
+                        <input type="button" @click="$refs[db].click();" value="Browse Photo...">
                         <input type="button" value="Remove Photo" @click="removePhoto">
-                        <input type="file" :id="dblogofile" :ref="dblogofile" accept="image/*" @change="onFileChange" style="display:none;"><br>
+                        <input type="file" :ref="db" accept="image/*" @change="onFileChange" style="display:none;"><br>
                     </td>
                 </tr>
             </table>
@@ -72,13 +72,13 @@
 import axios from 'axios' //upload photos
 
 export default{
-    props: { dblogofile:{type:String}, _id:{type:String}, fake:{type:Boolean}, uri:{type:String}, },
+    props: { db:{type:String}, dblogofile:{type:String}, _id:{type:String}, uri:{type:String}, },
 
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  
     data(){return{
                 bucket:{timeF:'',time0:0, a:'', s:''},
-                selectedId:'',
+                selectedId:'', 
                 vname:'', vage:'', multerRandomPhotoName:'', photoObject:null,
                 showpopup:false, popuptext:'', 
                 }
@@ -112,9 +112,22 @@ export default{
                 this.clear();
             }
         },
-        handleDelete(){ //#TODO table needs to get the last inserted row after delete, instead of refreshing
-            if(!this.selectedId){this.popuptext='Select User !';this.showpopup = true;}
-            else{this.$emit('clickDelete', this.selectedId);}
+        handleDelete(){
+        
+        
+                const lastTableId = this.bucket.a[this.bucket.a.length-1][this._id];
+
+        if(!this.selectedId){this.popuptext='Select User !';this.showpopup = true;}
+        else{this.$emit('clickDelete', this.selectedId, lastTableId, this.bucket);}
+
+
+for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to remove
+                    if(this.bucket.a[i][this._id]==this.selectedId)
+                       {this.bucket.a.splice(i, 1);}
+                    }
+
+
+
         },
 
         selectUser(id){
@@ -122,8 +135,8 @@ export default{
             this.vname = this.$refs['trName'+id][0].innerHTML;
             this.photoObject=null;
             
-            if (!this.fake) { //fake has no PPD
-                this.$refs[this.dblogofile].value= null;
+            if (this.db!='fake') { //fake has no PPD
+                this.$refs[this.db].value= null;
                 this.vage = this.$refs['trAge'+id][0].innerHTML;
                 let src = this.$refs['trImg'+id][0].src;
                 this.$refs.img.src = src;
@@ -134,7 +147,7 @@ export default{
             this.multerRandomPhotoName='';
             this.$refs.img.src='./uploads/user.jpg';
             this.photoObject=null;
-            this.$refs[this.dblogofile].value= null;
+            this.$refs[this.db].value= null;
         },
         clear(){
             this.vname='';
@@ -142,10 +155,10 @@ export default{
             this.multerRandomPhotoName='';
             this.$refs.img.src='./uploads/user.jpg';
             this.photoObject=null;
-            this.$refs[this.dblogofile].value= null;
+            this.$refs[this.db].value= null;
         },
         onFileChange(e){
-            if (e.target.files[0]) { //e.target.files is the same as this.$refs.[this.dblogofile].files
+            if (e.target.files[0]) { //e.target.files is the same as this.$refs.[this.db].files
                 this.photoObject = e.target.files[0];
                 this.$refs.img.src = URL.createObjectURL(this.photoObject);
             }
@@ -409,7 +422,7 @@ z-index: 1; */
     }
     /*-------------- animate tables--(using @keyframes) -------------*/
     @keyframes anim2{
-        0%{transform: translateY(-100px); opacity: 0;}
+        0%{transform: translateX(-100px); opacity: 0;}
     }
     .table-enter-active{
         animation: anim2 300ms ease-in;

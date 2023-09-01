@@ -38,7 +38,7 @@ app.get('/', async (req, res) => {
   else{
     let q = {"name":{ $regex: '.*' + req.query._name + '.*' }};
     if (req.query._age) {q.age = req.query._age;}
-    usersModel.find(q).sort({"timestamp":-1}).select("-timestamp -__v").limit(req.query._limit).then((data)=>{
+    usersModel.find(q).sort({"timestamp":-1}).select("-_id -__v").limit(req.query._limit).then((data)=>{
       res.json(data);
     });
   }
@@ -47,7 +47,7 @@ app.get('/', async (req, res) => {
 app.post('/', (req, res) => {
   const row = new usersModel(req.body);
   row.save().then((data)=>{
-    res.json(data._id)
+    res.json(data)
   });
 });
 //Update
@@ -59,12 +59,18 @@ app.put('/:id', (req, res) => {
     row.save().then((data)=>{
       res.json(data)
     });
+
   });
 });
 //Delete
 app.delete('/:id', (req, res) => {
-  usersModel.findByIdAndDelete(req.params.id).then((data)=>{
-    res.json(data);
+  usersModel.findOneAndDelete({"timestamp":req.params.id}).then((data)=>{
+      
+    //the row to enter in place of the deleted one
+    usersModel.find({"timestamp":{$lt:req.query.lasttableid}}).sort({"timestamp":-1}).select("-__v").limit(1).then((data)=>{
+      res.json(data);
+    });
+
   });
 });
 //404

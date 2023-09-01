@@ -55,7 +55,10 @@ app.put('/:id', (req, res) => {
 //Delete
 app.delete('/:id', (req, res) => {
   client.query("DELETE FROM users WHERE id='"+ req.params.id +"'", (err, data)=>{
-    res.json(data);
+      //the row to enter in place of the deleted one
+      client.query("SELECT * FROM users WHERE id=(SELECT MAX(id) from users where id < '"+ req.query.lasttableid +"')", (err, rows)=>{
+        res.send(rows.rows)
+      }) 
   });
 });
 //404

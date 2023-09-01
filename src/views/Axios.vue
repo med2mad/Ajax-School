@@ -15,6 +15,7 @@ export default {
           })
         .catch((err)=>{bucket.a = 'err: ' + err.message})
       },
+
       async fgetw(uri){
         try {
           const response = await axios.get(uri)
@@ -23,11 +24,13 @@ export default {
         catch(err) {return 'err: ' + err.message}
       },
       
+
       fpost(uri, body, bucket, limit){
         axios.post(uri,body)
         .then((response) => {
-                const id = response.data.id?response.data.id:response.data; //json-Server responds with an object
-                bucket.a.unshift({"id":id, "_id":id, "name":body.name, "age":body.age, "photo":body.photo});
+                const insertedId = response.data.id?response.data.id:response.data; //json-Server responds with an object
+                const rowToInsert = {"id":insertedId, "timestamp":response.data.timestamp, "name":body.name, "age":body.age, "photo":body.photo};
+                bucket.a.unshift(rowToInsert);
                 if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
               })
         .catch((err) => {console.error(err.message)})
@@ -39,10 +42,20 @@ export default {
           .catch((err) => {console.error(err);});
       },
 
-      fdelete(uri){
-        axios.delete(uri)
-        .then((response)=>{console.log(response.data);})
-        .catch((err)=>{console.error(err.message)})
+      fdelete(uri, lastTableId, bucket, db){
+        axios.delete(uri+'?lasttableid='+lastTableId)
+        .then((response)=>{
+            if(db!='jsonserver')
+            { bucket.a.push({"id":response.data[0].id, "timestamp":response.data[0].timestamp, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo} )}
+            else
+            {
+            axios.get('http://localhost:3000/Resource1?id_lte='+ lastTableId +'&id_ne='+ lastTableId +'&_limit=1&_sort=id&_order=desc')
+              .then((response)=>{  
+                  bucket.a.push({"id":response.data[0].id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo});
+                })
+          }
+          })
+        // .catch((err)=>{console.error(err.message)})
       },
   }
 }
