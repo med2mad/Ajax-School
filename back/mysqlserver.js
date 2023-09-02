@@ -48,7 +48,7 @@ app.put('/:id', (req, res) => {
 //Delete
 app.delete('/:id', (req, res) => {
     con.query("DELETE FROM users WHERE id='"+ req.params.id +"'", (err, data)=>{
-      //the row to enter in place of the deleted one
+      //GET Row to add instead
       con.query("SELECT * FROM users WHERE id=(SELECT Max(id) from users where id < '"+ req.query.lasttableid +"')", (err, rows)=>{
         res.send(rows)
       }) 

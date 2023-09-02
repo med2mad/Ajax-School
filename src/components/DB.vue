@@ -16,53 +16,49 @@
             </div>
 
             <div class="data">
-                <div class="nodata" v-if="bucket.a && bucket.a.length===0">
+                <div v-if="bucket.a && bucket.a.length===0" class="nodata">
                     <h2>No Data!!</h2>
                 </div>
-                <div v-else>
-                    <div v-if="bucket.a" >
+                <div v-else-if="bucket.a" class="rows">
                     <form>
                     <table cellspacing="2">
-                        <tr><th v-if="db!='fake'"></th><th>#</th><th>id</th><th>Name</th><th v-if="db!='fake'">Age</th><th v-if="db!='fake'">Photo</th></tr>
-                        <transition-group name="table">
+                        <tr><th v-if="db!='fake'"></th><th>#</th><th>Name</th><th v-if="db!='fake'">Age</th><th v-if="db!='fake'">Photo</th></tr>
+                        <transition-group name="table" >
                         <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
                             <td v-show="db!='fake'"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
-                            <td></td><td>{{user[_id]}}</td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="db!='fake'" :ref="'trAge'+user[_id]">{{user.age}}</td>
+                            <td></td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="db!='fake'" :ref="'trAge'+user[_id]">{{user.age}}</td>
                             <td v-if="db!='fake'"><img :src="'./uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
                         </tr>
                         </transition-group>
                     </table>
                     </form>
-                    </div>
-                    <div v-else>Loading ....</div>
                 </div>
+                <div v-else>Loading ....</div>
             </div>
-
         </div>
 
         <div class="db2">
         <div class="form" v-if="db!='fake'"> 
             <div class="data">
-            <table>
+            <table cellspacing="0">
                 <tr><td id="name">Name:<input type="text" v-model="vname" name="name" maxlength ="25" autocomplete="off" spellcheck="false"></td></tr>
                 <tr class="agetr"><td id="age2">Age:<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
                 <tr>
                     <td>
                         <img ref="img" alt="img" @click="$refs[db].click();" class="img" src="uploads/user.jpg"><br>
                         <input type="button" @click="$refs[db].click();" value="Browse Photo...">
-                        <input type="button" value="Remove Photo" @click="removePhoto">
+                        <input type="button" value="Remove" @click="removePhoto">
                         <input type="file" :ref="db" accept="image/*" @change="onFileChange" style="display:none;"><br>
                     </td>
                 </tr>
             </table>
             </div>
-            <div class="btn">
-                <div class="post ppd" @click="handlePost"> <div class="flash"></div> </div>
-                <div class="put ppd" @click="handlePut"> <div class="flash"></div> </div>
-                <div class="delete ppd" @click="handleDelete"> <div class="flash"></div> </div>
+            <div class="ppd">
+                <div class="post btn" @click="handlePost"> <div class="flash"></div> </div>
+                <div class="put btn" @click="handlePut"> <div class="flash"></div> </div>
+                <div class="delete btn" @click="handleDelete"> <div class="flash"></div> </div>
             </div>
         </div>
-        <div v-else class="form">jsonplaceholder.typicode.com</div>
         </div>
 
     </div>
@@ -101,8 +97,6 @@ export default{
                 for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to change
                     if(this.bucket.a[i][this._id]==this.selectedId)
                     {
-// let b={name:this.vname, age:this.vage, photo:this.multerRandomPhotoName};
-//   this.bucket.a[i] = b;
                         this.bucket.a[i].name = this.vname;
                         this.bucket.a[i].age = this.vage;
                         this.bucket.a[i].photo = this.multerRandomPhotoName;
@@ -113,20 +107,17 @@ export default{
             }
         },
         handleDelete(){
-        
-        
-                const lastTableId = this.bucket.a[this.bucket.a.length-1][this._id];
+            const lastTableId = this.bucket.a[this.bucket.a.length-1][this._id];
 
-        if(!this.selectedId){this.popuptext='Select User !';this.showpopup = true;}
-        else{this.$emit('clickDelete', this.selectedId, lastTableId, this.bucket);}
-
-
-for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to remove
+            if(!this.selectedId){this.popuptext='Select User !';this.showpopup = true;}
+            else{
+                this.$emit('clickDelete', this.selectedId, lastTableId, this.bucket);
+                
+                for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to remove
                     if(this.bucket.a[i][this._id]==this.selectedId)
-                       {this.bucket.a.splice(i, 1);}
-                    }
-
-
+                    {this.bucket.a.splice(i, 1);}
+                }
+            }
 
         },
 
@@ -135,7 +126,7 @@ for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to remove
             this.vname = this.$refs['trName'+id][0].innerHTML;
             this.photoObject=null;
             
-            if (this.db!='fake') { //fake has no PPD
+            if (this.db!='fake') { //fake has no .form
                 this.$refs[this.db].value= null;
                 this.vage = this.$refs['trAge'+id][0].innerHTML;
                 let src = this.$refs['trImg'+id][0].src;
@@ -199,15 +190,10 @@ for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to remove
 </script>
 
 <style>
-
-
     .title{
         background-image: linear-gradient(45deg , white 5% , #42b983 50%, white  ) ;
-        /* background-image: linear-gradient(180deg , #252525 , white  ) ; */
         border: solid 4px #2c3e50;
         padding: 1px;
-        text-align: center;
-        margin:auto;
         border-radius: 0px 0px 20px 20px;
     }
     .title img{
@@ -216,98 +202,57 @@ for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to remove
 
     .db{
         background-image: linear-gradient(90deg , #eaf2fb , #8a8a8a , #eaf2fb ) ;
-        /* background: radial-gradient( #eaf2fb  , rgb(177, 177, 177) , #eaf2fb ); */
-
+        padding-bottom: 25px;
         display: flex; /* align .db1|.db2 */
-        justify-content: center;
-
-
-        padding: 2px 0px 25px 0px;
         flex-wrap: wrap;
-        gap: 10px;
-        /* background-color: ; */
+        justify-content: center;
     }
 
-    .db .db1{display:flex; /* align .time|.data */
-        max-height: 500px;
-        min-height: 90px; /* No Data !! shows timeF out of boundies */
-        border-radius: 10px 10px 10px 10px;
+    .db .db1{
         border: solid 4px;
-        
+        border-radius: 10px 10px 10px 10px;
         background-color: white;
-         
+        max-height: 500px;
+        min-height: 90px; /* 'No Data!!' shows timeF out of bounds */
+        flex: 1;
+        display:flex; /* align .time|.data */ 
     }
 
     .db1 .time{
- border-radius: 5px 0px 0px 5px;
-       border-right: solid 4px;
-        margin:0px;
-        padding: 0px;
+        border-right: solid 4px;
         font-size: 1.2rem;
-
-
-width:30px;
-
+        width:30px;
+    }
+    .db1 .time div{
+        transform: rotateZ(90deg) translateX(30%);
+        white-space: nowrap;
+    }
+    .db1 .time .timef{
+        font-weight: bold;
+    }
+    .db1 .time .ms{
+        font-size: 0.8rem;
     }
 
-    
-        .db1 .time div{
-            transform: rotateZ(90deg) translateX(30%);
-            white-space: nowrap;
-        }
-        .db1 .time .timef{
-            font-weight: bold;
-        }
-        .db1 .time .ms{
-            font-size: 0.8rem;
-        }
-
-.db1 .data{
-        overflow: auto;
-        border-radius: 0px 5px 5px 0px;
-}
-
-.db1 .data .nodata h2{ /* center "No DATA !!" */
-    position:relative;
-    top: 25px;
-}
-
-    .db1 table{
-        
-        border-left: none;
-        border-bottom:none;
-  
-    }
     .db1 table td{
         border: solid 2px;
         font-weight: bold;
         border-radius:5px;
-        padding: 0px 5px;
-        /* background-image: linear-gradient(90deg ,rgb(255, 255, 236) 0%, rgb(255, 255, 120) 30%, rgb(255, 255, 120) 80%, rgb(255, 255, 225) 100% ) ; */
+        padding: 0px 1px;
     }
     .db1 table td img{
-
-
         background-color: black;
         width: 40px;
         height: 40px;
         border-left: solid 1px;
         border-right: solid 1px;
-        /* margin: 0px;
-       padding: 0px; */
-       /* position:relative;
-        top:0;
-        left:0;
-z-index: 1; */
-
     }
     
     .db1 table th{
-        background-color: rgb(0, 17, 110);    
+        background-image: linear-gradient(180deg , rgb(0, 17, 110) ,  rgb(84, 98, 179) 40% , rgb(0, 17, 110) 70% ) ;
         color: white;
         border-radius: 7px;
         padding: 5px;
-        white-space: nowrap;
         position:sticky;
         top:2px;
     }
@@ -322,7 +267,6 @@ z-index: 1; */
 
     .db1 table .selectedrow:nth-child(odd) td , 
     .db1 table .selectedrow:nth-child(even) td {
-
         background-color: rgb(184, 255, 184);
         color:green;
         box-shadow: 0px 0px 1px 1px green;
@@ -330,85 +274,83 @@ z-index: 1; */
 
     .db2 .form{
         background-color: white;
-        /* box-shadow: 0px 0px 20px black; */
         border-radius: 20px;
-        /* min-width:350px; */
         border:  solid 4px white  ;
-        display: flex; /* align .data|.btn */
-    }
-
-    .form .data{
-        font-size: 1.2rem;
-        /* margin-left:10px;
-        margin-right:10px; */
-        color:black;
+        flex: 1;
+        display: flex; /* align .data|.ppd */
     }
     .form .data table td{
-        /* border-collapse: collapse; */
-        padding:9px;
-        border-radius: 20px 0px 0px 20px;
-
-    }
-    .form .data table tr td{
+        padding:4px;
+        border-radius: 15px 0px 0px 15px;
         background-color: rgb(196, 196, 196);
     }
     .agetr td{
         border-bottom: solid 4px white;
         border-top: solid 4px white;
     }
-
     .form .data table img{
-        min-width: 250px; max-width: 250px;
-        min-height: 250px;max-height: 250px;
         background-color:gray;
         border: solid 1px;
         border-radius: 10px;
+        width: 250px;
+        height: 250px;
     }
     .form .data table input{
-        background-color:white;
-        height: 130%;
         width:100%;
         border-radius: 10px;
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
-    .form .btn{
+    .form .ppd{
         background-color: rgb(73, 73, 73);
-        /* background-image: linear-gradient(90deg, rgb(0, 0, 0) 30%,rgb(128, 128, 128)) ; */
         border-radius: 0px 20px 20px 0px;
         border-left:solid 1px black;
         overflow: hidden;
-        width:15%;
         display: grid; /* align buttons */
-        grid-template-columns: 0.5fr;
+        grid-template-columns: 0.7fr; /* align buttons */
     }
-    .form .btn .ppd{
-        border-radius: 10px;
+    .form .ppd .btn{
+        border-radius: 0px 15px 15px 0px;
         transition-property: transform;
         transition-duration: 250ms;
         border: solid 2px;
         background-repeat: no-repeat;
         background-position: 90% center;
         margin-left:-100%;
+        overflow: hidden;
     }
-    .form .btn div:hover{
-        transform: translateX(25%);
+    .form .ppd .btn:hover{
+        transform: translateX(15%);
     }
 
-    .btn .post{
+    .form .ppd .btn .flash{
+        position: relative;
+        transform: rotateZ(45deg);
+        top: -100px;
+        left: -40px;
+        width: 40px;
+        height: 100px;
+        background-image:  linear-gradient(135deg , rgba(255, 255, 255, 0) , #ffffff 50%, rgba(255, 255, 255, 0)  ) ;
+        transition: top 250ms, left 250ms ;
+    }
+    .form .ppd .btn:hover .flash{
+        left: 100%; top:100%;
+    }
+
+    .form .ppd .post{
         background-color: rgb(107, 221, 72);
         background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\post.jpg");
     }
-    .btn .put{
+    .form .ppd .put{
         background-color: rgb(87, 72, 221);  
         background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\put.jpg");
     }
-    .btn .delete{
+    .form .ppd .delete{
         background-color:rgb(245, 57, 58);
         background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\delete.jpg");
     }
     
-    /*-------------- animate popup--(using @keyframes) -------------*/
+    /*-------------- animate popup-------------*/
     @keyframes anim{
         0%{transform: translateY(-50px); opacity: 0;}
         50%{transform: translateY(10px); opacity: 1;}
@@ -420,16 +362,13 @@ z-index: 1; */
     .popup-leave-active{
         animation: anim 250ms reverse;
     }
-    /*-------------- animate tables--(using @keyframes) -------------*/
+    /*-------------- animate tables -------------*/
     @keyframes anim2{
         0%{transform: translateX(-100px); opacity: 0;}
     }
     .table-enter-active{
         animation: anim2 300ms ease-in;
     }
-    /* .table-move{ the rows that automatically move down when row added */
-        /* transition: transform 300ms ease-in; */
-    /* } */
     .table-leave-active{ /* not having the leaving row, else table will have limit+1 and pushes down title of next DB */
         position:absolute;
         opacity: 0;
@@ -444,9 +383,7 @@ z-index: 1; */
     .db1 table tr td:nth-child(2)::before {
     content: counter(rowNumber);
     }
-
-
-    
+    /* ------------- class declarations -------------*/
     .green{
         background-color: green;
     }
@@ -456,27 +393,4 @@ z-index: 1; */
     .orange{
         background-color: orange;
     }
-
-
-
-
-.ppd{
-    overflow: hidden;
-}
-
-.flash {
-		position: relative;
-        transform: rotateZ(45deg);
-		top: -100px;
-		left: -40px;
-        width: 40px;
-        height: 100px;
-        background-image:  linear-gradient(135deg , rgba(255, 255, 255, 0) , #ffffff 50%, rgba(255, 255, 255, 0)  ) ;
- 		transition: top 250ms, left 250ms ;
-	}
-
-.ppd:hover .flash{
-   left: 100%; top:100%;
-}
-
 </style>

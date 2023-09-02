@@ -45,18 +45,20 @@ export default {
       fdelete(uri, lastTableId, bucket, db){
         axios.delete(uri+'?lasttableid='+lastTableId)
         .then((response)=>{
-            if(db!='jsonserver')
-            { bucket.a.push({"id":response.data[0].id, "timestamp":response.data[0].timestamp, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo} )}
-            else
-            {
-            axios.get('http://localhost:3000/Resource1?id_lte='+ lastTableId +'&id_ne='+ lastTableId +'&_limit=1&_sort=id&_order=desc')
-              .then((response)=>{  
-                  bucket.a.push({"id":response.data[0].id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo});
-                })
+          //GET row to add instead
+          if(db!='jsonserver' && response.data.length>0)
+          { bucket.a.push({"id":response.data[0].id, "timestamp":response.data[0].timestamp, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo} )}
+          else if(db=='jsonserver')
+          {
+          axios.get('http://localhost:3000/Resource1?id_lte='+ lastTableId +'&id_ne='+ lastTableId +'&_limit=1&_sort=id&_order=desc')
+            .then((response)=>{
+              if(response.data.length>0)
+              { bucket.a.push({"id":response.data[0].id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}); }
+            })
           }
-          })
-        // .catch((err)=>{console.error(err.message)})
-      },
+        })
+      .catch((err)=>{console.error(err.message)})
+    },
   }
 }
 </script>

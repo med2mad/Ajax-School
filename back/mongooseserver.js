@@ -65,12 +65,10 @@ app.put('/:id', (req, res) => {
 //Delete
 app.delete('/:id', (req, res) => {
   usersModel.findOneAndDelete({"timestamp":req.params.id}).then((data)=>{
-      
-    //the row to enter in place of the deleted one
+    //GET row to add instead
     usersModel.find({"timestamp":{$lt:req.query.lasttableid}}).sort({"timestamp":-1}).select("-__v").limit(1).then((data)=>{
       res.json(data);
     });
-
   });
 });
 //404

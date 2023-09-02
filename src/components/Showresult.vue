@@ -277,6 +277,7 @@ color:brown;font-weight: bold;
 }
 footer input{
      border-radius: 20px;
+     text-align: center;
 }
 footer .footer1{   padding-bottom:2px; border-radius: 20px 20px 0px 0px ;
         background-image: linear-gradient(180deg,#787878 0%,
