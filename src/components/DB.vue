@@ -7,7 +7,7 @@
 
     <div class="db">
 
-        <div class="db1">
+        <div class="db1" >
 
             <div class="time" :class="{'green':bucket.timeF<100, 'orange':bucket.timeF>=100 && bucket.timeF<200, 'red':bucket.timeF>=200}">
                 <div v-if="bucket.timeF">
@@ -23,7 +23,7 @@
                     <form>
                     <table cellspacing="2">
                         <tr><th v-if="db!='fake'"></th><th>#</th><th>Name</th><th v-if="db!='fake'">Age</th><th v-if="db!='fake'">Photo</th></tr>
-                        <transition-group name="table" >
+                        <transition-group name="table">
                         <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
                             <td v-show="db!='fake'"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
                             <td></td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="db!='fake'" :ref="'trAge'+user[_id]">{{user.age}}</td>
@@ -41,7 +41,7 @@
         <div class="form" v-if="db!='fake'"> 
             <div class="data">
             <table cellspacing="0">
-                <tr><td id="name">Name:<input type="text" v-model="vname" name="name" maxlength ="25" autocomplete="off" spellcheck="false"></td></tr>
+                <tr><td id="name">Name:<input type="text" v-model="vname" name="name" maxlength ="20" autocomplete="off" spellcheck="false"></td></tr>
                 <tr class="agetr"><td id="age2">Age:<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
                 <tr>
                     <td>
@@ -194,7 +194,7 @@ export default{
         background-image: linear-gradient(45deg , white 5% , #42b983 50%, white  ) ;
         border: solid 4px #2c3e50;
         padding: 1px;
-        border-radius: 0px 0px 20px 20px;
+        border-radius: 0px 0px 15px 15px;
     }
     .title img{
         height:75px;
@@ -234,6 +234,12 @@ export default{
         font-size: 0.8rem;
     }
 
+    .db1 .data{
+        overflow: auto;
+    }
+    .db1 .data , .db1 .data table{
+        width:100%; /* makes the table columns responsive because .db{display:flex} and .db2 is fixed */
+    }
     .db1 table td{
         border: solid 2px;
         font-weight: bold;
@@ -252,9 +258,10 @@ export default{
         background-image: linear-gradient(180deg , rgb(0, 17, 110) ,  rgb(84, 98, 179) 40% , rgb(0, 17, 110) 70% ) ;
         color: white;
         border-radius: 7px;
+        box-shadow: 0px 0px 1px 1px white; /* because of {position:sticky} data appair behinde <hr> */
         padding: 5px;
         position:sticky;
-        top:2px;
+        top:1px; /* {position:sticky} requires top */
     }
 
     .db1 table .datarow{
@@ -272,11 +279,13 @@ export default{
         box-shadow: 0px 0px 1px 1px green;
     }
 
+    .db2{
+        width:auto; /*which is a fixed size because .db{display:flex} makes .db2 intrensic ([width:max-content] does the same)*/
+    }
     .db2 .form{
         background-color: white;
         border-radius: 20px;
         border:  solid 4px white  ;
-        flex: 1;
         display: flex; /* align .data|.ppd */
     }
     .form .data table td{

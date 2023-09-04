@@ -1,63 +1,62 @@
 <template>
     <header>
-        <p><router-link to="/">Test Speed using:</router-link></p>
-        
-            <nav>
-                <router-link to="/xhr">XHR</router-link>|
-                <router-link to="/jquery">JQuery</router-link>|
-                <router-link to="/fetch">Fetch</router-link>|
-                <router-link to="/axios">Axios</router-link>
-            </nav>
+        <p><router-link to="/">Test Speed using :</router-link></p>
+        <nav>
+            <router-link to="/xhr"><div>XHR</div></router-link>
+            <router-link to="/jquery"><div>JQuery</div></router-link>
+            <router-link to="/fetch"><div>Fetch</div></router-link>
+            <router-link to="/axios"><div>Axios</div></router-link>
+        </nav>
     </header>
 
     <div class="side">
-        <div class="logo"><router-link to="/"><img src="logo.png" alt="logo"></router-link></div>
+        <div class="logo"><router-link to="/"><img src="logo.png" alt="logo"></router-link></div> 
         
-<hr>
+        <hr>
 
-        <h2 class="h2">Filter :</h2>
+        <h2>Filter :</h2>
+
         Name <br> <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
         Age <br> <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
     
-        <div class="limit">
-         </div>
+        <div class="limit"></div>
 
-           <h2>Limit :</h2>
-            <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"><br>
+        <h2>Limit :</h2>
 
+        <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"><br>
 
-        <div class="limit">
-         </div>
+        <div class="limit"></div>
 
         <h2>Legend :</h2>
-        <table class="legend" cellspacing="6">
-            <tr><td><div class="green"></div></td><td>Under <br> 100 ms</td></tr>
-            <tr><td><div class="orange"></div></td><td>Between 100 <br> and 200 ms</td></tr>
-            <tr><td ><div class="red"></div></td><td>Above <br> 200 ms</td></tr>
-        </table>
+
+        <div class="legend">
+            <div><div class="green"></div></div><div>Under 100 ms</div>
+            <div><div class="orange"></div></div><div>Between 100 <br> and 200 ms</div>
+            <div><div class="red"></div></div><div>Above 200 ms</div>
+        </div>
     </div>
 
-        <main>
-            <DB v-for="item in DBs" :key="item.db+vlimit+vname+vage" :dblogofile="item.dblogofile" :_id="item._id" :db="item.db" :uri="item.uri" 
-                                @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
-                                @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
-                                    @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
-                                    @clickPut="(selectedId, body)=>{this.fput(item.uri+selectedId, body);}"
-                                    @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item.uri+selectedId, lastTableId, bucket, item.db);}"
-            ></DB>
-        </main>
-
+    <main>
+        <DB v-for="item in DBs" :key="item.db+vlimit+vname+vage" :dblogofile="item.dblogofile" :_id="item._id" :db="item.db" :uri="item.uri" 
+                            @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
+                            @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
+                                @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
+                                @clickPut="(selectedId, body)=>{this.fput(item.uri+selectedId, body);}"
+                                @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item.uri+selectedId, lastTableId, bucket, item.db);}"
+        ></DB>
+    </main>
 
     <footer>
         <div class="footer1">
-            <span>Filter :</span><br>
-            Name : <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false">
-            | Age : <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
+            <div class="span">Filter :</div>
+            <div class="flex2">
+            Name : <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
+            Age : <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
+            </div>
         </div>
         <div class="footer2">
-            <span>Limit : </span>
+            <span class="span">Limit : </span>
             <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off">
-            <!-- <p>Created by "Mohammad LEGHDAICH" in 2023, for portfolio purpose only</p> -->
         </div>
     </footer>
 </template>
@@ -108,156 +107,135 @@ export default{
 @font-face {
     font-family: Roboto-Light;
     src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Roboto-Light.ttf');
-}  
-.side h2{font-family:  Roboto-Light;
-    margin-bottom: 0px;
-    color:brown;
+}
+@font-face {
+    font-family: Rajdhani-Light;
+    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Light.ttf');
 }
 
-header p a{font-family:  JlsspacegothicRnc-n2zY;
-    color: white;
-    font-size: clamp( 0.2rem , 4vw + 0.2rem , 3rem );
-    
+header{
+    background-image: linear-gradient(180deg, rgb(85, 85, 85), rgb(36, 35, 35));
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 70px;
+    z-index: 200;
 
-    margin:0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header p{
+    padding-bottom:15px;
+    margin-left:auto;
+    margin-right:20px;
+}
+header p a{
+    font-family: JlsspacegothicRnc-n2zY, sans-serif;
+    text-shadow: 0px 0px 9px blue;
+    color: white;
+    font-size: clamp( 0.2rem , 4vw + 0.2rem , 2rem );
     font-style: italic;
     font-weight: bold;
-    text-shadow: 0px 0px 9px blue;
 }
-    header{
-        width: 100%;
-        position: fixed;
-        gap:0px;
-    height: 75px;
-        top: 0px;
-    left: 0px;
-        /* background-color: black; */
-        /* background-color: rgb(36, 36, 36); */
-          background-image: linear-gradient(180deg ,rgb(26, 26, 26),white      ) ;
-       /* background-image: linear-gradient(45deg ,white 0%, black 50%  ) ; */
 
-box-shadow: 0px 0px 9px blue;
-        z-index: 200;
+header nav{
+    width: 400px;
+    height: 100%;
+    display: flex; /* align links */
+}
+header nav a{
+    color: white;
+    font-family: Rajdhani-Light, sans-serif;
+    font-size: 1.4rem;font-weight: bold;
+    text-decoration: none;
+    cursor: hand;
+    border-left: solid 1px gray;
+    border-right: solid 1px gray;
+    flex:1;
+    display: flex; /* vertical align links */
+}
+header nav a div{
+    margin: auto; /* vertical align links */
+}
 
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+header nav a:hover{
+    background-image: linear-gradient(180deg, rgb(133, 133, 133), rgb(59, 59, 59)) ;
+}
+header nav a.router-link-exact-active{
+    text-shadow: 0px 0px 9px blue;
+    background-image: linear-gradient(180deg, rgb(182, 182, 182), rgb(59, 59, 59));
+    cursor: default;
+    font-size: 2.1rem;
+    font-weight: bolder;
+}
 
-border-bottom: solid 4px black;
-    }
+main{
+    margin-top: 70px;
+    margin-left: 185px;
+}
 
-    main{
-        margin-top: 75px;
-        margin-left: 185px;
-        overflow: hidden;
-    }
-
-    .side{
-        
-        position: fixed;
-      font-family: 'Roboto', sans-serif;
-
-height: 80vh;
-
-overflow: auto ;
-
-border-radius: 0 0 40px 0px;
-        width:180px;
-padding-top: 0px;
-
-        border-right: solid 3px ;
- border-bottom: solid 1px ;
-/* background-color: black; */
-
-        background-image: linear-gradient(90deg,#787878 0%,
-                                                #b5b5b5 25%,
-                                                #e3e3e3 50%,
-                                                #b5b5b5 75%,
-                                                #787878 100%
-                                            ) ;
-
-    }
+.side{
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+    border-radius: 0 0 40px 0px;
+    border-right: solid 3px ;
+    border-bottom: solid 1px ;
+    background-image: linear-gradient(90deg,#787878 0%,
+                                            #b5b5b5 25%,
+                                            #e3e3e3 50%,
+                                            #b5b5b5 75%,
+                                            #787878 100%
+                                        ) ;
+    position: fixed;
+    overflow-y: auto ;
+    overflow-x: hidden ;
+    height: 80vh;
+    width:180px;
+}
+.side .logo{
+    background-color: black;
+    border: solid 1px white;
+    border-radius: 10px;
+    padding: 7px 10px;
+    text-align: center;
+}
+.side img{
+    width: 100%;
+}
+.side h2{
+    font-family: Roboto-Light, sans-serif;
+    color:brown;
+    margin: 1vh auto; /* not to have to change "marging-bottom" */
+    margin-top: 2vh;
+}
 .side input{
     border-radius: 20px;
     text-align: center;
 }
 
-.side img{
-    height: 90px;
-    width: 150px;
-}
+.side hr{margin: 1vh auto; width:80%;}
 
-.side .logo{
-
-background-color: black ;
-border: solid 1px white;
-border-radius: 10px;
-}
-
-.side hr{margin: 10px auto 10px auto; width:80%;}
-
-.side h2{margin-top: 2vh; }
-
-.side .legend td{
-    text-align: left;
-    min-width: 20px;
-    font-size: 0.9rem;
-}
-
-.side .legend tr td div{
-width:20px;
-height:20px;
-border:solid 1px;
-}
-
-    nav {
-white-space: nowrap;
-        padding: 30px 10px;
-    }
-    nav a {
-        /* background-color: white; */
-            background-image: linear-gradient(180deg , white 10% , #949494 50%, white  ) ;
- font-weight: bold;
-        color: black;
-        text-decoration: none;
-        cursor: hand;
-        padding: 10px;
-
-        border-radius: 10px;
-        box-shadow: #787878 4px 4px 1px;
-        
-    }
-    nav a:hover {
-        background-color: #cfcece;
-         background-image: linear-gradient(180deg , white 10% , #dd6060 50%, white  ) ;
-    }
-    nav a.router-link-exact-active {
-        background-color: #d32f2f;
-         background-image: linear-gradient(180deg , white 10% , #ee2727 50%, white  ) ;
-        color: white;
-        cursor: default;
-        font-weight: bold;
-        padding: 20px;
-        border-radius: 50px;
-        font-size: 1.2rem;
-        box-shadow:none;
-        box-shadow: #787878 4px 4px 1px;
-    }
-
-    
-.limit{
+.side .limit{
     border-bottom: solid 1px brown;
     width : 75%;
     margin: auto;
-    padding: 10px 0px;
+    padding: 1.5vh 0px;
 }
 
-hr{
-
-    width:50%;
+.side .legend{
+    display: grid;
+    grid-template-columns: 1fr 7fr;
+    align-items: center;
+    text-align: left;
+    grid-gap: 6px 10px;
+    margin-left:10px;
 }
-.h2{
-    margin-top:5px;
+.side .legend div div{ /* colored blocks */
+    width:20px;
+    height:20px;
+    border:solid 1px;
 }
 
 footer{
@@ -270,46 +248,66 @@ footer{
                                         ) ;
     border-top: solid 2px black;
     border-radius: 20px 20px 0px 0px ;
-    
 }
-footer span{
-color:brown;font-weight: bold;
+footer .span{
+    color:brown;font-weight: bold;
 }
 footer input{
-     border-radius: 20px;
-     text-align: center;
+    border-radius: 20px;
+    text-align: center;
 }
-footer .footer1{   padding-bottom:2px; border-radius: 20px 20px 0px 0px ;
-        background-image: linear-gradient(180deg,#787878 0%,
+
+footer .footer1{
+    padding-bottom:2px; border-radius: 20px 20px 0px 0px ;
+    display: flex; justify-content: center; align-items:center; gap:10px;
+    background-image: linear-gradient(180deg,#787878 0%,
                                             #b5b5b5 25%,
                                             #e3e3e3 50%,
                                             #b5b5b5 75%,
                                             #787878 100%
                                         ) ;
 }
-footer .footer2{ height:20px; padding-top:6px; border-top: solid 1px;
-        background-image: linear-gradient(180deg,#787878 0%,
+footer .footer1 .flex2{
+    text-align: right;
+}
+
+footer .footer2{ 
+    height:20px; padding-top:6px; border-top: solid 1px;
+    background-image: linear-gradient(180deg,#787878 0%,
                                             #b5b5b5 25%,
                                             #e3e3e3 50%,
                                             #b5b5b5 75%,
                                             #787878 100%
                                         ) ;
 }
+
 @media only screen and (max-width: 650px){
     .side{
         display: none;
     }
+    
     main{
         margin:auto;
         padding-top: 70px;
         padding-bottom: 50px;
     }
+
     footer{
         display:block;
         width: 100%;
         position:fixed;
-        bottom: 0;
         height:72px;
+        bottom: -4px;
+    }
+
+    header p{
+        display:none;
+    }
+    header nav{
+        width:100%;
+    }
+    header nav a{
+        flex:1;
     }
 }
 </style>
