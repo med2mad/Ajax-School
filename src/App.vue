@@ -10,10 +10,10 @@ margin: 0px;
 padding: 0px;
 }
 
-    img{
-        object-fit: contain;
-        vertical-align: bottom;
-    }
+  img{
+      object-fit: contain;
+      vertical-align: bottom;
+  }
 
   body{
     background-color: #eaf2fb;

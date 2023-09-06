@@ -3,7 +3,7 @@
         <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
     </transition>
     
-    <div class="title"> <img v-if="db!='fake'" :src="'DBsImages\\'+dblogofile" alt="DB logo"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
+    <div class="title"> <img v-if="db!='fake'" :src="'tools\\'+dblogofile" alt="DB logo"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
 
     <div class="db">
 
@@ -55,7 +55,7 @@
             </div>
             <div class="ppd">
                 <div class="post btn" @click="handlePost"> <div class="flash"></div> </div>
-                <div class="put btn" @click="handlePut"> <div class="flash"></div> </div>
+                <div class="put btn" @click="handlePut"> <div class="flash"></div> </div><!-- fuck -->
                 <div class="delete btn" @click="handleDelete"> <div class="flash"></div> </div>
             </div>
         </div>
@@ -265,11 +265,11 @@ export default{
     }
 
     .db1 table .datarow{
-        background-color: rgb(255, 255, 130);
+        background-color: rgb(255, 255, 185);
         height: 40px;
     }
     .db1 table .datarow:nth-child(odd){
-        background-color: rgb(255, 255, 190);
+        background-color: white;
     }
 
     .db1 table .selectedrow:nth-child(odd) td , 
@@ -332,18 +332,9 @@ export default{
         transform: translateX(15%);
     }
 
-    .form .ppd .btn .flash{
-        position: relative;
-        transform: rotateZ(45deg);
-        top: -100px;
-        left: -40px;
+    .form .ppd .btn .flash{ /* fuck */
         width: 40px;
         height: 100px;
-        background-image:  linear-gradient(135deg , rgba(255, 255, 255, 0) , #ffffff 50%, rgba(255, 255, 255, 0)  ) ;
-        transition: top 250ms, left 250ms ;
-    }
-    .form .ppd .btn:hover .flash{
-        left: 100%; top:100%;
     }
 
     .form .ppd .post{

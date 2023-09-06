@@ -2,10 +2,10 @@
     <header>
         <p><router-link to="/">Test Speed using :</router-link></p>
         <nav>
-            <router-link to="/xhr"><div>XHR</div></router-link>
-            <router-link to="/jquery"><div>JQuery</div></router-link>
-            <router-link to="/fetch"><div>Fetch</div></router-link>
-            <router-link to="/axios"><div>Axios</div></router-link>
+            <router-link to="/xhr"> <div class="btn">XHR</div> <div class="flash"></div> </router-link>
+            <router-link to="/jquery"> <div class="btn">JQuery</div> <div class="flash"></div> </router-link>
+            <router-link to="/fetch"> <div class="btn">Fetch</div> <div class="flash"></div> </router-link>
+            <router-link to="/axios"> <div class="btn">Axios</div> <div class="flash"></div> </router-link>
         </nav>
     </header>
 
@@ -115,13 +115,13 @@ export default{
 
 header{
     background-image: linear-gradient(180deg, rgb(85, 85, 85), rgb(36, 35, 35));
+    border-bottom: solid 4px gray;
     width: 100%;
     position: fixed;
     top: 0px;
     left: 0px;
     height: 70px;
     z-index: 200;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -153,11 +153,16 @@ header nav a{
     cursor: hand;
     border-left: solid 1px gray;
     border-right: solid 1px gray;
+    overflow: hidden; /* flash */
     flex:1;
-    display: flex; /* vertical align links */
+    position: relative;
+
 }
-header nav a div{
-    margin: auto; /* vertical align links */
+header nav a .btn{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 
 header nav a:hover{
@@ -171,9 +176,23 @@ header nav a.router-link-exact-active{
     font-weight: bolder;
 }
 
+.flash{
+    position: relative;
+    transform: rotateZ(45deg);
+    top: -100px;
+    left: -40px;
+    width: 20px;
+    height: 150px;
+    background-image: linear-gradient(135deg , rgba(255, 255, 255, 0) , #ffffff75 50%, rgba(255, 255, 255, 0)  ) ;
+    transition: top 250ms, left 250ms ;
+}
+header nav a:not(header nav a.router-link-exact-active):hover .flash{
+    left: 100%; top:100%;
+}
+
 main{
     margin-top: 70px;
-    margin-left: 185px;
+    margin-left: 182px;
 }
 
 .side{
@@ -196,7 +215,7 @@ main{
 }
 .side .logo{
     background-color: black;
-    border: solid 1px white;
+    border: solid 4px #2c3e50; 
     border-radius: 10px;
     padding: 7px 10px;
     text-align: center;
@@ -285,7 +304,7 @@ footer .footer2{
     .side{
         display: none;
     }
-    
+
     main{
         margin:auto;
         padding-top: 70px;

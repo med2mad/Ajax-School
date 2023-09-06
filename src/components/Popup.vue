@@ -36,6 +36,10 @@ export default{
     padding: 32px;
     color: #2c3e50;
     border-radius: 10px;
+
+    /* background-color: white;
+    border:rgb(118, 0, 44) solid;
+    color: black; */
 }
 
 /* @keyframes anim {
