@@ -2,10 +2,10 @@
     <header>
         <p><router-link to="/">Test Speed using :</router-link></p>
         <nav>
-            <router-link to="/xhr"> <div class="btn">XHR</div> <div class="flash"></div> </router-link>
-            <router-link to="/jquery"> <div class="btn">JQuery</div> <div class="flash"></div> </router-link>
-            <router-link to="/fetch"> <div class="btn">Fetch</div> <div class="flash"></div> </router-link>
-            <router-link to="/axios"> <div class="btn">Axios</div> <div class="flash"></div> </router-link>
+            <router-link to="/xhr"> <div class="btn">XHR</div> </router-link>
+            <router-link to="/jquery"> <div class="btn">JQuery</div> </router-link>
+            <router-link to="/fetch"> <div class="btn">Fetch</div> </router-link>
+            <router-link to="/axios"> <div class="btn">Axios</div> </router-link>
         </nav>
     </header>
 
@@ -150,13 +150,10 @@ header nav a{
     font-family: Rajdhani-Light, sans-serif;
     font-size: 1.4rem;font-weight: bold;
     text-decoration: none;
-    cursor: hand;
     border-left: solid 1px gray;
     border-right: solid 1px gray;
-    overflow: hidden; /* flash */
     flex:1;
     position: relative;
-
 }
 header nav a .btn{
     position: absolute;
@@ -174,20 +171,6 @@ header nav a.router-link-exact-active{
     cursor: default;
     font-size: 2.1rem;
     font-weight: bolder;
-}
-
-.flash{
-    position: relative;
-    transform: rotateZ(45deg);
-    top: -100px;
-    left: -40px;
-    width: 20px;
-    height: 150px;
-    background-image: linear-gradient(135deg , rgba(255, 255, 255, 0) , #ffffff75 50%, rgba(255, 255, 255, 0)  ) ;
-    transition: top 250ms, left 250ms ;
-}
-header nav a:not(header nav a.router-link-exact-active):hover .flash{
-    left: 100%; top:100%;
 }
 
 main{
