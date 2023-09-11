@@ -127,7 +127,7 @@ header{
     align-items: center;
 }
 header p{
-    padding-bottom:15px;
+    padding-top:20px;
     margin-left:auto;
     margin-right:20px;
 }
@@ -282,6 +282,8 @@ footer .footer2{
                                             #787878 100%
                                         ) ;
 }
+
+/*---------------------media query------------------------------------------*/
 
 @media only screen and (max-width: 650px){
     .side{

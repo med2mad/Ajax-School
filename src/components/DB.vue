@@ -241,6 +241,7 @@ export default{
         width:100%; /* makes the table columns responsive because .db{display:flex} and .db2 is fixed */
     }
     .db1 table td{
+        font-family: Avenir, Helvetica, Arial, sans-serif;
         border: solid 2px;
         font-weight: bold;
         border-radius:5px;
@@ -308,6 +309,7 @@ export default{
         width:100%;
         border-radius: 10px;
         font-size: 1rem;
+        text-align: center;
     }
 
     .form .ppd{
@@ -349,7 +351,6 @@ export default{
         background-color:rgb(245, 57, 58);
         background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\delete.jpg");
     }
-    
     /*-------------- animate popup-------------*/
     @keyframes anim{
         0%{transform: translateY(-50px); opacity: 0;}

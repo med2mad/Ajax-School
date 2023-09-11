@@ -1,35 +1,32 @@
 <template>
+  <div class="homelogo"><img src="logo.png" alt="logo"></div>
 
-  <div class="homelogo"> <router-link to="/"><img src="logo.png" alt="logo"></router-link> </div>
-
-  <h1>Welcome</h1>
+  <h1>- Welcome -</h1>
 
   <div class="home">
 
     <div class="start">
       <div class="ps">
-        <p class="enjoy">Welcome to "AJAX Paradise".</p>
         <p>
           "AJAX", A web developpement technique used to send requests to web servers Asynchronously using javascript 
-          (and XML but no one does any more, we use JSON instead).
         </p>
         <p>
-          This web site's goal is to show off my technical skills by comparing AJAX technique tools on different database systems 
-          by calculating time it takes for each of them to send and receive data (which can help you pick the right database system for your projects).
+          This app's goal is to show off my technical skills by comparing AJAX tools on different database systems 
+          by calculating the time it takes for each of them to send and receive data (which can help you pick the right database system for your projects).
         </p>
         <p>
-          The app also shows my Front-End capabilities in web developpement (UI/Styling/Animations).
+          The app also shows my Front-End capabilities (UI/Styling/Animations).
         </p>
       </div>
       <div class="btn">
           <router-link to="/axios"><div class="text">Start</div></router-link><div class="flash"></div>
       </div>
     </div>
- 
+    
     <div class="tools">
-      <p class="enjoy">These are the tools that were used to make this app:</p>
+      <p>Tools used to make this app:</p>
       <div class="carousel">
-        <button @click="prev" class="buttonPrev">&lt;</button>
+        <img class="crslbtn prevbtn" src="prev.png" @click="prev" alt="button prev">
         <transition :name="transName">
           <img v-if="tools[tooli] == tools[0]" :src="'tools\\'+tools[0]" alt="">
           <img v-else-if="tools[tooli] == tools[1]" :src="'tools\\'+tools[1]" alt="">
@@ -42,11 +39,12 @@
           <img v-else-if="tools[tooli] == tools[8]" :src="'tools\\'+tools[8]" alt="">
           <img v-else :src="'tools\\'+tools[9]" alt="">
         </transition>
-        <button @click="next" class="buttonNext">&gt;</button>
+        <img class="nextbtn crslbtn" src="next.png" @click="next" alt="button next">
       </div>
     </div>
 
   </div>
+  
 </template>
 
 <script>
@@ -59,13 +57,14 @@ export default {
                       'axios.png', 'fetch.jpg', 'jquery.png', 'xhr.png', 
                     ],
               tooli:0,
-              transName:'next',
+              transName:'next', SIreturn:null,
               }
           },
 
     methods:{
       next(){
           this.transName='next';
+          this.startAutoSlide() //restart timer after each manual next/prev
           if(this.tooli<this.tools.length-1) {
             this.tooli++;
           }else{
@@ -74,24 +73,46 @@ export default {
       },
       prev(){
           this.transName='prev';
+          this.startAutoSlide() //restart timer after each manual next/prev
           if(this.tooli>0) {
             this.tooli--;
           }else{
             this.tooli=this.tools.length-1
           }
+      },      
+      startAutoSlide(){
+        clearInterval(this.SIreturn);
+        this.SIreturn = setInterval(() => {
+        this.next();
+        }, 2500);
       },
-    }
+
+    },
+
+    mounted(){
+      this.startAutoSlide();
+    },
 }
 </script>
 
 <style>
+@font-face {
+    font-family: Rajdhani-Light;
+    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Light.ttf');
+}
+@font-face {
+    font-family: Rajdhani-Bold;
+    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Bold.ttf');
+}
+
 .homelogo{
   padding: 10px 0px;
   background-color: black;
   border-radius: 30px;
   border: solid 8px #2c3e50; 
   width: 30%;
-  margin: auto;
+  margin: 5px auto;
+  min-width: 300px;
 }
 
 .homelogo img{
@@ -103,22 +124,28 @@ export default {
 .home{
   display: flex; /*align .start|.tools*/
   flex-wrap: wrap;
+  gap:10px;
+}
+
+h1{
+  font-size: 50px;
+  margin: 20px;
+  margin-bottom: 15px;
+  font-family: Rajdhani-Light, sans-serif;
 }
 
 .start{
   flex: 1;
 }
 
-
-p.enjoy{
-  margin-top:20px;
-  margin-bottom:30px;
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-.start .ps p{
-  margin-bottom:20px;
+p{
+margin-bottom: 20px;
+text-align: left;
+padding-left: 10px;
+line-height: 1.3rem;
+font-family: Rajdhani-Light, sans-serif;
+font-weight: bold;
+font-size: 1.2rem;
 }
 
 .start .btn{
@@ -127,12 +154,15 @@ p.enjoy{
   position: relative; /*position .flash*/
   transition: transform 250ms;
   overflow: hidden;
+  margin-top: 10px;
+  font-family: Rajdhani-Light, sans-serif;
+  border-radius: 20px;
 }
 .start .btn a{
   text-decoration: none;
 }
 .start .btn a .text{
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   background-color: blue;
   color: white;
   font-weight: bold;
@@ -163,56 +193,88 @@ p.enjoy{
   flex:1;
   border-left: solid 1px;
 }
+.tools p{
+  text-align: center;
+  font-family: Rajdhani-Bold, sans-serif;
+  font-size: 1.5rem;
+}
 .tools .carousel{
   justify-content: center;
   display: flex;
-  
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height:50%;
 }
 .tools .carousel img{
   width:50%;
 }
+.tools .carousel .crslbtn{
+  position: absolute;
+  width: 20%;
+}
+.tools .carousel .prevbtn{
+  left:10px;
+  z-index: 1; /* slides go on prev button while sliding */
+}
+.tools .carousel .nextbtn{
+  right:10px;
+}
 /*-------------- animate carousel (using classes)-------------*/
-  .next-leave-from{
-    transform: translateX(0); opacity: 1;
-  }
-  .next-leave-to{
-    transform: translateX(-100%); opacity: 0;
-  }
-  .next-leave-active{
-    transition-property:transform, opacity;
-    transition-duration: 250ms;
-    position: absolute;
-  }
-  .next-enter-from{
-    transform: translateX(100%); opacity: 0;
-  }
-  .next-enter-to{
-    transform: translateX(0); opacity: 1;
-  }
-  .next-enter-active{
-    transition-property:transform, opacity;
-    transition-duration: 250ms;
-  }
+.next-leave-from{
+  transform: translateX(0); opacity: 1;
+}
+.next-leave-to{
+  transform: translateX(-100%); opacity: 0;
+}
+.next-leave-active{
+  transition-property:transform, opacity;
+  transition-duration: 250ms;
+  position: absolute;
+}
+.next-enter-from{
+  transform: translateX(100%); opacity: 0;
+}
+.next-enter-to{
+  transform: translateX(0); opacity: 1;
+}
+.next-enter-active{
+  transition-property:transform, opacity;
+  transition-duration: 250ms;
+}
 
-  .prev-leave-from{
-    transform: translateX(0%); opacity: 1;
+.prev-leave-from{
+  transform: translateX(0%); opacity: 1;
+}
+.prev-leave-to{
+  transform: translateX(100%); opacity: 0;
+}
+.prev-leave-active{
+  transition-property:transform, opacity;
+  transition-duration: 250ms;
+  position: absolute;
+}
+.prev-enter-from{
+  transform: translateX(-100%); opacity: 0;
+}
+.prev-enter-to{
+  transform: translateX(0%); opacity: 1;
+}
+.prev-enter-active{
+  transition-property:transform, opacity;
+  transition-duration: 250ms;
+}
+/*---------------------media query-------------------------*/
+@media only screen and (max-width: 650px){
+  .home{
+    flex-direction: column-reverse;
   }
-  .prev-leave-to{
-    transform: translateX(100%); opacity: 0;
+  .start .ps{
+    display: none;
   }
-  .prev-leave-active{
-    transition-property:transform, opacity;
-    transition-duration: 250ms;
-    position: absolute;
+  .tools .carousel{
+    height: 100px;
   }
-  .prev-enter-from{
-    transform: translateX(-100%); opacity: 0;
-  }
-  .prev-enter-to{
-    transform: translateX(0%); opacity: 1;
-  }
-  .prev-enter-active{
-    transition-property:transform, opacity;
-    transition-duration: 250ms;
-  }
+}
 </style>
