@@ -1,14 +1,14 @@
 <template>
   <div class="homelogo"><img src="logo.png" alt="logo"></div>
 
-  <h1>- Welcome -</h1>
+  <h1><span>-</span> Welcome <span>-</span></h1>
 
   <div class="home">
 
     <div class="start">
       <div class="ps">
         <p>
-          "AJAX", A web developpement technique used to send requests to web servers Asynchronously using javascript 
+          "AJAX", a web developpement technique used to send requests to web servers Asynchronously using javascript.
         </p>
         <p>
           This app's goal is to show off my technical skills by comparing AJAX tools on different database systems 
@@ -39,7 +39,7 @@
           <img v-else-if="tools[tooli] == tools[8]" :src="'tools\\'+tools[8]" alt="">
           <img v-else :src="'tools\\'+tools[9]" alt="">
         </transition>
-        <img class="nextbtn crslbtn" src="next.png" @click="next" alt="button next">
+        <img class="crslbtn nextbtn" src="next.png" @click="next" alt="button next">
       </div>
     </div>
 
@@ -106,18 +106,16 @@ export default {
 }
 
 .homelogo{
-  padding: 10px 0px;
   background-color: black;
   border-radius: 30px;
   border: solid 8px #2c3e50; 
   width: 30%;
+  min-width: 250px;
+  padding: 10px 0px;
   margin: 5px auto;
-  min-width: 300px;
 }
 
 .homelogo img{
-  background-image: linear-gradient(180deg, rgb(206, 206, 206), white);
-  border-radius: 20px;
   width: 90%;
 }
 
@@ -128,9 +126,12 @@ export default {
 }
 
 h1{
-  font-size: 50px;
-  margin: 20px;
-  margin-bottom: 15px;
+  font-family: Rajdhani-Bold, sans-serif;
+  font-size: 3rem;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+h1 span{
   font-family: Rajdhani-Light, sans-serif;
 }
 
@@ -138,55 +139,52 @@ h1{
   flex: 1;
 }
 
-p{
-margin-bottom: 20px;
-text-align: left;
-padding-left: 10px;
-line-height: 1.3rem;
-font-family: Rajdhani-Light, sans-serif;
-font-weight: bold;
-font-size: 1.2rem;
+.start p{
+  font-family: Rajdhani-Light, sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: left;
+  padding-left: 10px;
+  margin-bottom: 15px;
 }
 
 .start .btn{
-  width: 200px;
-  margin: auto;
-  position: relative; /*position .flash*/
-  transition: transform 250ms;
-  overflow: hidden;
-  margin-top: 10px;
   font-family: Rajdhani-Light, sans-serif;
   border-radius: 20px;
+  transition: transform 250ms;
+  position: relative; /*position .flash*/
+  overflow: hidden; /*.flash*/
+  width: 200px;
+  margin: auto;
 }
 .start .btn a{
   text-decoration: none;
 }
 .start .btn a .text{
   font-size: 1.5rem;
+  font-weight: bold;
   background-color: blue;
   color: white;
-  font-weight: bold;
   border-radius: 5px;
   height: 50px;
-  display: grid; place-content: center;
-  transition: transform 250ms;
+  display: grid; place-content: center; /*center text vertically*/
 }
 .start .btn .flash{
   background-image: linear-gradient(135deg , rgba(255, 255, 255, 0) , #ffffff 50%, rgba(255, 255, 255, 0));
-  position: absolute;
   transform: rotateZ(45deg);
+  position: absolute;
   top: -150px;
   left: -40px;
+  transition: top 250ms, left 250ms;
   width: 40px;
   height: 250px;
-  transition: top 250ms, left 250ms ;
+}
+.start .btn:hover{
+  transform: scale(150%, 150%);
 }
 .start .btn:hover .flash{
   top: 100%;
   left:100%;
-}
-.start .btn:hover{
-  transform: scale(150%, 150%);
 }
 
 .tools{
@@ -194,17 +192,16 @@ font-size: 1.2rem;
   border-left: solid 1px;
 }
 .tools p{
-  text-align: center;
   font-family: Rajdhani-Bold, sans-serif;
   font-size: 1.5rem;
+  margin-bottom: 30px;
 }
 .tools .carousel{
-  justify-content: center;
-  display: flex;
+  display: flex; /*.prevbtn |<img>| .nextbtn*/
   align-content: center;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: relative;/*position .crslbtn*/
   height:50%;
 }
 .tools .carousel img{
@@ -275,6 +272,10 @@ font-size: 1.2rem;
   }
   .tools .carousel{
     height: 100px;
+    margin-bottom: 15px;
+  }
+  h1{
+    margin-bottom: 30px;
   }
 }
 </style>

@@ -206,6 +206,7 @@ export default{
         display: flex; /* align .db1|.db2 */
         flex-wrap: wrap;
         justify-content: center;
+        min-height: 525px; /* changing limit / deleting makes the next .title go up and down */
     }
 
     .db .db1{
@@ -213,7 +214,7 @@ export default{
         border-radius: 10px 10px 10px 10px;
         background-color: white;
         max-height: 500px;
-        min-height: 90px; /* 'No Data!!' shows timeF out of bounds */
+        min-height: 90px; /* 'No Data!!' shows timeF out of bounds (optional ?)*/
         flex: 1;
         display:flex; /* align .time|.data */ 
     }
