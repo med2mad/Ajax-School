@@ -16,6 +16,22 @@ export default{
 </script> 
 
 <style>
+@font-face {
+    font-family: JlsspacegothicRnc-n2zY;
+    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\JlsspacegothicRnc-n2zY.otf');
+}
+@font-face {
+    font-family: Roboto-Light;
+    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Roboto-Light.ttf');
+}
+@font-face {
+    font-family: Rajdhani-Light;
+    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Light.ttf');
+}
+@font-face {
+    font-family: Rajdhani-Bold;
+    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Bold.ttf');
+}
 
 .popup{
     position:fixed;
@@ -40,6 +56,10 @@ export default{
     /* background-color: white;
     border:rgb(118, 0, 44) solid;
     color: black; */
+}
+.innerpopup h1{
+    font-family: Rajdhani-Bold, sans-serif;
+    font-weight: bold;
 }
 
 /* @keyframes anim {

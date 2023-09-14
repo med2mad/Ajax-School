@@ -1,6 +1,6 @@
 <template>
     <header>
-        <p><router-link to="/">Test Speed using :</router-link></p>
+        <p><router-link to="/">Testing using :</router-link></p>
         <nav>
             <router-link to="/xhr"> <div class="btn">XHR</div> </router-link>
             <router-link to="/jquery"> <div class="btn">JQuery</div> </router-link>
@@ -95,10 +95,6 @@ export default{
 
 <style>
 @font-face {
-    font-family: JlsspacegothicRnc-n2zY;
-    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\JlsspacegothicRnc-n2zY.otf');
-}
-@font-face {
     font-family: Roboto-Light;
     src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Roboto-Light.ttf');
 }
@@ -125,11 +121,11 @@ header p{
     margin-right:20px;
 }
 header p a{
-    font-family: JlsspacegothicRnc-n2zY, sans-serif;
+    font-family: Rajdhani-Light, sans-serif;
+    font-style: italic;
     text-shadow: 0px 0px 9px blue;
     color: white;
     font-size: clamp( 0.2rem , 4vw + 0.2rem , 2rem );
-    font-style: italic;
     font-weight: bold;
 }
 
@@ -172,7 +168,8 @@ main{
 }
 
 .side{
-    font-family: 'Roboto', sans-serif;
+    font-family: Rajdhani-Light, sans-serif;
+    font-weight: bold;
     font-size: 0.9rem;
     border-radius: 0 0 40px 0px;
     border-right: solid 3px ;

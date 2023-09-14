@@ -41,8 +41,8 @@
         <div class="form" v-if="db!='fake'"> 
             <div class="data">
             <table cellspacing="0">
-                <tr><td id="name">Name:<input type="text" v-model="vname" name="name" maxlength ="20" autocomplete="off" spellcheck="false"></td></tr>
-                <tr class="agetr"><td id="age2">Age:<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
+                <tr><td id="name">Name<input type="text" v-model="vname" name="name" maxlength ="20" autocomplete="off" spellcheck="false"></td></tr>
+                <tr class="agetr"><td id="age2">Age<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
                 <tr>
                     <td>
                         <img ref="img" alt="img" @click="$refs[db].click();" class="img" src="uploads/user.jpg"><br>
@@ -190,209 +190,221 @@ export default{
 </script>
 
 <style>
-    .title{
-        background-image: linear-gradient(45deg , white 5% , #42b983 50%, white  ) ;
-        border: solid 4px #2c3e50;
-        padding: 1px;
-        border-radius: 0px 0px 15px 15px;
-    }
-    .title img{
-        height:75px;
-    }
+@font-face {
+    font-family: Rajdhani-Light;
+    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Light.ttf');
+}
 
-    .db{
-        background-image: linear-gradient(90deg , #eaf2fb , #8a8a8a , #eaf2fb ) ;
-        padding-bottom: 25px;
-        display: flex; /* align .db1|.db2 */
-        flex-wrap: wrap;
-        justify-content: center;
-        min-height: 525px; /* changing limit / deleting makes the next .title go up and down */
-    }
+.title{
+    background-image: linear-gradient(45deg , white 5% , #42b983 50%, white  ) ;
+    border: solid 4px #2c3e50;
+    padding: 1px;
+    border-radius: 0px 0px 15px 15px;
+}
+.title img{
+    height:75px;
+}
 
-    .db .db1{
-        border: solid 4px;
-        border-radius: 10px 10px 10px 10px;
-        background-color: white;
-        max-height: 500px;
-        min-height: 90px; /* 'No Data!!' shows timeF out of bounds (optional ?)*/
-        flex: 1;
-        display:flex; /* align .time|.data */ 
-    }
+.db{
+    background-image: linear-gradient(90deg , #eaf2fb , #8a8a8a , #eaf2fb ) ;
+    padding-bottom: 25px;
+    display: flex; /* align .db1|.db2 */
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: 525px; /* changing limit / deleting makes the next .title go up and down */
+}
 
-    .db1 .time{
-        border-right: solid 4px;
-        font-size: 1.2rem;
-        width:30px;
-    }
-    .db1 .time div{
-        transform: rotateZ(90deg) translateX(30%);
-        white-space: nowrap;
-    }
-    .db1 .time .timef{
-        font-weight: bold;
-    }
-    .db1 .time .ms{
-        font-size: 0.8rem;
-    }
+.db .db1{
+border: solid 4px;
+border-radius: 10px 10px 10px 10px;
+background-color: white;
+max-height: 500px;
+min-height: 90px; /* 'No Data!!' shows timeF out of bounds (optional ?)*/
+flex: 1;
+display:flex; /* align .time|.data */ 
+}
 
-    .db1 .data{
-        overflow: auto;
-    }
-    .db1 .data , .db1 .data table{
-        width:100%; /* makes the table columns responsive because .db{display:flex} and .db2 is fixed */
-    }
-    .db1 table td{
-        font-family: Avenir, Helvetica, Arial, sans-serif;
-        border: solid 2px;
-        font-weight: bold;
-        border-radius:5px;
-        padding: 0px 1px;
-    }
-    .db1 table td img{
-        background-color: black;
-        width: 40px;
-        height: 40px;
-        border-left: solid 1px;
-        border-right: solid 1px;
-    }
-    
-    .db1 table th{
-        background-image: linear-gradient(180deg , rgb(0, 17, 110) ,  rgb(84, 98, 179) 40% , rgb(0, 17, 110) 70% ) ;
-        color: white;
-        border-radius: 7px;
-        box-shadow: 0px 0px 1px 1px white; /* because of {position:sticky} data appair behinde <hr> */
-        padding: 5px;
-        position:sticky;
-        top:1px; /* {position:sticky} requires top */
-    }
+.db1 .time{
+    border-right: solid 4px;
+    font-size: 1.2rem;
+    width:30px;
+}
+.db1 .time div{
+    transform: rotateZ(90deg) translateX(30%);
+    white-space: nowrap;
+}
+.db1 .time .timef{
+    font-weight: bold;
+}
+.db1 .time .ms{
+    font-size: 0.8rem;
+}
 
-    .db1 table .datarow{
-        background-color: rgb(255, 255, 185);
-        height: 40px;
-    }
-    .db1 table .datarow:nth-child(odd){
-        background-color: white;
-    }
+.db1 .data{
+    overflow: auto;
+}
+.db1 .data , .db1 .data table{
+    width:100%; /* makes the table columns responsive because .db{display:flex} and .db2 is fixed */
+}
+.db1 table td{
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    border: solid 2px;
+    font-weight: bold;
+    border-radius:5px;
+    padding: 0px 1px;
+}
+.db1 table td img{
+    background-color: black;
+    width: 40px;
+    height: 40px;
+    border-left: solid 1px;
+    border-right: solid 1px;
+}
 
-    .db1 table .selectedrow:nth-child(odd) td , 
-    .db1 table .selectedrow:nth-child(even) td {
-        background-color: rgb(184, 255, 184);
-        color:green;
-        box-shadow: 0px 0px 1px 1px green;
-    }
+.db1 table th{
+    background-image: linear-gradient(180deg , rgb(0, 17, 110) ,  rgb(84, 98, 179) 40% , rgb(0, 17, 110) 70% ) ;
+    color: white;
+    border-radius: 7px;
+    box-shadow: 0px 0px 1px 1px white; /* because of {position:sticky} data appair behinde <hr> */
+    padding: 5px;
+    position:sticky;
+    top:1px; /* {position:sticky} requires top */
+}
 
-    .db2{
-        width:auto; /*which is a fixed size because .db{display:flex} makes .db2 intrensic ([width:max-content] does the same)*/
-    }
-    .db2 .form{
-        background-color: white;
-        border-radius: 20px;
-        border:  solid 4px white  ;
-        display: flex; /* align .data|.ppd */
-    }
-    .form .data table td{
-        padding:4px;
-        border-radius: 15px 0px 0px 15px;
-        background-color: rgb(196, 196, 196);
-    }
-    .agetr td{
-        border-bottom: solid 4px white;
-        border-top: solid 4px white;
-    }
-    .form .data table img{
-        background-color:gray;
-        border: solid 1px;
-        border-radius: 10px;
-        width: 250px;
-        height: 250px;
-    }
-    .form .data table input{
-        width:100%;
-        border-radius: 10px;
-        font-size: 1rem;
-        text-align: center;
-    }
+.db1 table .datarow{
+    background-color: rgb(255, 255, 185);
+    height: 40px;
+}
+.db1 table .datarow:nth-child(odd){
+    background-color: white;
+}
 
-    .form .ppd{
-        background-color: rgb(73, 73, 73);
-        border-radius: 0px 20px 20px 0px;
-        border-left:solid 1px black;
-        overflow: hidden;
-        display: grid; /* align buttons */
-        grid-template-columns: 0.7fr; /* align buttons */
-    }
-    .form .ppd .btn{
-        border-radius: 0px 15px 15px 0px;
-        transition-property: transform;
-        transition-duration: 250ms;
-        border: solid 2px;
-        background-repeat: no-repeat;
-        background-position: 90% center;
-        margin-left:-100%;
-        overflow: hidden;
-    }
-    .form .ppd .btn:hover{
-        transform: translateX(15%);
-    }
+.db1 table .selectedrow:nth-child(odd) td , 
+.db1 table .selectedrow:nth-child(even) td {
+    background-color: rgb(184, 255, 184);
+    color:green;
+    box-shadow: 0px 0px 1px 1px green;
+}
 
-    .form .ppd .btn .flash{ /* fuck */
-        width: 40px;
-        height: 100px;
-    }
+.db2{
+    width:auto; /*which is a fixed size because .db{display:flex} makes .db2 intrensic ([width:max-content] does the same)*/
+}
+.db2 .form{
+    background-color: white;
+    border-radius: 20px;
+    border: solid 4px white  ;
+    display: flex; /* align .data|.ppd */
+    font-family: Rajdhani-Light;
+    font-weight: bold;
+}
+.form .data table td{
+    padding:4px;
+    border-radius: 15px 0px 0px 15px;
+    background-color: rgb(196, 196, 196);
+}  
+.agetr td{
+    border-bottom: solid 4px white;
+    border-top: solid 4px white;
+}
+.form .data table input{
+    width:100%;
+    border-radius: 10px;
+    font-size: 1rem;
+    text-align: center;
+}
+.form .data table img{
+    background-color:gray;
+    border: solid 1px;
+    border-radius: 10px;
+    width: 250px;
+    height: 250px;
+}
+.form .data table input[type="button"]{
+    font-family: Rajdhani-Light;
+    font-weight: bold;
+} 
 
-    .form .ppd .post{
-        background-color: rgb(107, 221, 72);
-        background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\post.jpg");
-    }
-    .form .ppd .put{
-        background-color: rgb(87, 72, 221);  
-        background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\put.jpg");
-    }
-    .form .ppd .delete{
-        background-color:rgb(245, 57, 58);
-        background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\delete.jpg");
-    }
-    /*-------------- animate popup-------------*/
-    @keyframes anim{
-        0%{transform: translateY(-50px); opacity: 0;}
-        50%{transform: translateY(10px); opacity: 1;}
-        100%{transform: translateY(0); opacity: 1;}
-    }
-    .popup-enter-active{
-        animation: anim 250ms;
-    }
-    .popup-leave-active{
-        animation: anim 250ms reverse;
-    }
-    /*-------------- animate tables -------------*/
-    @keyframes anim2{
-        0%{transform: translateX(-100px); opacity: 0;}
-    }
-    .table-enter-active{
-        animation: anim2 300ms ease-in;
-    }
-    .table-leave-active{ /* not having the leaving row, else table will have limit+1 and pushes down title of next DB */
-        position:absolute;
-        opacity: 0;
-    }
-    /* ------------- automatically numbered rows -------------*/
-    .db1 table {
-    counter-reset: rowNumber -1;
-    }
-    .db1 table tr {
-    counter-increment: rowNumber;
-    }
-    .db1 table tr td:nth-child(2)::before {
-    content: counter(rowNumber);
-    }
-    /* ------------- class declarations -------------*/
-    .green{
-        background-color: green;
-    }
-    .red{
-        background-color: red;
-    }
-    .orange{
-        background-color: orange;
-    }
+.form .ppd{
+    background-color: rgb(73, 73, 73);
+    border-radius: 0px 20px 20px 0px;
+    border-left:solid 1px black;
+    overflow: hidden;
+    display: grid; /* align buttons */
+    grid-template-columns: 0.7fr; /* align buttons */
+}
+.form .ppd .btn{
+    border-radius: 0px 15px 15px 0px;
+    transition-property: transform;
+    transition-duration: 250ms;
+    border: solid 2px;
+    background-repeat: no-repeat;
+    background-position: 90% center;
+    margin-left:-100%;
+    overflow: hidden;
+}
+.form .ppd .btn:hover{
+    transform: translateX(15%);
+}
+
+.form .ppd .btn .flash{ /* fuck */
+    width: 40px;
+    height: 100px;
+}
+
+.form .ppd .post{
+    background-color: rgb(107, 221, 72);
+    background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\post.jpg");
+}
+.form .ppd .put{
+    background-color: rgb(87, 72, 221);  
+    background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\put.jpg");
+}
+.form .ppd .delete{
+    background-color:rgb(245, 57, 58);
+    background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\delete.jpg");
+}
+
+/*-------------- animate popup-------------*/
+@keyframes anim{
+    0%{transform: translateY(-50px); opacity: 0;}
+    50%{transform: translateY(10px); opacity: 1;}
+    100%{transform: translateY(0); opacity: 1;}
+}
+.popup-enter-active{
+    animation: anim 250ms;
+}
+.popup-leave-active{
+    animation: anim 250ms reverse;
+}
+/*-------------- animate tables -------------*/
+@keyframes anim2{
+    0%{transform: translateX(-100px); opacity: 0;}
+}
+.table-enter-active{
+    animation: anim2 300ms ease-in;
+}
+.table-leave-active{ /* not having the leaving row, else table will have limit+1 and pushes down title of next DB */
+    position:absolute;
+    opacity: 0;
+}
+/* ------------- automatically numbered rows -------------*/
+.db1 table {
+counter-reset: rowNumber -1;
+}
+.db1 table tr {
+counter-increment: rowNumber;
+}
+.db1 table tr td:nth-child(2)::before {
+content: counter(rowNumber);
+}
+/* ------------- class declarations -------------*/
+.green{
+    background-color: green;
+}
+.red{
+    background-color: red;
+}
+.orange{
+    background-color: orange;
+}
 </style>
