@@ -2,6 +2,7 @@
     <div class="popup" @click.self="this.$emit('close')">
         <div class="innerpopup">
             <h1>{{text}}</h1>
+            <div @click.self="this.$emit('close')">ok</div>
         </div>
     </div>
 </template>
@@ -17,20 +18,8 @@ export default{
 
 <style>
 @font-face {
-    font-family: JlsspacegothicRnc-n2zY;
-    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\JlsspacegothicRnc-n2zY.otf');
-}
-@font-face {
-    font-family: Roboto-Light;
-    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Roboto-Light.ttf');
-}
-@font-face {
     font-family: Rajdhani-Light;
     src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Light.ttf');
-}
-@font-face {
-    font-family: Rajdhani-Bold;
-    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Bold.ttf');
 }
 
 .popup{
@@ -48,25 +37,23 @@ export default{
 }
 .innerpopup{
     background-color:rgb(255, 227, 227);
-    border:red solid;
     padding: 32px;
-    color: #2c3e50;
     border-radius: 10px;
-
-    /* background-color: white;
-    border:rgb(118, 0, 44) solid;
-    color: black; */
+    border:rgb(118, 0, 44) solid 4px;
+    color: black;
 }
 .innerpopup h1{
-    font-family: Rajdhani-Bold, sans-serif;
+    font-family: Rajdhani-Light, sans-serif;
     font-weight: bold;
 }
 
-/* @keyframes anim {
-    0%{transform: translateY(-25px); opacity: 0;}
-    100%{transform: translateY(0); opacity: 1;}
+.innerpopup div{
+    font-family: Rajdhani-Light, sans-serif;
+    font-weight: bold;
+    color: white;
+    font-size: 2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: rgb(118, 0, 44);
 }
-.innerpopup{
-    animation: anim 250ms;
-} */
 </style>
