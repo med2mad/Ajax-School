@@ -19,7 +19,8 @@
         </p>
       </div>
       <div class="btn">
-          <router-link to="/axios"><div class="text">Start</div></router-link><div class="flash"></div>
+          <router-link to="/axios"><div class="text">Start</div></router-link>
+          <div class="flash"></div>
       </div>
     </div>
     
@@ -143,7 +144,7 @@ h1 span{
   font-family: Rajdhani-Light, sans-serif;
   font-weight: bold;
   font-size: 1.2rem;
-  text-align: left;
+  text-align: justify;
   padding-left: 10px;
   margin-bottom: 15px;
 }
