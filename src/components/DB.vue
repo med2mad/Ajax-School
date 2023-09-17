@@ -196,7 +196,7 @@ export default{
 }
 
 .title{
-    background-image: linear-gradient(45deg , white 5% , #42b983 50%, white  ) ;
+    background-image: linear-gradient(45deg , white 5% , #c5c5c5 50%, white  ) ;
     border: solid 4px #2c3e50;
     padding: 1px;
     border-radius: 0px 0px 15px 15px;
@@ -215,13 +215,13 @@ export default{
 }
 
 .db .db1{
-border: solid 4px;
-border-radius: 10px 10px 10px 10px;
-background-color: white;
-max-height: 500px;
-min-height: 90px; /* 'No Data!!' shows timeF out of bounds (optional ?)*/
-flex: 1;
-display:flex; /* align .time|.data */ 
+    border: solid 4px;
+    border-radius: 10px 10px 10px 10px;
+    background-color: white;
+    max-height: 500px;
+    min-height: 90px; /* 'No Data!!' shows timeF out of bounds (optional ?)*/
+    flex: 1;
+    display:flex; /* align .time|.data */ 
 }
 
 .db1 .time{
