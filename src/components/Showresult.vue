@@ -183,7 +183,7 @@ main{
     position: fixed;
     overflow-y: auto ;
     overflow-x: hidden ;
-    height: 80vh;
+    /* height: 80vh; */
     width:180px;
 }
 .side .logo{
