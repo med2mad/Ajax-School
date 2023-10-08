@@ -170,8 +170,8 @@ main{
 .side{
     font-family: Rajdhani-Light, sans-serif;
     font-weight: bold;
-    /* font-size: 0.9rem;
-    border-radius: 0 0 40px 0px; */
+    /* font-size: 0.9rem; 
+    border-radius: 0 0 40px 0px; anti-pro*/
     border-right: solid 3px ;
     border-bottom: solid 1px ;
     background-image: linear-gradient(90deg,#787878 0%,
@@ -184,6 +184,7 @@ main{
     overflow-y: auto ;
     overflow-x: hidden ;
     /* height: 80vh; */
+    height: 100vh; /*pro*/
     width:180px;
 }
 .side .logo{
