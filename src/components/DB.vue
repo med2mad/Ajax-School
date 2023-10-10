@@ -272,7 +272,7 @@ export default{
 }
 
 .db1 table .datarow{
-    background-color: rgb(255, 255, 185);
+    background-color: rgb(238, 238, 238);
     height: 40px;
 }
 .db1 table .datarow:nth-child(odd){
