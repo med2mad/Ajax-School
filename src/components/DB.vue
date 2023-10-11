@@ -54,9 +54,9 @@
             </table>
             </div>
             <div class="ppd">
-                <div class="post btn" @click="handlePost"> <div class="flash"></div> </div>
-                <div class="put btn" @click="handlePut"> <div class="flash"></div> </div><!-- fuck -->
-                <div class="delete btn" @click="handleDelete"> <div class="flash"></div> </div>
+                <div class="post btn" @click="handlePost"> <div class="flash">POST</div> </div>
+                <div class="put btn" @click="handlePut"> <div class="flash">PUT</div> </div><!-- fuck -->
+                <div class="delete btn" @click="handleDelete"> <div class="flash">DELETE</div> </div>
             </div>
         </div>
         </div>
@@ -348,20 +348,31 @@ export default{
 
 .form .ppd .btn .flash{ /* fuck */
     width: 40px;
-    height: 100px;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+}
+.form .ppd .post .flash{
+    transform: rotateZ(90deg) translate(120%,-30%);
+}.form .ppd .put .flash{
+    transform: rotateZ(90deg) translate(140%,-30%);
+}.form .ppd .delete .flash{
+    transform: rotateZ(90deg) translate(100%,-30%);
 }
 
 .form .ppd .post{
-    background-color: rgb(107, 221, 72);
-    background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\post.jpg");
+    color: green;
+    border-color: green;
+    background-color: rgb(221, 221, 221);  
 }
 .form .ppd .put{
-    background-color: rgb(87, 72, 221);  
-    background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\put.jpg");
+    color: rgb(87, 72, 221);  
+    border-color: rgb(87, 72, 221);  
+    background-color: rgb(221, 221, 221);  
 }
 .form .ppd .delete{
-    background-color:rgb(245, 57, 58);
-    background-image: url("C:\Users\MED\Desktop\AJAX Paradise\public\delete.jpg");
+    color: rgb(207, 72, 72);
+    border-color: rgb(207, 72, 72);
+    background-color: rgb(221, 221, 221);  
 }
 
 /*-------------- animate popup-------------*/
