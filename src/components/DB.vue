@@ -346,12 +346,12 @@ export default{
     transform: translateX(15%);
 }
 
-.form .ppd .btn .flash{ /* fuck */
+.form .ppd .btn .flash{ 
     width: 40px;
     font-size: 1.2rem;
     letter-spacing: 3px;
 }
-.form .ppd .post .flash{
+.form .ppd .post .flash{/* (this is not how it should be done) */
     transform: rotateZ(90deg) translate(120%,-30%);
 }.form .ppd .put .flash{
     transform: rotateZ(90deg) translate(140%,-30%);
