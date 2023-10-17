@@ -66,6 +66,7 @@ export default{
                 vname:'', vage:'', vlimit:10,
                 DBs:[
                     {db:'mysql', dblogofile:'mysql.png', uri:'http://localhost:5010/', _id:'id'},
+                    // {db:'mysql', dblogofile:'mysql.png', uri:'http://localhost/p.php', _id:'id'},
                     {db:'mogoose', dblogofile:'mongodb.png', uri:'http://localhost:5020/', _id:'timestamp'},
                     {db:'postgresql', dblogofile:'postgresql.png', uri:'http://localhost:5030/', _id:'id'},
                     {db:'jsonserver', dblogofile:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id'},
