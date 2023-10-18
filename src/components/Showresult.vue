@@ -1,5 +1,7 @@
 <template>
     <header>
+        <select name="vback" v-model="vback" id=""><option>node</option><option>php</option></select>
+
         <p><router-link to="/">Testing using :</router-link></p>
         <nav>
             <router-link to="/xhr"> <div class="btn">XHR</div> </router-link>
@@ -31,12 +33,12 @@
     </div>
 
     <main>
-        <DB v-for="item in DBs" :key="item.db+vlimit+vname+vage" :dblogofile="item.dblogofile" :_id="item._id" :db="item.db" :uri="item.uri" 
-                            @mountGet="(bucket)=>{fget(getUri(item.uri), bucket);}" 
-                            @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri));}" 
-                                @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
-                                @clickPut="(selectedId, body)=>{this.fput(item.uri+selectedId, body);}"
-                                @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item.uri+selectedId, lastTableId, bucket, item.db);}"
+        <DB v-for="item in DBs" :key="item.db+vback+vlimit+vname+vage" :back="vback" :dblogofile="item.dblogofile" :_id="item._id" :db="item.db" :uri="item.uri" 
+                            @mountGet="(bucket)=>{fget(getUri(item.uri[vback]), bucket);}" 
+                            @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri[vback]));}" 
+                            @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
+                            @clickPut="(selectedId, body)=>{this.fput(item.uri+selectedId, body);}"
+                            @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item.uri+selectedId, lastTableId, bucket, item.db);}"
         ></DB>
     </main>
 
@@ -63,10 +65,9 @@ export default{
             },
 
     data(){return{
-                vname:'', vage:'', vlimit:10,
+                vback:'node', vname:'', vage:'', vlimit:10,
                 DBs:[
-                    {db:'mysql', dblogofile:'mysql.png', uri:'http://localhost:5010/', _id:'id'},
-                    // {db:'mysql', dblogofile:'mysql.png', uri:'http://localhost/p.php', _id:'id'},
+                    {db:'mysql', dblogofile:'mysql.png', uri:{'node':'http://localhost:5010/', 'php':'http://localhost/mysql.php'}, _id:'id'}, //CORS shit ("http://localhost/p.php" and not just "p.php")
                     {db:'mogoose', dblogofile:'mongodb.png', uri:'http://localhost:5020/', _id:'timestamp'},
                     {db:'postgresql', dblogofile:'postgresql.png', uri:'http://localhost:5030/', _id:'id'},
                     {db:'jsonserver', dblogofile:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id'},
@@ -89,8 +90,9 @@ export default{
                 uri += '&_sort=id&_order=desc'; //fake/jsonServer use _sort and _order
                 
                 return uri;
-            }
-        }
+            },
+        getVback(){return this.vback;}
+    }
 }
 </script>
 
