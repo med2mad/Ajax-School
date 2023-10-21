@@ -67,7 +67,7 @@ export default{
     data(){return{
                 vback:'node', vname:'', vage:'', vlimit:10,
                 DBs:[
-                    {db:'mysql', dblogofile:'mysql.png', uri:{'node':'http://localhost:5010/', 'php':'http://localhost/mysql.php'}, _id:'id'}, //CORS shit ("http://localhost/p.php" and not just "p.php")
+                    {db:'mysql', dblogofile:'mysql.png', uri:{'node':'http://localhost:5010/', 'php':'http://localhost/mysql.php'}, _id:'id'}, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
                     {db:'mogoose', dblogofile:'mongodb.png', uri:'http://localhost:5020/', _id:'timestamp'},
                     {db:'postgresql', dblogofile:'postgresql.png', uri:'http://localhost:5030/', _id:'id'},
                     {db:'jsonserver', dblogofile:'jsonserver.png', uri:'http://localhost:3000/Resource1/', _id:'id'},
