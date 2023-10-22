@@ -68,7 +68,7 @@
 import axios from 'axios' //upload photos
 
 export default{
-    props: { db:{type:String}, dblogofile:{type:String}, _id:{type:String}, uri:{type:String}, },
+    props: { db:{type:String}, dblogofile:{type:String}, _id:{type:String},  },
 
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  

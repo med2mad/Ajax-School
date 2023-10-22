@@ -33,12 +33,12 @@
     </div>
 
     <main>
-        <DB v-for="item in DBs" :key="item.db+vback+vlimit+vname+vage" :back="vback" :dblogofile="item.dblogofile" :_id="item._id" :db="item.db" :uri="item.uri" 
+        <DB v-for="item in DBs" :key="item.db+vback+vlimit+vname+vage" :back="vback" :dblogofile="item.dblogofile" :_id="item._id" :db="item.db" 
                             @mountGet="(bucket)=>{fget(getUri(item.uri[vback]), bucket);}" 
                             @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri[vback]));}" 
-                            @clickPost="(body, bucket)=>{this.fpost(item.uri, body, bucket, vlimit);}" 
-                            @clickPut="(selectedId, body)=>{this.fput(item.uri+selectedId, body);}"
-                            @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item.uri+selectedId, lastTableId, bucket, item.db);}"
+                            @clickPost="(body, bucket)=>{this.fpost(item.uri[vback], body, bucket, vlimit);}" 
+                            @clickPut="(selectedId, body)=>{this.fput(item.uri[vback]+selectedId, body);}"
+                            @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item.uri[vback]+selectedId, lastTableId, bucket, item.db);}"
         ></DB>
     </main>
 
@@ -69,7 +69,7 @@ export default{
                 DBs:[
                     {db:'mysql', dblogofile:'mysql.png', uri:{'node':'http://localhost:5010/','php':'http://localhost/mysql.php'}, _id:'id'}, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
                     {db:'mogoose', dblogofile:'mongodb.png', uri:{'node':'http://localhost:5020/','php':'http://localhost/phpmongoback/mongodb.php'}, _id:'timestamp'},
-                    {db:'postgresql', dblogofile:'postgresql.png', uri:{'node':'http://localhost:5030/','php':'http://localhost:5030/'}, _id:'id'},
+                    {db:'postgresql', dblogofile:'postgresql.png', uri:{'node':'http://localhost:5030/','php':'http://localhost/postgress.php'}, _id:'id'},
                     {db:'jsonserver', dblogofile:'jsonserver.png', uri:{'node':'http://localhost:3000/Resource1/','php':'http://localhost:3000/Resource1/'}, _id:'id'},
                     {db:'fake', dblogofile:'fake', uri:{'node':'https://jsonplaceholder.typicode.com/users/','php':'https://jsonplaceholder.typicode.com/users/'}, _id:'id'},
                     //{db:'file', dblogofile:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id'}//in the public folder
