@@ -20,7 +20,7 @@
                     <h2>No Data!!</h2>
                 </div>
                 <div v-else-if="bucket.a" class="rows">
-                    <form>
+                    <form> <!-- //for input radio -->
                     <table cellspacing="2">
                         <tr><th v-if="db!='fake'"></th><th>#</th><th>Name</th><th v-if="db!='fake'">Age</th><th v-if="db!='fake'">Photo</th></tr>
                         <transition-group name="table">
@@ -68,7 +68,7 @@
 import axios from 'axios' //upload photos
 
 export default{
-    props: { db:{type:String}, dblogofile:{type:String}, _id:{type:String},  },
+    props: { db:{type:String}, dblogofile:{type:String}, back:{type:String}, _id:{type:String},  },
 
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  
@@ -163,7 +163,7 @@ export default{
             else if (!Number.isInteger(this.vage) || this.vage<18 || this.vage>99){this.popuptext='Insert Integer between 18 and 99 !'; }
             else if (this.photoObject) {
                 const fd = new FormData();
-                fd.append('photo', this.photoObject , this.photoObject.name)
+                fd.append('photo', this.photoObject , this.photoObject.name);
                 try {
                     const response = await axios.post('http://localhost:5999/upload',fd);
                     this.multerRandomPhotoName = response.data.newPhotoName;

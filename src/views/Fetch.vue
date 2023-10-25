@@ -26,10 +26,19 @@ export default {
       },
 
       fpost(url, body, bucket, limit){
+        console.log(body);
+        const fd = new FormData();
+        fd.append('name', body.name);
+        fd.append('age', body.age);
+        fd.append('photo', body.photo);
+
         fetch(url, {
           method: "POST", 
-          headers: {"Content-Type":"application/json"},
-          body: JSON.stringify(body)
+          // headers: {"Content-Type":"application/json"},
+          // headers: {"Content-Type":"application/w-www-form-urlencoded"},
+          headers: { 'Accept': 'application/json, text/html, text/plain, application/w-www-form-urlencoded' },
+          // body: JSON.stringify(body)
+          body: fd
           })
         .then((response)=> {return response.json()})
         .then((data)=>{

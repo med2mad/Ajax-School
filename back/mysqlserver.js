@@ -25,20 +25,14 @@ con.connect((err) => {
 
 //API Routes (API endpoints)
 //Get All
-// app.get('/', (req, res) => {
-//   let q ="SELECT * FROM users WHERE name LIKE '%"+ req.query._name +"%'";
-//   if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
-//   q += " ORDER BY id DESC LIMIT "+ req.query._limit;
-//   con.query(q, (err, rows)=>{
-//     res.json(rows)
-//   }) 
-// });
 app.get('/', (req, res) => {
-console.log(req.params.id);
-    res.end('rows')
-
+  let q ="SELECT * FROM users WHERE name LIKE '%"+ req.query._name +"%'";
+  if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
+  q += " ORDER BY id DESC LIMIT "+ req.query._limit;
+  con.query(q, (err, rows)=>{
+    res.json(rows)
+  }) 
 });
-
 //Insert
 app.post('/', (req, res) => {
   con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ req.body.photo +"')", (err, data)=>{

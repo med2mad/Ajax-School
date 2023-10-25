@@ -26,7 +26,12 @@ export default {
       
 
       fpost(uri, body, bucket, limit){
-        axios.post(uri,body)
+        const fd = new FormData();
+        fd.append('name', body.name);
+        fd.append('age', body.age);
+        fd.append('photo', body.photo);
+
+        axios.post(uri,fd)
         .then((response) => {
                 const insertedId = response.data.id?response.data.id:response.data; //json-Server responds with an object
                 const rowToInsert = {"id":insertedId, "timestamp":response.data.timestamp, "name":body.name, "age":body.age, "photo":body.photo};
@@ -43,6 +48,7 @@ export default {
       },
 
       fdelete(uri, lastTableId, bucket, db){
+        console.log(uri);
         axios.delete(uri+'?lasttableid='+lastTableId)
         .then((response)=>{
           //GET row to add instead
