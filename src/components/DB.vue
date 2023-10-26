@@ -118,7 +118,6 @@ export default{
                     {this.bucket.a.splice(i, 1);}
                 }
             }
-
         },
 
         selectUser(id){
@@ -161,17 +160,17 @@ export default{
             
             if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !';}
             else if (!Number.isInteger(this.vage) || this.vage<18 || this.vage>99){this.popuptext='Insert Integer between 18 and 99 !'; }
-            else if (this.photoObject) {
-                const fd = new FormData();
-                fd.append('photo', this.photoObject , this.photoObject.name);
-                try {
-                    const response = await axios.post('http://localhost:5999/upload',fd);
-                    this.multerRandomPhotoName = response.data.newPhotoName;
-                } catch (error) {
-                    this.popuptext='Photo not valid !'; 
-                }
-            }
-            
+            // else if (this.photoObject) {
+            //     const fd = new FormData();
+            //     fd.append('photo', this.photoObject , this.photoObject.name);
+            //     try {
+            //         const response = await axios.post('http://localhost:5999/upload',fd);
+            //         this.multerRandomPhotoName = response.data.newPhotoName;
+            //     } catch (error) {
+            //         this.popuptext='Photo not valid !'; 
+            //     }
+            // }
+            this.multerRandomPhotoName = 'user.jpg';
             return this.popuptext;
         },
 

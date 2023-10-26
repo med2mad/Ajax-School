@@ -26,7 +26,6 @@ export default {
       },
 
       fpost(url, body, bucket, limit){
-        console.log(body);
         const fd = new FormData();
         fd.append('name', body.name);
         fd.append('age', body.age);
@@ -36,7 +35,8 @@ export default {
           method: "POST", 
           // headers: {"Content-Type":"application/json"},
           // headers: {"Content-Type":"application/w-www-form-urlencoded"},
-          headers: { 'Accept': 'application/json, text/html, text/plain, application/w-www-form-urlencoded' },
+          headers: {"Content-Type":"multipart/form-data"},
+          // headers: { 'Accept': 'application/json, text/html, text/plain, application/w-www-form-urlencoded' },
           // body: JSON.stringify(body)
           body: fd
           })
