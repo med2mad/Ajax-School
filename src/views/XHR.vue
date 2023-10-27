@@ -1,5 +1,5 @@
 <template>
-  <Showresult title="XHR" :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" />
+  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" />
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <Showresult title="Fetch" :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" />
+  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" />
 </template>
 
 <script>
@@ -26,19 +26,15 @@ export default {
       },
 
       fpost(url, body, bucket, limit){
-        const fd = new FormData();
-        fd.append('name', body.name);
-        fd.append('age', body.age);
-        fd.append('photo', body.photo);
+        // const fd = new FormData();
+        // fd.append('name', body.name);
+        // fd.append('age', body.age);
+        // fd.append('photo', body.photo);
 
         fetch(url, {
           method: "POST", 
-          // headers: {"Content-Type":"application/json"},
-          // headers: {"Content-Type":"application/w-www-form-urlencoded"},
-          headers: {"Content-Type":"multipart/form-data"},
-          // headers: { 'Accept': 'application/json, text/html, text/plain, application/w-www-form-urlencoded' },
-          // body: JSON.stringify(body)
-          body: fd
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify(body)
           })
         .then((response)=> {return response.json()})
         .then((data)=>{

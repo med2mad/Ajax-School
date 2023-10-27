@@ -1,5 +1,5 @@
 <template>
-  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fput="fput" :fdelete="fdelete" />
+  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" />
 </template>
 
 <script>
@@ -26,9 +26,7 @@ export default {
       
 
       fpost(uri, body, bucket, limit){
-        let fd = new FormData();
-        fd.append('name',body.name);fd.append('age',body.age);fd.append('photo','user.jpg');
-        axios.post(uri,fd)
+        axios.post(uri,body)
         .then((response) => {
                 const insertedId = response.data.id?response.data.id:response.data; //json-Server responds with an object
                 const rowToInsert = {"id":insertedId, "timestamp":response.data.timestamp, "name":body.name, "age":body.age, "photo":body.photo};
@@ -40,14 +38,14 @@ export default {
 
       fput(uri, body){
         axios.put(uri, body)
-          .then((response) => {console.log(response);})
+          .then((response) => {console.log(response.data);})
           .catch((err) => {console.error(err);});
       },
 
       fdelete(uri, lastTableId, bucket, db){
         axios.delete(uri+'?lasttableid='+lastTableId)
         .then((response)=>{
-          //GET row to add instead
+          //GET row to add instead of the deleted one
           if(db!='jsonserver' && response.data.length>0)
           { bucket.a.push({"id":response.data[0].id, "timestamp":response.data[0].timestamp, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo} )}
           else if(db=='jsonserver')

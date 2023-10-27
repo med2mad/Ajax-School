@@ -1,5 +1,5 @@
 <template>
-  <Showresult title="JQuery" :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" />
+  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" />
 </template>
 
 <script>
@@ -26,7 +26,6 @@ export default {
       fpost(uri, body, bucket, limit){
         $.ajax({type:'post', url:uri+'?callback=?', contentType:"application/json", data:JSON.stringify(body)})
         .done(function(response){ //#TODO get last inserted id using GET (JSONServer+jQuery problem)
-                  console.log(response);
                   const id = response.id?response.id:response; //json-Server responds with an object
                   bucket.a.unshift({"id":id, "_id":id, "name":body.name, "age":body.age, "photo":body.photo});
                   if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
