@@ -56,10 +56,23 @@ export default {
         .catch((err)=>{console.log('err: ' + err.message)})
       },
       
-      fdelete(url){
+      fdelete(url, lastTableId, bucket, db){
         fetch(url, {method: "DELETE"})
         .then((response)=>{return response.json()})
-        .then((data)=>{console.log(data);})
+        .then((response)=>{
+          console.log(response);
+          //GET row to add instead of the deleted one
+          if(db!='jsonserver' && response.data.length>0)
+          { bucket.a.push({"id":response.data[0].id, "timestamp":response.data[0].timestamp, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo} )}
+          else if(db=='jsonserver')
+          {
+          axios.get('http://localhost:3000/Resource1?id_lte='+ lastTableId +'&id_ne='+ lastTableId +'&_limit=1&_sort=id&_order=desc')
+            .then((response)=>{
+              if(response.data.length>0)
+              { bucket.a.push({"id":response.data[0].id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}); }
+            })
+          }
+        })
         .catch((err)=>{console.log('err: ' + err.message)})
       }
   }

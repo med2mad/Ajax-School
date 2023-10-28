@@ -4,6 +4,7 @@
 
 <script>
 import axios from "axios";
+import { resolveComponent } from 'vue';
 export default {
   methods: {
       fget(uri, bucket){
