@@ -12,6 +12,7 @@
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
+    "curl": "^0.1.4",
     "dotenv": "^16.3.1",
     "express-fileupload": "^1.4.0",
     "express-response-time": "^0.0.6",
