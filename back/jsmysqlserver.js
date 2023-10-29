@@ -1,8 +1,4 @@
 console.log(require('./mod').a);
-
-
-
-
 var url = require('url');
 const http=require('http');
 
@@ -33,6 +29,7 @@ const server = http.createServer((req, res)=>{
     }) 
   }
   else if (req.method=='POST'){
+    
     con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ req.body.photo +"')", (err, data)=>{
       res.json(data.insertId)
     })
@@ -41,7 +38,9 @@ const server = http.createServer((req, res)=>{
     
   }
   else if (req.method=='DELETE'){
-    
+    const t = req.url.split('/');
+    const id = t[t.length-1];
+
   }
 }); 
 

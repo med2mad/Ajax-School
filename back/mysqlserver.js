@@ -1,4 +1,6 @@
 require('dotenv').config();
+const o = require('./jsonserver.json');
+console.log(o);
 const port = process.env.mysqlPORT || process.argv[2] || 5010;
 // Import required packages
 const express = require('express');
