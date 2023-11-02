@@ -1,4 +1,3 @@
-console.log(require('./mod').a);
 var url = require('url');
 const http=require('http');
 
@@ -29,9 +28,17 @@ const server = http.createServer((req, res)=>{
     }) 
   }
   else if (req.method=='POST'){
-    
-    con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ req.body.photo +"')", (err, data)=>{
-      res.json(data.insertId)
+    const body=[];
+    req.on('data', p=>{body.push(p)})
+    req.on('end', ()=>{
+      const parsedbody = Buffer.concat(body).toString();
+      const data = parsedbody.split('&');
+      const name = data[0].split('=');
+      const age = data[1].split('=');
+      const photo = data[2].split('=');
+      con.query("INSERT INTO users (name, age, photo) VALUES ('"+ name +"', '"+ age +"', '"+ photo +"')", (err, data)=>{
+        console.log(data.insertId)
+      })
     })
   }
   else if (req.method=='PUT'){

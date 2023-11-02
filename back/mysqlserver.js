@@ -1,6 +1,3 @@
-require('dotenv').config();
-const o = require('./jsonserver.json');
-console.log(o);
 const port = process.env.mysqlPORT || process.argv[2] || 5010;
 // Import required packages
 const express = require('express');
@@ -25,6 +22,14 @@ con.connect((err) => {
   else{app.listen(port, ()=>{console.log("'Mysyql' Port: " + port);});}
 });
 
+
+app.use((req, res) => {
+  return res.send('<a href="">aaaaaaaaaaa</a>');
+});
+
+
+
+
 //API Routes (API endpoints)
 //Get All
 app.get('/', (req, res) => {
@@ -32,31 +37,31 @@ app.get('/', (req, res) => {
   if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
   q += " ORDER BY id DESC LIMIT "+ req.query._limit;
   con.query(q, (err, rows)=>{
-    res.json(rows)
-  }) 
+    res.json(rows);
+  });
 });
 //Insert
 app.post('/', (req, res) => {
   con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ req.body.photo +"')", (err, data)=>{
-    res.json(data.insertId)
+    res.json(data.insertId);
   })
 });
 //Update
 app.put('/:id', (req, res) => {
     con.query("UPDATE users SET name = '"+ req.body.name +"', age = '"+ req.body.age +"', photo = '"+ req.body.photo +"' WHERE id='"+ req.params.id +"'", (err, data)=>{
-      res.json(data)
-  })
+      res.json(data);
+  });
 });
 //Delete
 app.delete('/:id', (req, res) => {
     con.query("DELETE FROM users WHERE id='"+ req.params.id +"'", (err, data)=>{
       //GET Row to add instead
       con.query("SELECT * FROM users WHERE id=(SELECT Max(id) from users where id < '"+ req.query.lasttableid +"')", (err, rows)=>{
-        res.send(rows)
-      }) 
+        res.json(rows)
+      });
   });
 });
 //404
 app.use((req, res) => {
-  res.status(404).json("404 , no routes !")
-}); 
+  res.status(404).json("404 , no routes !");
+});
