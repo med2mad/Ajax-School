@@ -8,6 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json()); //req.body gets data from ajax requests payload
 app.use(express.urlencoded({extended:true})); //req.body gets <form> values
+app.use(express.static(__dirname));
 
 // Connect to Mysql2
 const mysql = require('mysql2');
@@ -22,13 +23,14 @@ con.connect((err) => {
   else{app.listen(port, ()=>{console.log("'Mysyql' Port: " + port);});}
 });
 
-
-app.use((req, res) => {
-  return res.send('<a href="">aaaaaaaaaaa</a>');
+app.use('/shit', (req, res) => {
+  return   res.send("shit" );
 });
 
-
-
+app.use((req, res) => {
+// return   res.sendFile(__dirname + "/a.jpg");
+return   res.sendFile(__dirname + "/noajax.html" );
+});
 
 //API Routes (API endpoints)
 //Get All
