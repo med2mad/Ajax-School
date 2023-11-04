@@ -6,64 +6,26 @@ const cors = require('cors');
 // Create an Express application
 const app = express();
 app.use(cors());
-app.use(express.json()); //req.body gets data from ajax requests payload
-app.use(express.urlencoded({extended:true})); //req.body gets <form> values
+app.use(express.urlencoded({extended:true})); //for req.body to get data directly (no Ajax) from <form> text values (urlencoded)
+app.use(express.json()); //for req.body to get data from ajax requests payload
 app.use(express.static(__dirname));
 
-// Connect to Mysql2
-const mysql = require('mysql2');
-var con = mysql.createConnection({
-  host: "localhost", 
-  user: "root",
-  password: "",
-  database: "test"
-});
+const con = require('./configurations/mysql');
 con.connect((err) => {
   if (err){console.log("'Mysyql' initial connection error");}
   else{app.listen(port, ()=>{console.log("'Mysyql' Port: " + port);});}
 });
 
-app.use('/shit', (req, res) => {
-  return   res.send("shit" );
-});
-
-app.use((req, res) => {
-// return   res.sendFile(__dirname + "/a.jpg");
-return   res.sendFile(__dirname + "/noajax.html" );
-});
-
 //API Routes (API endpoints)
+const {getAll, add, edit, remove, notFound, addUser} = require('./controllers/mysql');
 //Get All
-app.get('/', (req, res) => {
-  let q ="SELECT * FROM users WHERE name LIKE '%"+ req.query._name +"%'";
-  if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
-  q += " ORDER BY id DESC LIMIT "+ req.query._limit;
-  con.query(q, (err, rows)=>{
-    res.json(rows);
-  });
-});
+app.get('/', getAll);
 //Insert
-app.post('/', (req, res) => {
-  con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ req.body.photo +"')", (err, data)=>{
-    res.json(data.insertId);
-  })
-});
+app.post('/', add);
+app.post('/sub', addUser, (req, res)=>{res.redirect('http://localhost:8080/axios')});
 //Update
-app.put('/:id', (req, res) => {
-    con.query("UPDATE users SET name = '"+ req.body.name +"', age = '"+ req.body.age +"', photo = '"+ req.body.photo +"' WHERE id='"+ req.params.id +"'", (err, data)=>{
-      res.json(data);
-  });
-});
+app.put('/:id', edit);
 //Delete
-app.delete('/:id', (req, res) => {
-    con.query("DELETE FROM users WHERE id='"+ req.params.id +"'", (err, data)=>{
-      //GET Row to add instead
-      con.query("SELECT * FROM users WHERE id=(SELECT Max(id) from users where id < '"+ req.query.lasttableid +"')", (err, rows)=>{
-        res.json(rows)
-      });
-  });
-});
+app.delete('/:id', remove);
 //404
-app.use((req, res) => {
-  res.status(404).json("404 , no routes !");
-});
+app.use(notFound);

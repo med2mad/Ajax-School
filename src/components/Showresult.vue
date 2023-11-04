@@ -1,9 +1,10 @@
 <template>
     <header>
-        <select name="vback" v-model="vback" id=""><option>node</option><option>js</option><option>php</option></select>
+        <select name="vback" v-model="vback" id=""><option>express</option><option>js</option><option>php</option></select>
 
         <p><router-link to="/">Testing using :</router-link></p>
         <nav>
+            <router-link to="/sub"> <div class="btn">subscribe</div> </router-link>
             <router-link to="/xhr"> <div class="btn">XHR</div> </router-link>
             <router-link to="/jquery"> <div class="btn">JQuery</div> </router-link>
             <router-link to="/fetch"> <div class="btn">Fetch</div> </router-link>
@@ -55,23 +56,24 @@
             <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off">
         </div>
     </footer>
+    
 </template>
 
 <script>
 export default{
-    props: {fpost:{type:Function},
+    props: {fpost:{type:Function},sub:{type:String},
             fput:{type:Function}, fdelete:{type:Function},
             fget:{type:Function}, fgetw:{type:Function}
             },
 
     data(){return{
-                vback:'node', vname:'', vage:'', vlimit:10,
+                vback:'express', vname:'', vage:'', vlimit:10,
                 DBs:[
-                    {db:'mysql', dblogofile:'mysql.png', uri:{'node':'http://localhost:5010/', 'js':'http://localhost:1010/', 'php':'http://localhost:80/mysql.php/'}, _id:'id'}, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
-                    {db:'mogoose', dblogofile:'mongodb.png', uri:{'node':'http://localhost:5020/', 'js':'http://localhost:1020/','php':'http://localhost:80/phpmongoback/mongodb.php/'}, _id:'timestamp'},
-                    {db:'postgresql', dblogofile:'postgresql.png', uri:{'node':'http://localhost:5030/', 'js':'http://localhost:1030/','php':'http://localhost:80/postgress.php/'}, _id:'id'},
-                    {db:'jsonserver', dblogofile:'jsonserver.png', uri:{'node':'http://localhost:3000/Resource1/', 'js':'http://localhost:3000/Resource1/','php':'http://localhost:3000/Resource1/'}, _id:'id'},
-                    {db:'fake', dblogofile:'fake', uri:{'node':'https://jsonplaceholder.typicode.com/users/','js':'https://jsonplaceholder.typicode.com/users/','php':'https://jsonplaceholder.typicode.com/users/'}, _id:'id'},
+                    {db:'mysql', dblogofile:'mysql.png', uri:{'express':'http://localhost:5010/', 'js':'http://localhost:1010/', 'php':'http://localhost:80/mysql.php/'}, _id:'id'}, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
+                    {db:'mogoose', dblogofile:'mongodb.png', uri:{'express':'http://localhost:5020/', 'js':'http://localhost:1020/','php':'http://localhost:80/phpmongoback/mongodb.php/'}, _id:'timestamp'},
+                    {db:'postgresql', dblogofile:'postgresql.png', uri:{'express':'http://localhost:5030/', 'js':'http://localhost:1030/','php':'http://localhost:80/postgress.php/'}, _id:'id'},
+                    {db:'jsonserver', dblogofile:'jsonserver.png', uri:{'express':'http://localhost:3000/Resource1/', 'js':'http://localhost:3000/Resource1/','php':'http://localhost:3000/Resource1/'}, _id:'id'},
+                    {db:'fake', dblogofile:'fake', uri:{'express':'https://jsonplaceholder.typicode.com/users/','js':'https://jsonplaceholder.typicode.com/users/','php':'https://jsonplaceholder.typicode.com/users/'}, _id:'id'},
                     //{db:'file', dblogofile:'Simple File', uri:'http://localhost:8080/j.json' /*(or just [uri:'j.json']) */, _id:'id'}//in the public folder /  var o = JSON.parse(fs.readFileSync(filePath));   /   var o = require(filePath);)
                     ]
                 }

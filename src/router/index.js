@@ -4,6 +4,7 @@ import Fetch from '../views/Fetch.vue'
 import JQuery from '../views/JQuery.vue'
 import Axios from '../views/Axios.vue'
 import XHR from '../views/XHR.vue'
+import Sub from '../views/sub.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/xhr',
     name: 'xhr',
     component: XHR
+  },
+  {
+    path: '/sub',
+    name: 'sub',
+    component: Sub
   }
 ]
 
