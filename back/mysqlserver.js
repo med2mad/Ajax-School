@@ -6,8 +6,8 @@ const cors = require('cors');
 // Create an Express application
 const app = express();
 app.use(cors());
-app.use(express.urlencoded({extended:true})); //for req.body to get data directly (no Ajax) from <form> text values (urlencoded)
-app.use(express.json()); //for req.body to get data from ajax requests payload
+// app.use(express.urlencoded({extended:true})); 
+app.use(express.json());
 app.use(express.static(__dirname));
 
 const con = require('./configurations/mysql');
@@ -17,12 +17,13 @@ con.connect((err) => {
 });
 
 //API Routes (API endpoints)
-const {getAll, add, edit, remove, notFound, addUser} = require('./controllers/mysql');
+const {getAll, add, edit, remove, notFound, addUser} = require('./controllers/mysqlCrl');
 //Get All
 app.get('/', getAll);
+app.get('/sub/:rparam', (req, res)=>{console.log(req.body);console.log(req.params);console.log(req.query);});
 //Insert
 app.post('/', add);
-app.post('/sub', addUser, (req, res)=>{res.redirect('http://localhost:8080/axios')});
+app.post('/sub/:rparam', addUser);
 //Update
 app.put('/:id', edit);
 //Delete

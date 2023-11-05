@@ -36,6 +36,8 @@ module.exports.notFound = (req, res) => {
 
 module.exports.addUser = (req, res, next) => {
     console.log(req.body);
-    // res.send(req.body); //cannot redirect after this
-    next();
+    console.log(req.params);
+    console.log(req.query);
+    // res.send(req.body); 
+    // next();//cannot redirect after res.send
 };
