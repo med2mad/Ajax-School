@@ -1,5 +1,6 @@
 const con = require('../configurations/mysql');
 
+
 module.exports.getAll = (req, res) => {
     let q ="SELECT * FROM users WHERE name LIKE '%"+ req.query._name +"%'";
     if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
@@ -35,9 +36,14 @@ module.exports.notFound = (req, res) => {
 };
 
 module.exports.addUser = (req, res, next) => {
-    console.log(req.body);
-    console.log(req.params);
-    console.log(req.query);
-    // res.send(req.body); 
-    // next();//cannot redirect after res.send
+    const body = req.body;
+    const file = req.files;
+    console.log(file.photo.size);
+    console.log(file.photo.name);
+    console.log(file.photo.mimetype);
+    res.send(body);
+
+    if( file.photo.size<1000000 && file.photo.mimetype.split("/")[0]==="image" ){
+        file.photo.mv(file.photo.name, (err, result)=>{});
+    }
 };
