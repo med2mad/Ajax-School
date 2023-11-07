@@ -37,13 +37,10 @@ module.exports.notFound = (req, res) => {
 
 module.exports.addUser = (req, res, next) => {
     const body = req.body;
-    const file = req.files;
-    console.log(file.photo.size);
-    console.log(file.photo.name);
-    console.log(file.photo.mimetype);
+    // const file = req.files.photo;
+    // console.log(file);
+    console.log(body);
     res.send(body);
 
-    if( file.photo.size<1000000 && file.photo.mimetype.split("/")[0]==="image" ){
-        file.photo.mv(file.photo.name, (err, result)=>{});
-    }
+    // file.mv( file.name, (err, result)=>{if (err) {console.log(err)}} );
 };

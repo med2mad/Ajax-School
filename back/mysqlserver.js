@@ -8,9 +8,10 @@ const mysqlCon = require('./configurations/mysql');
 // Create an Express application
 const app = express();
 app.use(cors());
-app.use(express.static(__dirname));
-app.use(expressFileupload());
-//app.use(express.json());
+// app.use(express.static(__dirname));
+app.use(express.urlencoded({extended:true}));
+// app.use(expressFileupload());
+app.use(express.json());
 
 mysqlCon.connect((err) => {
   if (err){console.log("'Mysyql' initial connection error");}

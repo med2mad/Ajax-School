@@ -75,7 +75,7 @@ export default{
     data(){return{
                 bucket:{timeF:'',time0:0, a:'', s:''},
                 selectedId:'', 
-                vname:'', vage:'', multerRandomPhotoName:'', photoObject:null,
+                vname:'', vage:'', generatedPhotoName:'', photoObject:null,
                 showpopup:false, popuptext:'', 
                 }
             },
@@ -84,7 +84,7 @@ export default{
         async handlePost(){
             if(await this.dataCheck()){this.showpopup = true;}
             else{
-                this.$emit('clickPost', {"name":this.vname, "age":this.vage, "photo":this.multerRandomPhotoName}, this.bucket);
+                this.$emit('clickPost', {"name":this.vname, "age":this.vage, "photo":this.generatedPhotoName}, this.bucket);
                 this.clear();
                 }
         },
@@ -92,14 +92,14 @@ export default{
             if(!this.selectedId){this.popuptext='Select User !'; this.showpopup = true;}
             else if(await this.dataCheck()){this.showpopup = true;}
             else{
-                this.$emit('clickPut', this.selectedId, {"name":this.vname, "age":this.vage, "photo":this.multerRandomPhotoName});
+                this.$emit('clickPut', this.selectedId, {"name":this.vname, "age":this.vage, "photo":this.generatedPhotoName});
                 
                 for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to change
                     if(this.bucket.a[i][this._id]==this.selectedId)
                     {
                         this.bucket.a[i].name = this.vname;
                         this.bucket.a[i].age = this.vage;
-                        this.bucket.a[i].photo = this.multerRandomPhotoName;
+                        this.bucket.a[i].photo = this.generatedPhotoName;
                     }
                 }
 
@@ -130,11 +130,11 @@ export default{
                 this.vage = this.$refs['trAge'+id][0].innerHTML;
                 let src = this.$refs['trImg'+id][0].src;
                 this.$refs.img.src = src;
-                this.multerRandomPhotoName = src?src.split("/")[src.split("/").length-1]:''; 
+                this.generatedPhotoName = src?src.split("/")[src.split("/").length-1]:''; 
             }
         },
         removePhoto(){
-            this.multerRandomPhotoName='';
+            this.generatedPhotoName='';
             this.$refs.img.src='./uploads/user.jpg';
             this.photoObject=null;
             this.$refs[this.db].value= null;
@@ -142,7 +142,7 @@ export default{
         clear(){
             this.vname='';
             this.vage='';
-            this.multerRandomPhotoName='';
+            this.generatedPhotoName='';
             this.$refs.img.src='./uploads/user.jpg';
             this.photoObject=null;
             this.$refs[this.db].value= null;
@@ -165,7 +165,7 @@ export default{
                 fd.append('photo', this.photoObject , this.photoObject.name);
                 try {
                     const response = await axios.post('http://localhost:5999/upload',fd);
-                    this.multerRandomPhotoName = response.data.newPhotoName;
+                    this.generatedPhotoName = response.data.newPhotoName;
                 } catch (error) {
                     this.popuptext='Photo not valid !'; 
                 }

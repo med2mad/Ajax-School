@@ -28,6 +28,7 @@ const server = http.createServer((req, res)=>{
     }) 
   }
   else if (req.method=='POST'){
+   
     const body=[];
     req.on('data', p=>{body.push(p)})
     req.on('end', ()=>{
