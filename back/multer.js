@@ -1,7 +1,11 @@
 require('dotenv').config();
 const port = process.env.multerPORT || process.argv[2] || 5999;
-// Import required packages
+const express = require('express');
+const cors = require('cors');
+const app = express();
+app.use(cors());
 const fs = require('fs');
+
 const multer = require('multer');
 let randomImgName;
 const strg = multer.diskStorage({ destination: function(req,file,callback){fs.mkdirSync('./public/uploads', {recursive:true}); callback(null,'./public/uploads');}, 
@@ -14,15 +18,13 @@ function fileCheck(file, cb) {
   else {return cb(null, true);}
 }
 
-// Create an Express application
-const express = require('express');
-const cors = require('cors');
-const app = express();
-app.use(cors());
+app.use(uploads.single("photo"));
 
 //Insert
-app.post('/upload', uploads.single("photo"), (req, res) => {
+app.post('/upload', (req, res) => {
     res.json({newPhotoName:randomImgName})
 });
 
 app.listen(port, ()=>{console.log("'Multer' Port: " + port);});
+
+module.exports = uploads.single("photo");

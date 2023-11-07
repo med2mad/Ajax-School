@@ -1,6 +1,5 @@
 const con = require('../configurations/mysql');
 
-
 module.exports.getAll = (req, res) => {
     let q ="SELECT * FROM users WHERE name LIKE '%"+ req.query._name +"%'";
     if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
@@ -37,10 +36,9 @@ module.exports.notFound = (req, res) => {
 
 module.exports.addUser = (req, res, next) => {
     const body = req.body;
-    // const file = req.files.photo;
-    // console.log(file);
+    const file = req.files.photo;
     console.log(body);
-    res.send(body);
+    res.send(file);
 
-    // file.mv( file.name, (err, result)=>{if (err) {console.log(err)}} );
+    file.mv( file.name, (err, result)=>{if (err) {console.log(err)}} );
 };

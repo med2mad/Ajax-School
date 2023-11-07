@@ -74,7 +74,7 @@ export default{
                     {db:'postgresql', dblogofile:'postgresql.png', uri:{'express':'http://localhost:5030/', 'js':'http://localhost:1030/','php':'http://localhost:80/postgress.php/'}, _id:'id'},
                     {db:'jsonserver', dblogofile:'jsonserver.png', uri:{'express':'http://localhost:3000/Resource1/', 'js':'http://localhost:3000/Resource1/','php':'http://localhost:3000/Resource1/'}, _id:'id'},
                     {db:'fake', dblogofile:'fake', uri:{'express':'https://jsonplaceholder.typicode.com/users/','js':'https://jsonplaceholder.typicode.com/users/','php':'https://jsonplaceholder.typicode.com/users/'}, _id:'id'},
-                    //{db:'file', dblogofile:'Simple File', uri:'http://localhost:8080/j.json' /*(or [uri:'j.json'] because served links will add the current uri) */, _id:'id'} //in the public folder. (use: var o = JSON.parse(fs.readFileSync(filePath)); / var o = require(filePath);)
+                    //{db:'file', dblogofile:'Simple File', uri:'http://localhost:8080/j.json' /*(or [uri:'j.json'] because served links will add the current uri) */, _id:'id'} //in the public folder. ( use: var o = JSON.parse(fs.readFileSync(filePath)); + fs.writeFileSync(path, JSON.stringify(o)) / var o = require(filePath); )
                     ]
                 }
             },
