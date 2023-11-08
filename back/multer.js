@@ -18,13 +18,13 @@ function fileCheck(file, cb) {
   else {return cb(null, true);}
 }
 
+//upload
 app.use(uploads.single("photo"));
-
-//Insert
-app.post('/upload', (req, res) => {
+//return generated Name
+app.post('/upload', (req, res, next) => {
     res.json({newPhotoName:randomImgName})
 });
 
-app.listen(port, ()=>{console.log("'Multer' Port: " + port);});
+// app.listen(port, ()=>{console.log("'Multer' Port: " + port);});
 
 module.exports = uploads.single("photo");

@@ -10,6 +10,7 @@ module.exports.getAll = (req, res) => {
 };
 
 module.exports.add = (req, res) => {
+    console.log(req.body);
     con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ req.body.photo +"')", (err, data)=>{
         res.json(data.insertId);
     });
@@ -36,9 +37,9 @@ module.exports.notFound = (req, res) => {
 
 module.exports.addUser = (req, res, next) => {
     const body = req.body;
-    const file = req.files.photo;
+    const file = req.file;
     console.log(body);
     res.send(file);
 
-    file.mv( file.name, (err, result)=>{if (err) {console.log(err)}} );
+    // file.mv( file.name, (err, result)=>{if (err) {console.log(err)}} );
 };

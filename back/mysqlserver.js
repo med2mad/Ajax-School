@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 // app.use(expressFileupload());
-app.use(multer);
+// app.use(multer);
 
 mysqlCon.connect((err) => {
   if (err){console.log("'Mysyql' initial connection error");}
@@ -25,10 +25,10 @@ mysqlCon.connect((err) => {
 const {getAll, add, edit, remove, notFound, addUser} = require('./controllers/mysqlCrl');
 //Get All
 app.get('/sub/:rparam', (req, res)=>{console.log(req.body);res.send(req.body);});
-app.get('/', getAll);
+app.get('/',  getAll);
 //Insert
-app.post('/sub/:rparam', addUser);
-app.post('/', add);
+app.post('/sub/:rparam', multer, addUser);
+app.post('/', multer, add);
 //Update
 app.put('/:id', edit);
 //Delete

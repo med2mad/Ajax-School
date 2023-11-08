@@ -84,7 +84,13 @@ export default{
         async handlePost(){
             if(await this.dataCheck()){this.showpopup = true;}
             else{
-                this.$emit('clickPost', {"name":this.vname, "age":this.vage, "photo":this.generatedPhotoName}, this.bucket);
+                const fd = new FormData();
+                fd.append('name', this.vname );
+                fd.append('age', this.vage );
+                fd.append('photo', this.photoObject , this.photoObject.name);
+
+                // this.$emit('clickPost', {"name":this.vname, "age":this.vage, "photo":this.generatedPhotoName}, this.bucket);
+                this.$emit('clickPost', fd , this.bucket);
                 this.clear();
                 }
         },
@@ -161,13 +167,14 @@ export default{
             if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !';}
             else if (!Number.isInteger(this.vage) || this.vage<18 || this.vage>99){this.popuptext='Insert Integer between 18 and 99 !'; }
             else if (this.photoObject) {
-                const fd = new FormData();
-                fd.append('photo', this.photoObject , this.photoObject.name);
+                // const fd = new FormData();
+                // fd.append('photo', this.photoObject , this.photoObject.name);
                 try {
-                    const response = await axios.post('http://localhost:5999/upload',fd);
-                    this.generatedPhotoName = response.data.newPhotoName;
+                    // const response = await axios.post('http://localhost:5999/upload',fd);
+                    // this.generatedPhotoName = response.data.newPhotoName;
+
                 } catch (error) {
-                    this.popuptext='Photo not valid !'; 
+                    // this.popuptext='Photo not valid !'; 
                 }
             }
             return this.popuptext;
