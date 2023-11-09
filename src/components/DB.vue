@@ -39,7 +39,7 @@
 
         <div class="db2">
         <div class="form" v-if="db!='fake'"> 
-            <div class="data">
+            <form ref="frmid" class="data" >
             <table cellspacing="0">
                 <tr><td id="name">Name<input type="text" v-model="vname" name="name" maxlength ="20" autocomplete="off" spellcheck="false"></td></tr>
                 <tr class="agetr"><td id="age2">Age<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
@@ -48,11 +48,11 @@
                         <img ref="img" alt="img" @click="$refs[db].click();" class="img" src="uploads/user.jpg"><br>
                         <input type="button" @click="$refs[db].click();" value="Browse Photo...">
                         <input type="button" value="Remove" @click="removePhoto">
-                        <input type="file" :ref="db" accept="image/*" @change="onFileChange" style="display:none;"><br>
+                        <input type="file" name="photo" :ref="db" accept="image/*" @change="onFileChange" style="display:none;"><br>
                     </td>
                 </tr>
             </table>
-            </div>
+            </form>
             <div class="ppd">
                 <div class="post btn" @click="handlePost"> <div class="flash">POST</div> </div>
                 <div class="put btn" @click="handlePut"> <div class="flash">PUT</div> </div><!-- fuck -->
@@ -75,7 +75,7 @@ export default{
     data(){return{
                 bucket:{timeF:'',time0:0, a:'', s:''},
                 selectedId:'', 
-                vname:'', vage:'', generatedPhotoName:'', photoObject:null,
+                vname:'', vage:'', selectedPhotoName:'', photoObject:null,
                 showpopup:false, popuptext:'', 
                 }
             },
@@ -84,12 +84,8 @@ export default{
         async handlePost(){
             if(await this.dataCheck()){this.showpopup = true;}
             else{
-                const fd = new FormData();
-                fd.append('name', this.vname );
-                fd.append('age', this.vage );
-                fd.append('photo', this.photoObject , this.photoObject.name);
-
-                // this.$emit('clickPost', {"name":this.vname, "age":this.vage, "photo":this.generatedPhotoName}, this.bucket);
+                const fd = new FormData(this.$refs.frmid);
+                fd.append('selectedPhotoName', this.selectedPhotoName);
                 this.$emit('clickPost', fd , this.bucket);
                 this.clear();
                 }
@@ -98,16 +94,16 @@ export default{
             if(!this.selectedId){this.popuptext='Select User !'; this.showpopup = true;}
             else if(await this.dataCheck()){this.showpopup = true;}
             else{
-                this.$emit('clickPut', this.selectedId, {"name":this.vname, "age":this.vage, "photo":this.generatedPhotoName});
-                
+                let selectedTr;
                 for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to change
                     if(this.bucket.a[i][this._id]==this.selectedId)
                     {
-                        this.bucket.a[i].name = this.vname;
-                        this.bucket.a[i].age = this.vage;
-                        this.bucket.a[i].photo = this.generatedPhotoName;
+                        selectedTr=i;
                     }
                 }
+                const fd = new FormData(this.$refs.frmid);
+                fd.append('selectedPhotoName', this.selectedPhotoName);
+                this.$emit('clickPut', this.selectedId, fd, selectedTr, this.bucket);
 
                 this.clear();
             }
@@ -136,11 +132,11 @@ export default{
                 this.vage = this.$refs['trAge'+id][0].innerHTML;
                 let src = this.$refs['trImg'+id][0].src;
                 this.$refs.img.src = src;
-                this.generatedPhotoName = src?src.split("/")[src.split("/").length-1]:''; 
+                this.selectedPhotoName = src?src.split("/")[src.split("/").length-1]:''; 
             }
         },
         removePhoto(){
-            this.generatedPhotoName='';
+            this.selectedPhotoName='';
             this.$refs.img.src='./uploads/user.jpg';
             this.photoObject=null;
             this.$refs[this.db].value= null;
@@ -148,7 +144,7 @@ export default{
         clear(){
             this.vname='';
             this.vage='';
-            this.generatedPhotoName='';
+            this.selectedPhotoName='';
             this.$refs.img.src='./uploads/user.jpg';
             this.photoObject=null;
             this.$refs[this.db].value= null;
@@ -161,25 +157,13 @@ export default{
         },
 
         async dataCheck(){
-            this.popuptext='';
             if (this.vname!=="" && !Number.isInteger(this.vage)){this.vage = Number.parseInt(this.vage);}
             
+            this.popuptext='';
             if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !';}
             else if (!Number.isInteger(this.vage) || this.vage<18 || this.vage>99){this.popuptext='Insert Integer between 18 and 99 !'; }
-            else if (this.photoObject) {
-                // const fd = new FormData();
-                // fd.append('photo', this.photoObject , this.photoObject.name);
-                try {
-                    // const response = await axios.post('http://localhost:5999/upload',fd);
-                    // this.generatedPhotoName = response.data.newPhotoName;
-
-                } catch (error) {
-                    // this.popuptext='Photo not valid !'; 
-                }
-            }
             return this.popuptext;
         },
-
     },
 
     mounted(){

@@ -39,7 +39,7 @@ export default {
       // const payload = new FormData();
       // payload.append("name",this.vname);
       // payload.append("age",this.vage);
-      // payload.append("photo",this.photoObject, 'fileNewName.ext');
+      // payload.append("photo", this.photoObject, this.photoObject.name);
 
       axios.post("http://localhost:5010/sub/149?_limit=10&_age=77", payload)
       .then((response) => {})

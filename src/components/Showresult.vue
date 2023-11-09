@@ -38,7 +38,7 @@
                             @mountGet="(bucket)=>{fget(getUri(item.uri[vback]), bucket);}" 
                             @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri[vback]));}" 
                             @clickPost="(body, bucket)=>{this.fpost(item.uri[vback], body, bucket, vlimit);}" 
-                            @clickPut="(selectedId, body)=>{this.fput(item.uri[vback]+selectedId, body);}"
+                            @clickPut="(selectedId, body, i, bucket)=>{this.fput(item.uri[vback]+selectedId, body, i, bucket);}"
                             @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item.uri[vback]+selectedId, lastTableId, bucket, item.db);}"
         ></DB>
     </main>

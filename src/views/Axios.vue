@@ -29,16 +29,16 @@ export default {
         axios.post(uri,body)
         .then((response) => {
                 const insertedId = response.data.id?response.data.id:response.data; //json-Server responds with an object
-                const rowToInsert = {"id":insertedId, "timestamp":response.data.timestamp, "name":body.name, "age":body.age, "photo":body.photo};
+                const rowToInsert = {"id":insertedId, "timestamp":response.data.timestamp, "name":body.get("name"), "age":body.get("age"), "photo":response.data.photoName};
                 bucket.a.unshift(rowToInsert);
                 if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
               })
         .catch((err) => {console.error(err.message)})
       },
 
-      fput(uri, body){
+      fput(uri, body, i, bucket){
         axios.put(uri, body)
-          .then((response) => {console.log(response.data);})
+          .then((response) => {bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photoName;})
           .catch((err) => {console.error(err);});
       },
 
