@@ -1,19 +1,29 @@
 <template>
-  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" />
+  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" :propsbucket="propsbucket" />
 </template>
 
 <script>
 import axios from "axios";
+import { isProxy, toRaw } from "vue";
 export default {
+
+  data(){return {
+                  propsbucket:{}, mysqlData:{}
+                }
+            },
+
   methods: {
-      fget(uri, bucket){
+      fget(uri, bucket, db){
         let time0 = performance.now();
         axios.get(uri)
         .then((response)=>{
-          bucket.timeF = (performance.now() - time0).toFixed(2);  
-          bucket.a = response.data;
+          bucket.timeF = (performance.now() - time0).toFixed(2);
+            this.propsbucket =response.data;
+
+  console.log(   this.propsbucket[db]);
+ 
           })
-        .catch((err)=>{bucket.a = 'err: ' + err.message})
+        .catch((err)=>{this.propsbucket.db = 'err: ' + err.message})
       },
 
       async fgetw(uri){

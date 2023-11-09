@@ -65,10 +65,8 @@
 </template>
 
 <script>
-import axios from 'axios' //upload photos
-
 export default{
-    props: { db:{type:String}, dblogofile:{type:String}, back:{type:String}, _id:{type:String},  },
+    props: { db:{type:String}, dblogofile:{type:String}, back:{type:String}, _id:{type:String}, propsbucket:{type:Object}  },
 
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  

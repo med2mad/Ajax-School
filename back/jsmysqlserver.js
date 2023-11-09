@@ -38,7 +38,7 @@ const server = http.createServer((req, res)=>{
       const age = data[1].split('=');
       const photo = data[2].split('=');
       con.query("INSERT INTO users (name, age, photo) VALUES ('"+ name +"', '"+ age +"', '"+ photo +"')", (err, data)=>{
-        console.log(data.insertId)
+        console.log(data)
       })
     })
   }

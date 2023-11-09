@@ -34,8 +34,8 @@
     </div>
 
     <main>
-        <DB v-for="item in DBs" :key="item.db+vback+vlimit+vname+vage" :back="vback" :dblogofile="item.dblogofile" :_id="item._id" :db="item.db" 
-                            @mountGet="(bucket)=>{fget(getUri(item.uri[vback]), bucket);}" 
+        <DB v-for="item in DBs" :key="item.db+vback+vlimit+vname+vage" :back="vback" :dblogofile="item.dblogofile" :_id="item._id" :db="item.db" :propsbucket="propsbucket"
+                            @mountGet="(bucket)=>{fget(getUri(item.uri[vback]), bucket, item.db);}" 
                             @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri[vback]));}" 
                             @clickPost="(body, bucket)=>{this.fpost(item.uri[vback], body, bucket, vlimit);}" 
                             @clickPut="(selectedId, body, i, bucket)=>{this.fput(item.uri[vback]+selectedId, body, i, bucket);}"
@@ -63,7 +63,8 @@
 export default{
     props: {fpost:{type:Function},sub:{type:String},
             fput:{type:Function}, fdelete:{type:Function},
-            fget:{type:Function}, fgetw:{type:Function}
+            fget:{type:Function}, fgetw:{type:Function},
+            propsbucket:{type:Object}
             },
 
     data(){return{

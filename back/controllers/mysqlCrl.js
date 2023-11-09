@@ -5,6 +5,7 @@ module.exports.getAll = (req, res) => {
     if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
     q += " ORDER BY id DESC LIMIT "+ req.query._limit;
     con.query(q, (err, rows)=>{
+        console.log(rows);
         res.json(rows);
     });
 };
@@ -38,7 +39,7 @@ module.exports.notFound = (req, res) => {
     res.status(404).json("404 , no routes !");
 };
 
-module.exports.addUser = (req, res, next) => {
+module.exports.subscribe = (req, res, next) => {
     const body = req.body;
     const file = req.file;
     console.log(file);
