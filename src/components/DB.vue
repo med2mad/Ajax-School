@@ -66,7 +66,7 @@
 
 <script>
 export default{
-    props: { db:{type:String}, dblogofile:{type:String}, back:{type:String}, _id:{type:String}, propsbucket:{type:Object}  },
+    props: { db:{type:String}, dblogofile:{type:String}, back:{type:String}, _id:{type:String}, },
 
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  
@@ -84,7 +84,7 @@ export default{
             else{
                 const fd = new FormData(this.$refs.frmid);
                 fd.append('selectedPhotoName', this.selectedPhotoName);
-                this.$emit('clickPost', fd , this.bucket);
+                this.$emit('clickPost', fd, this.bucket);
                 this.clear();
                 }
         },
@@ -101,7 +101,7 @@ export default{
                 }
                 const fd = new FormData(this.$refs.frmid);
                 fd.append('selectedPhotoName', this.selectedPhotoName);
-                this.$emit('clickPut', this.selectedId, fd, selectedTr, this.bucket);
+                this.$emit('clickPut', this.selectedId, fd, selectedTr);
 
                 this.clear();
             }
@@ -111,7 +111,7 @@ export default{
 
             if(!this.selectedId){this.popuptext='Select User !';this.showpopup = true;}
             else{
-                this.$emit('clickDelete', this.selectedId, lastTableId, this.bucket);
+                this.$emit('clickDelete', this.selectedId, lastTableId);
                 
                 for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to remove
                     if(this.bucket.a[i][this._id]==this.selectedId)

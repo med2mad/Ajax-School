@@ -1,29 +1,20 @@
 <template>
-  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" :propsbucket="propsbucket" />
+  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" />
 </template>
 
 <script>
 import axios from "axios";
-import { isProxy, toRaw } from "vue";
 export default {
-
-  data(){return {
-                  propsbucket:{}, mysqlData:{}
-                }
-            },
 
   methods: {
       fget(uri, bucket, db){
         let time0 = performance.now();
         axios.get(uri)
         .then((response)=>{
-          bucket.timeF = (performance.now() - time0).toFixed(2);
-            this.propsbucket =response.data;
-
-  console.log(   this.propsbucket[db]);
- 
+            bucket.timeF = (performance.now() - time0).toFixed(2);
+            bucket.a = response.data;
           })
-        .catch((err)=>{this.propsbucket.db = 'err: ' + err.message})
+        .catch((err)=>{bucket.a= 'err: ' + err.message})
       },
 
       async fgetw(uri){
@@ -35,11 +26,13 @@ export default {
       },
       
 
-      fpost(uri, body, bucket, limit){
+      fpost(uri, body, limit, bucket){
         axios.post(uri,body)
         .then((response) => {
                 const insertedId = response.data.id?response.data.id:response.data; //json-Server responds with an object
                 const rowToInsert = {"id":insertedId, "timestamp":response.data.timestamp, "name":body.get("name"), "age":body.get("age"), "photo":response.data.photoName};
+                // const rowToInsert = {"id":insertedId, "timestamp":response.data.timestamp, "name":body.name, "age":body.age, "photo":response.data.photoName};
+                console.log(rowToInsert);
                 bucket.a.unshift(rowToInsert);
                 if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
               })

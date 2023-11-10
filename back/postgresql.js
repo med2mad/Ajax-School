@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
   if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
   q += " ORDER BY id DESC LIMIT "+req.query._limit;
   client.query(q, (err, data)=>{
-    res.json(data.rows)
+    res.json(data.rows);
   })
 });
 //Insert
