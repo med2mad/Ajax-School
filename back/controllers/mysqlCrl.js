@@ -13,7 +13,7 @@ module.exports.add = (req, res) => {
     let photoName;
     if(req.file){photoName = req.file.filename;}else{photoName = req.body.selectedPhotoName;}
     con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ photoName +"')", (err, data)=>{
-        res.json({"id":data.insertId, db:"mysql", "photoName":photoName});
+        res.json({"id":data.insertId, "photoName":photoName});
     });
 };
 

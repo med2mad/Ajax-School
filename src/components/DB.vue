@@ -95,13 +95,11 @@ export default{
                 let selectedTr;
                 for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to change
                     if(this.bucket.a[i][this._id]==this.selectedId)
-                    {
-                        selectedTr=i;
-                    }
+                    { selectedTr = i; }
                 }
                 const fd = new FormData(this.$refs.frmid);
                 fd.append('selectedPhotoName', this.selectedPhotoName);
-                this.$emit('clickPut', this.selectedId, fd, selectedTr);
+                this.$emit('clickPut', this.selectedId, fd, selectedTr, this.bucket);
 
                 this.clear();
             }
@@ -111,7 +109,7 @@ export default{
 
             if(!this.selectedId){this.popuptext='Select User !';this.showpopup = true;}
             else{
-                this.$emit('clickDelete', this.selectedId, lastTableId);
+                this.$emit('clickDelete', this.selectedId, lastTableId, this.bucket);
                 
                 for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to remove
                     if(this.bucket.a[i][this._id]==this.selectedId)

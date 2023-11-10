@@ -7,7 +7,7 @@ import axios from "axios";
 export default {
 
   methods: {
-      fget(uri, bucket, db){
+      fget(uri, bucket){
         let time0 = performance.now();
         axios.get(uri)
         .then((response)=>{
@@ -26,13 +26,11 @@ export default {
       },
       
 
-      fpost(uri, body, limit, bucket){
+      fpost(uri, body, bucket, limit){
         axios.post(uri,body)
         .then((response) => {
-                const insertedId = response.data.id?response.data.id:response.data; //json-Server responds with an object
-                const rowToInsert = {"id":insertedId, "timestamp":response.data.timestamp, "name":body.get("name"), "age":body.get("age"), "photo":response.data.photoName};
-                // const rowToInsert = {"id":insertedId, "timestamp":response.data.timestamp, "name":body.name, "age":body.age, "photo":response.data.photoName};
-                console.log(rowToInsert);
+          console.log(response);
+                const rowToInsert = {"id":response.data.id, "photo":response.data.photoName, "timestamp":response.data.timestamp, "name":body.get("name"), "age":body.get("age")};//use get because a FormData object
                 bucket.a.unshift(rowToInsert);
                 if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
               })
@@ -41,7 +39,7 @@ export default {
 
       fput(uri, body, i, bucket){
         axios.put(uri, body)
-          .then((response) => {bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photoName;})
+          .then((response) => {bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photoName?response.data.photoName:response.data.photo;})
           .catch((err) => {console.error(err);});
       },
 
@@ -50,7 +48,7 @@ export default {
         .then((response)=>{
           //GET row to add instead of the deleted one
           if(db!='jsonserver' && response.data.length>0)
-          { bucket.a.push({"id":response.data[0].id, "timestamp":response.data[0].timestamp, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo} )}
+          { bucket.a.push({"id":response.data[0].id, "timestamp":response.data[0].timestamp, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}) }
           else if(db=='jsonserver')
           {
           axios.get('http://localhost:3000/Resource1?id_lte='+ lastTableId +'&id_ne='+ lastTableId +'&_limit=1&_sort=id&_order=desc')
