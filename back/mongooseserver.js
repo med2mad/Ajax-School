@@ -57,8 +57,16 @@ app.post('/', (req, res) => {
 });
 //Update
 app.put('/:id', (req, res) => {
-  let photoName; console.log(req.file.name);
-  if(req.file){photoName = req.file.filename;}else{photoName = req.body.selectedPhotoName;}
+  let photoName;
+
+  console.log(req.body.name);
+  console.log(req.body.age);
+ if(req.file)
+ {  photoName=req.file.filename ;}
+ else{ photoName=req.body.selectedPhotoName; }
+  console.log(photoName);
+
+  return res.json(req.file);
 
   usersModel.findById(req.params.id).then((row)=>{    
     row.name=req.body.name;
