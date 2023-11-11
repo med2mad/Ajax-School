@@ -50,7 +50,6 @@ app.post('/', (req, res) => {
   let photoName;
   if(req.file){photoName = req.file.filename;}else{photoName = req.body.selectedPhotoName;}
   req.body.photo = photoName; //see schema
-  console.log(req.body);
   const row = new usersModel(req.body);
   row.save().then((data)=>{
     res.json({"data":data, "photoName":photoName});
@@ -58,14 +57,16 @@ app.post('/', (req, res) => {
 });
 //Update
 app.put('/:id', (req, res) => {
-  usersModel.findById(req.params.id).then((row)=>{
+  let photoName; console.log(req.file.name);
+  if(req.file){photoName = req.file.filename;}else{photoName = req.body.selectedPhotoName;}
+
+  usersModel.findById(req.params.id).then((row)=>{    
     row.name=req.body.name;
     row.age=req.body.age;
-    row.photo=req.body.photo;
+    row.photo=photoName;
     row.save().then((data)=>{
       res.json(data)
     });
-
   });
 });
 //Delete

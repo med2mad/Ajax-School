@@ -3,12 +3,14 @@ const port = process.env.postgreSQLPORT || process.argv[2] || 5030;
 // Import required packages
 const express = require('express');
 const cors = require('cors');
+const multer = require('./configurations/multer');
 
 // Create an Express application
 const app = express();
 app.use(cors());
 app.use(express.json()); //for req.body to get data from ajax requests payload
-app.use(express.urlencoded({extended:true}));
+// app.use(express.urlencoded({extended:true}));
+app.use(multer);
 
 // Connect to PostgreSQL
 const {Client} = require('pg');
@@ -42,8 +44,10 @@ app.get('/', (req, res) => {
 });
 //Insert
 app.post('/', (req, res) => {
-  client.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', "+ req.body.age +", '"+ req.body.photo +"') RETURNING id;", (err, data)=>{    
-    res.json(data.rows[0].id)
+  let photoName;
+  if(req.file){photoName = req.file.filename;}else{photoName = req.body.selectedPhotoName;}
+  client.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', "+ req.body.age +", '"+ photoName +"') RETURNING id;", (err, data)=>{    
+    res.json({"id":data.rows[0].id, "photoName":photoName});
   })
 });
 //Update
