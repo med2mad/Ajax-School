@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "j": "json-server --watch back/jsonserver.json",
-    "multer": "nodemon back/multer.js"
+    "multer": "nodemon back/multer.js",
+    "mongooseserver": "nodemon back/mongooseserver.js"
   },
   "dependencies": {
     "axios": "^1.4.0",

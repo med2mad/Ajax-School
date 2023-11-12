@@ -40,7 +40,7 @@ app.get('/', async (req, res) => {
   else{
     let q = {"name":{ $regex: '.*' + req.query._name + '.*' }};
     if (req.query._age) {q.age = req.query._age;}
-      usersModel.find(q).sort({"timestamp":-1}).select("-_id -__v").limit(req.query._limit).then((data)=>{
+      usersModel.find(q).sort({"timestamp":1}).select("-_id -__v").limit(req.query._limit).then((data)=>{
       res.json(data);
     });
   }
@@ -56,27 +56,30 @@ app.post('/', (req, res) => {
   });
 });
 //Update
-app.put('/:id', (req, res) => {
-  let photoName;
+app.put('/:id', (req, res) => {   
+try {
+console.log('gfd');
 
-  console.log(req.body.name);
-  console.log(req.body.age);
- if(req.file)
- {  photoName=req.file.filename ;}
- else{ photoName=req.body.selectedPhotoName; }
-  console.log(photoName);
-
-  return res.json(req.file);
-
-  usersModel.findById(req.params.id).then((row)=>{    
+    usersModel.findById(req.params.id).then((row)=>{    
+      console.log(row);
     row.name=req.body.name;
     row.age=req.body.age;
+    console.log(row.photo);
     row.photo=photoName;
-    row.save().then((data)=>{
-      res.json(data)
-    });
+    // row.save().then((data)=>{
+    // res.json(data)
+    // });
   });
+
+
+} catch(error) {  console.log('error');  }  
+
+
 });
+
+
+
+
 //Delete
 app.delete('/:id', (req, res) => {
   usersModel.findOneAndDelete({"timestamp":req.params.id}).then((data)=>{

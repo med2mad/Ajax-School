@@ -37,8 +37,10 @@ export default {
       },
 
       fput(uri, body, i, bucket){
+
         axios.put(uri, body)
-          .then((response) => {bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photoName?response.data.photoName:response.data.photo;})
+          .then((response) => {
+            bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photoName?response.data.photoName:response.data.photo;})
           // .catch((err) => {console.error(err);});
       },
 
