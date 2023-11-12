@@ -58,9 +58,10 @@ app.post('/', (req, res) => {
 //Update
 app.put('/:id', (req, res) => {   
 try {
-console.log('gfd');
+console.log(req.params.id);
 
-    usersModel.findById(req.params.id).then((row)=>{    
+    usersModel.findOne({timestamp:req.params.id}).
+    then((row)=>{    
       console.log(row);
     row.name=req.body.name;
     row.age=req.body.age;
@@ -72,7 +73,7 @@ console.log('gfd');
   });
 
 
-} catch(error) {  console.log('error');  }  
+} catch(error) {  console.log(error);  }  
 
 
 });
