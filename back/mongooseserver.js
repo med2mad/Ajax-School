@@ -40,7 +40,7 @@ app.get('/', async (req, res) => {
   else{
     let q = {"name":{ $regex: '.*' + req.query._name + '.*' }};
     if (req.query._age) {q.age = req.query._age;}
-      usersModel.find(q).sort({"timestamp":1}).select("-_id -__v").limit(req.query._limit).then((data)=>{
+      usersModel.find(q).sort({"timestamp":-1}).select("-__v").limit(req.query._limit).then((data)=>{
       res.json(data);
     });
   }
@@ -56,36 +56,24 @@ app.post('/', (req, res) => {
   });
 });
 //Update
-app.put('/:id', (req, res) => {   
-try {
-console.log(req.params.id);
-
-    usersModel.findOne({timestamp:req.params.id}).
-    then((row)=>{    
-      console.log(row);
+app.put('/:id', (req, res) => { //req.params.id not working cause now its timestamp and not _id
+  usersModel.findById(req.params.id).then((row)=>{    
+    let photoName;
+    if(req.file){photoName = req.file.filename;}else{photoName = req.body.selectedPhotoName;}
+    
     row.name=req.body.name;
     row.age=req.body.age;
-    console.log(row.photo);
     row.photo=photoName;
-    // row.save().then((data)=>{
-    // res.json(data)
-    // });
+    row.save().then((data)=>{
+      res.json(data)
+    });
   });
-
-
-} catch(error) {  console.log(error);  }  
-
-
 });
-
-
-
-
 //Delete
 app.delete('/:id', (req, res) => {
-  usersModel.findOneAndDelete({"timestamp":req.params.id}).then((data)=>{
+  usersModel.findOneAndDelete({"_id":req.params.id}).then((data)=>{
     //GET row to add instead
-    usersModel.find({"timestamp":{$lt:req.query.lasttableid}}).sort({"timestamp":-1}).select("-__v").limit(1).then((data)=>{
+    usersModel.find({"_id":{$lt:req.query.lasttableid}}).sort({"timestamp":-1}).select("-__v").limit(1).then((data)=>{
       res.json(data);
     });
   });

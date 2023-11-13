@@ -35,11 +35,11 @@
 
     <main>
         <DB v-for="item in DBs" :key="item.db+vback+vlimit+vname+vage" :back="vback" :dblogofile="item.dblogofile" :_id="item._id" :db="item.db" 
-                            @mountGet="(bucket)=>{fget(getUri(item.uri[vback]), bucket);}" 
-                            @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item.uri[vback]));}" 
-                            @clickPost="(body, bucket)=>{this.fpost(item.uri[vback], body, bucket, vlimit, item.db);}" 
-                            @clickPut="(selectedId, body, i, bucket)=>{this.fput(item.uri[vback]+selectedId, body, i, bucket);}"
-                            @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item.uri[vback]+selectedId, lastTableId, bucket, item.db);}"
+                            @mountGet="(bucket)=>{fget(getUri(item._url[vback]), bucket);}" 
+                            @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item._url[vback]));}" 
+                            @clickPost="(body, bucket)=>{this.fpost(item._url[vback], body, bucket, vlimit, item.db);}" 
+                            @clickPut="(selectedId, body, i, bucket)=>{this.fput(item._url[vback]+selectedId, body, i, bucket);}"
+                            @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item._url[vback]+selectedId, lastTableId, bucket, item.db);}"
         ></DB>
     </main>
 
@@ -69,29 +69,29 @@ export default{
     data(){return{
                 vback:'express', vname:'', vage:'', vlimit:10,
                 DBs:[
-                    {db:'mysql', dblogofile:'mysql.png', uri:{'express':'http://localhost:5010/', 'js':'http://localhost:1010/', 'php':'http://localhost:80/mysql.php/'}, _id:'id'}, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
-                    {db:'mongoose', dblogofile:'mongodb.png', uri:{'express':'http://localhost:5020/', 'js':'http://localhost:1020/','php':'http://localhost:80/phpmongoback/mongodb.php/'}, _id:'timestamp'},
-                    {db:'postgresql', dblogofile:'postgresql.png', uri:{'express':'http://localhost:5030/', 'js':'http://localhost:1030/','php':'http://localhost:80/postgress.php/'}, _id:'id'},
-                    // {db:'jsonserver', dblogofile:'jsonserver.png', uri:{'express':'http://localhost:3000/Resource1/', 'js':'http://localhost:3000/Resource1/','php':'http://localhost:3000/Resource1/'}, _id:'id'}, //is not compatible with FormData (need json body)
-                    // {db:'fake', dblogofile:'fake', uri:{'express':'https://jsonplaceholder.typicode.com/users/','js':'https://jsonplaceholder.typicode.com/users/','php':'https://jsonplaceholder.typicode.com/users/'}, _id:'id'},
-                    // {db:'file', dblogofile:'Simple File', uri:'http://localhost:8080/j.json' /*(or [uri:'j.json'] because served links will add the current uri) */, _id:'id'} //in the public folder. ( use: var o = JSON.parse(fs.readFileSync(filePath)); + fs.writeFileSync(path, JSON.stringify(o)) / var o = require(filePath); )
+                    {db:'mysql', dblogofile:'mysql.png', _url:{'express':'http://localhost:5010/', 'js':'http://localhost:1010/', 'php':'http://localhost:80/mysql.php/'}, _id:'id'}, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
+                    {db:'mongoose', dblogofile:'mongodb.png', _url:{'express':'http://localhost:5020/', 'js':'http://localhost:1020/','php':'http://localhost:80/phpmongoback/mongodb.php/'}, _id:'_id'},
+                    {db:'postgresql', dblogofile:'postgresql.png', _url:{'express':'http://localhost:5030/', 'js':'http://localhost:1030/','php':'http://localhost:80/postgress.php/'}, _id:'id'},
+                    // {db:'jsonserver', dblogofile:'jsonserver.png', _url:{'express':'http://localhost:3000/Resource1/', 'js':'http://localhost:3000/Resource1/','php':'http://localhost:3000/Resource1/'}, _id:'id'}, //is not compatible with FormData (need json body)
+                    // {db:'fake', dblogofile:'fake', _url:{'express':'https://jsonplaceholder.typicode.com/users/','js':'https://jsonplaceholder.typicode.com/users/','php':'https://jsonplaceholder.typicode.com/users/'}, _id:'id'},
+                    // {db:'file', dblogofile:'Simple File', _url:'http://localhost:8080/j.json' /*(or [_url:'j.json'] because served links will add the current _url) */, _id:'id'} //in the public folder. ( use: var o = JSON.parse(fs.readFileSync(filePath)); + fs.writeFileSync(path, JSON.stringify(o)) / var o = require(filePath); )
                     ]
                 }
             },
 
     methods:{
-        getUri(uri){
-                uri += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);//fake/jsonServer use _limit
-                uri += '&_name='+this.vname; //named _name not(name) for not to clash with fake/jsonServer
-                uri += '&name_like='+this.vname; //fake/jsonServer
+        getUri(url){
+                url += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);//fake/jsonServer use _limit
+                url += '&_name='+this.vname; //named _name not(name) for not to clash with fake/jsonServer
+                url += '&name_like='+this.vname; //fake/jsonServer
                 if (Number.isInteger(this.vage) && this.vage!=="e")
                 {
-                    uri += '&_age='+this.vage;//named _age not(age) for not to clash with fake/jsonServer
-                    uri += '&age_gte='+this.vage;    uri += '&age_lte='+this.vage;    //jsonServer (no like)
+                    url += '&_age='+this.vage;//named _age not(age) for not to clash with fake/jsonServer
+                    url += '&age_gte='+this.vage;    url += '&age_lte='+this.vage;    //jsonServer (no like)
                 }
-                uri += '&_sort=id&_order=desc'; //fake/jsonServer use _sort and _order
+                url += '&_sort=id&_order=desc'; //fake/jsonServer use _sort and _order
                 
-                return uri;
+                return url;
             },
         getVback(){return this.vback;}
     }
