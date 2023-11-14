@@ -52,11 +52,11 @@ app.post('/', (req, res) => {
   req.body.photo = photoName; //see schema
   const row = new usersModel(req.body);
   row.save().then((data)=>{
-    res.json({"data":data, "photoName":photoName});
+    res.json({"id":data.id, "photoName":photoName});
   });
 });
 //Update
-app.put('/:id', (req, res) => { //req.params.id not working cause now its timestamp and not _id
+app.put('/:id', (req, res) => {
   usersModel.findById(req.params.id).then((row)=>{    
     let photoName;
     if(req.file){photoName = req.file.filename;}else{photoName = req.body.selectedPhotoName;}

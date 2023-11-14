@@ -3,7 +3,7 @@
         <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
     </transition>
     
-    <div class="title"> <img v-if="db!='fake'" :src="'tools\\'+dblogofile" alt="DB logo"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
+    <div class="title"> <img v-if="_db!='fake'" :src="'tools\\'+_dblogofile" alt="DB logo"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
 
     <div class="db">
 
@@ -22,12 +22,12 @@
                 <div v-else-if="bucket.a" class="rows">
                     <form> <!-- //for input radio -->
                     <table cellspacing="2">
-                        <tr><th v-if="db!='fake'"></th><th>#</th><th>Name</th><th v-if="db!='fake'">Age</th><th v-if="db!='fake'">Photo</th></tr>
+                        <tr><th v-if="_db!='fake'"></th><th>#</th><th>Name</th><th v-if="_db!='fake'">Age</th><th v-if="_db!='fake'">Photo</th></tr>
                         <transition-group name="table">
-                        <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_id]==selectedId}" :key="user[_id]" @click="selectUser(user[_id]);">
-                            <td v-show="db!='fake'"> <input type="radio" name="db" v-model="selectedId" :value="user[_id]"> </td>
-                            <td></td> <td :ref="'trName'+user[_id]">{{user.name}}</td> <td v-if="db!='fake'" :ref="'trAge'+user[_id]">{{user.age}}</td>
-                            <td v-if="db!='fake'"><img :src="'./uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user[_id]" :ref="'trImg'+user[_id]"></td>
+                        <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_idClmn]==selectedId}" :key="user[_idClmn]" @click="selectUser(user[_idClmn]);">
+                            <td v-show="_db!='fake'"> <input type="radio" name="db" v-model="selectedId" :value="user[_idClmn]"> </td>
+                            <td></td> <td :ref="'trName'+user[_idClmn]">{{user.name}}</td> <td v-if="_db!='fake'" :ref="'trAge'+user[_idClmn]">{{user.age}}</td>
+                            <td v-if="_db!='fake'"><img :src="'./uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user[_idClmn]" :ref="'trImg'+user[_idClmn]"></td>
                         </tr>
                         </transition-group>
                     </table>
@@ -38,17 +38,17 @@
         </div>
 
         <div class="db2">
-        <div class="form" v-if="db!='fake'"> 
+        <div class="form" v-if="_db!='fake'"> 
             <form ref="frmid" class="data" >
             <table cellspacing="0">
                 <tr><td id="name">Name<input type="text" v-model="vname" name="name" maxlength ="20" autocomplete="off" spellcheck="false"></td></tr>
                 <tr class="agetr"><td id="age2">Age<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
                 <tr>
                     <td>
-                        <img ref="img" alt="img" @click="$refs[db].click();" class="img" src="uploads/user.jpg"><br>
-                        <input type="button" @click="$refs[db].click();" value="Browse Photo...">
+                        <img ref="img" alt="img" @click="$refs[_db].click();" class="img" src="uploads/user.jpg"><br>
+                        <input type="button" @click="$refs[_db].click();" value="Browse Photo...">
                         <input type="button" value="Remove" @click="removePhoto">
-                        <input type="file" name="photo" :ref="db" accept="image/*" @change="onFileChange" style="display:none;"><br>
+                        <input type="file" name="photo" :ref="_db" accept="image/*" @change="onFileChange" style="display:none;"><br>
                     </td>
                 </tr>
             </table>
@@ -66,7 +66,7 @@
 
 <script>
 export default{
-    props: { db:{type:String}, dblogofile:{type:String}, back:{type:String}, _id:{type:String}, },
+    props: { _db:{type:String}, _dblogofile:{type:String}, _idClmn:{type:String}, },
 
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  
@@ -94,7 +94,7 @@ export default{
             else{
                 let selectedTr;
                 for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to change
-                    if(this.bucket.a[i][this._id]==this.selectedId)
+                    if(this.bucket.a[i][this._idClmn]==this.selectedId)
                     { selectedTr = i; }
                 }
                 const fd = new FormData(this.$refs.frmid);
@@ -105,14 +105,14 @@ export default{
             }
         },
         handleDelete(){
-            const lastTableId = this.bucket.a[this.bucket.a.length-1][this._id];
+            const lastTrId = this.bucket.a[this.bucket.a.length-1][this._idClmn];
 
             if(!this.selectedId){this.popuptext='Select User !';this.showpopup = true;}
             else{
-                this.$emit('clickDelete', this.selectedId, lastTableId, this.bucket);
+                this.$emit('clickDelete', this.selectedId, lastTrId, this.bucket);
                 
                 for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to remove
-                    if(this.bucket.a[i][this._id]==this.selectedId)
+                    if(this.bucket.a[i][this._idClmn]==this.selectedId)
                     {this.bucket.a.splice(i, 1);}
                 }
             }
@@ -123,8 +123,8 @@ export default{
             this.vname = this.$refs['trName'+id][0].innerHTML;
             this.photoObject=null;
             
-            if (this.db!='fake') { //fake has no .form
-                this.$refs[this.db].value= null;
+            if (this._db!='fake') { //fake has no .form
+                this.$refs[this._db].value= null;
                 this.vage = this.$refs['trAge'+id][0].innerHTML;
                 let src = this.$refs['trImg'+id][0].src;
                 this.$refs.img.src = src;
@@ -135,7 +135,7 @@ export default{
             this.selectedPhotoName='';
             this.$refs.img.src='./uploads/user.jpg';
             this.photoObject=null;
-            this.$refs[this.db].value= null;
+            this.$refs[this._db].value= null;
         },
         clear(){
             this.vname='';
@@ -143,10 +143,10 @@ export default{
             this.selectedPhotoName='';
             this.$refs.img.src='./uploads/user.jpg';
             this.photoObject=null;
-            this.$refs[this.db].value= null;
+            this.$refs[this._db].value= null;
         },
         onFileChange(e){
-            if (e.target.files[0]) { //e.target.files is the same as this.$refs.[this.db].files
+            if (e.target.files[0]) { //e.target.files is the same as this.$refs.[this._db].files
                 this.photoObject = e.target.files[0];
                 this.$refs.img.src = URL.createObjectURL(this.photoObject);
             }
