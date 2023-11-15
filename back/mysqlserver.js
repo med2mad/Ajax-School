@@ -1,14 +1,16 @@
 // Import required packages
 const express = require('express');
 const cors = require('cors');
-const multer = require('./configurations/multer');
+// const multer = require('./configurations/multer');
+const expressFileupload = require('express-fileupload');
 const mysqlCon = require('./configurations/mysql');
 
 // Create an Express application
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(multer);
+// app.use(multer);
+app.use(expressFileupload());
 
 const port = process.env.mysqlPORT || process.argv[2] || 5010;
 mysqlCon.connect((err) => {
