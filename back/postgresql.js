@@ -3,14 +3,16 @@ const port = process.env.postgreSQLPORT || process.argv[2] || 5030;
 // Import required packages
 const express = require('express');
 const cors = require('cors');
-const multer = require('./configurations/multer');
+// const multer = require('./configurations/multer');
+const expressFileupload = require('express-fileupload');
 
 // Create an Express application
 const app = express();
 app.use(cors());
 app.use(express.json()); //for req.body to get data from ajax requests payload
 // app.use(express.urlencoded({extended:true}));
-app.use(multer);
+// app.use(multer);
+app.use(expressFileupload());
 
 // Connect to PostgreSQL
 const {Client} = require('pg');
@@ -45,15 +47,21 @@ app.get('/', (req, res) => {
 //Insert
 app.post('/', (req, res) => {
   let photoName;
-  if(req.file){photoName = req.file.filename;}else{photoName = req.body.selectedPhotoName;}
+  if(req.files){photoName = req.files.photo.name+'-photo.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
+  if(req.files){req.files.photo.mv('./public/uploads/' + photoName, (err, result)=>{});}
+ 
   client.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', "+ req.body.age +", '"+ photoName +"') RETURNING id;", (err, data)=>{    
     res.json({"id":data.rows[0].id, "photoName":photoName});
   })
 });
 //Update
 app.put('/:id', (req, res) => {
-  client.query("UPDATE users SET name='"+ req.body.name +"', age = '"+ req.body.age +"', photo = '"+ req.body.photo +"' WHERE id='"+ req.params.id +"'", (err, data)=>{
-    res.json(data)
+  let photoName;
+  if(req.files){photoName = req.files.photo.name+'-photo.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
+  if(req.files){req.files.photo.mv('./public/uploads/' + photoName, (err, result)=>{});}
+  
+  client.query("UPDATE users SET name='"+ req.body.name +"', age = '"+ req.body.age +"', photo = '"+ photoName +"' WHERE id='"+ req.params.id +"'", (err, data)=>{
+    res.json({"photoName":photoName});
   })
 });
 //Delete

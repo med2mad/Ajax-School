@@ -11,8 +11,9 @@ module.exports.getAll = (req, res) => {
 
 module.exports.add = (req, res) => {
     let photoName;
-    if(req.file){photoName = req.file.filename;}else{photoName = req.body.selectedPhotoName;}
-    console.log(req.file);
+    if(req.files){photoName = req.files.photo.name+'-photo.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
+    if(req.files){req.files.photo.mv('./public/uploads/' + photoName, (err, result)=>{});}
+    
     con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ photoName +"')", (err, data)=>{
         res.json({"id":data.insertId, "photoName":photoName});
     });
@@ -20,7 +21,9 @@ module.exports.add = (req, res) => {
 
 module.exports.edit = (req, res) => {
     let photoName;
-    if(req.file){photoName = req.file.filename;}else{photoName = req.body.selectedPhotoName;}
+    if(req.files){photoName = req.files.photo.name+'-photo.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
+    if(req.files){req.files.photo.mv('./public/uploads/' + photoName, (err, result)=>{});}
+    
     con.query("UPDATE users SET name = '"+ req.body.name +"', age = '"+ req.body.age +"', photo = '"+ photoName +"' WHERE id='"+ req.params.id +"'", (err, data)=>{
         res.json({"photoName":photoName});
     });
