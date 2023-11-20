@@ -20,14 +20,14 @@
                     <h2>No Data!!</h2>
                 </div>
                 <div v-else-if="bucket.a" class="rows">
-                    <form> <!-- //for input radio -->
+                    <form> <!--for input radio-->
                     <table cellspacing="2">
                         <tr><th v-if="_db!='fake'"></th><th>#</th><th>Name</th><th v-if="_db!='fake'">Age</th><th v-if="_db!='fake'">Photo</th></tr>
                         <transition-group name="table">
                         <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_idClmn]==selectedId}" :key="user[_idClmn]" @click="selectUser(user[_idClmn]);">
                             <td v-show="_db!='fake'"> <input type="radio" name="db" v-model="selectedId" :value="user[_idClmn]"> </td>
                             <td></td> <td :ref="'trName'+user[_idClmn]">{{user.name}}</td> <td v-if="_db!='fake'" :ref="'trAge'+user[_idClmn]">{{user.age}}</td>
-                            <td v-if="_db!='fake'"><img :src="'./uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user[_idClmn]" :ref="'trImg'+user[_idClmn]"></td>
+                            <td v-if="_db!='fake'"><!--public folder--><img :src="'uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user[_idClmn]" :ref="'trImg'+user[_idClmn]"></td>
                         </tr>
                         </transition-group>
                     </table>

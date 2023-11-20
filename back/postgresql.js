@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
 //Insert
 app.post('/', (req, res) => {
   let photoName;
-  if(req.files){photoName = req.files.photo.name+'-photo.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
+  if(req.files){photoName = req.files.photo.name+'.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
   if(req.files){req.files.photo.mv('./public/uploads/' + photoName, (err, result)=>{});}
  
   client.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', "+ req.body.age +", '"+ photoName +"') RETURNING id;", (err, data)=>{    
@@ -57,7 +57,7 @@ app.post('/', (req, res) => {
 //Update
 app.put('/:id', (req, res) => {
   let photoName;
-  if(req.files){photoName = req.files.photo.name+'-photo.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
+  if(req.files){photoName = req.files.photo.name+'.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
   if(req.files){req.files.photo.mv('./public/uploads/' + photoName, (err, result)=>{});}
   
   client.query("UPDATE users SET name='"+ req.body.name +"', age = '"+ req.body.age +"', photo = '"+ photoName +"' WHERE id='"+ req.params.id +"'", (err, data)=>{

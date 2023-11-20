@@ -50,7 +50,7 @@ app.get('/', async (req, res) => {
 //Insert
 app.post('/', (req, res) => {
   let photoName;
-  if(req.files){photoName = req.files.photo.name+'-photo.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
+  if(req.files){photoName = req.files.photo.name+'.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
   if(req.files){req.files.photo.mv('./public/uploads/' + photoName, (err, result)=>{});}
   
   req.body.photo = photoName; //see schema
@@ -63,7 +63,7 @@ app.post('/', (req, res) => {
 app.put('/:id', (req, res) => {
   usersModel.findById(req.params.id).then((row)=>{    
     let photoName;
-    if(req.files){photoName = req.files.photo.name+'-photo.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
+    if(req.files){photoName = req.files.photo.name+'.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
     if(req.files){req.files.photo.mv('./public/uploads/' + photoName, (err, result)=>{});}
     
     row.name=req.body.name;

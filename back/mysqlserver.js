@@ -7,10 +7,12 @@ const mysqlCon = require('./configurations/mysql');
 
 // Create an Express application
 const app = express();
+app.use(express.static(__dirname)); 
 app.use(cors());
 app.use(express.json());
 // app.use(multer);
 app.use(expressFileupload());
+
 
 const port = process.env.mysqlPORT || process.argv[2] || 5010;
 mysqlCon.connect((err) => {
@@ -25,7 +27,15 @@ const {getAll, add, edit, remove, notFound, subscribe} = require('./controllers/
 app.get('/',  getAll);
 //Insert
 app.post('/sub', subscribe);
-app.post('/', add);
+app.post('/', (req, res) => {
+  let photoName = req.body.selectedPhotoName;
+  if(req.files){photoName = req.files.photo.name+'.'+req.files.photo.mimetype.split("/")[1];}
+  if(req.files){req.files.photo.mv( ''+photoName, (err, result)=>{});}
+  
+  con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ photoName +"')", (err, data)=>{
+      res.json({"id":data.insertId, "photoName":photoName});
+  });
+});
 //Update
 app.put('/:id', edit);
 //Delete
