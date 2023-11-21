@@ -1,13 +1,13 @@
+// var path = required('path');
 // Import required packages
 const express = require('express');
 const cors = require('cors');
 // const multer = require('./configurations/multer');
 const expressFileupload = require('express-fileupload');
 const mysqlCon = require('./configurations/mysql');
-
 // Create an Express application
 const app = express();
-app.use(express.static(__dirname)); 
+// app.use(express.static(__dirname)); 
 app.use(cors());
 app.use(express.json());
 // app.use(multer);
@@ -29,10 +29,11 @@ app.get('/',  getAll);
 app.post('/sub', subscribe);
 app.post('/', (req, res) => {
   let photoName = req.body.selectedPhotoName;
-  if(req.files){photoName = req.files.photo.name+'.'+req.files.photo.mimetype.split("/")[1];}
-  if(req.files){req.files.photo.mv( ''+photoName, (err, result)=>{});}
-  
-  con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ photoName +"')", (err, data)=>{
+  if(req.files){
+    photoName = req.files.photo.name+'.'+req.files.photo.mimetype.split("/")[1];
+    req.files.photo.mv( photoName, (err, result)=>{});
+  }
+  mysqlCon.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ photoName +"')", (err, data)=>{
       res.json({"id":data.insertId, "photoName":photoName});
   });
 });

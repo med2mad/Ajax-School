@@ -43,8 +43,8 @@ module.exports.notFound = (req, res) => {
 };
 
 module.exports.subscribe = (req, res, next) => {
-    const body = req.body;
-    const file = req.file;
-    console.log(file);
-    res.send(body);
+    // const body = req.body;
+    // const file = req.file;
+    console.log(req.params.a + " " + req.params.b);
+    res.send("body");
 };
