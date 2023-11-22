@@ -3,16 +3,16 @@ const port = process.env.mongoosePORT || process.argv[2] || 5020;//get port from
 // Import required packages
 const express = require('express');
 const cors = require('cors');
-// const multer = require('./configurations/multer');
-const expressFileupload = require('express-fileupload');
+const multer = require('./configurations/multer');
+// const expressFileupload = require('express-fileupload');
 
 // Create an Express application
 const app = express();
 app.use(cors());
 app.use(express.json()); //req.body gets data from ajax requests payload
 // app.use(express.urlencoded({extended:true}));
-// app.use(multer);
-app.use(expressFileupload());
+app.use(multer);
+// app.use(expressFileupload());
 
 // Connect to MongoDB using Mongoose
 const mongoose = require('mongoose');
@@ -50,10 +50,9 @@ app.get('/', async (req, res) => {
 //Insert
 app.post('/', (req, res) => {
   let photoName;
-  if(req.files){photoName = req.files.photo.name+'.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
-  if(req.files){req.files.photo.mv('./public/uploads/' + photoName, (err, result)=>{});}
-  
+  if(req.file){photoName=req.file.filename;} else {photoName=req.body.selectedPhotoName}
   req.body.photo = photoName; //see schema
+
   const row = new usersModel(req.body);
   row.save().then((data)=>{
     res.json({"id":data.id, "photoName":photoName});
@@ -63,9 +62,8 @@ app.post('/', (req, res) => {
 app.put('/:id', (req, res) => {
   usersModel.findById(req.params.id).then((row)=>{    
     let photoName;
-    if(req.files){photoName = req.files.photo.name+'.'+req.files.photo.mimetype.split("/")[1];}else{photoName = req.body.selectedPhotoName;}
-    if(req.files){req.files.photo.mv('./public/uploads/' + photoName, (err, result)=>{});}
-    
+    if(req.file){photoName = req.file.filename;} else {photoName = req.body.selectedPhotoName;}
+
     row.name=req.body.name;
     row.age=req.body.age;
     row.photo=photoName;

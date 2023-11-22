@@ -28,18 +28,18 @@ export default {
 
       fpost(uri, body, bucket, limit, db){
         axios.post(uri,body)
-        .then((response) => {
-                const rowToInsert = {"id":response.data.id, "photo":response.data.photoName, "timestamp":response.data.timestamp, "name":body.get("name"), "age":body.get("age")};//use get because a FormData object
-                bucket.a.unshift(rowToInsert);
-                if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
-              })
-        .catch((err) => {console.error(err.message)})
+          .then((response) => {
+                  const rowToInsert = {"id":response.data.id, "photo":response.data.photoName, "timestamp":response.data.timestamp, "name":body.get("name"), "age":body.get("age")};//use get because a FormData object
+                  bucket.a.unshift(rowToInsert);
+                  if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
+                })
+          .catch((err) => {console.error(err.message)})
       },
 
       fput(uri, body, i, bucket){
         axios.put(uri, body)
           .then((response) => {
-            bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photoName?response.data.photoName:response.data.photo;
+              bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photoName?response.data.photoName:response.data.photo;
             })
           .catch((err) => {console.error(err);});
       },

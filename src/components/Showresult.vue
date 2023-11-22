@@ -71,7 +71,7 @@ export default{
                 DBs:[
                     {_db:'mysql', _dblogofile:'mysql.png', _url:{'express':'http://localhost:5010/', 'js':'http://localhost:1010/', 'php':'http://localhost:80/mysql.php/'}, _idClmn:'id'}, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
                     {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'express':'http://localhost:5020/', 'js':'http://localhost:1020/','php':'http://localhost:80/phpmongoback/mongodb.php/'}, _idClmn:'_id'},
-                    {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'express':'http://localhost:5030/', 'js':'http://localhost:1030/','php':'http://localhost:80/postgress.php/'}, _idClmn:'id'},
+                    // {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'express':'http://localhost:5030/', 'js':'http://localhost:1030/','php':'http://localhost:80/postgress.php/'}, _idClmn:'id'},
                     // {_db:'jsonserver', _dblogofile:'jsonserver.png', _url:{'express':'http://localhost:3000/Resource1/', 'js':'http://localhost:3000/Resource1/','php':'http://localhost:3000/Resource1/'}, _idClmn:'id'}, //is not compatible with FormData (need json body)
                     // {_db:'fake', _dblogofile:'fake', _url:{'express':'https://jsonplaceholder.typicode.com/users/','js':'https://jsonplaceholder.typicode.com/users/','php':'https://jsonplaceholder.typicode.com/users/'}, _idClmn:'id'},
                     // {_db:'file', _dblogofile:'Simple File', _url:'http://localhost:8080/j.json' /*(or [_url:'j.json'] because served links will add the current _url) */, _idClmn:'id'} //in the public folder. ( use: var o = JSON.parse(fs.readFileSync(filePath)); + fs.writeFileSync(path, JSON.stringify(o)) / var o = require(filePath); )

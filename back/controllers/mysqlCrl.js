@@ -11,7 +11,7 @@ module.exports.getAll = (req, res) => {
 
 module.exports.add = (req, res) => {
     let photoName;
-    if(req.file){photoName = req.file.filename;} else {photoName = req.body.selectedPhotoName;}
+    if(req.file){photoName=req.file.filename;} else {photoName=req.body.selectedPhotoName}
 
     con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ photoName +"')", (err, data)=>{
         res.json({"id":data.insertId, "photoName":photoName});
@@ -20,7 +20,7 @@ module.exports.add = (req, res) => {
 
 module.exports.edit = (req, res) => {
     let photoName;
-    if(req.file){photoName = req.file.filename;} else {photoName = req.body.selectedPhotoName;}
+    if(req.file){photoName=req.file.filename;} else {photoName=req.body.selectedPhotoName}
     
     con.query("UPDATE users SET name = '"+ req.body.name +"', age = '"+ req.body.age +"', photo = '"+ photoName +"' WHERE id='"+ req.params.id +"'", (err, data)=>{
         res.json({"photoName":photoName});
@@ -41,6 +41,6 @@ module.exports.notFound = (req, res) => {
 };
 
 module.exports.subscribe = (req, res, next) => {
-    console.log(req.body);
-    res.send("req.file");
+    console.log(req.file);
+    res.send(req.body);
 };

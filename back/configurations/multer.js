@@ -1,13 +1,13 @@
-const fs = require('fs');
 const multer = require('multer');
+const fs = require('fs');
+const d = __dirname+'/../../public/uploads';
 
 const storg = multer.diskStorage({destination: (req,file,callback)=>{
-                                        const p = __dirname+'/../../public/uploads';
-                                        fs.mkdirSync(p, {recursive:true});
-                                        callback(null,p);
+                                        fs.mkdirSync(d, {recursive:true});
+                                        callback(null, d);
                                       }, 
                                   filename: (req,file,callback)=>{
-                                        callback(null, file.originalname);
+                                        callback(null, file.originalname+Date.now()); //what to parse in req.file.filename
                                       }
                                 });
 
