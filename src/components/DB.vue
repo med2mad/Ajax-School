@@ -27,7 +27,7 @@
                         <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_idClmn]==selectedId}" :key="user[_idClmn]" @click="selectUser(user[_idClmn]);">
                             <td v-show="_db!='fake'"> <input type="radio" name="db" v-model="selectedId" :value="user[_idClmn]"> </td>
                             <td></td> <td :ref="'trName'+user[_idClmn]">{{user.name}}</td> <td v-if="_db!='fake'" :ref="'trAge'+user[_idClmn]">{{user.age}}</td>
-                            <td v-if="_db!='fake'"><!--public folder--><img :src="require('../../back/cmds/13.jpg')" :alt="'photo'+user[_idClmn]" :ref="'trImg'+user[_idClmn]"></td>
+                            <td v-if="_db!='fake'"><!--public folder--><img :src="'uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user[_idClmn]" :ref="'trImg'+user[_idClmn]"></td>
                         </tr>
                         </transition-group>
                     </table>
