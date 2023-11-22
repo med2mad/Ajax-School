@@ -24,7 +24,8 @@ mysqlCon.connect((err) => {
 //in MVC use : const conn = await mysqlCon.createConnection({ database: test }); //OR send a function as parameter
 
 //API Routes (API endpoints)
-const {getAll, add, edit, remove, notFound, subscribe} = require('./controllers/mysqlCrl');
+const {getAll, add, edit, remove, notFound, subscribe, photoNameF} = require('./controllers/mysqlCrl');
+app.use(photoNameF);
 //Get All
 app.get('/',  getAll);
 //Insert

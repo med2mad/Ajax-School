@@ -29,17 +29,17 @@ export default {
       fpost(uri, body, bucket, limit, db){
         axios.post(uri,body)
           .then((response) => {
-                  const rowToInsert = {"id":response.data.id, "photo":response.data.photoName, "timestamp":response.data.timestamp, "name":body.get("name"), "age":body.get("age")};//use get because a FormData object
-                  bucket.a.unshift(rowToInsert);
-                  if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
-                })
+                const rowToInsert = {"id":response.data.id, "_id":response.data.id, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//use get because a FormData object
+                bucket.a.unshift(rowToInsert);
+                if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
+            })
           .catch((err) => {console.error(err.message)})
       },
 
       fput(uri, body, i, bucket){
         axios.put(uri, body)
           .then((response) => {
-              bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photoName?response.data.photoName:response.data.photo;
+              bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photo;
             })
           .catch((err) => {console.error(err);});
       },
@@ -47,18 +47,18 @@ export default {
       fdelete(uri, lastTableId, bucket, db){
         axios.delete(uri+'?lasttableid='+lastTableId)
         .then((response)=>{
-          //GET row to add instead of the deleted one
-          if(db!='jsonserver' && response.data.length>0)
-          { bucket.a.push({"id":response.data[0].id, "timestamp":response.data[0].timestamp, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}) }
-          else if(db=='jsonserver')
-          {
-          axios.get('http://localhost:3000/Resource1?id_lte='+ lastTableId +'&id_ne='+ lastTableId +'&_limit=1&_sort=id&_order=desc')
-            .then((response)=>{
-              if(response.data.length>0)
-              { bucket.a.push({"id":response.data[0].id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}); }
-            })
-          }
-        })
+            //GET replacement row
+            if(db!='jsonserver' && response.data.length>0)
+            { bucket.a.push({"id":response.data[0].id, "_id":response.data[0]._id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}) }
+            else if(db=='jsonserver')
+            {
+            axios.get('http://localhost:3000/Resource1?id_lte='+ lastTableId +'&id_ne='+ lastTableId +'&_limit=1&_sort=id&_order=desc')
+              .then((response)=>{
+                  if(response.data.length>0)
+                  { bucket.a.push({"id":response.data[0].id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}); }
+              })
+            }
+          })
       .catch((err)=>{console.error(err.message)})
     },
   }

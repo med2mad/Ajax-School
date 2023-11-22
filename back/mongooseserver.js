@@ -12,6 +12,7 @@ app.use(cors());
 app.use(express.json()); //req.body gets data from ajax requests payload
 // app.use(express.urlencoded({extended:true}));
 app.use(multer);
+app.use(photoNameF); //put the name of the photo in a new variable called "req.photoName"
 // app.use(expressFileupload());
 
 // Connect to MongoDB using Mongoose
@@ -42,41 +43,38 @@ app.get('/', async (req, res) => {
   else{
     let q = {"name":{ $regex: '.*' + req.query._name + '.*' }};
     if (req.query._age) {q.age = req.query._age;}
-      usersModel.find(q).sort({"timestamp":-1}).select("-__v").limit(req.query._limit).then((data)=>{
+      usersModel.find(q).sort({"timestamp":-1}).select("-__v -timestamp").limit(req.query._limit).then((data)=>{
       res.json(data);
     });
   }
 });
+
 //Insert
 app.post('/', (req, res) => {
-  let photoName;
-  if(req.file){photoName=req.file.filename;} else {photoName=req.body.selectedPhotoName}
-  req.body.photo = photoName; //see schema
+  req.body.photo = req.photoName; //see schema
 
   const row = new usersModel(req.body);
   row.save().then((data)=>{
-    res.json({"id":data.id, "photoName":photoName});
+    res.json({"id":data._id, "photo":req.photoName});
   });
 });
+
 //Update
 app.put('/:id', (req, res) => {
-  usersModel.findById(req.params.id).then((row)=>{    
-    let photoName;
-    if(req.file){photoName = req.file.filename;} else {photoName = req.body.selectedPhotoName;}
-
+  usersModel.findById(req.params.id).then((row)=>{
     row.name=req.body.name;
     row.age=req.body.age;
-    row.photo=photoName;
+    row.photo=req.photoName;
     row.save().then((data)=>{
-      res.json(data)
+      res.json({"photo":req.photoName})
     });
   });
 });
 //Delete
 app.delete('/:id', (req, res) => {
   usersModel.findOneAndDelete({"_id":req.params.id}).then((data)=>{
-    //GET row to add instead
-    usersModel.find({"_id":{$lt:req.query.lasttableid}}).sort({"timestamp":-1}).select("-__v").limit(1).then((data)=>{
+    //GET replacement row
+    usersModel.find({"_id":{$lt:req.query.lasttableid}}).sort({"timestamp":-1}).select("-__v -timestamp").limit(1).then((data)=>{
       res.json(data);
     });
   });
@@ -85,3 +83,9 @@ app.delete('/:id', (req, res) => {
 app.use((req, res) => {
   res.status(404).json("404 , no routes !")
 });
+
+function photoNameF (req, res, next){
+  if(req.file){req.photoName = req.file.filename;}
+  else{req.photoName = req.body.selectedPhotoName;}
+  next();
+}
