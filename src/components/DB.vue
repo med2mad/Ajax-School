@@ -276,12 +276,13 @@ export default{
     width:auto; /*which is a fixed size because .db{display:flex} makes .db2 intrensic ([width:max-content] does the same)*/
 }
 .db2 .form{
+    font-family: Rajdhani-Light;
+    font-weight: bold;
     background-color: white;
     border-radius: 20px;
     border: solid 4px white  ;
+    min-height: 418px;
     display: flex; /* align .data|.ppd */
-    font-family: Rajdhani-Light;
-    font-weight: bold;
 }
 .form .data table td{
     padding:4px;
