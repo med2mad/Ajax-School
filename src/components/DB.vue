@@ -158,6 +158,7 @@ export default{
             this.popuptext='';
             if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !';}
             else if (!Number.isInteger(this.vage) || this.vage<18 || this.vage>99){this.popuptext='Insert Integer between 18 and 99 !'; }
+            
             return this.popuptext;
         },
     },

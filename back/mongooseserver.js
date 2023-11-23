@@ -12,14 +12,14 @@ app.use(cors());
 app.use(express.json()); //req.body gets data from ajax requests payload
 // app.use(express.urlencoded({extended:true}));
 app.use(multer);
-app.use(photoNameF); //put the name of the photo in a new variable called "req.photoName"
+app.use(customParser); //parses the name of the photo in a new variable called "req.PHOTO_PARSED"
 // app.use(expressFileupload());
 
 // Connect to MongoDB using Mongoose
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/medDB', {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
-    app.listen(port, () => {console.log("'Mongoose' Port: " + port);});
+    app.listen(port, () => {console.log("Mongoose: " + port);});
   })
   .catch((err) => {
     console.log('Mongoose initial connextion error: ', err);
@@ -51,11 +51,11 @@ app.get('/', async (req, res) => {
 
 //Insert
 app.post('/', (req, res) => {
-  req.body.photo = req.photoName; //see schema
+  req.body.photo = req.PHOTO_PARSED; //see schema
 
   const row = new usersModel(req.body);
   row.save().then((data)=>{
-    res.json({"id":data._id, "photo":req.photoName});
+    res.json({"id":data._id, "photo":req.PHOTO_PARSED});
   });
 });
 
@@ -64,9 +64,9 @@ app.put('/:id', (req, res) => {
   usersModel.findById(req.params.id).then((row)=>{
     row.name=req.body.name;
     row.age=req.body.age;
-    row.photo=req.photoName;
+    row.photo=req.PHOTO_PARSED;
     row.save().then((data)=>{
-      res.json({"photo":req.photoName})
+      res.json({"photo":req.PHOTO_PARSED})
     });
   });
 });
@@ -84,8 +84,8 @@ app.use((req, res) => {
   res.status(404).json("404 , no routes !")
 });
 
-function photoNameF (req, res, next){
-  if(req.file){req.photoName = req.file.filename;}
-  else{req.photoName = req.body.selectedPhotoName;}
+function customParser (req, res, next){
+  if(req.file){req.PHOTO_PARSED = req.file.filename;}
+  else{req.PHOTO_PARSED = req.body.selectedPhotoName;}
   next();
 }

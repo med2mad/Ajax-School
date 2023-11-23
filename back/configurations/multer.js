@@ -11,7 +11,7 @@ const storg = multer.diskStorage({destination: (req,file,callback)=>{
                                       }
                                 });
 
-const midleware = multer({storage: storg , 
+const midleware = multer({storage: storg ,
                           limits: {fileSize:1024*1024*10} ,
                           fileFilter: (req, file, callback)=>{
                                 if(file.mimetype.split("/")[0]!=="image")
@@ -20,4 +20,4 @@ const midleware = multer({storage: storg ,
                               }
                         });
 
-module.exports = midleware.single("photo");
+module.exports = midleware.single("photo"); //the parser midleware

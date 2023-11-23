@@ -26,13 +26,11 @@
     "path": "^0.12.7",
     "pg": "^8.11.1",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.3",
-    "webpack": "^5.89.0"
+    "vue-router": "^4.0.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
-    "image-webpack-loader": "^8.1.0"
+    "@vue/cli-service": "~5.0.0"
   }
 }

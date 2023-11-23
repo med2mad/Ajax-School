@@ -10,14 +10,14 @@ module.exports.getAll = (req, res) => {
 };
 
 module.exports.add = (req, res) => {
-    con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ req.file.filename +"')", (err, data)=>{
-        res.json({"id":data.insertId, "photo":req.file.filename});
+    con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ req.PHOTO_PARSED +"')", (err, data)=>{
+        res.json({"id":data.insertId, "photo":req.PHOTO_PARSED});
     });
 };
 
 module.exports.edit = (req, res) => {
-    con.query("UPDATE users SET name = '"+ req.body.name +"', age = '"+ req.body.age +"', photo = '"+ req.file.filename +"' WHERE id='"+ req.params.id +"'", (err, data)=>{
-        res.json({"photo":req.file.filename});
+    con.query("UPDATE users SET name = '"+ req.body.name +"', age = '"+ req.body.age +"', photo = '"+ req.PHOTO_PARSED +"' WHERE id='"+ req.params.id +"'", (err, data)=>{
+        res.json({"photo":req.PHOTO_PARSED});
     });
 };
 
@@ -38,9 +38,3 @@ module.exports.subscribe = (req, res, next) => {
     console.log(req.file);
     res.send(req.body);
 };
-
-module.exports.photoNameF = (req, res, next)=> {
-    if(req.file){req.file = req.file.filename;}
-    else{req.file = req.body.selectedPhotoName;}
-    next();
-}

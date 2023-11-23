@@ -26,7 +26,7 @@ export default {
       },
       
 
-      fpost(uri, body, bucket, limit, db){
+      fpost(uri, body, bucket, limit){
         axios.post(uri,body)
           .then((response) => {
                 const rowToInsert = {"id":response.data.id, "_id":response.data.id, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//use get because a FormData object
@@ -44,13 +44,13 @@ export default {
           .catch((err) => {console.error(err);});
       },
 
-      fdelete(uri, lastTableId, bucket, db){
+      fdelete(uri, lastTableId, bucket, _db){
         axios.delete(uri+'?lasttableid='+lastTableId)
         .then((response)=>{
             //GET replacement row
-            if(db!='jsonserver' && response.data.length>0)
+            if(_db!='jsonserver' && response.data.length>0)
             { bucket.a.push({"id":response.data[0].id, "_id":response.data[0]._id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}) }
-            else if(db=='jsonserver')
+            else if(_db=='jsonserver')
             {
             axios.get('http://localhost:3000/Resource1?id_lte='+ lastTableId +'&id_ne='+ lastTableId +'&_limit=1&_sort=id&_order=desc')
               .then((response)=>{

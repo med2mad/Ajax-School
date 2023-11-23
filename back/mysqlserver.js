@@ -1,4 +1,3 @@
-// var path = required('path');
 // Import required packages
 const express = require('express');
 const cors = require('cors');
@@ -13,19 +12,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(multer);
+app.use(customParser); //parses the name of the photo in a new variable called "req.PHOTO_PARSED"
 // app.use(expressFileupload());
-
 
 const port = process.env.mysqlPORT || process.argv[2] || 5010;
 mysqlCon.connect((err) => {
   if (err){console.log("'Mysyql' initial connection error");}
-  else{app.listen(port, ()=>{console.log("'Mysyql' Port: " + port);});}
+  else{app.listen(port, ()=>{console.log("Mysyql: " + port);});}
 });
 //in MVC use : const conn = await mysqlCon.createConnection({ database: test }); //OR send a function as parameter
 
 //API Routes (API endpoints)
-const {getAll, add, edit, remove, notFound, subscribe, photoNameF} = require('./controllers/mysqlCrl');
-app.use(photoNameF);
+const {getAll, add, edit, remove, notFound, subscribe} = require('./controllers/mysqlCrl');
 //Get All
 app.get('/',  getAll);
 //Insert
@@ -37,3 +35,9 @@ app.put('/:id', edit);
 app.delete('/:id', remove);
 //404
 app.use(notFound);
+
+function customParser (req, res, next){
+  if(req.file){req.PHOTO_PARSED = req.file.filename;}
+  else{req.PHOTO_PARSED = req.body.selectedPhotoName;}
+  next();
+}
