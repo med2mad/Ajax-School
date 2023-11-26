@@ -37,7 +37,7 @@ export default {
       },
 
       fput(uri, body, i, bucket){
-        axios.put(uri, body)
+        axios.put(uri, body, {headers: {"Content-Type": "multipart/form-data"}})
           .then((response) => {
               bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photo;
             })
@@ -50,14 +50,14 @@ export default {
             //GET replacement row
             if(_db!='jsonserver' && response.data.length>0)
             { bucket.a.push({"id":response.data[0].id, "_id":response.data[0]._id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}) }
-            else if(_db=='jsonserver')
-            {
-            axios.get('http://localhost:3000/Resource1?id_lte='+ lastTableId +'&id_ne='+ lastTableId +'&_limit=1&_sort=id&_order=desc')
-              .then((response)=>{
-                  if(response.data.length>0)
-                  { bucket.a.push({"id":response.data[0].id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}); }
-              })
-            }
+            // else if(_db=='jsonserver')
+            // {
+            // axios.get('http://localhost:3000/Resource1?id_lte='+ lastTableId +'&id_ne='+ lastTableId +'&_limit=1&_sort=id&_order=desc')
+            //   .then((response)=>{
+            //       if(response.data.length>0)
+            //       { bucket.a.push({"id":response.data[0].id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}); }
+            //   })
+            // }
           })
       .catch((err)=>{console.error(err.message)})
     },

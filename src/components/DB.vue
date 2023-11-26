@@ -39,7 +39,7 @@
 
         <div class="db2">
         <div class="form" v-if="_db!='fake'"> 
-            <form ref="frmid" class="data" >
+            <form ref="frmid" class="data" enctype="multipart/form-data">
             <table cellspacing="0">
                 <tr><td id="name">Name<input type="text" v-model="vname" name="name" maxlength ="20" autocomplete="off" spellcheck="false"></td></tr>
                 <tr class="agetr"><td id="age2">Age<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
