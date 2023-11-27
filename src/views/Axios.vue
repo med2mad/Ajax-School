@@ -5,7 +5,6 @@
 <script>
 import axios from "axios";
 export default {
-
   methods: {
       fget(uri, bucket){
         let time0 = performance.now();
@@ -14,7 +13,6 @@ export default {
             bucket.timeF = (performance.now() - time0).toFixed(2);
             bucket.a = response.data;
           })
-        .catch((err)=>{bucket.a= 'err: ' + err.message})
       },
 
       async fgetw(uri){
@@ -29,11 +27,10 @@ export default {
       fpost(uri, body, bucket, limit){
         axios.post(uri,body)
           .then((response) => {
-                const rowToInsert = {"id":response.data.id, "_id":response.data.id, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//use get because a FormData object
+                const rowToInsert = {"id":response.data.id, "_id":response.data.id, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
                 bucket.a.unshift(rowToInsert);
                 if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
             })
-          .catch((err) => {console.error(err.message)})
       },
 
       fput(uri, body, i, bucket){
@@ -41,14 +38,13 @@ export default {
           .then((response) => {
               bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photo;
             })
-          .catch((err) => {console.error(err);});
       },
 
-      fdelete(uri, lastTableId, bucket, _db){
+      fdelete(uri, lastTableId, bucket){
         axios.delete(uri+'?lasttableid='+lastTableId)
         .then((response)=>{
             //GET replacement row
-            if(_db!='jsonserver' && response.data.length>0)
+            if(response.data.length>0)
             { bucket.a.push({"id":response.data[0].id, "_id":response.data[0]._id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}) }
             // else if(_db=='jsonserver')
             // {
@@ -59,7 +55,6 @@ export default {
             //   })
             // }
           })
-      .catch((err)=>{console.error(err.message)})
     },
   }
 }

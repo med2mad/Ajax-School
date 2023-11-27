@@ -4,7 +4,6 @@
 
 <script>
 import $ from "jquery";
-
 export default {
   methods: {
       fget(uri, bucket){ 
@@ -24,22 +23,62 @@ export default {
       },
 
       fpost(uri, body, bucket, limit){
-        $.ajax({type:'post', url:uri+'?callback=?', contentType:"application/json", data:JSON.stringify(body)})
-        .done(function(response){ //#TODO get last inserted id using GET (JSONServer+jQuery problem)
-                  const id = response.id?response.id:response; //json-Server responds with an object
-                  bucket.a.unshift({"id":id, "_id":id, "name":body.name, "age":body.age, "photo":body.photo});
-                  if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
-          } );
+        $.ajax(
+            {
+            type:'post',
+            url:uri,
+            data: body,
+            processData: false,
+            contentType: false //setting "Content-Type":"multipart/form-data" throws "Multipart: Boundary not found" error
+
+            //using JSON data (no FormData = no photos)
+            // url:uri+'?callback=?',
+            // contentType:"application/json",
+            // data:JSON.stringify(body)
+            }
+          )
+        .done(function(response){
+              const rowToInsert = {"id":response.id, "_id":response.id, "photo":response.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
+              bucket.a.unshift(rowToInsert);
+              if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
+        });
       },
 
-      fput(uri, body){
-        $.ajax({type:'put', url:uri+'?callback=?', contentType:"application/json", data:JSON.stringify(body)})
-        .done( function(response){console.log(response);} );
+      fput(uri, body, i, bucket){
+        $.ajax(
+            {
+            type:'put', 
+            url:uri, 
+            data:body,
+            processData: false,
+            contentType: false //setting "Content-Type":"multipart/form-data" throws "Multipart: Boundary not found" error
+
+            //using JSON data (no FormData = no photos)
+            // url:uri+'?callback=?', 
+            // contentType:"application/json", 
+            // data:JSON.stringify(body)
+            }
+          )
+        .done( function(response){
+            bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.photo;
+        });
       },
       
-      fdelete(uri){
-        $.ajax({type:'delete', url:uri+'?callback=?'})
-        .done( function(response){console.log(response);} );
+      fdelete(uri, lastTableId, bucket){
+        $.ajax(
+            {
+            type:'delete', 
+            url:uri+'?lasttableid='+lastTableId
+
+            //using JSON data (no FormData = no photos)
+            // url:uri+'?callback=?'
+            }
+          )
+        .done( function(response){
+          //GET replacement row
+          if(response.length>0)
+          { bucket.a.push({"id":response[0].id, "_id":response[0]._id, "name":response[0].name, "age":response[0].age, "photo":response[0].photo}) }
+        });
       }
   }
 }

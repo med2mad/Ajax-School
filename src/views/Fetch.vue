@@ -4,8 +4,9 @@
 
 <script>
 export default {
+
   methods: {
-      fget(uri,bucket){ 
+      fget(uri, bucket){ 
         let time0 = performance.now();
         fetch(uri)
         .then((response)=> {if(response.ok){ return response.json() } else {throw new Error("[!response.ok]")} })
@@ -13,8 +14,8 @@ export default {
                       bucket.timeF = (performance.now() - time0).toFixed(2);  
                       bucket.a = data;
                       })
-        .catch((err)=>{ bucket.a = 'err: ' + err.message })
       },
+
       async fgetw(uri){
         try {
           const response = await fetch(uri)
@@ -25,55 +26,50 @@ export default {
         catch(err) {return 'err: ' + err.message}
       },
 
-      fpost(url, body, bucket, limit){
-        // const fd = new FormData();
-        // fd.append('name', body.name);
-        // fd.append('age', body.age);
-        // fd.append('photo', body.photo);
 
+      fpost(url, body, bucket, limit){
         fetch(url, {
           method: "POST", 
-          headers: {"Content-Type":"application/json"},
-          body: JSON.stringify(body)
+          body: body //setting "Content-Type":"multipart/form-data" throws "Multipart: Boundary not found" error
+          //body: JSON.stringify(body), headers: {"Content-Type":"application/json"} //if data send as JSON not as FormData (no photos)
           })
         .then((response)=> {return response.json()})
-        .then((data)=>{
-                const id = data.id?data.id:data; //json-Server responds with an object
-                bucket.a.unshift({"id":id, "_id":id, "name":body.name, "age":body.age, "photo":body.photo});
+        .then((response)=>{
+                const rowToInsert = {"id":response.id, "_id":response.id, "photo":response.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get 
+                // const id = response.id?response.id:response; //json-Server responds with an object
+                bucket.a.unshift(rowToInsert);
                 if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
               })
-        .catch((err)=>{console.log('err: ' + err.message)})
       },
 
-      fput(url, body){
-        fetch(url, {
+      fput(uri, body, i, bucket){
+        fetch(uri, {
             method: 'PUT',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(body)
+            body: body
+            //body: JSON.stringify(body), headers: {"Content-Type":"application/json"} //if data send as JSON not as FormData (no photos)
         })
         .then((response)=> {return response.json()})
-        .then((data)=>{console.log(data);})
-        .catch((err)=>{console.log('err: ' + err.message)})
+        .then((response)=> {
+          bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age');bucket.a[i].photo=response.photo;
+        })
       },
-      
-      fdelete(url, lastTableId, bucket, db){
-        fetch(url, {method: "DELETE"})
+
+      fdelete(url, lastTableId, bucket){
+        fetch(url+'?lasttableid='+lastTableId, {method: "DELETE"})
         .then((response)=>{return response.json()})
         .then((response)=>{
-          console.log(response);
-          //GET row to add instead of the deleted one
-          if(db!='jsonserver' && response.data.length>0)
-          { bucket.a.push({"id":response.data[0].id, "timestamp":response.data[0].timestamp, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo} )}
-          else if(db=='jsonserver')
-          {
-          axios.get('http://localhost:3000/Resource1?id_lte='+ lastTableId +'&id_ne='+ lastTableId +'&_limit=1&_sort=id&_order=desc')
-            .then((response)=>{
-              if(response.data.length>0)
-              { bucket.a.push({"id":response.data[0].id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}); }
-            })
-          }
+          //GET replacement row
+          if(response.length>0)
+          { bucket.a.push({"id":response[0].id, "_id":response[0]._id, "name":response[0].name, "age":response[0].age, "photo":response[0].photo}) }
+          // else if(db=='jsonserver')
+          // {
+          // axios.get('http://localhost:3000/Resource1?id_lte='+ lastTableId +'&id_ne='+ lastTableId +'&_limit=1&_sort=id&_order=desc')
+          //   .then((response)=>{
+          //     if(response.data.length>0)
+          //     { bucket.a.push({"id":response.data[0].id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}); }
+          //   })
+          // }
         })
-        .catch((err)=>{console.log('err: ' + err.message)})
       }
   }
 }

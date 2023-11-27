@@ -37,9 +37,9 @@
         <DB v-for="item in DBs" :key="item._db+vback+vlimit+vname+vage" :_dblogofile="item._dblogofile" :_idClmn="item._idClmn" :_db="item._db" 
                             @mountGet="(bucket)=>{fget(getUri(item._url[vback]), bucket);}" 
                             @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item._url[vback]));}" 
-                            @clickPost="(body, bucket)=>{this.fpost(item._url[vback], body, bucket, vlimit, item._db);}" 
+                            @clickPost="(body, bucket)=>{this.fpost(item._url[vback], body, bucket, vlimit);}" 
                             @clickPut="(selectedId, body, i, bucket)=>{this.fput(item._url[vback]+selectedId, body, i, bucket);}"
-                            @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item._url[vback]+selectedId, lastTableId, bucket, item._db);}"
+                            @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item._url[vback]+selectedId, lastTableId, bucket);}"
         ></DB>
     </main>
 
