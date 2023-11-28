@@ -54,7 +54,7 @@
             </table>
             </form>
             <div class="ppd">
-                <div class="post btn" @click="handlePost"> <div class="flash">POST</div> </div>
+                <button class="post btn" @click="handlePost"> POST </button>
                 <div class="put btn" @click="handlePut"> <div class="flash">PUT</div> </div><!-- fuck -->
                 <div class="delete btn" @click="handleDelete"> <div class="flash">DELETE</div> </div>
             </div>
@@ -303,6 +303,7 @@ export default{
     background-color:gray;
     border: solid 1px;
     border-radius: 10px;
+    cursor: pointer;
     width: 250px;
     height: 250px;
 }

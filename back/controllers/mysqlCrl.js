@@ -11,7 +11,7 @@ module.exports.getAll = (req, res) => {
 
 module.exports.add = (req, res) => {
     con.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ req.PHOTO_PARSED +"')", (err, data)=>{
-        res.json({"id":data.insertId, "photo":req.PHOTO_PARSED});
+        res.json({"newId":data.insertId, "photo":req.PHOTO_PARSED});
     });
 };
 

@@ -38,7 +38,7 @@ export default {
             }
           )
         .done(function(response){
-              const rowToInsert = {"id":response.id, "_id":response.id, "photo":response.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
+              const rowToInsert = {"id":response.newId, "_id":response.newId, "photo":response.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
               bucket.a.unshift(rowToInsert);
               if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
         });

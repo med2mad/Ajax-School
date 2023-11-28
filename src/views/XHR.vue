@@ -36,37 +36,42 @@ export default {
       fpost(uri, body, bucket, limit){
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
-          //if (xhr.status===201){//not sure what status code is for POST request
-              const id = JSON.parse(xhr.responseText).id?JSON.parse(xhr.responseText).id:JSON.parse(xhr.responseText); //json-Server responds with an object
-              bucket.a.unshift({"id":id, "_id":id, "name":body.name, "age":body.age, "photo":body.photo});
-              if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
-            //}
-          }
+          const response = JSON.parse(xhr.responseText);
+          bucket.a.unshift({"id":response.newId, "_id":response.newId, "photo":response.photo, "name":body.get("name"), "age":body.get("age")});//FormData object use get
+          if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
+        }
         xhr.open("POST", uri, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify(body));
+        //xhr.setRequestHeader('Content-Type', 'multipart/form-data');//throws "Multipart: Boundary not found" error
+        xhr.send(body);
+
+        //using JSON data (no FormData = no photos)
+        // xhr.setRequestHeader('Content-Type', 'application/json');
+        // xhr.send(JSON.stringify(body));
       },
 
-      fput(uri, body){
+      fput(uri, body, i, bucket){
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
-          //if (xhr.status===201){//not sure what status code is for PUT request
-            console.log(xhr.response);
-            //} 
+          const response = JSON.parse(xhr.responseText);
+          bucket.a[i].photo=response.photo; bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age');
         }
         xhr.open("PUT", uri, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify(body));
+        // xhr.setRequestHeader('Content-Type', 'multipart/form-data');//throws "Multipart: Boundary not found" error
+        xhr.send(body);
+
+        //using JSON data (no FormData = no photos)
+        // xhr.setRequestHeader('Content-Type', 'application/json');
+        // xhr.send(JSON.stringify(body));
       },
       
-      fdelete(uri){
+      fdelete(uri, lastTableId, bucket){
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
-        //if (xhr.status===201){ //not sure what status code is for Delete request
-            console.log("Deleted"); 
-            //}
+          const response = JSON.parse(xhr.responseText);
+          if(response.length>0)
+          { bucket.a.push({"id":response[0].id, "_id":response[0]._id, "name":response[0].name, "age":response[0].age, "photo":response[0].photo}) }
         }
-        xhr.open("DELETE", uri, true);
+        xhr.open("DELETE", uri+'?lasttableid='+lastTableId, true);
         xhr.send();
       }
   }

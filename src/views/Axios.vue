@@ -27,7 +27,7 @@ export default {
       fpost(uri, body, bucket, limit){
         axios.post(uri,body)
           .then((response) => {
-                const rowToInsert = {"id":response.data.id, "_id":response.data.id, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
+                const rowToInsert = {"id":response.data.newId, "_id":response.data.newId, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
                 bucket.a.unshift(rowToInsert);
                 if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
             })

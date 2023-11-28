@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
 //Insert
 app.post('/', (req, res) => {
   client.query("INSERT INTO users (name, age, photo) VALUES ('"+ req.body.name +"', "+ req.body.age +", '"+ req.PHOTO_PARSED +"') RETURNING id;", (err, data)=>{    
-    res.json({"id":data.rows[0].id, "photo":req.PHOTO_PARSED});
+    res.json({"newId":data.rows[0].id, "photo":req.PHOTO_PARSED});
   })
 });
 //Update

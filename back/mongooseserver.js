@@ -55,7 +55,7 @@ app.post('/', (req, res) => {
 
   const row = new usersModel(req.body);
   row.save().then((data)=>{
-    res.json({"id":data._id, "photo":req.PHOTO_PARSED});
+    res.json({"newId":data._id, "photo":req.PHOTO_PARSED});
   });
 });
 
