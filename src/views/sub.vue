@@ -21,21 +21,21 @@ export default {
     f(e){
       e.preventDefault();
       
-      //Json text body (no files)
+      ////Json text body (no files)
       // const payload = {"name":this.vname, "age":this.vage, "photo":this.photoObject.name};
 
-      //Json text body (no files)
+      ////Json text body (no files)
       // const str = `{"name":"${this.vname}", "age":"${this.vage}", "photo":"${this.photoObject.name}"}`;
       // const payload = JSON.parse(str);
 
-      //Json text body (no files)
+      ////Json text body (no files)
       // const fd = new FormData(this.$refs.frmid);
       // const payload = new URLSearchParams(fd); //No need for headers
 
-      //form body (supports file)
+      ////form body (supports file)
       const payload = new FormData(this.$refs.frmid);
     
-      //form body (supports file)
+      //// form body (supports file)
       // const payload = new FormData();
       // payload.append("name",this.vname);
       // payload.append("age",this.vage);

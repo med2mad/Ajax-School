@@ -3,7 +3,7 @@
         <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
     </transition>
     
-    <div class="title"> <img v-if="_db!='fake'" :src="'tools\\'+_dblogofile" alt="DB logo"> <div v-else > <p>Fake API<br/> jsonplaceholder.typicode.com</p> </div> </div>
+    <div class="title"> <img :src="'tools\\'+_dblogofile" alt="DB logo">  </div>
 
     <div class="db">
 
@@ -22,12 +22,12 @@
                 <div v-else-if="bucket.a" class="rows">
                     <form> <!--for input radio-->
                     <table cellspacing="2">
-                        <tr><th v-if="_db!='fake'"></th><th>#</th><th>Name</th><th v-if="_db!='fake'">Age</th><th v-if="_db!='fake'">Photo</th></tr>
+                        <tr><th></th><th>#</th><th>Name</th><th>Age</th><th>Photo</th></tr>
                         <transition-group name="table">
                         <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_idClmn]==selectedId}" :key="user[_idClmn]" @click="selectUser(user[_idClmn]);">
-                            <td v-show="_db!='fake'"> <input type="radio" name="db" v-model="selectedId" :value="user[_idClmn]"> </td>
-                            <td></td> <td :ref="'trName'+user[_idClmn]">{{user.name}}</td> <td v-if="_db!='fake'" :ref="'trAge'+user[_idClmn]">{{user.age}}</td>
-                            <td v-if="_db!='fake'"><!--public folder--><img :src="'uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user[_idClmn]" :ref="'trImg'+user[_idClmn]"></td>
+                            <td> <input type="radio" name="db" v-model="selectedId" :value="user[_idClmn]"> </td>
+                            <td></td> <td :ref="'trName'+user[_idClmn]">{{user.name}}</td> <td :ref="'trAge'+user[_idClmn]">{{user.age}}</td>
+                            <td><!--public folder--><img :src="'uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user[_idClmn]" :ref="'trImg'+user[_idClmn]"></td>
                         </tr>
                         </transition-group>
                     </table>
@@ -38,7 +38,7 @@
         </div>
 
         <div class="db2">
-        <div class="form" v-if="_db!='fake'"> 
+        <div class="form"> 
             <form ref="frmid" class="data" enctype="multipart/form-data">
             <table cellspacing="0">
                 <tr><td id="name">Name<input type="text" v-model="vname" name="name" maxlength ="20" autocomplete="off" spellcheck="false"></td></tr>
@@ -121,15 +121,12 @@ export default{
         selectUser(id){
             this.selectedId = id;
             this.vname = this.$refs['trName'+id][0].innerHTML;
-            this.photoObject=null;
-            
-            if (this._db!='fake') { //fake has no .form
-                this.$refs[this._db].value= null;
-                this.vage = this.$refs['trAge'+id][0].innerHTML;
-                let src = this.$refs['trImg'+id][0].src;
-                this.$refs.img.src = src;
-                this.selectedPhotoName = src?src.split("/")[src.split("/").length-1]:''; 
-            }
+            this.vage = this.$refs['trAge'+id][0].innerHTML;
+            this.photoObject=null;            
+            this.$refs[this._db].value= null;
+            let src = this.$refs['trImg'+id][0].src;
+            this.$refs.img.src = src;
+            this.selectedPhotoName = src?src.split("/")[src.split("/").length-1]:''; 
         },
         removePhoto(){
             this.selectedPhotoName='';
