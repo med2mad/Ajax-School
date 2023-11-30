@@ -54,7 +54,7 @@ export default {
   data(){return{
               tools:[
                       'vuejs.png', 'nodejs.png', 
-                      'mysql.png', 'mongodb.png', 'postgresql.png', 'jsonserver.png', 
+                      'mysql.png', 'mongodb.png', 'postgresql.png',
                       'axios.png', 'fetch.jpg', 'jquery.png', 'xhr.png', 
                     ],
               tooli:0,
@@ -209,6 +209,7 @@ h1 span{
   width:50%;
 }
 .tools .carousel .crslbtn{
+  cursor: pointer;
   position: absolute;
   width: 20%;
 }
