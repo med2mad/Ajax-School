@@ -1,6 +1,7 @@
 <template>
     <header>
-        <select name="vback" v-model="vback" id=""><option value="js">Js-Express</option><option value="php">PHP-Laravel</option></select>
+        <img src="hamburger-button.png" alt="hamburger-button back-end" class="hamburger-button">
+        <select name="vback" v-model="vback" id="" class="back"><option value="js">Js-Express</option><option value="php">PHP-Laravel</option></select>
 
         <p><router-link to="/">Testing using:</router-link></p>
         <nav>
@@ -120,6 +121,10 @@ header{
     justify-content: space-between;
     align-items: center;
 }
+header .hamburger-button{
+    width:25px;
+    display:none;
+}
 header p{
     margin-left:auto;
     margin-right:20px;
@@ -164,6 +169,7 @@ header nav a.router-link-exact-active{
     cursor: default;
     font-size: 2.1rem;
     font-weight: bolder;
+    padding: 10px;
 }
 
 main{
@@ -304,6 +310,13 @@ footer .footer2{
     }
     header nav a{
         flex:1;
+    }
+    header .hamburger-button{
+        display:block;
+        margin: 10px;
+    }
+    header .back{
+        display:none;
     }
 }
 </style>
