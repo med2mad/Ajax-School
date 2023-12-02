@@ -1,7 +1,11 @@
 <template>
     <header>
-        <img src="hamburger-button.png" alt="hamburger-button back-end" class="hamburger-button">
-        <select name="vback" v-model="vback" id="" class="back"><option value="js">Js-Express</option><option value="php">PHP-Laravel</option></select>
+        <img src="hamburger-button.png" alt="hamburger-button back-end" class="hamburger-button" @click="burgerButton">
+        <div class="back" ref="back">
+            <select name="vback" v-model="vback" id="">
+                <option value="js">Js-Express</option><option value="php">PHP-Laravel</option>
+            </select>
+        </div>
 
         <p><router-link to="/">Testing using:</router-link></p>
         <nav>
@@ -93,7 +97,20 @@ export default{
                 
                 return url;
             },
-        getVback(){return this.vback;}
+        getVback(){return this.vback;},
+        burgerButton(){
+            const bs = this.$refs.back.style;
+            if (bs.display=="none") {
+                bs.display="block";
+                bs.position="absolute";
+                bs.top="50px";
+                bs.left="5px";
+                bs.zIndex=100;
+            }
+            else{
+                bs.display="none";
+            }
+        }
     }
 }
 </script>
@@ -305,6 +322,9 @@ footer .footer2{
     header p{
         display:none;
     }
+    header .back{
+        display:none;
+    }
     header nav{
         width:100%;
     }
@@ -314,9 +334,6 @@ footer .footer2{
     header .hamburger-button{
         display:block;
         margin: 10px;
-    }
-    header .back{
-        display:none;
     }
 }
 </style>
