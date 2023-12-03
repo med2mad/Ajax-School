@@ -142,6 +142,9 @@ header .hamburger-button{
     width:25px;
     display:none;
 }
+header .back{
+    display:block;
+}
 header p{
     margin-left:auto;
     margin-right:20px;
@@ -325,15 +328,15 @@ footer .footer2{
     header .back{
         display:none;
     }
+    header .hamburger-button{
+        display:block;
+        margin: 10px;
+    }
     header nav{
         width:100%;
     }
     header nav a{
         flex:1;
-    }
-    header .hamburger-button{
-        display:block;
-        margin: 10px;
     }
 }
 </style>

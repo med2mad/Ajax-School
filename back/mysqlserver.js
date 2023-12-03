@@ -25,6 +25,12 @@ mysqlCon.connect((err) => {
 //API Routes (API endpoints)
 const {getAll, add, edit, remove, notFound, subscribe} = require('./controllers/mysqlCrl');
 //Get All
+const fs = require('fs');
+app.get('/unity',  (req, res) => {
+  fs.readFile(__dirname+"/webgl build/index.html" , (err, data)=>{
+      res.send(data);
+  })
+});
 app.get('/',  getAll);
 //Insert
 app.post('/sub', subscribe);
