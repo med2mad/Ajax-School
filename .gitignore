@@ -25,4 +25,3 @@ pnpm-debug.log*
 uploads
 cmds
 cmds/jsonserver.json
-webgl build

@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "curl": "^0.1.4",
     "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
     "express-fileupload": "^1.4.0",
     "express-response-time": "^0.0.6",
     "http": "^0.0.1-security",

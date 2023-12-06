@@ -2,18 +2,14 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('./configurations/multer');
-// const expressFileupload = require('express-fileupload');
 const mysqlCon = require('./configurations/mysql');
+
 // Create an Express application
 const app = express();
-
-// app.use(express.static('public')); 
-// app.use(express.static(__dirname+'/public/uploads')); 
 app.use(cors());
 app.use(express.json());
 app.use(multer);
 app.use(customParser); //parses the name of the photo in a new variable called "req.PHOTO_PARSED"
-// app.use(expressFileupload());
 
 const port = process.env.mysqlPORT || process.argv[2] || 5010;
 mysqlCon.connect((err) => {
@@ -25,12 +21,6 @@ mysqlCon.connect((err) => {
 //API Routes (API endpoints)
 const {getAll, add, edit, remove, notFound, subscribe} = require('./controllers/mysqlCrl');
 //Get All
-const fs = require('fs');
-app.get('/unity',  (req, res) => {
-  fs.readFile(__dirname+"/webgl build/index.html" , (err, data)=>{
-      res.send(data);
-  })
-});
 app.get('/',  getAll);
 //Insert
 app.post('/sub', subscribe);
