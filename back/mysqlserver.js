@@ -16,7 +16,7 @@ mysqlCon.connect((err) => {
   if (err){console.log("'Mysyql' initial connection error");}
   else{app.listen(port, ()=>{console.log("Mysyql: " + port);});}
 });
-//in MVC use : const conn = await mysqlCon.createConnection({ database: test }); //OR send a function as parameter
+//in MVC use: const conn = await mysqlCon.createConnection({database:test}); //OR send a function as parameter (recomended)
 
 //API Routes (API endpoints)
 const {getAll, add, edit, remove, notFound, subscribe} = require('./controllers/mysqlCrl');
