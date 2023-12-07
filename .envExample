@@ -2,3 +2,5 @@ mysqlPORT=5010
 mongoosePORT=5020
 postgreSQLPORT=5030
 multerPORT=5999
+
+DB_table=users

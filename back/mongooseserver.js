@@ -25,13 +25,13 @@ mongoose.connect('mongodb://localhost:27017/medDB', {useNewUrlParser: true, useU
     console.log('Mongoose initial connextion error: ', err);
   });
 
-// Define a schema for the 'users' collection
+// Define a schema for the collection
 const usersSchema = new mongoose.Schema({
   name: String,
   age: Number,
   photo: String,
-  timestamp:{type:Date,
-            default: function(){return new Date()}}
+  timestamp:{ type:Date,
+              default: function(){return new Date()}}
 });
 // Create a Mongoose model based on the schema
 const usersModel = mongoose.model('users', usersSchema, 'users');
