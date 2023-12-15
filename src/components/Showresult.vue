@@ -1,6 +1,7 @@
 <template>
+    <Vbackpopup v-if="backpopup" @close="(popV)=>{vback=popV; backpopup=false;}"/>
     <header>
-        <img src="hamburger-button.png" alt="hamburger-button back-end" class="hamburger-button" @click="burgerButton">
+        <img src="hamburger-button.png" alt="hamburger-button back-end" class="hamburger-button" @click="backpopup=true;">
         <div class="back" ref="back">
             <select name="vback" v-model="vback" id="">
                 <option value="js">Js-Express</option><option value="php">PHP-Laravel</option>
@@ -65,7 +66,9 @@
 </template>
 
 <script>
+
 export default{
+
     props: {fpost:{type:Function},sub:{type:String},
             fput:{type:Function}, fdelete:{type:Function},
             fget:{type:Function}, fgetw:{type:Function},
@@ -73,6 +76,7 @@ export default{
 
     data(){return{
                 vback:'js', vname:'', vage:'', vlimit:10,
+                backpopup:false, 
                 DBs:[
                     {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/', 'php':'http://localhost:8000/'}, _idClmn:'id'}, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
                     {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'http://localhost:5020/','php':'http://localhost:8000/'}, _idClmn:'_id'},
@@ -98,19 +102,19 @@ export default{
                 return url;
             },
         getVback(){return this.vback;},
-        burgerButton(){
-            const bs = this.$refs.back.style;
-            if (bs.display=="none") {
-                bs.display="block";
-                bs.position="absolute";
-                bs.top="50px";
-                bs.left="5px";
-                bs.zIndex=100;
-            }
-            else{
-                bs.display="none";
-            }
-        }
+        // burgerButton(){
+        //     const bs = this.$refs.back.style;
+        //     if (bs.display=="none") {
+        //         bs.display="block";
+        //         bs.position="absolute";
+        //         bs.top="50px";
+        //         bs.left="5px";
+        //         bs.zIndex=100;
+        //     }
+        //     else{
+        //         bs.display="none";
+        //     }
+        // }
     }
 }
 </script>
