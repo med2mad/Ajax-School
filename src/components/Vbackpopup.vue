@@ -1,14 +1,12 @@
 <template>
     <div class="popup" @click.self="this.$emit('close', this.vback)">
         <div class="innerpopup">
-        <div @click.self="this.$emit('close')">
             <div class="back" ref="back">
                 <select name="vback" v-model="vback" id="">
                     <option value="js">Js-Express</option>
                     <option value="php">PHP-Laravel</option>
                 </select>
             </div>
-        </div>
         </div>
     </div>
 </template>
@@ -18,7 +16,10 @@
 export default{
     emits:['close'],
     props:['text'],
-    vback:'js'
+    data(){return{
+                vback:'js',
+            }
+        },
 }
 
 </script> 
