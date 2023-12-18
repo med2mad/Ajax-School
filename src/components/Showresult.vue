@@ -2,11 +2,8 @@
     <Vbackpopup v-if="backpopup" @close="(popV)=>{vback=popV; backpopup=false;}"/>
     <header>
         <img src="hamburger-button.png" alt="hamburger-button back-end" class="hamburger-button" @click="backpopup=true;">
-        <div class="back" ref="back">
-            <select name="vback" v-model="vback" id="">
-                <option value="js">Js-Express</option><option value="php">PHP-Laravel</option>
-            </select>
-        </div>
+
+        <div class="logo"><router-link to="/"><img src="usetest.png" alt="logo"></router-link></div> 
 
         <p><router-link to="/">Testing using:</router-link></p>
         <nav>
@@ -19,19 +16,27 @@
     </header>
 
     <div class="side">
-        <div class="logo"><router-link to="/"><img src="logo.png" alt="logo"></router-link></div> 
-        <hr>
+        <h2>Back-end</h2>
+        <div ref="back">
+            <select name="vback" v-model="vback" id="">
+                <option value="js">Js-Express</option><option value="php">PHP-Laravel</option>
+            </select>
+        </div>
+        
+        <div class="limit"></div>
 
-        <h2>Filter :</h2>
+        <h2>Filter</h2>
         Name <br> <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
         Age <br> <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
+        
         <div class="limit"></div>
 
-        <h2>Limit :</h2>
+        <h2>Limit</h2>
         <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"><br>
+        
         <div class="limit"></div>
 
-        <h2>Legend :</h2>
+        <h2>Legend</h2>
         <div class="legend">
             <div><div class="green"></div></div><div>Under 100 ms</div>
             <div><div class="orange"></div></div><div>Between 100 <br> and 200 ms</div>
