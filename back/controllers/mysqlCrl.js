@@ -1,6 +1,7 @@
 const con = require('../configurations/mysql');
 require('dotenv').config();
 const table = process.env.DB_table || 'userstable';
+const axios = require('axios');
 
 module.exports.getAll = (req, res) => {
     let q ="SELECT * FROM "+table+" WHERE name LIKE '%"+ req.query._name +"%'";
@@ -39,4 +40,11 @@ module.exports.notFound = (req, res) => {
 module.exports.subscribe = (req, res, next) => {
     console.log(req.file);
     res.send(req.body);
+};
+
+module.exports.getsub = (req, res, next) => {
+    axios.get("https://dev-nobuisness.pantheonsite.io/wp-json/wp/v2/posts/1")
+    .then((response)=>{
+        res.send(response);
+    })
 };
