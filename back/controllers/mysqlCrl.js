@@ -43,8 +43,5 @@ module.exports.subscribe = (req, res, next) => {
 };
 
 module.exports.getsub = (req, res, next) => {
-    axios.get("https://dev-nobuisness.pantheonsite.io/wp-json/wp/v2/posts/1")
-    .then((response)=>{
-        res.send(response);
-    })
+    
 };

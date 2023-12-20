@@ -21,7 +21,7 @@
                 </div>
                 <div v-else-if="bucket.a" class="rows">
                     <form> <!--for input radio-->
-                    <table cellspacing="2">
+                    <table>
                         <tr><th></th><th>#</th><th>Name</th><th>Age</th><th>Photo</th></tr>
                         <transition-group name="table">
                         <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_idClmn]==selectedId}" :key="user[_idClmn]" @click="selectUser(user[_idClmn]);">

@@ -5,7 +5,7 @@
 
         <div class="logo"><router-link to="/"><img src="usetest.png" alt="logo"></router-link></div> 
 
-        <p><router-link to="/">Testing using:</router-link></p>
+        <p>Testing using :</p>
         <nav>
             <!-- <router-link to="/sub"> <div class="btn">subscribe</div> </router-link> -->
             <router-link to="/xhr"> <div class="btn">XHR</div> </router-link>
@@ -16,7 +16,7 @@
     </header>
 
     <div class="side">
-        <h2>Back-end</h2>
+        <h2>Back-end :</h2>
         <div ref="back">
             <select name="vback" v-model="vback" id="">
                 <option value="js">Js-Express</option><option value="php">PHP-Laravel</option>
@@ -25,21 +25,21 @@
         
         <div class="limit"></div>
 
-        <h2>Filter</h2>
-        Name <br> <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
-        Age <br> <input type="number" v-model="vage" name="age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
+        <h2>Filter :</h2>
+        <input type="text" v-model="vname" name="name" placeholder="Name" autocomplete="off" spellcheck="false"><br>
+        <input type="number" v-model="vage" name="age" placeholder="Age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
         
         <div class="limit"></div>
 
-        <h2>Limit</h2>
+        <h2>Limit :</h2>
         <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off"><br>
         
         <div class="limit"></div>
 
-        <h2>Legend</h2>
+        <h2>Legend :</h2>
         <div class="legend">
             <div><div class="green"></div></div><div>Under 100 ms</div>
-            <div><div class="orange"></div></div><div>Between 100 <br> and 200 ms</div>
+            <div><div class="orange"></div></div><div>100 ms to 200 ms</div>
             <div><div class="red"></div></div><div>Above 200 ms</div>
         </div>
     </div>

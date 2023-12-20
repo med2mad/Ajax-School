@@ -1,7 +1,8 @@
 @font-face {
-    font-family: Rajdhani-Light;
-    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Light.ttf');
+    font-family: Rajdhani-Regular;
+    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Regular.ttf');
 }
+
 .title{
     background-image: linear-gradient(45deg , white 5% , #c5c5c5 50%, white  ) ;
     border: solid 4px #2c3e50;
@@ -22,8 +23,6 @@
 }
 
 .db .db1{
-    border: solid 4px;
-    border-radius: 10px 10px 10px 10px;
     background-color: white;
     max-height: 500px;
     min-height: 90px; /* 'No Data!!' shows timeF out of bounds (optional ?)*/
@@ -32,8 +31,11 @@
 }
 
 .db1 .time{
-    border-right: solid 4px;
+    font-family: Rajdhani-Regular, sans-serif;
     font-size: 1.2rem;
+    border: solid 2px;
+    border-right: solid 0px;
+    border-radius: 9px 0px 0px 0px;
     width:30px;
 }
 .db1 .time div{
@@ -49,38 +51,39 @@
 
 .db1 .data{
     overflow: auto;
+    border: solid 1px;
+}
+table{
+    border-collapse: collapse;
 }
 .db1 .data , .db1 .data table{
     width:100%; /* makes the table columns responsive because .db{display:flex} and .db2 is fixed */
 }
 .db1 table td{
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    border: solid 2px;
+    font-family: Rajdhani-Regular, sans-serif;
     font-weight: bold;
-    border-radius:5px;
-    padding: 0px 1px;
+    border: solid 1px;
 }
 .db1 table td img{
     background-color: black;
     width: 40px;
     height: 40px;
-    border-left: solid 1px;
-    border-right: solid 1px;
+    border: solid 1px;
 }
 
 .db1 table th{
-    background-image: linear-gradient(180deg , rgb(0, 17, 110) ,  rgb(84, 98, 179) 40% , rgb(0, 17, 110) 70% ) ;
+    font-family: Rajdhani-Regular, sans-serif;
+    text-shadow: 0px 0px 4px blue;
+    font-size: 1.1em;
+    background-image: linear-gradient(180deg, rgb(85, 85, 85), rgb(36, 35, 35));
     color: white;
-    border-radius: 7px;
-    box-shadow: 0px 0px 1px 1px white; /* because of {position:sticky} data appair behinde <hr> */
-    padding: 5px;
-    position:sticky;
-    top:1px; /* {position:sticky} requires top */
-}
+    border: solid 1px grey;
+    padding: 7px;
+ }
 
 .db1 table .datarow{
     background-color: rgb(238, 238, 238);
-    height: 40px;
+    height: 46px;
 }
 .db1 table .datarow:nth-child(odd){
     background-color: white;
@@ -97,7 +100,7 @@
     width:auto; /*which is a fixed size because .db{display:flex} makes .db2 intrensic ([width:max-content] does the same)*/
 }
 .db2 .form{
-    font-family: Rajdhani-Light;
+    font-family: Rajdhani-Medium;
     font-weight: bold;
     background-color: white;
     border-radius: 20px;
@@ -129,7 +132,7 @@
     height: 250px;
 }
 .form .data table input[type="button"]{
-    font-family: Rajdhani-Light;
+    font-family: Rajdhani-Regular;
     font-weight: bold;
 } 
 
@@ -153,7 +156,7 @@
     background-image: linear-gradient(90deg,#e3e3e3 0%,
                                             #e3e3e3 50%,
                                             #b6b6b6 100%
-) ;
+                                    ) ;
 }
 .form .ppd .btn:hover{
     transform: translateX(15%);
