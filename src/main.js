@@ -1,10 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import Showresult from './components/Showresult.vue'
-import Popup from './components/Popup.vue'
-import DB from './components/DB.vue'
-import Vbackpopup from './components/Vbackpopup.vue'
+import Showresult from './views/components/Showresult.vue'
+import Popup from './views/components/Popup.vue'
+import DB from './views/components/DB.vue'
+import Vbackpopup from './views/components/Vbackpopup.vue'
 
 const app = createApp(App)
 app.use(router)
