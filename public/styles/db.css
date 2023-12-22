@@ -101,19 +101,18 @@ table{
 }
 .db2 .form{
     font-family: Rajdhani-Regular;
-    font-weight: bold;
-    background-color: white;
-    border: solid 4px white  ;
+    color:white;
+    border: solid 2px #e0e0e0;
     min-height: 418px;
     display: flex; /* align .data|.ppd */
 }
 .form .data table td{
     padding:4px;
-    background-color: rgb(196, 196, 196);
+    background-image:linear-gradient(180deg, rgb(85, 85, 85), rgb(36, 35, 35));
 }  
 .agetr td{
-    border-bottom: solid 4px white;
-    border-top: solid 4px white;
+    border-bottom: solid 2px #e0e0e0;
+    border-top: solid 2px #e0e0e0;
 }
 .form .data table input{
     width:100%;
@@ -132,7 +131,8 @@ table{
 .form .data table input[type="button"]{
     font-family: Rajdhani-Regular;
     font-weight: bold;
-} 
+    font-size: 0.9rem;
+}
 
 .form .ppd{
     background-color: rgb(73, 73, 73);
@@ -143,6 +143,8 @@ table{
     grid-template-columns: 0.7fr; /* align buttons */
 }
 .form .ppd .btn{
+    font-family: Rajdhani-Regular;
+    font-weight: bold;
     border-radius: 0px 15px 15px 0px;
     transition-property: transform;
     transition-duration: 250ms;
@@ -170,7 +172,7 @@ table{
 }.form .ppd .put .flash{
     transform: rotateZ(90deg) translate(-10%,-30%);
 }.form .ppd .delete .flash{
-    transform: rotateZ(90deg) translate(-60%,-30%);
+    transform: rotateZ(90deg) translate(-35%,-30%);
 }
 
 .form .ppd .post{
