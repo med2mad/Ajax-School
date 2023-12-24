@@ -41,9 +41,10 @@
 .db1 .time div{
     transform: rotateZ(90deg) translateX(30%);
     white-space: nowrap;
+    font-weight: bold;
 }
 .db1 .time .timef{
-    font-weight: bold;
+    letter-spacing: 10px;
 }
 .db1 .time .ms{
     font-size: 0.8rem;
@@ -102,17 +103,21 @@ table{
 .db2 .form{
     font-family: Rajdhani-Regular;
     color:white;
-    border: solid 2px #e0e0e0;
+    border: solid 1px #e0e0e0;
+    border-radius: 0px 20px 20px 0px;
     min-height: 418px;
     display: flex; /* align .data|.ppd */
 }
+.form .data {
+    background-image:linear-gradient(180deg, rgb(85, 85, 85), rgb(36, 35, 35));
+}  
 .form .data table td{
-    padding:4px;
+    padding:8px 4px;
     background-image:linear-gradient(180deg, rgb(85, 85, 85), rgb(36, 35, 35));
 }  
 .agetr td{
-    border-bottom: solid 2px #e0e0e0;
-    border-top: solid 2px #e0e0e0;
+    border-bottom: solid 1px #e0e0e0;
+    border-top: solid 1px #e0e0e0;
 }
 .form .data table input{
     width:100%;
