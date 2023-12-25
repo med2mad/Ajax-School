@@ -74,7 +74,7 @@ table{
 
 .db1 table th{
     font-family: Rajdhani-Regular, sans-serif;
-    text-shadow: 0px 0px 4px blue;
+    text-shadow: 0px 0px 3px blue;
     font-size: 1.1em;
     background-image: linear-gradient(180deg, rgb(85, 85, 85), rgb(36, 35, 35));
     color: white;
@@ -103,7 +103,7 @@ table{
 .db2 .form{
     font-family: Rajdhani-Regular;
     color:white;
-    border: solid 1px #e0e0e0;
+    border: solid 1px grey;
     border-radius: 0px 20px 20px 0px;
     min-height: 418px;
     display: flex; /* align .data|.ppd */
@@ -116,8 +116,8 @@ table{
     background-image:linear-gradient(180deg, rgb(85, 85, 85), rgb(36, 35, 35));
 }  
 .agetr td{
-    border-bottom: solid 1px #e0e0e0;
-    border-top: solid 1px #e0e0e0;
+    border-bottom: solid 1px grey;
+    border-top: solid 1px grey;
 }
 .form .data table input{
     width:100%;
@@ -175,7 +175,7 @@ table{
 .form .ppd .post .flash{/* (this is not how it should be done) */
     transform: rotateZ(90deg) translate(-20%,-30%);
 }.form .ppd .put .flash{
-    transform: rotateZ(90deg) translate(-10%,-30%);
+    transform: rotateZ(90deg) translate(6%,-30%);
 }.form .ppd .delete .flash{
     transform: rotateZ(90deg) translate(-35%,-30%);
 }
