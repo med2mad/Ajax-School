@@ -165,9 +165,9 @@ export default{
         this.$emit('mountGet', this.bucket);
         
         //get function's return value(SLOW)
-        (async ()=>{
-            this.$emit('mountGetw', this.bucket);
-        })(); //async self invoking
+        // (async ()=>{
+        //     this.$emit('mountGetw', this.bucket);
+        // })(); //async self invoking
     },
 }
 </script>
