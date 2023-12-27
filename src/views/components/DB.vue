@@ -26,7 +26,7 @@
                         <transition-group name="table">
                         <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_idClmn]==selectedId}" :key="user[_idClmn]" @click="selectUser(user[_idClmn]);">
                             <td> <input type="radio" name="db" v-model="selectedId" :value="user[_idClmn]"> </td>
-                            <td></td> <td :ref="'trName'+user[_idClmn]">{{user.name}}</td> <td :ref="'trAge'+user[_idClmn]">{{user.age}}</td>
+                            <td>{{user.id}}</td> <td :ref="'trName'+user[_idClmn]">{{user.name}}</td> <td :ref="'trAge'+user[_idClmn]">{{user.age}}</td>
                             <td><!--public folder--><img :src="'uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user[_idClmn]" :ref="'trImg'+user[_idClmn]"></td>
                         </tr>
                         </transition-group>
@@ -66,7 +66,7 @@
 
 <script>
 export default{
-    props: { _db:{type:String}, _dblogofile:{type:String}, _idClmn:{type:String}, },
+    props: { _db:{type:String}, _dblogofile:{type:String}, _idClmn:{type:String}, back:{type:String}},
 
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  
@@ -99,8 +99,13 @@ export default{
                 }
                 const fd = new FormData(this.$refs.frmid);
                 fd.append('selectedPhotoName', this.selectedPhotoName);
-                this.$emit('clickPut', this.selectedId, fd, selectedTr, this.bucket);
-
+                
+                if(this.back=='js')
+                    this.$emit('clickPut', 'PUT', this.selectedId, fd, selectedTr, this.bucket);
+                else{
+                    this.$emit('clickPut', 'POST', this.selectedId+'/?_method=PUT', fd, selectedTr, this.bucket);
+                }
+                
                 this.clear();
             }
         },

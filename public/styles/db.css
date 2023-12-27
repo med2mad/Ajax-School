@@ -226,9 +226,9 @@ counter-reset: rowNumber -1;
 .db1 table tr {
 counter-increment: rowNumber;
 }
-.db1 table tr td:nth-child(2)::before {
+/* .db1 table tr td:nth-child(2)::before {
 content: counter(rowNumber);
-}
+} */
 /* ------------- class declarations -------------*/
 .green{
     background-color: green;

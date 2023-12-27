@@ -15,13 +15,13 @@ export default {
           })
       },
 
-      async fgetw(uri){
-        try {
-          const response = await axios.get(uri)
-          return response.data
-        }
-        catch(err) {return 'err: ' + err.message}
-      },
+      // async fgetw(uri){
+      //   try {
+      //     const response = await axios.get(uri)
+      //     return response.data
+      //   }
+      //   catch(err) {return 'err: ' + err.message}
+      // },
       
 
       fpost(uri, body, bucket, limit){
@@ -33,8 +33,14 @@ export default {
             })
       },
 
-      fput(uri, body, i, bucket){
-        axios.put(uri, body, {headers: {"Content-Type": "multipart/form-data"}})
+      // fput(uri, body, i, bucket){
+      //   axios.put(uri, body, {headers: {"Content-Type": "multipart/form-data"}})
+      //     .then((response) => {
+      //         bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photo;
+      //       })
+      // },
+      fput(method, uri, body, i, bucket){
+        axios({"method": method, "url": uri, "data":body}, {headers: {"Content-Type": "multipart/form-data"}})
           .then((response) => {
               bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photo;
             })
