@@ -24,10 +24,10 @@
                     <table>
                         <tr><th></th><th>#</th><th>Name</th><th>Age</th><th>Photo</th></tr>
                         <transition-group name="table">
-                        <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user[_idClmn]==selectedId}" :key="user[_idClmn]" @click="selectUser(user[_idClmn]);">
-                            <td> <input type="radio" name="db" v-model="selectedId" :value="user[_idClmn]"> </td>
-                            <td>{{user.id}}</td> <td :ref="'trName'+user[_idClmn]">{{user.name}}</td> <td :ref="'trAge'+user[_idClmn]">{{user.age}}</td>
-                            <td><!--public folder--><img :src="'uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user[_idClmn]" :ref="'trImg'+user[_idClmn]"></td>
+                        <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user._id==selectedId}" :key="user._id" @click="selectUser(user._id);">
+                            <td> <input type="radio" name="db" v-model="selectedId" :value="user._id"> </td>
+                            <td>{{user._id}}</td> <td :ref="'trName'+user._id">{{user.name}}</td> <td :ref="'trAge'+user._id">{{user.age}}</td>
+                            <td><!--public folder--><img :src="'uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user._id" :ref="'trImg'+user._id"></td>
                         </tr>
                         </transition-group>
                     </table>
@@ -66,7 +66,7 @@
 
 <script>
 export default{
-    props: { _db:{type:String}, _dblogofile:{type:String}, _idClmn:{type:String}, back:{type:String}},
+    props: { _db:{type:String}, _dblogofile:{type:String}, back:{type:String}},
 
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  
@@ -94,7 +94,7 @@ export default{
             else{
                 let selectedTr;
                 for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to change
-                    if(this.bucket.a[i][this._idClmn]==this.selectedId)
+                    if(this.bucket.a[i]["_id"]==this.selectedId)
                     { selectedTr = i; }
                 }
                 const fd = new FormData(this.$refs.frmid);
@@ -103,21 +103,21 @@ export default{
                 if(this.back=='js')
                     this.$emit('clickPut', 'PUT', this.selectedId, fd, selectedTr, this.bucket);
                 else{
-                    this.$emit('clickPut', 'POST', this.selectedId+'/?_method=PUT', fd, selectedTr, this.bucket);
+                    this.$emit('clickPut', 'POST', this.selectedId+'?_method=PUT', fd, selectedTr, this.bucket);
                 }
                 
                 this.clear();
             }
         },
         handleDelete(){
-            const lastTrId = this.bucket.a[this.bucket.a.length-1][this._idClmn];
+            const lastTrId = this.bucket.a[this.bucket.a.length-1]["_id"];
 
             if(!this.selectedId){this.popuptext='Select User !';this.showpopup = true;}
             else{
                 this.$emit('clickDelete', this.selectedId, lastTrId, this.bucket);
                 
                 for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to remove
-                    if(this.bucket.a[i][this._idClmn]==this.selectedId)
+                    if(this.bucket.a[i]["_id"]==this.selectedId)
                     {this.bucket.a.splice(i, 1);}
                 }
             }

@@ -41,28 +41,28 @@ client.connect().then((err) => {
 app.get('/', (req, res) => {
   let q ="SELECT * FROM "+table+" WHERE name LIKE '%"+ req.query._name +"%'";
   if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
-  q += " ORDER BY id DESC LIMIT "+req.query._limit;
+  q += " ORDER BY _id DESC LIMIT "+req.query._limit;
   client.query(q, (err, data)=>{
     res.json(data.rows);
   })
 });
 //Insert
 app.post('/', (req, res) => {
-  client.query("INSERT INTO "+table+" (name, age, photo) VALUES ('"+ req.body.name +"', "+ req.body.age +", '"+ req.PHOTO_PARSED +"') RETURNING id;", (err, data)=>{    
-    res.json({"newId":data.rows[0].id, "photo":req.PHOTO_PARSED});
+  client.query("INSERT INTO "+table+" (name, age, photo) VALUES ('"+ req.body.name +"', "+ req.body.age +", '"+ req.PHOTO_PARSED +"') RETURNING _id;", (err, data)=>{    
+    res.json({"newId":data.rows[0]._id, "photo":req.PHOTO_PARSED});
   })
 });
 //Update
 app.put('/:id', (req, res) => {
-  client.query("UPDATE "+table+" SET name='"+ req.body.name +"', age = '"+ req.body.age +"', photo = '"+ req.PHOTO_PARSED +"' WHERE id='"+ req.params.id +"'", (err, data)=>{
+  client.query("UPDATE "+table+" SET name='"+ req.body.name +"', age = '"+ req.body.age +"', photo = '"+ req.PHOTO_PARSED +"' WHERE _id='"+ req.params.id +"'", (err, data)=>{
     res.json({"photo":req.PHOTO_PARSED});
   })
 });
 //Delete
 app.delete('/:id', (req, res) => {
-  client.query("DELETE FROM "+table+" WHERE id='"+ req.params.id +"'", (err, data)=>{
+  client.query("DELETE FROM "+table+" WHERE _id='"+ req.params.id +"'", (err, data)=>{
       //GET Row to add instead
-      client.query("SELECT * FROM "+table+" WHERE id=(SELECT MAX(id) from "+table+" where id < '"+ req.query.lasttableid +"')", (err, rows)=>{
+      client.query("SELECT * FROM "+table+" WHERE _id=(SELECT MAX(_id) from "+table+" where _id < '"+ req.query.lasttableid +"')", (err, rows)=>{
         res.send(rows.rows)
       }) 
   });

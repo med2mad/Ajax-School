@@ -7,7 +7,7 @@
 
         <p>Testing using :</p>
         <nav>
-            <router-link to="/sub"> <div class="btn">subscribe</div> </router-link>
+            <!-- <router-link to="/sub"> <div class="btn">subscribe</div> </router-link> -->
             <router-link to="/xhr"> <div class="btn">XHR</div> </router-link>
             <router-link to="/jquery"> <div class="btn">JQuery</div> </router-link>
             <router-link to="/fetch"> <div class="btn">Fetch</div> </router-link>
@@ -45,11 +45,11 @@
     </div>
 
     <main>
-        <DB v-for="item in DBs" :key="item._db+vback+vlimit+vname+vage" :back="vback" :_dblogofile="item._dblogofile" :_idClmn="item._idClmn" :_db="item._db" 
+        <DB v-for="item in DBs" :key="item._db+vback+vlimit+vname+vage" :back="vback" :_dblogofile="item._dblogofile" :_db="item._db" 
                             @mountGet="(bucket)=>{fget(getUri(item._url[vback]), bucket);}" 
                             @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item._url[vback]));}" 
                             @clickPost="(body, bucket)=>{this.fpost(item._url[vback], body, bucket, vlimit);}" 
-                            @clickPut="(methode, selectedId, body, i, bucket)=>{this.fput(methode, item._url[vback]+selectedId, body, i, bucket);}"
+                            @clickPut="(method, selectedId, body, i, bucket)=>{this.fput(method, item._url[vback]+selectedId, body, i, bucket);}"
                             @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item._url[vback]+selectedId, lastTableId, bucket);}"
         ></DB>
     </main>
@@ -83,9 +83,9 @@ export default{
                 vback:'js', vname:'', vage:'', vlimit:10,
                 backpopup:false, 
                 DBs:[
-                    {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/', 'php':'http://127.0.0.1:8000/'}, _idClmn:'id'}, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
-                    {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'http://localhost:5020/','php':'http://127.0.0.1:8000/'}, _idClmn:'_id'},
-                    {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'http://localhost:5030/', 'php':'http://127.0.0.1:8000/'}, _idClmn:'id'},
+                    {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/', 'php':'http://127.0.0.1:8000/MysqlModel/'} }, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
+                    {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'http://localhost:5020/','php':'http://127.0.0.1:8000/MongoModel'} },
+                    {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'http://localhost:5030/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
                     // {_db:'jsonserver', _dblogofile:'jsonserver.png', _url:{'js':'http://localhost:3000/Resource1/', 'js':'http://localhost:3000/Resource1/','php':'http://localhost:3000/Resource1/'}, _idClmn:'id'}, //is not compatible with FormData (need json body)
                     // {_db:'file', _dblogofile:'Simple File', _url:'http://localhost:8080/j.json' /*(or [_url:'j.json'] because served links will add the current _url) */, _idClmn:'id'} //in the public folder. ( use: var o = JSON.parse(fs.readFileSync(filePath)); + fs.writeFileSync(path, JSON.stringify(o)) / var o = require(filePath); )
                     ]

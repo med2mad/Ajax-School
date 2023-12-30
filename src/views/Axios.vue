@@ -15,30 +15,25 @@ export default {
           })
       },
 
-      // async fgetw(uri){
-      //   try {
-      //     const response = await axios.get(uri)
-      //     return response.data
-      //   }
-      //   catch(err) {return 'err: ' + err.message}
-      // },
+      async fgetw(uri){
+        try {
+          const response = await axios.get(uri)
+          return response.data
+        }
+        catch(err) {return 'err: ' + err.message}
+      },
       
 
       fpost(uri, body, bucket, limit){
+        console.log(uri);
         axios.post(uri,body)
           .then((response) => {
-                const rowToInsert = {"id":response.data.newId, "_id":response.data.newId, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
+                const rowToInsert = {"_id":response.data.newId, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
                 bucket.a.unshift(rowToInsert);
                 if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
             })
       },
 
-      // fput(uri, body, i, bucket){
-      //   axios.put(uri, body, {headers: {"Content-Type": "multipart/form-data"}})
-      //     .then((response) => {
-      //         bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photo;
-      //       })
-      // },
       fput(method, uri, body, i, bucket){
         axios({"method": method, "url": uri, "data":body}, {headers: {"Content-Type": "multipart/form-data"}})
           .then((response) => {

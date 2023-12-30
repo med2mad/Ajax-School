@@ -43,7 +43,7 @@ app.get('/', async (req, res) => {
   else{
     let q = {"name":{ $regex: '.*' + req.query._name + '.*' }};
     if (req.query._age) {q.age = req.query._age;}
-      usersModel.find(q).sort({"timestamp":-1}).select("-__v -timestamp").limit(req.query._limit).then((data)=>{
+      usersModel.find(q).sort({"_id":-1}).select("-__v -timestamp").limit(req.query._limit).then((data)=>{
       res.json(data);
     });
   }
@@ -74,7 +74,7 @@ app.put('/:id', (req, res) => {
 app.delete('/:id', (req, res) => {
   usersModel.findOneAndDelete({"_id":req.params.id}).then((data)=>{
     //GET replacement row
-    usersModel.find({"_id":{$lt:req.query.lasttableid}}).sort({"timestamp":-1}).select("-__v -timestamp").limit(1).then((data)=>{
+    usersModel.find({"_id":{$lt:req.query.lasttableid}}).sort({"_id":-1}).select("-__v -timestamp").limit(1).then((data)=>{
       res.json(data);
     });
   });
