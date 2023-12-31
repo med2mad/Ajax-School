@@ -50,7 +50,9 @@
                             @mountGetw="async(bucket)=>{bucket.s = await fgetw(getUri(item._url[vback]));}" 
                             @clickPost="(body, bucket)=>{this.fpost(item._url[vback], body, bucket, vlimit);}" 
                             @clickPut="(method, selectedId, body, i, bucket)=>{this.fput(method, item._url[vback]+selectedId, body, i, bucket);}"
-                            @clickDelete="(selectedId, lastTableId, bucket)=>{this.fdelete(item._url[vback]+selectedId, lastTableId, bucket);}"
+                            @clickDelete="(method, selectedId, bucket)=>{
+                                console.log(item._url[vback]+selectedId);
+                                this.fdelete(method, item._url[vback]+selectedId, bucket);}"
         ></DB>
     </main>
 
@@ -84,7 +86,7 @@ export default{
                 backpopup:false, 
                 DBs:[
                     {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/', 'php':'http://127.0.0.1:8000/MysqlModel/'} }, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
-                    {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'http://localhost:5020/','php':'http://127.0.0.1:8000/MongoModel'} },
+                    {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'http://localhost:5020/','php':'http://127.0.0.1:8000/MongoModel/'} },
                     {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'http://localhost:5030/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
                     // {_db:'jsonserver', _dblogofile:'jsonserver.png', _url:{'js':'http://localhost:3000/Resource1/', 'js':'http://localhost:3000/Resource1/','php':'http://localhost:3000/Resource1/'}, _idClmn:'id'}, //is not compatible with FormData (need json body)
                     // {_db:'file', _dblogofile:'Simple File', _url:'http://localhost:8080/j.json' /*(or [_url:'j.json'] because served links will add the current _url) */, _idClmn:'id'} //in the public folder. ( use: var o = JSON.parse(fs.readFileSync(filePath)); + fs.writeFileSync(path, JSON.stringify(o)) / var o = require(filePath); )

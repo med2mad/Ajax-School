@@ -110,11 +110,15 @@ export default{
             }
         },
         handleDelete(){
-            const lastTrId = this.bucket.a[this.bucket.a.length-1]["_id"];
+            const lastTableId = this.bucket.a[this.bucket.a.length-1]["_id"];
 
             if(!this.selectedId){this.popuptext='Select User !';this.showpopup = true;}
             else{
-                this.$emit('clickDelete', this.selectedId, lastTrId, this.bucket);
+                if(this.back=='js')
+                    this.$emit('clickDelete', 'DELETE', this.selectedId+'?lasttableid='+lastTableId, this.bucket);
+                else{
+                    this.$emit('clickDelete', 'POST', this.selectedId+'?_method=DELETE&lasttableid='+lastTableId, this.bucket);
+                }
                 
                 for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to remove
                     if(this.bucket.a[i]["_id"]==this.selectedId)
