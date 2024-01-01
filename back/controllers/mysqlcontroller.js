@@ -1,7 +1,6 @@
-const con = require('../configurations/mysql');
+const con = require('../configurations/mysqlconnection');
 require('dotenv').config();
 const table = process.env.DB_table || 'userstable';
-const axios = require('axios');
 
 module.exports.getAll = (req, res) => {
     let q ="SELECT * FROM "+table+" WHERE name LIKE '%"+ req.query._name +"%'";
@@ -42,6 +41,7 @@ module.exports.subscribe = (req, res, next) => {
     res.send(req.body);
 };
 
-module.exports.getsub = (req, res, next) => {
-    
+console.log('mysqlController again !');
+
+module.exports.getsub = (req, res, next) => {    
 };
