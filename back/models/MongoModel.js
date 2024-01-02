@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     timestamp:{ type:Date, default:function(){return new Date()} }
 });
 
-// Create the User model from the schema
+// Create the User model using the schema
 const UserModel = mongoose.model('User', userSchema, 'users');
 
 console.log('mongoModel again !');

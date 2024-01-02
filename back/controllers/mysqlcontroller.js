@@ -1,35 +1,31 @@
-const con = require('../configurations/mysqlconnection');
-require('dotenv').config();
-const table = process.env.DB_table || 'userstable';
+const User = require('../models/MysqlModel');
 
 module.exports.getAll = (req, res) => {
-    let q ="SELECT * FROM "+table+" WHERE name LIKE '%"+ req.query._name +"%'";
+    let q ="SELECT * FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";
     if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
     q += " ORDER BY _id DESC LIMIT "+ req.query._limit;
-    con.query(q, (err, rows)=>{
-        res.json(rows);
+
+    User.findAll(q).then((response)=>{
+        res.json(response);
     });
 };
 
 module.exports.add = (req, res) => {
-    con.query("INSERT INTO "+table+" (name, age, photo) VALUES ('"+ req.body.name +"', '"+ req.body.age +"', '"+ req.PHOTO_PARSED +"')", (err, data)=>{
-        res.json({"newId":data.insertId, "photo":req.PHOTO_PARSED});
-    });
+    const data = {"name":req.body.name, "age":req.body.age, "photo":req.PHOTO_PARSED};
+    const o = new User(data);
+    o.create(res);
 };
 
 module.exports.edit = (req, res) => {
-    con.query("UPDATE "+table+" SET name = '"+ req.body.name +"', age = '"+ req.body.age +"', photo = '"+ req.PHOTO_PARSED +"' WHERE _id='"+ req.params.id +"'", (err, data)=>{
-        res.json({"photo":req.PHOTO_PARSED});
-    });
+    const data = {"name":req.body.name, "age":req.body.age, "photo":req.PHOTO_PARSED};
+    const id = req.params.id;
+    User.update(id, data, res);
 };
 
 module.exports.remove = (req, res) => {
-    con.query("DELETE FROM "+table+" WHERE _id='"+ req.params.id +"'", (err, data)=>{
-        //GET replacement row
-        con.query("SELECT * FROM "+table+" WHERE _id=(SELECT Max(_id) from "+table+" where _id < '"+ req.query.lasttableid +"')", (err, rows)=>{
-            res.json(rows)
-        });
-    });
+    const id = req.params.id;
+    const lasttableid = req.query.lasttableid;
+    User.delete(id, lasttableid, res);
 };
 
 module.exports.notFound = (req, res) => {
@@ -43,5 +39,4 @@ module.exports.subscribe = (req, res, next) => {
 
 console.log('mysqlController again !');
 
-module.exports.getsub = (req, res, next) => {    
-};
+module.exports.getsub = (req, res, next) => {   };
