@@ -71,7 +71,7 @@ export default{
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  
     data(){return{
-                bucket:{timeF:'',time0:0, a:'', s:''},
+                bucket:{timeF:'',time0:0, a:''},
                 selectedId:'', 
                 vname:'', vage:'', selectedPhotoName:'', photoObject:null,
                 showpopup:false, popuptext:'', 

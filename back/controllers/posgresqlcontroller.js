@@ -1,6 +1,6 @@
-const User = require('../models/MysqlModel');
+const User = require('../models/PostgresqlModel');
 
-module.exports.getAll = (req, res)=>{
+module.exports.read = (req, res) => {
     let q ="SELECT * FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";
     if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
     q += " ORDER BY _id DESC LIMIT "+ req.query._limit;
@@ -41,11 +41,4 @@ module.exports.notFound = (req, res)=>{
     res.status(404).json("404 , no routes !");
 };
 
-module.exports.subscribe = (req, res, next)=>{
-    console.log(req.file);
-    res.send(req.body);
-};
-
-module.exports.getsub = (req, res, next)=>{   };
-
-console.log('mysqlController again !');
+console.log('postgrescontroller again !');
