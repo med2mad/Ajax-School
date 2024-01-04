@@ -46,4 +46,4 @@ module.exports = class User {
     };
 }
 
-console.log('postgresqlModel again !');
+console.log('postgresqlClass again !');

@@ -1,6 +1,6 @@
-const User = require('../models/PostgresqlModel');
+const User = require('../models/PostgresqlClass');
 
-module.exports.read = (req, res) => {
+module.exports.getAll = (req, res) => {
     let q ="SELECT * FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";
     if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
     q += " ORDER BY _id DESC LIMIT "+ req.query._limit;

@@ -1,9 +1,9 @@
 const app = require('./configurations/expressapp');
 
 //API Routes (API endpoints)
-const {read, add, edit, remove, notFound} = require('./controllers/posgresqlcontroller');
+const {getAll, add, edit, remove, notFound} = require('./controllers/posgresqlcontroller');
 //Get
-app.get('/', read);
+app.get('/', getAll);
 //Insert
 app.post('/', add);
 //Update

@@ -46,4 +46,4 @@ module.exports = class User {
     };
 }
 
-console.log('mysqlModel again !');
+console.log('mysqlClass again !');

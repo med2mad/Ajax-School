@@ -1,4 +1,4 @@
-const User = require('../models/MysqlModel');
+const User = require('../models/MysqlClass');
 
 module.exports.getAll = (req, res)=>{
     let q ="SELECT * FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";
@@ -21,7 +21,7 @@ module.exports.add = (req, res)=>{
 module.exports.edit = (req, res)=>{
     const id = req.params.id;
     const body = {"name":req.body.name, "age":req.body.age};
-    const photo = req.PHOTO_PARSED; //by the time con.query finished there will be no more req (no "body")
+    const photo = req.PHOTO_PARSED; //by the time con.query finishes there will be no more req (no "body")
     
     User.update(id, body, photo).then((response)=>{
         res.json(response); 
