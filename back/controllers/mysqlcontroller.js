@@ -2,8 +2,8 @@ const User = require('../models/MysqlClass');
 
 module.exports.getAll = (req, res)=>{
     let q ="SELECT * FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";
-    if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
-    q += " ORDER BY _id DESC LIMIT "+ req.query._limit;
+        if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
+        q += " ORDER BY _id DESC LIMIT "+ req.query._limit;
 
     User.findAll(q).then((response)=>{
         res.json(response);
@@ -11,7 +11,7 @@ module.exports.getAll = (req, res)=>{
 };
 
 module.exports.add = (req, res)=>{
-    let user = new User({"name":req.body.name, "age":req.body.age, "photo":req.PHOTO_PARSED});
+    const user = new User({"name":req.body.name, "age":req.body.age, "photo":req.PHOTO_PARSED});
 
     user.create().then((response)=>{
         res.json(response);
@@ -29,10 +29,12 @@ module.exports.edit = (req, res)=>{
 };
 
 module.exports.remove = (req, res)=>{
-    const id = req.params.id;
-    const lasttableid = req.query.lasttableid;
-    
-    User.delete(id, lasttableid).then((response)=>{
+    let replacement = "SELECT * FROM "+User.table+" WHERE _id=";
+        replacement += "(SELECT Max(_id) from "+User.table+" where _id < '"+ req.query.lasttableid +"' AND name LIKE '%"+ req.query._name +"%'";
+        if (req.query._age) {replacement += " AND age = '"+ req.query._age +"'";}
+        replacement += ")";
+
+    User.delete(req.params.id, replacement).then((response)=>{
         res.json(response); 
     });
 };

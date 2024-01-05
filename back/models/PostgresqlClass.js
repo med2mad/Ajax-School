@@ -34,11 +34,10 @@ module.exports = class User {
         });
     }
     
-    static delete (id, lasttableid) {
+    static delete(id, replacement) {
         return new Promise(function(myResolve, myReject) {
             con.query("DELETE FROM "+User.table+" WHERE _id='"+ id +"'", (err, data)=>{
-                //GET replacement row
-                con.query("SELECT * FROM "+User.table+" WHERE _id=(SELECT Max(_id) from "+User.table+" where _id < '"+ lasttableid +"')", (err, rows)=>{
+                con.query(replacement, (err, rows)=>{
                     myResolve(rows.rows)
                 });
             });

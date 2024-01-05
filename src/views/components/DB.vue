@@ -115,7 +115,7 @@ export default{
             if(!this.selectedId){this.popuptext='Select User !';this.showpopup = true;}
             else{
                 if(this.back=='js')
-                    this.$emit('clickDelete', 'DELETE', this.selectedId+'?lasttableid='+lastTableId, this.bucket);
+                    this.$emit('clickDelete', 'DELETE', this.selectedId, '&lasttableid='+lastTableId, this.bucket);
                 else{
                     this.$emit('clickDelete', 'POST', this.selectedId+'?_method=DELETE&lasttableid='+lastTableId, this.bucket);
                 }
