@@ -39,20 +39,14 @@ const Model2 = sequelizeCon.define('fuck', {
 );
 Model1.hasMany(Model2);
 
-let name = null;
 sequelizeCon.sync({alter:true}).then(()=>{
-    console.log('tables Created');
-    return Model1.create({name:'kkk',age:'45',photo:''});
-}).then((kkk)=>{
-    console.log('user '+kkk._id+' ('+kkk.name+') Created');
-    console.log(kkk.toJSON());
-    name = kkk.name;
-    return kkk.createFuck({price:'16.5'});
-}).then((fuck)=>{
-    console.log('fuck '+fuck.price+' Created, that belongs to user '+name);
-    return Model2.findAll({where:3})//{where:{_id:3}}
-}).then((r)=>{
-    console.log(JSON.parse(JSON.stringify(r)));
-});
+    return Model1.create({name:'aa', age:22, photo:''});
+}).then((user)=>{
+    // return Model1.findAll({attributes:[[SequelizeClass.fn('COUNT', SequelizeClass.col('age')),'alias'], [SequelizeClass.fn('sum', SequelizeClass.col('_id')),'alias2']]});
+    return Model1.findAll({order:['age','name']});
 
-      
+}).then((data)=>{
+    console.log(data[0].toJSON());
+})
+
+
