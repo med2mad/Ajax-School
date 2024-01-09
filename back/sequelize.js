@@ -17,6 +17,10 @@ const Model1 = sequelizeCon.define('user', {
     },
     name:{
         type: SequelizeClass.STRING,
+        get(){//manipulate value got from entry.field snd entry.toJSON()
+            const raw = this.getDataValue('age');
+            return "original:"+raw+" | manipulated:"+(raw+22);
+        }
     },
     age:{
         type: SequelizeClass.INTEGER,
@@ -37,16 +41,14 @@ const Model2 = sequelizeCon.define('fuck', {
     sucks:{type: SequelizeClass.BOOLEAN},
   }
 );
-Model1.hasMany(Model2);
+// Model1.hasMany(Model2);
 
-sequelizeCon.sync({alter:true}).then(()=>{
+sequelizeCon.sync({force:true}).then(()=>{
     return Model1.create({name:'aa', age:22, photo:''});
 }).then((user)=>{
-    // return Model1.findAll({attributes:[[SequelizeClass.fn('COUNT', SequelizeClass.col('age')),'alias'], [SequelizeClass.fn('sum', SequelizeClass.col('_id')),'alias2']]});
-    return Model1.findAll({order:['age','name']});
-
+    return Model1.findOne();
 }).then((data)=>{
-    console.log(data[0].toJSON());
+     console.log(data.toJSON());
 })
 
 
