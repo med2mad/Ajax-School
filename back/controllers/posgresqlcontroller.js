@@ -1,6 +1,6 @@
 const User = require('../models/PostgresqlClass');
 
-module.exports.getAll = (req, res) => {
+module.exports.getAll = (req, res)=>{
     let q ="SELECT * FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";
         if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
         q += " ORDER BY _id DESC LIMIT "+ req.query._limit;
@@ -11,7 +11,7 @@ module.exports.getAll = (req, res) => {
 };
 
 module.exports.add = (req, res)=>{
-    let user = new User({"name":req.body.name, "age":req.body.age, "photo":req.PHOTO_PARSED});
+    const user = new User({"name":req.body.name, "age":req.body.age, "photo":req.PHOTO_PARSED});
 
     user.create().then((response)=>{
         res.json(response);

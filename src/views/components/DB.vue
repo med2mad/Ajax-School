@@ -158,7 +158,7 @@ export default{
             }
         },
 
-        async dataCheck(){
+        async dataCheck(){return '';
             if (this.vname!=="" && !Number.isInteger(this.vage)){this.vage = Number.parseInt(this.vage);}
             
             this.popuptext='';
