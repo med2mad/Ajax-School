@@ -46,14 +46,6 @@ export default {
             //GET replacement row
             if(response.data.length>0)
             { bucket.a.push({"_id":response.data[0]._id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}) }
-            // else if(_db=='jsonserver')
-            // {
-            // axios.get('http://localhost:3000/Resource1?id_lte='+ lastTableId +'&id_ne='+ lastTableId +'&_limit=1&_sort=id&_order=desc')
-            //   .then((response)=>{
-            //       if(response.data.length>0)
-            //       { bucket.a.push({"id":response.data[0].id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}); }
-            //   })
-            // }
           })
     },
   }

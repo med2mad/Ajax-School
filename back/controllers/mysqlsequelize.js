@@ -1,14 +1,13 @@
-const {User, Op} = require('../models/Sequelize');
+const {sequelizeCon, User, Op} = require('../models/Sequelize');
 
 module.exports.getAlls = (req, res)=>{
-    const whereClause = {};
-    whereClause.name = {[Op.like] : '%'+req.query._name+'%'};
-    if (req.query._age) {whereClause['age'] = req.query._age;}
-    const _limit = parseInt(req.query._limit);
+    const whereClause = {name: {[Op.like]:'%'+req.query._name+'%'}};
+    if (req.query._age) {whereClause.age = req.query._age;} 
     
     User.findAll({
         where: whereClause,
-        limit: _limit,
+        limit: parseInt(req.query._limit),
+        order: [['_id', 'DESC']],
     })
     .then((entries)=>{
         res.json(entries);
@@ -16,9 +15,11 @@ module.exports.getAlls = (req, res)=>{
 };
 
 module.exports.adds = (req, res)=>{
-    User.create({"name":req.body.name, "age":req.body.age, "photo":req.PHOTO_PARSED})
+    const photo = req.PHOTO_PARSED;
+
+    User.create({"name":req.body.name, "age":req.body.age, "photo":photo})
     .then((entry)=>{
-        res.json({"newId":entry._id, "photo":req.PHOTO_PARSED});
+        res.json({"newId":entry._id, "photo":photo});
     });
 };
 
@@ -31,12 +32,23 @@ module.exports.edits = (req, res)=>{
     });
 };
 
-module.exports.remove = (req, res)=>{
-
-};
-
-module.exports.notFound = (req, res)=>{
-    res.status(404).json("404 , no routes !");
+module.exports.removes = (req, res)=>{
+    User.destroy({where:{_id: req.params.id}})
+    .then(()=>{
+        const whereClause = {
+            _id: {[Op.lt]: parseInt(req.query.lasttableid)},
+            name: {[Op.like]: '%'+req.query._name+'%'},
+        };
+        if (req.query._age) {whereClause.age = req.query._age;}
+    
+        User.findAll({
+            where: whereClause,
+            order: [['_id', 'DESC']],
+        })
+        .then((entries)=>{
+            res.json(entries);
+        });
+    });
 };
 
 console.log('mysql sequelize Controller again !');

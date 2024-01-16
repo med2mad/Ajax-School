@@ -1,4 +1,5 @@
 const {sequelizeCon, SequelizeClass} = require('../configurations/sequelizeconn');
+const Op = SequelizeClass.Op;
 
 const User = sequelizeCon.define('user', {
     _id:{
@@ -19,9 +20,20 @@ const User = sequelizeCon.define('user', {
         type: SequelizeClass.STRING,
         defaultValue: '',
     }
-});
+},
+);
 
-sequelizeCon.sync({alter:true});
-console.log('mysqlSequelize again !');
+sequelizeCon.sync({alter:true})
+.then(()=>{
+
+    sequelizeCon.query(`select * from users`,{model:User})
+    .then((data)=>{
+        console.log(data[0].toJSON());
+    })
+})
+;
+
+// console.log('mysqlSequelize again !');
+module.exports.sequelizeCon = sequelizeCon;
 module.exports.User = User;
-module.exports.Op = SequelizeClass.Op;
+module.exports.Op = Op;
