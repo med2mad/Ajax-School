@@ -23,13 +23,26 @@ const User = sequelizeCon.define('user', {
 },
 );
 
+const Post = sequelizeCon.define('post', {
+    name:{
+        type: SequelizeClass.STRING,
+    },
+},
+);
+
+User.hasMany(Post);
+
+let postEntry;
 sequelizeCon.sync({alter:true})
 .then(()=>{
-
-    sequelizeCon.query(`select * from users`,{model:User})
-    .then((data)=>{
-        console.log(data[0].toJSON());
-    })
+    return Post.findOne({where:{name:'ganator'}});
+})    
+.then((entry)=>{
+    postEntry = entry;
+    return User.findAll();
+})
+.then((entry)=>{
+    
 })
 ;
 

@@ -6,6 +6,6 @@ const sequelize = new Sequelize('test', 'root', '', {
     logging: false, //no logs in console
 });
 
-console.log('sequelizeconn again !');
+// console.log('sequelizeconn again !');
 module.exports.sequelizeCon = sequelize;
 module.exports.SequelizeClass = Sequelize;
