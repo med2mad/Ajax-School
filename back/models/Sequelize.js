@@ -1,52 +1,69 @@
 const {sequelizeCon, SequelizeClass} = require('../configurations/sequelizeconn');
 const Op = SequelizeClass.Op;
 
-const User = sequelizeCon.define('user', {
-    _id:{
-        type: SequelizeClass.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
+// const User = sequelizeCon.define('user', {
+//     _id:{
+//         type: SequelizeClass.INTEGER,
+//         primaryKey: true,
+//         autoIncrement: true,
+//         allowNull: false,
+//     },
+//     name:{
+//         type: SequelizeClass.STRING,
+//         validate:{ len:{args:[1,25], msg:"name from 1 to 25 chars !"} },
+//     },
+//     age:{
+//         type: SequelizeClass.INTEGER,
+//         validate:{ min:{args:18, msg:"under aged !"}, max:{args:99, msg:"over aged !"} },
+//     },
+//     photo:{
+//         type: SequelizeClass.STRING,
+//         defaultValue: '',
+//     }
+// },
+// );
+
+const Game = sequelizeCon.define('game', {
+        name:{
+            type: SequelizeClass.STRING,
+            unique:true,
+        },
     },
-    name:{
-        type: SequelizeClass.STRING,
-        validate:{ len:{args:[1,25], msg:"name from 1 to 25 chars !"} },
+);
+const Category = sequelizeCon.define('category', {
+        name:{
+            type: SequelizeClass.STRING,
+            unique:true,
+        },
     },
-    age:{
-        type: SequelizeClass.INTEGER,
-        validate:{ min:{args:18, msg:"under aged !"}, max:{args:99, msg:"over aged !"} },
-    },
-    photo:{
-        type: SequelizeClass.STRING,
-        defaultValue: '',
-    }
-},
+);
+const Joint = sequelizeCon.define('joint'
 );
 
-const Post = sequelizeCon.define('post', {
-    name:{
-        type: SequelizeClass.STRING,
-    },
-},
-);
+Game.belongsToMany(Category, {through:Joint, targetKey:'name', foreignKey:'category'});
+Category.belongsToMany(Game, {through:Joint, targetKey:'name', foreignKey:'game'});
 
-User.hasMany(Post);
-
-let postEntry;
-sequelizeCon.sync({alter:true})
+sequelizeCon.sync({force:true})
 .then(()=>{
-    return Post.findOne({where:{name:'ganator'}});
-})    
-.then((entry)=>{
-    postEntry = entry;
-    return User.findAll();
+    // return Game.bulkCreate([{name:'zelda'},{name:'castlevania'},{name:'tekken'},]);
+})  
+.then(()=>{
+    // return Category.bulkCreate([{name:'3D'},{name:'RPG'},{name:'Windows'},]);
+})  
+.then(()=>{
+    // return Category.findAll();
 })
-.then((entry)=>{
-    
+.then((data)=>{
+    // categories = data;
+    // return Game.findOne({where:{name:"zelda"}});
 })
+.then((data)=>{
+    // data.addCategories(categories);
+})
+
 ;
 
 // console.log('mysqlSequelize again !');
 module.exports.sequelizeCon = sequelizeCon;
-module.exports.User = User;
+// module.exports.User = User;
 module.exports.Op = Op;

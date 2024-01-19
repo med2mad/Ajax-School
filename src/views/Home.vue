@@ -53,9 +53,8 @@ export default {
   
   data(){return{
               tools:[
-                      'vuejs.png', 'nodejs.png', 
+                      'vuejs.png', 'nodejs.png', 'laravel.png',
                       'mysql.png', 'mongodb.png', 'postgresql.png',
-                      'axios.png', 'fetch.jpg', 'jquery.png', 'xhr.png', 
                     ],
               tooli:0,
               transName:'next', SIreturn:null,
