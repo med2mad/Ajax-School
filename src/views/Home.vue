@@ -55,6 +55,7 @@ export default {
               tools:[
                       'vuejs.png', 'nodejs.png', 'laravel.png',
                       'mysql.png', 'mongodb.png', 'postgresql.png',
+                      'sequelize.png', 'mongoose.png',
                     ],
               tooli:0,
               transName:'next', SIreturn:null,
