@@ -10,6 +10,7 @@
     "mongooseserver": "nodemon back/mongooseserver.js"
   },
   "dependencies": {
+    "@ngneat/falso": "^7.1.1",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
