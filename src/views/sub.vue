@@ -1,5 +1,6 @@
 <template> <div style="margin-top:200px"></div>
-
+<img src="https://i.pravatar.cc/100?0.8"/>
+<img :src="this.getavatar({ size: 400 })+'?'+Math.random()" :alt="'photo'+user._id" :ref="'trImg'+user._id">
     <!-- <form ref="frmid" method="POST" action="http://localhost:5010/sub?_limit=10&_age=77" enctype="multipart/form-data" > -->
     <form method="POST" action="http://127.0.0.1:8000/">
         <input type="text" name="name" v-model="vname"> <br>
@@ -12,6 +13,7 @@
 
 <script> //add @submit="f" to <form> to use AJAX , otherwise you can remove <script>
 import axios from "axios";
+import { randAvatar } from '@ngneat/falso';
 export default {
 
   data(){return{
@@ -51,7 +53,9 @@ export default {
       if (e.target.files[0]) {
           this.photoObject = e.target.files[0];
       }
-    }
+    },
+
+    getavatar(){return randAvatar();},
 
   }
 }
