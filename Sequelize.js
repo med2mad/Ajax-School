@@ -1,41 +1,43 @@
 const {sequelizeCon, SequelizeClass} = require('./back/configurations/sequelizeconn');
-const Op = SequelizeClass.Op;let result;
+const {randAvatar, randFullName, randNumber} = require('@ngneat/falso');
+const Op = SequelizeClass.Op;
 
-const Model1 = sequelizeCon.define('model1', {
-        name:{
-            type: SequelizeClass.STRING,
-            primaryKey:true
-            
-        },
+const User = sequelizeCon.define('user', {
+    _id:{
+        type: SequelizeClass.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
     },
-);
-const Model2 = sequelizeCon.define('model2', {
-        name:{
-            type: SequelizeClass.STRING,
-            primaryKey:true
-        },
+    name:{
+        type: SequelizeClass.STRING,
+        validate:{ len:{args:[1,25], msg:"name from 1 to 25 chars !"} },
+        allowNull: false,
     },
+    age:{
+        type: SequelizeClass.INTEGER,
+        validate:{ min:{args:18, msg:"under aged !"}, max:{args:99, msg:"over aged !"} },
+        allowNull: false,
+    },
+    photo:{
+        type: SequelizeClass.STRING,
+        defaultValue: '',
+    }
+},
 );
 
-Model1.belongsToMany(Model2, {through:'Join'});
-Model2.belongsToMany(Model1, {through:'Join'});
-// Category.belongsToMany(Game, {through:Join, sourceKey:'name', foreignKey:'game'}); //targetKey:'name',
-sequelizeCon.sync({force:true})
-.then(()=>{return Model1.bulkCreate([{name:'zelda'},{name:'castlevania'},{name:'tekken'},]);})  
-.then(()=>{return Model2.bulkCreate([{name:'3D'},{name:'RPG'},{name:'Windows'},]);})  
-
+User.sync({force:true})
 
 .then(()=>{
-    return Model1.findByPk('tekken');
+    for (let i=0; i<100; i++){
+        User.create({
+            'name': randFullName({withAccents:false}),
+            'age': randNumber({min:18, max:99, precision:1}),
+            'photo': randAvatar()+'?img='+Math.random(),
+        });
+    }
 })
-.then((data)=>{
-    console.log( data.hasModel2s('3D'));
-    // data.createModel2({name:'new'});
-    // return data.countModel2s();
-})
-.then((data)=>{
-    // console.log(data);
-})
+
 
 
 ;

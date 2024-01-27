@@ -27,7 +27,8 @@
                         <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user._id==selectedId}" :key="user._id" @click="selectUser(user._id);">
                             <td> <input type="radio" name="db" v-model="selectedId" :value="user._id"> </td>
                             <td>{{user._id}}</td> <td :ref="'trName'+user._id">{{user.name}}</td> <td :ref="'trAge'+user._id">{{user.age}}</td>
-                            <td><!--public folder--><img :src="'uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user._id" :ref="'trImg'+user._id"></td>
+                            <td><img :src="'uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user._id" :ref="'trImg'+user._id"></td>
+                            <!-- <td><img :src="user.photo" :alt="'photo'+user._id" :ref="'trImg'+user._id"></td> -->
                         </tr>
                         </transition-group>
                     </table>
