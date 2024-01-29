@@ -1,4 +1,4 @@
-const User = require('../models/PostgresqlClass');
+const User = require('../models/class/Postgresql');
 
 module.exports.getAll = (req, res)=>{
     let q ="SELECT * FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";

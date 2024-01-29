@@ -1,4 +1,4 @@
-const User = require('../models/MysqlClass');
+const User = require('../models/class/Mysql');
 
 module.exports.getAll = (req, res)=>{
     let q ="SELECT * FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";

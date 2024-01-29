@@ -1,7 +1,6 @@
-const {sequelizeCon, SequelizeClass} = require('../configurations/sequelizeconn');
-const Op = SequelizeClass.Op;
+const {sequelizeMysql, SequelizeClass} = require('../../configurations/sequelizeconn');
 
-const User = sequelizeCon.define('user', {
+const User = sequelizeMysql.define('user', {
     _id:{
         type: SequelizeClass.INTEGER,
         primaryKey: true,
@@ -11,19 +10,22 @@ const User = sequelizeCon.define('user', {
     name:{
         type: SequelizeClass.STRING,
         validate:{ len:{args:[1,25], msg:"name from 1 to 25 chars !"} },
+        allowNull: false,
     },
     age:{
         type: SequelizeClass.INTEGER,
         validate:{ min:{args:18, msg:"under aged !"}, max:{args:99, msg:"over aged !"} },
+        allowNull: false,
     },
     photo:{
         type: SequelizeClass.STRING,
         defaultValue: '',
+        allowNull: false,
     }
 },
 );
 
 console.log('mysqlSequelize again !');
-module.exports.sequelizeCon = sequelizeCon;
+// module.exports.sequelizeCon = sequelizeCon;
 module.exports.User = User;
-module.exports.Op = Op;
+module.exports.Op = SequelizeClass.Op;
