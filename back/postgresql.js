@@ -1,14 +1,15 @@
 const app = require('./configurations/expressapp');
 
 //API Routes (API endpoints)
-const {getAll, add, edit, remove, notFound} = require('./controllers/posgresqlcontroller');
+const {getAll, add, edit, remove, notFound} = require('./controllers/js/postgresql');
+const {getAlls, adds, edits, removes} = require('./controllers/sequelize/postgresql');
 //Get
-app.get('/', getAll);
+app.get('/', getAlls);
 //Insert
-app.post('/', add);
+app.post('/', adds);
 //Update
-app.put('/:id', edit);
+app.put('/:id', edits);
 //Delete
-app.delete('/:id', remove);
+app.delete('/:id', removes);
 //404
 app.use(notFound);

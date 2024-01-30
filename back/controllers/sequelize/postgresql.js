@@ -1,4 +1,4 @@
-const {sequelizeCon, User, Op} = require('../models/sequelize/Sequelize');
+const {User, Op} = require('../../models/sequelize/Postgesql');
 
 module.exports.getAlls = (req, res)=>{
     const whereClause = {name: {[Op.like]:'%'+req.query._name+'%'}};
@@ -51,4 +51,4 @@ module.exports.removes = (req, res)=>{
     });
 };
 
-console.log('mysql sequelize Controller again !');
+console.log('postgres sequelize Controller again !');
