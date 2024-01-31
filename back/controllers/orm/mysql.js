@@ -1,4 +1,4 @@
-const {User, Op} = require('../../models/sequelize/Mysql');
+const {User, Op} = require('../../models/orm/Mysql');
 
 module.exports.getAlls = (req, res)=>{
     const whereClause = {name: {[Op.like]:'%'+req.query._name+'%'}};

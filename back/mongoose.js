@@ -1,6 +1,7 @@
 const app = require('./configurations/expressapp');
+
 //API Routes (API endpoints)
-const {getAll, add, edit, remove, notFound} = require('./controllers/mogodb');
+const {getAll, add, edit, remove, notFound} = require('./controllers/orm/mongoose');
 //Get
 app.get('/', getAll);
 //Insert

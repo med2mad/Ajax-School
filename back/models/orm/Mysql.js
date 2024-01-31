@@ -25,7 +25,7 @@ const User = sequelizeMysql.define('user', {
 },
 );
 
-console.log('mysqlSequelize again !');
+console.log('mysqlSequelize model again !');
 // module.exports.sequelizeCon = sequelizeCon;
 module.exports.User = User;
 module.exports.Op = SequelizeClass.Op;

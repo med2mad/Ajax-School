@@ -1,5 +1,5 @@
-const usersModel = require('../models/MongoModel');
-require('../configurations/mongoconnection');
+const usersModel = require('../../models/orm/Mongoose');
+require('../../configurations/mongoconnection');
 
 module.exports.getAll = (req, res)=>{
     if(req.query._limit==0){res.json([]);}

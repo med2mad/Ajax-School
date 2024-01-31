@@ -6,6 +6,7 @@ module.exports.sequelizeMysql = new Sequelize('test', 'root', '', {
     host:'localhost',
     logging: false, //no logs in console
 });
+
 module.exports.sequelizeProgresql = new Sequelize('test', 'postgres', '5432', {
     dialect:'postgres',
     host:'localhost',

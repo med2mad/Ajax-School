@@ -25,7 +25,7 @@ const User = sequelizeProgresql.define('user', {
 },
 );
 
-console.log('postgresSequelize again !');
+console.log('postgresSequelize model again !');
 // module.exports.sequelizeCon = sequelizeCon;
 module.exports.User = User;
 module.exports.Op = SequelizeClass.Op;

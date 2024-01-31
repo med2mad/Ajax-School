@@ -2,7 +2,7 @@ const app = require('./configurations/expressapp');
 
 //API Routes (API endpoints)
 const {getAll, add, edit, remove, notFound, subscribe, getsub} = require('./controllers/js/mysql');
-const {getAlls, adds, edits, removes} = require('./controllers/sequelize/mysql');
+const {getAlls, adds, edits, removes} = require('./controllers/orm/mysql');
 //Get
 app.get('/', getAlls);
 //Insert
