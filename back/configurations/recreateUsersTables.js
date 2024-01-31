@@ -1,6 +1,6 @@
 const MyUser = require('../models/orm/Mysql').User;
 const PoUser = require('../models/orm/Postgesql').User;
-const MoUser = require('../models/orm/Mongoose');
+const MoUser = require('../models/orm/Mongoose').User;
 const {randFullName, randNumber} = require('@ngneat/falso');
 const fs = require('fs');
 let name = 'a';

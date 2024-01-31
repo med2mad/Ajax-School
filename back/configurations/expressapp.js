@@ -14,6 +14,4 @@ function customParser (req, res, next){
     next();
 }
 
-console.log('expressapp again !');
-
 module.exports = app;

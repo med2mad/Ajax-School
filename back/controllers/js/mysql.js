@@ -49,5 +49,3 @@ module.exports.subscribe = (req, res, next)=>{
 };
 
 module.exports.getsub = (req, res, next)=>{   };
-
-console.log('mysqlController again !');

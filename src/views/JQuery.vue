@@ -11,7 +11,7 @@ export default {
         $.ajax({url:uri , method:'GET', dataType:'json'})
           .done(function(response){ 
                           bucket.timeF = (performance.now() - time0).toFixed(2);  
-                          bucket.a = response; 
+                          bucket.rows = response; 
                           });
       },
       fgetw(uri){
@@ -39,8 +39,8 @@ export default {
           )
         .done(function(response){
               const rowToInsert = {"id":response.newId, "_id":response.newId, "photo":response.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
-              bucket.a.unshift(rowToInsert);
-              if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
+              bucket.rows.unshift(rowToInsert);
+              if(bucket.rows.length>limit){bucket.rows.pop();} //remove last row in <table> (respect _limit after add)
         });
       },
 
@@ -60,7 +60,7 @@ export default {
             }
           )
         .done( function(response){
-            bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.photo;
+            bucket.rows[i].name=body.get('name'); bucket.rows[i].age=body.get('age'); bucket.rows[i].photo=response.photo;
         });
       },
       
@@ -77,7 +77,7 @@ export default {
         .done( function(response){
           //GET replacement row
           if(response.length>0)
-          { bucket.a.push({"id":response[0].id, "_id":response[0]._id, "name":response[0].name, "age":response[0].age, "photo":response[0].photo}) }
+          { bucket.rows.push({"id":response[0].id, "_id":response[0]._id, "name":response[0].name, "age":response[0].age, "photo":response[0].photo}) }
         });
       }
   }

@@ -20,6 +20,4 @@ client.connect().then((err) => {
   });}
 })
 
-console.log('posgresqlconnection again !');
-
 module.exports = client;

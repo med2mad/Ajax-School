@@ -4,13 +4,13 @@ module.exports.getAlls = (req, res)=>{
     const whereClause = {name: {[Op.like]:'%'+req.query._name+'%'}};
     if (req.query._age) {whereClause.age = req.query._age;} 
     
-    User.findAll({
+    User.findAndCountAll({
         where: whereClause,
         limit: parseInt(req.query._limit),
         order: [['_id', 'DESC']],
     })
-    .then((entries)=>{
-        res.json(entries);
+    .then((data)=>{
+        res.json(data);
     });
 };
 
@@ -50,5 +50,3 @@ module.exports.removes = (req, res)=>{
         });
     });
 };
-
-console.log('mysql sequelize Controller again !');

@@ -13,6 +13,4 @@ con.connect((err) => {
   else{app.listen(5010, ()=>{console.log("Mysyql: " + 5010);});}
 });
 
-console.log('mysqlconn again !');
-
 module.exports = con;

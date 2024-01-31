@@ -1,13 +1,15 @@
-const usersModel = require('../../models/orm/Mongoose');
+const {User} = require('../../models/orm/Mongoose');
 require('../../configurations/mongoconnection');
 
-module.exports.getAll = (req, res)=>{
+module.exports.getAll = async (req, res)=>{
     if(req.query._limit==0){res.json([]);}
     else{
+        const count = await User.countDocuments().exec();
+
         const q = {name:{ $regex: '.*' + req.query._name + '.*' }};
         if (req.query._age) {q.age = req.query._age;}
-        usersModel.find(q).sort({_id:-1}).select("-__v -timestamp").limit(req.query._limit).then((data)=>{
-            res.json(data);
+        User.find(q).sort({_id:-1}).select("-__v -timestamp").limit(req.query._limit).then((data)=>{
+            res.json({"count":count,"rows":data});
         });
     }
 };
@@ -15,14 +17,14 @@ module.exports.getAll = (req, res)=>{
 module.exports.add = (req, res)=>{
     const photo = req.PHOTO_PARSED; //by the time save() finishes there will be no more "req.body"
 
-    const row = new usersModel(req.body);
+    const row = new User(req.body);
     row.save().then((data)=>{
         res.json({"newId":data._id, "photo":photo});
     });
 };
 
 module.exports.edit = (req, res)=>{
-    usersModel.findById(req.params.id).then((row)=>{
+    User.findById(req.params.id).then((row)=>{
         row.name=req.body.name;
         row.age=req.body.age;
         row.photo=req.PHOTO_PARSED;
@@ -34,13 +36,13 @@ module.exports.edit = (req, res)=>{
 };
 
 module.exports.remove = (req, res)=>{
-    usersModel.findOneAndDelete({"_id":req.params.id}).then((data)=>{
+    User.findOneAndDelete({"_id":req.params.id}).then((data)=>{
         //GET replacement row
         const q = {_id: {$lt: req.query.lasttableid}};
         q.name = {$regex: '.*' + req.query._name + '.*'};
         if (req.query._age) {q.age = req.query._age;}
         
-        usersModel.find(q).sort({"_id":-1}).select("-__v -timestamp").limit(1).then((data)=>{
+        User.find(q).sort({"_id":-1}).select("-__v -timestamp").limit(1).then((data)=>{
             res.json(data);
         });
     });
@@ -49,5 +51,3 @@ module.exports.remove = (req, res)=>{
 module.exports.notFound = (req, res)=>{
     res.status(404).json("404 , no routes !");
 };
-
-console.log('mongodbcontroller again !');

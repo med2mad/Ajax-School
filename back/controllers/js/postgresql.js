@@ -42,5 +42,3 @@ module.exports.remove = (req, res)=>{
 module.exports.notFound = (req, res)=>{
     res.status(404).json("404 , no routes !");
 };
-
-console.log('postgrescontroller again !');

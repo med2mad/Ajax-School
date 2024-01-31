@@ -16,15 +16,15 @@
             </div>
 
             <div class="data">
-                <div v-if="bucket.a && bucket.a.length===0" class="nodata">
+                <div v-if="bucket.rows && bucket.rows.length===0" class="nodata">
                     <h2>No Data!!</h2>
                 </div>
-                <div v-else-if="bucket.a" class="rows">
+                <div v-else-if="bucket.rows" class="rows">
                     <form> <!--for input radio-->
                     <table>
                         <tr><th></th><th>#</th><th>Name</th><th>Age</th><th>Photo</th></tr>
                         <transition-group name="table">
-                        <tr v-for="user in bucket.a" class="datarow" :class="{selectedrow:user._id==selectedId}" :key="user._id" @click="selectUser(user._id);">
+                        <tr v-for="user in bucket.rows" class="datarow" :class="{selectedrow:user._id==selectedId}" :key="user._id" @click="selectUser(user._id);">
                             <td> <input type="radio" name="db" v-model="selectedId" :value="user._id"> </td>
                             <td>{{user._id}}</td> <td :ref="'trName'+user._id">{{user.name}}</td> <td :ref="'trAge'+user._id">{{user.age}}</td>
                             <td><img :src="'uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user._id" :ref="'trImg'+user._id"></td>
@@ -72,7 +72,7 @@ export default{
     emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
  
     data(){return{
-                bucket:{timeF:'',time0:0, a:''},
+                bucket:{timeF:'',time0:0, rows:'', count:0},
                 selectedId:'', 
                 vname:'', vage:'', selectedPhotoName:'', photoObject:null,
                 showpopup:false, popuptext:'', 
@@ -94,8 +94,8 @@ export default{
             else if(await this.dataCheck()){this.showpopup = true;}
             else{
                 let selectedTr;
-                for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to change
-                    if(this.bucket.a[i]["_id"]==this.selectedId)
+                for (let i = 0; i < this.bucket.rows.length; i++){//find <tr> to change
+                    if(this.bucket.rows[i]["_id"]==this.selectedId)
                     { selectedTr = i; }
                 }
                 const fd = new FormData(this.$refs.frmid);
@@ -111,7 +111,7 @@ export default{
             }
         },
         handleDelete(){
-            const lastTableId = this.bucket.a[this.bucket.a.length-1]["_id"];
+            const lastTableId = this.bucket.rows[this.bucket.rows.length-1]["_id"];
 
             if(!this.selectedId){this.popuptext='Select User !';this.showpopup = true;}
             else{
@@ -121,9 +121,9 @@ export default{
                     this.$emit('clickDelete', 'POST', this.selectedId+'?_method=DELETE&lasttableid='+lastTableId, this.bucket);
                 }
                 
-                for (let i = 0; i < this.bucket.a.length; i++){//find <tr> to remove
-                    if(this.bucket.a[i]["_id"]==this.selectedId)
-                    {this.bucket.a.splice(i, 1);}
+                for (let i = 0; i < this.bucket.rows.length; i++){//find <tr> to remove
+                    if(this.bucket.rows[i]["_id"]==this.selectedId)
+                    {this.bucket.rows.splice(i, 1);}
                 }
             }
         },

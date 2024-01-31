@@ -11,7 +11,9 @@ export default {
         axios.get(uri)
         .then((response)=>{
             bucket.timeF = (performance.now() - time0).toFixed(2);
-            bucket.a = response.data;
+            bucket.rows = response.data.rows;
+            bucket.count = response.data.count;
+            console.log(response.data.count);
           })
       },
 
@@ -28,15 +30,15 @@ export default {
         axios.post(uri,body)
           .then((response) => {
                 const rowToInsert = {"_id":response.data.newId, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
-                bucket.a.unshift(rowToInsert);
-                if(bucket.a.length>limit){bucket.a.pop();} //remove last row in <table> (respect _limit after add)
+                bucket.rows.unshift(rowToInsert);
+                if(bucket.rows.length>limit){bucket.rows.pop();} //remove last row in <table> (respect _limit after add)
             })
       },
 
       fput(method, uri, body, i, bucket){
         axios({"method": method, "url": uri, "data":body}, {headers: {"Content-Type": "multipart/form-data"}})
           .then((response) => {
-              bucket.a[i].name=body.get('name'); bucket.a[i].age=body.get('age'); bucket.a[i].photo=response.data.photo;
+              bucket.rows[i].name=body.get('name'); bucket.rows[i].age=body.get('age'); bucket.rows[i].photo=response.data.photo;
             })
       },
 
@@ -45,7 +47,7 @@ export default {
         .then((response)=>{
             //GET replacement row
             if(response.data.length>0)
-            { bucket.a.push({"_id":response.data[0]._id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}) }
+            { bucket.rows.push({"_id":response.data[0]._id, "name":response.data[0].name, "age":response.data[0].age, "photo":response.data[0].photo}) }
           })
     },
   }

@@ -1,4 +1,3 @@
-console.log('sequelizeconn again !');
 const Sequelize = require('sequelize');
 
 module.exports.sequelizeMysql = new Sequelize('test', 'root', '', {
