@@ -27,3 +27,5 @@ const User = sequelizeProgresql.define('user', {
 
 module.exports.User = User;
 module.exports.Op = SequelizeClass.Op;
+module.exports.fn = SequelizeClass.fn;
+module.exports.col = SequelizeClass.col;

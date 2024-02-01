@@ -12,8 +12,7 @@ export default {
         .then((response)=>{
             bucket.timeF = (performance.now() - time0).toFixed(2);
             bucket.rows = response.data.rows;
-            bucket.count = response.data.count;
-            console.log(response.data.count);
+            bucket.total = response.data.total;
           })
       },
 
