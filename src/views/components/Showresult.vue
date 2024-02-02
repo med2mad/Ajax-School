@@ -45,12 +45,13 @@
     </div>
 
     <main>
-        <DB v-for="item in DBs" :key="item._db+vback+vlimit+vname+vage" :back="vback" :_dblogofile="item._dblogofile" :_db="item._db"
+        <DB v-for="item in DBs" :key="item._db+vback+vlimit+vname+vage+skip" :back="vback" :_dblogofile="item._dblogofile" :_db="item._db" :limit="vlimit"
                             @mountGet="(bucket)=>{fget(getUri(item._url[vback]), bucket);}" 
                             @mountGetw="async(bucket)=>{bucket.rows = await fgetw(getUri(item._url[vback]));}" 
                             @clickPost="(body, bucket)=>{this.fpost(item._url[vback], body, bucket, vlimit);}" 
                             @clickPut="(method, selectedId, body, i, bucket)=>{this.fput(method, item._url[vback]+selectedId, body, i, bucket);}"
                             @clickDelete="(method, selectedId, lastTableId, bucket)=>{this.fdelete(method, getUri(item._url[vback]+selectedId)+lastTableId, bucket);}"
+                            @pagechange="(i)=>{skip=(i-1)*10;}"
         ></DB>
     </main>
 
@@ -80,7 +81,7 @@ export default{
             },
 
     data(){return{
-                vback:'js', vname:'', vage:'', vlimit:10,
+                vback:'js', vname:'', vage:'', vlimit:10, skip:0,
                 backpopup:false, 
                 DBs:[
                     {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/', 'php':'http://127.0.0.1:8000/MysqlModel/'} }, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
@@ -95,6 +96,7 @@ export default{
     methods:{
         getUri(url){
                 url += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);//fake/jsonServer use _limit
+                url += '&_skip='+(this.skip);
                 url += '&_name='+this.vname; //named _name not(name) for not to clash with fake/jsonServer
                 url += '&name_like='+this.vname; //fake/jsonServer
                 if (Number.isInteger(this.vage) && this.vage!=="e")

@@ -9,6 +9,7 @@ module.exports.getAlls = async (req, res)=>{
     User.findAll({
         where: whereClause,
         limit: parseInt(req.query._limit),
+        offset:parseInt(req.query._skip),
         order: [['_id', 'DESC']],
     })
     .then((data)=>{

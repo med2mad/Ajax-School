@@ -5,9 +5,10 @@
     
     <div class="title"> <img :src="'tools\\'+_dblogofile" alt="DB logo">  </div>
 
+    <div class="dbpagin">
     <div class="db">
 
-        <div class="db1" >
+        <div class="db1">
 
             <div class="time" :class="{'green':bucket.timeF<100, 'orange':bucket.timeF>=100 && bucket.timeF<200, 'red':bucket.timeF>=200}">
                 <div v-if="bucket.timeF">
@@ -35,9 +36,11 @@
                     </form>
                 </div>
                 <div v-else>Loading ....</div>
+                
             </div>
+            
         </div>
-
+        
         <div class="db2">
         <div class="form"> 
             <form ref="frmid" class="data" enctype="multipart/form-data">
@@ -63,19 +66,25 @@
         </div>
 
     </div>
+    <Pagination :pages="bucket.pages" @go="(i)=>{this.$emit('pagechange', i);}"></Pagination>
+    </div>
 </template>
 
 <script>
-export default{
-    props: { _db:{type:String}, _dblogofile:{type:String}, back:{type:String}},
+import Pagination from './Pagination.vue';
 
-    emits:['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
- 
+export default{
+    props: { limit:{type:Number}, _db:{type:String}, _dblogofile:{type:String}, back:{type:String} },
+
+    emits: ['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete', 'pagechange'],
+
+    components: {Pagination},
+
     data(){return{
-                bucket:{timeF:'',time0:0, rows:'', total:0},
-                selectedId:'', 
-                vname:'', vage:'', selectedPhotoName:'', photoObject:null,
-                showpopup:false, popuptext:'', 
+                    bucket:{timeF:'',time0:0, rows:'', total:0, limit:this.limit, pages:{},},
+                    selectedId:'', 
+                    vname:'', vage:'', selectedPhotoName:'', photoObject:null,
+                    showpopup:false, popuptext:'', 
                 }
             },
 
@@ -173,7 +182,7 @@ export default{
     mounted(){
         //pass empty objects by reference to get promise result(FAST) 
         this.$emit('mountGet', this.bucket);
-        
+
         //get function's return value(SLOW)
         // (async ()=>{
         //     this.$emit('mountGetw', this.bucket);
@@ -183,7 +192,5 @@ export default{
 </script>
 
 <style>
-
-@import 'C:\Users\MED\Desktop\AJAX Paradise\public\styles\db.css';
-
+    @import 'C:\Users\MED\Desktop\AJAX Paradise\public\styles\db.css';
 </style>

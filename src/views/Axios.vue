@@ -4,15 +4,19 @@
 
 <script>
 import axios from "axios";
+import paginate from 'jw-paginate';
 export default {
   methods: {
       fget(uri, bucket){
         let time0 = performance.now();
         axios.get(uri)
         .then((response)=>{
+          console.log(response.data.total);
+                 console.log(response.data.total);
             bucket.timeF = (performance.now() - time0).toFixed(2);
             bucket.rows = response.data.rows;
             bucket.total = response.data.total;
+            bucket.pages = paginate(response.data.total, 1, bucket.limit, 10);
           })
       },
 
