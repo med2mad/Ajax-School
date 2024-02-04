@@ -3,7 +3,7 @@ const User = require('../../models/js/Postgresql');
 module.exports.getAll = (req, res)=>{
     let q ="SELECT * FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";
         if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
-        q += " ORDER BY _id DESC LIMIT "+ req.query._limit +" OFFSET " + req.query._skip;
+        q += " ORDER BY _id ASC LIMIT "+ req.query._limit +" OFFSET " + req.query._skip;
 
     User.findAll(q).then((response)=>{
         res.json(response);

@@ -12,9 +12,9 @@ module.exports = class User {
 
     static findAll(q) {
         return new Promise(function(myResolve, myReject) {
-            con.query("select count(_id) as total from users", (err, count)=>{
-                con.query(q, (err, rows)=>{
-                    myResolve({"rows":rows,"total":count[0].total});
+            con.query("select count(_id) from users", (err, countData)=>{
+                con.query(q, (err, rowsData)=>{
+                    myResolve({"rows":rowsData.rows,"total":countData.rows[0].count});
                 }); 
             });
         }); 

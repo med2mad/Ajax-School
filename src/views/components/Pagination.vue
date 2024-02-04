@@ -3,7 +3,7 @@
     <nav>
         <ul class="pagination">
             <li class="page-item"><a class="page-link" href="#"><span>&laquo;</span></a></li>
-            <li v-for="i in pages.pages" :key="i" class="page-item" @click.self="this.$emit('go', i)"><span class="page-link">{{i}}</span></li>
+            <li v-for="i in pages.pages" :key="i" class="page-item" @click="this.$emit('pagechange', i)"><span class="page-link">{{i}}</span></li>
             <li class="page-item"><a class="page-link" href="#"><span>&raquo;</span></a></li>
         </ul>
     </nav>
@@ -12,7 +12,7 @@
 
 <script>
 export default{
-    emits:['go'],
+    emits:['pagechange'],
     props: { pages:{type:Object} }
 }
 </script> 

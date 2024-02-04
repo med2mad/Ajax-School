@@ -66,7 +66,7 @@
         </div>
 
     </div>
-    <Pagination :pages="bucket.pages" @go="(i)=>{this.$emit('pagechange', i);}"></Pagination>
+    <Pagination :pages="bucket.pages" @pagechange="(i)=>{this.$emit('pagechange', i);}"></Pagination>
     </div>
 </template>
 
