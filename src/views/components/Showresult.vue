@@ -45,8 +45,9 @@
     </div>
 
     <main>
-        <DB v-for="item in DBs" :key="item._db+item._currentpage+vback+vlimit+vname+vage" :back="vback" :_dblogofile="item._dblogofile" :_db="item._db" :limit="vlimit" :currentPage="item._currentpage"
-                            @mountGet="(bucket)=>{fget(getUri(item._url[vback],item._currentpage), bucket);}" 
+        <DB v-for="item in DBs" :key="item._db+vback+vlimit+vname+vage" :back="vback" :_dblogofile="item._dblogofile" :_db="item._db" :limit="vlimit" :currentPage="item._currentpage"
+                            @mountGet="(bucket)=>{fget(getUri(item._url[vback],1), bucket);}" 
+                            @mountGetPage="(bucket, page)=>{fget(getUri(item._url[vback], page), bucket);}" 
                             @mountGetw="async(bucket)=>{bucket.rows = await fgetw(getUri(item._url[vback],item._currentpage));}" 
                             @clickPost="(body, bucket)=>{this.fpost(item._url[vback], body, bucket, vlimit);}" 
                             @clickPut="(method, selectedId, body, i, bucket)=>{this.fput(method, item._url[vback]+selectedId, body, i, bucket);}"
@@ -96,7 +97,7 @@ export default{
     methods:{
         getUri(url, _currentpage){
                 url += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);//fake/jsonServer use _limit
-                url += '&_skip='+_currentpage;
+                url += '&_skip='+(_currentpage-1)*this.vlimit;
                 url += '&_name='+this.vname; //named _name not(name) for not to clash with fake/jsonServer
                 url += '&name_like='+this.vname; //fake/jsonServer
                 if (Number.isInteger(this.vage) && this.vage!=="e")
