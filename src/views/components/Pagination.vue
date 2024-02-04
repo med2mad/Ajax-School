@@ -1,9 +1,9 @@
-<template>
+<template >
 
     <nav>
         <ul class="pagination">
             <li class="page-item"><a class="page-link" href="#"><span>&laquo;</span></a></li>
-            <li v-for="i in pages.pages" :key="i" class="page-item" @click="this.$emit('pagechange', i)"><span class="page-link">{{i}}</span></li>
+            <li v-for="i in pages.pages" :key="i" class="page-item" :class="{currentStyle: current==i}" @click="changeCurrent(i)"><span class="page-link">{{i}}</span></li>
             <li class="page-item"><a class="page-link" href="#"><span>&raquo;</span></a></li>
         </ul>
     </nav>
@@ -12,8 +12,18 @@
 
 <script>
 export default{
-    emits:['pagechange'],
-    props: { pages:{type:Object} }
+    emits:['changepage'],
+    props: { pages:{type:Object}, currentPage:{type:Number} },
+    data(){return{
+                current:1, 
+            }
+        },
+    methods:{
+        changeCurrent(i){
+            this.current=i;
+            this.$emit('changepage', i); 
+        },
+    }
 }
 </script> 
 
@@ -49,5 +59,9 @@ export default{
     font-family: Rajdhani-Regular, sans-serif;
     font-size: 1.2rem;
     text-decoration: none;
+}
+
+.currentStyle{
+    background-color: blue;
 }
 </style>

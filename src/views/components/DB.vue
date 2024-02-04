@@ -66,7 +66,7 @@
         </div>
 
     </div>
-    <Pagination :pages="bucket.pages" @pagechange="(i)=>{this.$emit('pagechange', i);}"></Pagination>
+    <Pagination :pages="bucket.pages" :currentPage="currentPage" @changepage="(i)=>{this.$emit('pagechange', i);}"></Pagination>
     </div>
 </template>
 
@@ -74,7 +74,7 @@
 import Pagination from './Pagination.vue';
 
 export default{
-    props: { limit:{type:Number}, _db:{type:String}, _dblogofile:{type:String}, back:{type:String} },
+    props: { currentPage:{type:Number}, limit:{type:Number}, _db:{type:String}, _dblogofile:{type:String}, back:{type:String} },
 
     emits: ['mountGet', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete', 'pagechange'],
 
@@ -177,6 +177,9 @@ export default{
             
             return this.popuptext;
         },
+        changepage(i){
+            this.$emit('mountGet', this.bucket);
+        }
     },
 
     mounted(){
