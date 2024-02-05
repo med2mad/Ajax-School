@@ -32,7 +32,7 @@
         <div class="limit"></div>
 
         <h2>Limit :</h2>
-        <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off" @input="limitchange"><br>
+        <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off" ><br>
         
         <div class="limit"></div>
 
@@ -45,14 +45,13 @@
     </div>
 
     <main>
-        <DB v-for="item in DBs" :key="item._db+vback+vlimit+vname+vage" :back="vback" :_dblogofile="item._dblogofile" :_db="item._db" :limit="vlimit" :currentPage="item._currentpage"
+        <DB v-for="item in DBs" :key="item._db+vback+vlimit+vname+vage" :back="vback" :_dblogofile="item._dblogofile" :_db="item._db"
                             @mountGet="(bucket)=>{fget(getUri(item._url[vback],1), bucket, vlimit);}" 
                             @mountGetPage="(bucket, page)=>{fget(getUri(item._url[vback], page), bucket, vlimit);}" 
-                            @mountGetw="async(bucket)=>{bucket.rows = await fgetw(getUri(item._url[vback],item._currentpage));}" 
+                            @mountGetw="async(bucket)=>{bucket.rows = await fgetw(getUri(item._url[vback]));}" 
                             @clickPost="(body, bucket)=>{this.fpost(item._url[vback], body, bucket, vlimit);}" 
                             @clickPut="(method, selectedId, body, i, bucket)=>{this.fput(method, item._url[vback]+selectedId, body, i, bucket);}"
                             @clickDelete="(method, selectedId, lastTableId, bucket)=>{this.fdelete(method, getUri(item._url[vback]+selectedId)+lastTableId, bucket);}"
-                            @pagechange="(i)=>{item._currentpage=(i-1)*vlimit;}"
         ></DB>
     </main>
 
@@ -82,12 +81,12 @@ export default{
             },
 
     data(){return{
-                vback:'js', vname:'', vage:'', vlimit:10, skip:0, 
+                vback:'js', vname:'', vage:'', vlimit:10, 
                 backpopup:false, 
                 DBs:[
-                    {_db:'mysql', _dblogofile:'mysql.png', _currentpage:0, _url:{'js':'http://localhost:5010/', 'php':'http://127.0.0.1:8000/MysqlModel/'} }, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
-                    {_db:'mongoose', _dblogofile:'mongodb.png', _currentpage:0, _url:{'js':'http://localhost:5020/','php':'http://127.0.0.1:8000/MongoModel/'} },
-                    {_db:'postgresql', _dblogofile:'postgresql.png', _currentpage:0, _url:{'js':'http://localhost:5030/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
+                    {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/', 'php':'http://127.0.0.1:8000/MysqlModel/'} }, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
+                    {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'http://localhost:5020/','php':'http://127.0.0.1:8000/MongoModel/'} },
+                    {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'http://localhost:5030/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
                     // {_db:'jsonserver', _dblogofile:'jsonserver.png', _url:{'js':'http://localhost:3000/Resource1/', 'js':'http://localhost:3000/Resource1/','php':'http://localhost:3000/Resource1/'}, _idClmn:'id'}, //is not compatible with FormData (need json body)
                     // {_db:'file', _dblogofile:'Simple File', _url:'http://localhost:8080/j.json' /*(or [_url:'j.json'] because served links will add the current _url) */, _idClmn:'id'} //in the public folder. ( use: var o = JSON.parse(fs.readFileSync(filePath)); + fs.writeFileSync(path, JSON.stringify(o)) / var o = require(filePath); )
                     ]
@@ -95,9 +94,9 @@ export default{
             },
 
     methods:{
-        getUri(url, _currentpage){
+        getUri(url, currentpage){
                 url += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);//fake/jsonServer use _limit
-                url += '&_skip='+(_currentpage-1)*this.vlimit;
+                url += '&_skip='+(currentpage-1)*this.vlimit;
                 url += '&_name='+this.vname; //named _name not(name) for not to clash with fake/jsonServer
                 url += '&name_like='+this.vname; //fake/jsonServer
                 if (Number.isInteger(this.vage) && this.vage!=="e")
@@ -110,9 +109,7 @@ export default{
                 return url;
             },
         getVback(){return this.vback;},
-        limitchange(){
-            this.skip=0;
-        },
+
         // burgerButton(){
         //     const bs = this.$refs.back.style;
         //     if (bs.display=="none") {

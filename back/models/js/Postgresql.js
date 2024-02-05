@@ -10,9 +10,9 @@ module.exports = class User {
         this.photo = data.photo;
     }
 
-    static findAll(q) {
+    static findAll(q, qCount) {
         return new Promise(function(myResolve, myReject) {
-            con.query("select count(_id) from users", (err, countData)=>{
+            con.query(qCount, (err, countData)=>{
                 con.query(q, (err, rowsData)=>{
                     myResolve({"rows":rowsData.rows,"total":countData.rows[0].count});
                 }); 

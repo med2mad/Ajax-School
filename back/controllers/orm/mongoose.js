@@ -2,13 +2,14 @@ const {User} = require('../../models/orm/Mongoose');
 require('../../configurations/mongoconnection');
 
 module.exports.getAll = async (req, res)=>{
-    const count = await User.countDocuments().exec();
+    const q = {name:{ $regex: '.*' + req.query._name + '.*' }};
+
+    const count = await User.find(q).countDocuments().exec();
 
     if(req.query._limit==0){res.json({"rows":[],"count":count});}
     else{
-        const q = {name:{ $regex: '.*' + req.query._name + '.*' }};
         if (req.query._age) {q.age = req.query._age;}
-        User.find(q).sort({_id:-1}).select("-__v -timestamp").limit(req.query._limit).then((data)=>{
+        User.find(q).sort({_id:-1}).select("-__v -timestamp").skip(req.query._skip).limit(req.query._limit).then((data)=>{
             res.json({"rows":data,"total":count});
         });
     }

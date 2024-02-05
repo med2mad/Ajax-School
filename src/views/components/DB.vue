@@ -5,7 +5,7 @@
     
     <div class="title"> <img :src="'tools\\'+_dblogofile" alt="DB logo">  </div>
 
-    <div class="dbpagin">
+    <div class="dbpaginate">
     <div class="db">
 
         <div class="db1">
@@ -66,7 +66,7 @@
         </div>
 
     </div>
-    <Pagination :pages="bucket.pages" :currentPage="currentPage" @changepage="(i)=>{changepage(i);}"></Pagination>
+    <Pagination :pages="bucket.pagination.pages" @changepage="(i)=>{changepage(i);}"></Pagination>
     </div>
 </template>
 
@@ -74,14 +74,14 @@
 import Pagination from './Pagination.vue';
 
 export default{
-    props: { currentPage:{type:Number}, limit:{type:Number}, _db:{type:String}, _dblogofile:{type:String}, back:{type:String} },
+    props: { _db:{type:String}, _dblogofile:{type:String}, back:{type:String} },
 
-    emits: ['mountGet', 'mountGetPage', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete', 'pagechange'],
+    emits: ['mountGet', 'mountGetPage', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
 
     components: {Pagination},
 
     data(){return{
-                    bucket:{timeF:'',time0:0, rows:'', total:0, limit:this.limit, pages:{},},
+                    bucket:{timeF:'',time0:0, rows:'', pagination:{},},
                     selectedId:'', 
                     vname:'', vage:'', selectedPhotoName:'', photoObject:null,
                     showpopup:false, popuptext:'', 

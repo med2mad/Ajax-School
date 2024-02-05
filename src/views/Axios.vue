@@ -6,6 +6,7 @@
 import axios from "axios";
 import paginate from 'jw-paginate';
 export default {
+  
   methods: {
       fget(uri, bucket, limit){
         let time0 = performance.now();
@@ -13,8 +14,7 @@ export default {
         .then((response)=>{
             bucket.timeF = (performance.now() - time0).toFixed(2);
             bucket.rows = response.data.rows;
-            bucket.total = response.data.total;
-            bucket.pages = paginate(response.data.total, 1, limit, 10);
+            bucket.pagination = paginate(response.data.total, 1, limit, 100000);//(number of filtered rows, current page, per page, max pages)
           })
       },
 

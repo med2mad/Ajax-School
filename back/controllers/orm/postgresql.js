@@ -1,11 +1,11 @@
 const {User, Op, fn, col} = require('../../models/orm/Postgesql');
 
 module.exports.getAlls = async (req, res)=>{
-    let count = await User.findAll({attributes: [[fn('count', col('_id')), 'total']]});
-
     const whereClause = {name: {[Op.like]:'%'+req.query._name+'%'}};
     if (req.query._age) {whereClause.age = req.query._age;} 
     
+    let count = await User.findAll({where:whereClause, attributes: [[fn('count', col('_id')), 'total']]});
+
     User.findAll({
         where: whereClause,
         limit: parseInt(req.query._limit),
