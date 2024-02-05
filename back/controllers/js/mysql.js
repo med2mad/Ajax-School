@@ -5,7 +5,10 @@ module.exports.getAll = (req, res)=>{
         if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
         q += " ORDER BY _id ASC LIMIT "+ req.query._limit +" OFFSET " + req.query._skip;
 
-    User.findAll(q).then((response)=>{
+    let q2 ="SELECT count(_id) as total FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";
+        if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
+
+    User.findAll(q, q2).then((response)=>{
         res.json(response);
     });
 };
