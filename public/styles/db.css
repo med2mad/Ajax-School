@@ -56,12 +56,19 @@
 .db1 .data{
     overflow: auto;
     border: solid 1px;
+    background-color: black;
+}
+.db1 .nodata{
+    font-family: Rajdhani-Regular, sans-serif;
+    color: white;
+    letter-spacing: 1.2rem;
 }
 table{
     border-collapse: collapse;
 }
 .db1 .data , .db1 .data table{
     width:100%; /* makes the table columns responsive because .db{display:flex} and .db2 is fixed */
+    
 }
 .db1 table td{
     font-family: Rajdhani-Regular, sans-serif;

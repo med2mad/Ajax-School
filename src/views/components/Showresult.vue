@@ -1,9 +1,9 @@
 <template>
     <Vbackpopup v-if="backpopup" @close="(popV)=>{vback=popV; backpopup=false;}"/>
     <header>
-        <img src="hamburger-button.png" alt="hamburger-button back-end" class="hamburger-button" @click="backpopup=true;">
+        <img src="imgs/hamburger-button.png" alt="hamburger-button back-end" class="hamburger-button" @click="backpopup=true;">
 
-        <div class="logo"><router-link to="/"><img src="usetest.png" alt="logo"></router-link></div> 
+        <div class="logo"><router-link to="/"><img src="imgs/usetest.png" alt="logo"></router-link></div> 
 
         <p>Testing using :</p>
         <nav>
@@ -23,18 +23,18 @@
             </select>
         </div>
         
-        <div class="limit"></div>
+        <div class="devider"></div>
 
         <h2>Filter :</h2>
         <input type="text" v-model="vname" name="name" placeholder="Name" autocomplete="off" spellcheck="false"><br>
         <input type="number" v-model="vage" name="age" placeholder="Age" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" >
         
-        <div class="limit"></div>
+        <div class="devider"></div>
 
-        <h2>Limit :</h2>
-        <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off" ><br>
+        <h2>Per page :</h2>
+        <input type="number" min="0" required class="limit" v-model="vlimit" name="limit" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"><br>
         
-        <div class="limit"></div>
+        <div class="devider"></div>
 
         <h2>Legend :</h2>
         <div class="legend">
@@ -46,8 +46,8 @@
 
     <main>
         <DB v-for="item in DBs" :key="item._db+vback+vlimit+vname+vage" :back="vback" :_dblogofile="item._dblogofile" :_db="item._db"
-                            @mountGet="(bucket)=>{fget(getUri(item._url[vback],1), bucket, vlimit);}" 
-                            @mountGetPage="(bucket, page)=>{fget(getUri(item._url[vback], page), bucket, vlimit);}" 
+                            @mountGet="(bucket)=>{fget(getUri(item._url[vback],1), bucket, vlimit, 1);}" 
+                            @mountGetPage="(bucket, page)=>{fget(getUri(item._url[vback], page), bucket, vlimit, page);}" 
                             @mountGetw="async(bucket)=>{bucket.rows = await fgetw(getUri(item._url[vback]));}" 
                             @clickPost="(body, bucket)=>{this.fpost(item._url[vback], body, bucket, vlimit);}" 
                             @clickPut="(method, selectedId, body, i, bucket)=>{this.fput(method, item._url[vback]+selectedId, body, i, bucket);}"
@@ -65,7 +65,7 @@
         </div>
         <div class="footer2">
             <span class="span">Limit : </span>
-            <input type="number" min="0" v-model="vlimit" name="limit" autocomplete="off">
+            <input type="number" min="0" class="limit" required v-model="vlimit" name="limit" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
         </div>
     </footer>
     
@@ -96,7 +96,7 @@ export default{
     methods:{
         getUri(url, currentpage){
                 url += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);//fake/jsonServer use _limit
-                url += '&_skip='+(currentpage-1)*this.vlimit;
+                url += '&_skip='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?(currentpage-1)*this.vlimit:0);
                 url += '&_name='+this.vname; //named _name not(name) for not to clash with fake/jsonServer
                 url += '&name_like='+this.vname; //fake/jsonServer
                 if (Number.isInteger(this.vage) && this.vage!=="e")

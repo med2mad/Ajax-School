@@ -18,7 +18,7 @@
 
             <div class="data">
                 <div v-if="bucket.rows && bucket.rows.length===0" class="nodata">
-                    <h2>No Data!!</h2>
+                    <h2 class="nodata">No Data !</h2>
                 </div>
                 <div v-else-if="bucket.rows" class="rows">
                     <form> <!--for input radio-->
@@ -66,7 +66,7 @@
         </div>
 
     </div>
-    <Pagination :pages="bucket.pagination.pages" @changepage="(i)=>{changepage(i);}"></Pagination>
+    <Pagination v-if="bucket.rows && bucket.rows.length>0" :pagination="bucket.pagination" @changepage="(i)=>{changepage(i);}"></Pagination>
     </div>
 </template>
 

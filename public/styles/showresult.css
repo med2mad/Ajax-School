@@ -85,10 +85,10 @@ main{
     border-bottom: solid 1px;
     background-image: linear-gradient(90deg, rgb(49, 49, 49), rgb(36, 35, 35) 90%);
     position: fixed;
-    overflow-y: auto ;
+    overflow-y: auto;
     overflow-x: hidden;
     height: 100vh;
-    width:180px;
+    width: 180px;
     padding-top: 2vh;
 }
 
@@ -100,7 +100,7 @@ main{
     margin-top: 2vh;
 }
 
-.side .limit{
+.side .devider{
     border-bottom: solid 1px #a5992a;
     width : 75%;
     margin: 3vh auto;
@@ -110,6 +110,10 @@ main{
 .side input{
     border-radius: 20px;
     text-align: center;
+}
+
+.limit:invalid{
+    background-color: pink;
 }
 
 .side .legend{

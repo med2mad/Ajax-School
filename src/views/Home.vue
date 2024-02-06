@@ -1,5 +1,5 @@
 <template>
-  <div class="homelogo"><img src="logo.png" alt="logo"></div>
+  <div class="homelogo"><img src="imgs/logo.png" alt="logo"></div>
 
   <h1><span>-</span> Welcome <span>-</span></h1>
 
@@ -27,7 +27,7 @@
     <div class="tools">
       <p>Tools used to make this app:</p>
       <div class="carousel">
-        <img class="crslbtn prevbtn" src="prev.png" @click="prev" alt="button prev">
+        <img class="crslbtn prevbtn" src="imgs/prev.png" @click="prev" alt="button prev">
         <transition :name="transName">
           <img v-if="tools[tooli] == tools[0]" :src="'tools\\'+tools[0]" alt="">
           <img v-else-if="tools[tooli] == tools[1]" :src="'tools\\'+tools[1]" alt="">
@@ -40,7 +40,7 @@
           <img v-else-if="tools[tooli] == tools[8]" :src="'tools\\'+tools[8]" alt="">
           <img v-else :src="'tools\\'+tools[9]" alt="">
         </transition>
-        <img class="crslbtn nextbtn" src="next.png" @click="next" alt="button next">
+        <img class="crslbtn nextbtn" src="imgs/next.png" @click="next" alt="button next">
       </div>
     </div>
 
