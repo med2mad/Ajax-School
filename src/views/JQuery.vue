@@ -4,15 +4,17 @@
 
 <script>
 import $ from "jquery";
+import paginate from 'jw-paginate';//get function without package : https://jasonwatmore.com/post/2018/08/07/javascript-pure-pagination-logic-in-vanilla-js-typescript
 export default {
   methods: {
-      fget(uri, bucket){ 
+      fget(uri, bucket, limit, currentpage){ 
         let time0 = performance.now();
         $.ajax({url:uri , method:'GET', dataType:'json'})
           .done(function(response){ 
-                          bucket.timeF = (performance.now() - time0).toFixed(2);  
-                          bucket.rows = response; 
-                          });
+              bucket.timeF = (performance.now() - time0).toFixed(2);  
+              bucket.rows = response.rows;
+              bucket.pagination = paginate(response.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
+            });
       },
       fgetw(uri){
         //sorry! sync XHR not allowed any more (XMLHttpRequest and JQuery both use it)

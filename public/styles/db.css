@@ -58,11 +58,15 @@
     border: solid 1px;
     background-color: black;
 }
+.db1 .loading{
+    color: white;
+}
 .db1 .nodata{
     font-family: Rajdhani-Regular, sans-serif;
     color: white;
     letter-spacing: 1.2rem;
 }
+
 table{
     border-collapse: collapse;
 }

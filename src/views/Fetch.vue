@@ -3,17 +3,20 @@
 </template>
 
 <script>
+import paginate from 'jw-paginate';//get function without package : https://jasonwatmore.com/post/2018/08/07/javascript-pure-pagination-logic-in-vanilla-js-typescript
 export default {
 
   methods: {
-      fget(uri, bucket){ 
+      fget(uri, bucket, limit, currentpage){ 
         let time0 = performance.now();
         fetch(uri)
         .then((response)=> {if(response.ok){ return response.json() } else {throw new Error("[!response.ok]")} })
-        .then((data)=>{
-                      bucket.timeF = (performance.now() - time0).toFixed(2);  
-                      bucket.rows = data;
-                      })
+        .then((response)=>{
+            bucket.timeF = (performance.now() - time0).toFixed(2);  
+            bucket.rows = response.rows;
+            bucket.pagination = paginate(response.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
+          
+          })
       },
 
       async fgetw(uri){

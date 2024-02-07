@@ -8,29 +8,23 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@ngneat/falso": "^7.1.1",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
-    "curl": "^0.1.4",
     "dotenv": "^16.3.1",
-    "ejs": "^3.1.9",
-    "express-fileupload": "^1.4.0",
-    "express-response-time": "^0.0.6",
-    "http": "^0.0.1-security",
-    "https": "^1.0.0",
+    "express-validator": "^7.0.1",
     "jquery": "^3.7.0",
     "jw-paginate": "^1.0.4",
     "mongoose": "^7.3.0",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.4.0",
-    "path": "^0.12.7",
     "pg": "^8.11.1",
     "sequelize": "^6.35.2",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
+    "@ngneat/falso": "^7.1.1",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-service": "~5.0.0"

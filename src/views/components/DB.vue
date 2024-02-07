@@ -35,7 +35,7 @@
                     </table>
                     </form>
                 </div>
-                <div v-else>Loading ....</div>
+                <div v-else class="loading">Loading ....</div>
                 
             </div>
             
