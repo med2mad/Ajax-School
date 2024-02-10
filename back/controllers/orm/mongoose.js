@@ -17,6 +17,7 @@ module.exports.getAll = async (req, res)=>{
 
 module.exports.add = (req, res)=>{
     const photo = req.PHOTO_PARSED; //by the time save() finishes there will be no more "req.body"
+    req.body.photo = req.PHOTO_PARSED;
 
     const row = new User(req.body);
     row.save().then((data)=>{
@@ -30,14 +31,14 @@ module.exports.edit = (req, res)=>{
         row.age=req.body.age;
         row.photo=req.PHOTO_PARSED;
 
-        row.save().then((data)=>{
+        row.save().then(()=>{
             res.json({"photo":req.PHOTO_PARSED})
         });
     });
 };
 
 module.exports.remove = (req, res)=>{
-    User.findOneAndDelete({"_id":req.params.id}).then((data)=>{
+    User.findOneAndDelete({"_id":req.params.id}).then(()=>{
         //GET replacement row
         const q = {_id: {$lt: req.query.lasttableid}};
         q.name = {$regex: '.*' + req.query._name + '.*'};

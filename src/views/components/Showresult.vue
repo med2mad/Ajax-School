@@ -5,7 +5,7 @@
 
         <div class="logo"><router-link to="/"><img src="imgs/usetest.png" alt="logo"></router-link></div> 
 
-        <p>Testing using :</p>
+        <p>Ajax tool</p>
         <nav>
             <!-- <router-link to="/sub"> <div class="btn">subscribe</div> </router-link> -->
             <router-link to="/xhr"> <div class="btn">XHR</div> </router-link>

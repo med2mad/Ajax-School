@@ -6,10 +6,10 @@ module.exports.getAll = (req, res)=>{
         q += " ORDER BY _id DESC LIMIT "+ req.query._limit +" OFFSET " + req.query._skip;
 
     let qCount ="SELECT count(_id) FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";
-        if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
+        if (req.query._age) {qCount += " AND age = '"+ req.query._age +"'";}
 
     User.findAll(q, qCount).then((response)=>{
-        res.json(response);
+        res.json({"rows":response[0], "total":response[1]});
     });
 };
 
