@@ -5,9 +5,9 @@ const { body, query, param, check, validationResult, matchedData } = require('ex
 const {getAll, add, edit, remove, notFound, subscribe} = require('./controllers/js/mysql');
 const {getAlls, adds, edits, removes} = require('./controllers/orm/mysql');
 //Get
-app.get('/', getAlls);
+app.get('/', getAll);
 //Insert
-app.post('/', body('*').notEmpty(), (req, res, next)=>{if(validationResult(req).isEmpty()){next()}} , add);
+app.post('/', body('name').notEmpty(), (req, res, next)=>{if(validationResult(req).isEmpty()){next()}} , add);
 //Update
 app.put('/:id', edits);
 //Delete
@@ -16,7 +16,7 @@ app.delete('/:id', removes);
 // const a = [query('name').trim().notEmpty(), param('name').trim().notEmpty(), body('name').escape().trim().notEmpty()];
 app.post('/sub/:id', query('*').notEmpty(), (req, res, next)=>{
 
-    res.send(validationResult(req));
+    // res.send(validationResult(req));
 
 });
 

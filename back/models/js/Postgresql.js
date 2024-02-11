@@ -11,20 +11,13 @@ module.exports = class User {
     }
 
     static findAll(q, qCount) {
-        const rows = new Promise(function(myResolve, myReject) {
-            con.query(q, (err, rowsData)=>{
-                myResolve(rowsData.rows);
+        return new Promise(function(myResolve, myReject) {
+            con.query(qCount, (err, countData)=>{
+                con.query(q, (err, rowsData)=>{
+                    myResolve({"rows":rowsData.rows,"total":countData.rows[0].count});
+                }); 
             });
         }); 
-        const count = new Promise(function(myResolve, myReject) {
-            con.query(qCount, (err, rowCount)=>{
-                myResolve(rowCount.rows[0].count);
-            });
-        }); 
-        
-        const promises = [];
-        promises.push(rows); promises.push(count);
-        return Promise.all(promises);
     }
 
     create() {

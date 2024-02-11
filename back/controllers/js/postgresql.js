@@ -8,9 +8,9 @@ module.exports.getAll = (req, res)=>{
     let qCount ="SELECT count(_id) FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";
         if (req.query._age) {qCount += " AND age = '"+ req.query._age +"'";}
 
-    User.findAll(q, qCount).then((response)=>{
-        res.json({"rows":response[0], "total":response[1]});
-    });
+        User.findAll(q, qCount).then((response)=>{
+            res.json(response);
+        });
 };
 
 module.exports.add = (req, res)=>{
