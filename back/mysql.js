@@ -7,15 +7,15 @@ const {getAlls, adds, edits, removes} = require('./controllers/orm/mysql');
 //Get
 app.get('/', getAll);
 //Insert
-app.post('/', body('name').notEmpty(), (req, res, next)=>{if(validationResult(req).isEmpty()){next()}} , add);
+app.post('/', body('name').custom((value)=>{console.log(value);}) , add);
 //Update
-app.put('/:id', edits);
+app.put('/:id', edit);
 //Delete
-app.delete('/:id', removes);
+app.delete('/:id', remove);
 
 // const a = [query('name').trim().notEmpty(), param('name').trim().notEmpty(), body('name').escape().trim().notEmpty()];
-app.post('/sub/:id', query('*').notEmpty(), (req, res, next)=>{
-
+app.post('/sub/:id', body('name').notEmpty(), (req, res, next)=>{
+    console.log('loged');
     // res.send(validationResult(req));
 
 });
