@@ -23,7 +23,7 @@ module.exports = class User {
     create() {
         return new Promise((myResolve, myReject)=>{
             con.query("INSERT INTO "+User.table+" (name, age, photo) VALUES ('"+ this.name +"', "+ this.age +", '"+ this.photo +"')", (err, data)=>{
-                myResolve({"newId":data.insertId, "photo":this.photo});
+                myResolve({"newId":data.insertId, "photo":this.photo, "errors":[]});
             });
         }); 
     }

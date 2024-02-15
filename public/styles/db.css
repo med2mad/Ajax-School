@@ -152,6 +152,9 @@ table{
     font-weight: bold;
     font-size: 0.9rem;
 }
+.form .data table .error{
+    color: pink;
+}
 
 .form .ppd{
     background-color: rgb(73, 73, 73);

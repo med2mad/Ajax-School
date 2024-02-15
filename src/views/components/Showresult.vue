@@ -95,19 +95,15 @@ export default{
 
     methods:{
         getUri(url, currentpage){
-                url += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);//fake/jsonServer use _limit
+                url += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);
                 url += '&_skip='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?(currentpage-1)*this.vlimit:0);
-                url += '&_name='+this.vname; //named _name not(name) for not to clash with fake/jsonServer
-                url += '&name_like='+this.vname; //fake/jsonServer
-                if (Number.isInteger(this.vage) && this.vage!=="e")
-                {
-                    url += '&_age='+this.vage;//named _age not(age) for not to clash with fake/jsonServer
-                    url += '&age_gte='+this.vage;    url += '&age_lte='+this.vage;    //jsonServer (no like)
-                }
-                url += '&_sort=id&_order=desc'; //fake/jsonServer use _sort and _order
+                url += '&_name='+this.vname;
+                if (Number.isInteger(this.vage))
+                {url += '&_age='+this.vage;}
                 
                 return url;
             },
+
         getVback(){return this.vback;},
 
         // burgerButton(){

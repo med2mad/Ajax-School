@@ -45,13 +45,19 @@
         <div class="form"> 
             <form ref="frmid" class="data" enctype="multipart/form-data">
             <table cellspacing="0">
-                <tr><td id="name">Name<input type="text" v-model="vname" name="name" maxlength ="20" autocomplete="off" spellcheck="false"></td></tr>
-                <tr class="agetr"><td id="age2">Age<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td></tr>
+                <tr><td id="name">
+                    Name<input type="text" v-model="vname" name="name" maxlength ="20" autocomplete="off" spellcheck="false">
+                    <div v-if="bucket.nameError" class="error">Enter a name from 1 to 20 characters</div>
+                </td></tr>
+                <tr class="agetr"><td id="age2">
+                    Age<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+                    <div v-if="bucket.ageError" class="error">Enter age from 18 to 99</div>
+                </td></tr>
                 <tr>
                     <td>
                         <img ref="img" alt="img" @click="$refs[_db].click();" class="img" src="uploads/user.jpg"><br>
                         <input type="button" @click="$refs[_db].click();" value="Browse Photo...">
-                        <input type="button" value="Remove" @click="removePhoto">
+                        <input type="button" value="Remove Photo" @click="removePhoto">
                         <input type="file" name="photo" :ref="_db" accept="image/*" @change="onFileChange" style="display:none;"><br>
                     </td>
                 </tr>
@@ -81,7 +87,7 @@ export default{
     components: {Pagination},
 
     data(){return{
-                    bucket:{timeF:'',time0:0, rows:'', pagination:{},},
+                    bucket:{timeF:'',time0:0, rows:'', pagination:{}, nameError:false, ageError:false},
                     selectedId:'', 
                     vname:'', vage:'', selectedPhotoName:'', photoObject:null,
                     showpopup:false, popuptext:'', 
@@ -89,19 +95,17 @@ export default{
             },
 
     methods:{
-        async handlePost(){
-            if(await this.dataCheck()){this.showpopup = true;}
-            else{
+        handlePost(){
+            if(this.dataCheck()){
                 const fd = new FormData(this.$refs.frmid);
                 fd.append('selectedPhotoName', this.selectedPhotoName);
                 this.$emit('clickPost', fd, this.bucket);
                 this.clear();
-                }
+            }
         },
-        async handlePut(){
+        handlePut(){
             if(!this.selectedId){this.popuptext='Select User !'; this.showpopup = true;}
-            else if(await this.dataCheck()){this.showpopup = true;}
-            else{
+            else if(this.dataCheck()){
                 let selectedTr;
                 for (let i = 0; i < this.bucket.rows.length; i++){//find <tr> to change
                     if(this.bucket.rows[i]["_id"]==this.selectedId)
@@ -168,15 +172,17 @@ export default{
             }
         },
 
-        async dataCheck(){return '';
-            if (this.vname!=="" && !Number.isInteger(this.vage)){this.vage = Number.parseInt(this.vage);}
+        dataCheck(){
+            this.vname = this.vname.trim();
+            this.vage = Number.parseInt(this.vage);
             
-            this.popuptext='';
-            if (this.vname==="" || this.vage===""){this.popuptext='Insert Data !';}
-            else if (!Number.isInteger(this.vage) || this.vage<18 || this.vage>99){this.popuptext='Insert Integer between 18 and 99 !'; }
+            this.bucket.nameError=false; this.bucket.ageError=false;
+            if (this.vname==="" || this.vname.length>20){this.bucket.nameError=true;}
+            if (!Number.isInteger(this.vage) || this.vage<18 || this.vage>99){this.bucket.ageError=true;}
             
-            return this.popuptext;
+            return !(this.bucket.nameError || this.bucket.ageError);
         },
+
         changepage(i){
             this.$emit('mountGetPage', this.bucket, i);
         }

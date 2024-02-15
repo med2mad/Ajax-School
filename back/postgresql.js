@@ -1,4 +1,4 @@
-const app = require('./configurations/expressapp');
+const {app} = require('./configurations/expressapp');
 
 //API Routes (API endpoints)
 const {getAll, add, edit, remove, notFound} = require('./controllers/js/postgresql');

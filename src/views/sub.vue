@@ -1,6 +1,6 @@
 <template> <div style="margin-top:200px"></div>
 
-    <form ref="frmid" method="POST" action="http://localhost:5010/sub/ppp?name1=qqq1&name2=qqq2&name3=qqq3" enctype="multipart/form-data" >
+    <form ref="frmid" method="POST" action="http://localhost:5010/sub/ppp?name1=qqq" enctype="multipart/form-data" >
     <!-- <form method="POST" action="http://127.0.0.1:8000/"> -->
         <input type="text" name="name" v-model="vname"> <br>
         <input type="text" name="age" v-model="vage"> <br>

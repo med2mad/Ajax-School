@@ -1,4 +1,4 @@
-const app = require('./expressapp');
+const {app} = require('./expressapp');
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/medDB', {useNewUrlParser: true, useUnifiedTopology: true})

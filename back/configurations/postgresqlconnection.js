@@ -7,7 +7,7 @@ const client = new Client({
   database: "test"
 })
 
-const app = require('./expressapp');
+const {app} = require('./expressapp');
 
 client.connect().then((err) => {
     if (err){console.log("'PostgreSQL' initial connection error");}

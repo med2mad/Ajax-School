@@ -6,7 +6,7 @@ var con = mysql.createConnection({
   database: "test"
 });
 
-const app = require('./expressapp');
+const {app} = require('./expressapp');
 
 con.connect((err) => {
   if (err){console.error("Mysyql initial connection error");}
