@@ -31,8 +31,10 @@ export default {
         axios.post(uri,body)
           .then((response) => {
               bucket.nameError=false; bucket.ageError=false;
-              response.data.errors.forEach(error => { if(error.path=='name'){bucket.nameError=true}else{bucket.ageError=true} });
-              if(bucket.nameError==false && bucket.ageError==false){
+              if(response.data.errors){
+                response.data.errors.forEach(error => { if(error.path=='name'){bucket.nameError=true}else{bucket.ageError=true} });
+              }
+              else{
                   const rowToInsert = {"_id":response.data.newId, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
                   bucket.rows.unshift(rowToInsert);
                   if(bucket.rows.length>limit){bucket.rows.pop();}//remove last row in <table> (respect _limit after add)

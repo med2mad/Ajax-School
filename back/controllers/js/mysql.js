@@ -1,14 +1,14 @@
 const User = require('../../models/js/Mysql');
 
 module.exports.getAll = (req, res)=>{
-    let q ="SELECT * FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";
-        if (req.query._age) {q += " AND age = '"+ req.query._age +"'";}
+    let q ="SELECT * FROM "+User.table+" WHERE name LIKE concat('%', ?, '%')"; const t = [req.query._name];
+        if (req.query._age) {q += " AND age = ?"; t.push(req.query._age);}
         q += " ORDER BY _id DESC LIMIT "+ req.query._limit +" OFFSET " + req.query._skip;
 
-    let qCount ="SELECT count(_id) as total FROM "+User.table+" WHERE name LIKE '%"+ req.query._name +"%'";
-        if (req.query._age) {qCount += " AND age = '"+ req.query._age +"'";}
+    let qCount ="SELECT count(_id) as total FROM "+User.table+" WHERE name LIKE concat('%', ?, '%')"; const tCount = [req.query._name];
+        if (req.query._age) {qCount += " AND age = ?"; tCount.push(req.query._age);}
 
-    User.findAll(q, qCount).then((response)=>{
+    User.findAll(q, t, qCount, tCount).then((response)=>{
         res.json(response);
     });
 };

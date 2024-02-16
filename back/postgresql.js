@@ -4,7 +4,7 @@ const {app} = require('./configurations/expressapp');
 const {getAll, add, edit, remove, notFound} = require('./controllers/js/postgresql');
 const {getAlls, adds, edits, removes} = require('./controllers/orm/postgresql');
 //Get
-app.get('/', getAll);
+app.get('/', getAlls);
 //Insert
 app.post('/', adds);
 //Update

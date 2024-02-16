@@ -27,9 +27,8 @@
                         <transition-group name="table">
                         <tr v-for="user in bucket.rows" class="datarow" :class="{selectedrow:user._id==selectedId}" :key="user._id" @click="selectUser(user._id);">
                             <td> <input type="radio" name="db" v-model="selectedId" :value="user._id"> </td>
-                            <td>{{user._id}}</td> <td :ref="'trName'+user._id">{{user.name}}</td> <td :ref="'trAge'+user._id">{{user.age}}</td>
+                            <td>{{user._id}}</td> <td :ref="'trName'+user._id">{{user.name}}</td><td :ref="'trAge'+user._id">{{user.age}}</td>
                             <td><img :src="'uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user._id" :ref="'trImg'+user._id"></td>
-                            <!-- <td><img :src="user.photo" :alt="'photo'+user._id" :ref="'trImg'+user._id"></td> -->
                         </tr>
                         </transition-group>
                     </table>
@@ -46,8 +45,8 @@
             <form ref="frmid" class="data" enctype="multipart/form-data">
             <table cellspacing="0">
                 <tr><td id="name">
-                    Name<input type="text" v-model="vname" name="name" maxlength ="20" autocomplete="off" spellcheck="false">
-                    <div v-if="bucket.nameError" class="error">Enter a name from 1 to 20 characters</div>
+                    Name<input type="text" v-model="vname" name="name" maxlength ="30" autocomplete="off" spellcheck="false">
+                    <div v-if="bucket.nameError" class="error">Enter a name from 1 to 30 characters</div>
                 </td></tr>
                 <tr class="agetr"><td id="age2">
                     Age<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
@@ -177,7 +176,7 @@ export default{
             this.vage = Number.parseInt(this.vage);
             
             this.bucket.nameError=false; this.bucket.ageError=false;
-            if (this.vname==="" || this.vname.length>20){this.bucket.nameError=true;}
+            if (this.vname==="" || this.vname.length>30){this.bucket.nameError=true;}
             if (!Number.isInteger(this.vage) || this.vage<18 || this.vage>99){this.bucket.ageError=true;}
             
             return !(this.bucket.nameError || this.bucket.ageError);

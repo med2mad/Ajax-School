@@ -2,16 +2,16 @@ const {app} = require('./configurations/expressapp');
 const { body, query, param, validationResult } = require('express-validator');
 
 const namevalidation = function () {
-    return body('name').trim().escape().isLength({min:1, max:20});
+    return body('name').trim().isLength({min:1, max:30});
 }
 const agevalidation = function () {
-    return body('age').default('').trim().escape().isInt({min:18, max:99});
+    return body('age').trim().default('').isInt({min:18, max:99});
 }
 const idEscape = function () {
-    return param('id').default(0).trim().escape();
+    return param('id').trim().default(0);
 }
 const queryEscape = function () {
-    return [query('_name').escape(), query('_age').default(undefined).escape(), query('_skip').default(undefined).escape()];
+    return [query('_name').default(''), query('_age').default(undefined), query('_skip').default(undefined)];
 }
 
 const bodyValidation = [ namevalidation(), agevalidation(), (req, res, next)=>{
@@ -23,13 +23,13 @@ const {getAll, add, edit, remove, notFound, subscribe} = require('./controllers/
 const {getAlls, adds, edits, removes} = require('./controllers/orm/mysql');
 
 //Get
-app.get('/', queryEscape(), getAll);
+app.get('/',  getAlls);
 //Insert
-app.post('/', idEscape(), bodyValidation, add);
+app.post('/', bodyValidation, adds);
 //Update
-app.put('/:id', idEscape(), bodyValidation, edit);
+app.put('/:id', idEscape(), bodyValidation, edits);
 //Delete
-app.delete('/:id', idEscape(), remove);
+app.delete('/:id', idEscape(), removes);
 
 //test
 app.post('/sub/:name', (req, res, next)=>{

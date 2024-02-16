@@ -9,7 +9,7 @@ const User = sequelizeMysql.define('user', {
     },
     name:{
         type: SequelizeClass.STRING,
-        validate:{ len:{args:[1,25], msg:"name from 1 to 25 chars !"} },
+        validate:{ len:{args:[1,30], msg:"name from 1 to 30 chars !"} },
         allowNull: false,
     },
     age:{
