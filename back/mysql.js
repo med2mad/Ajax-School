@@ -7,11 +7,11 @@ const namevalidation = function () {
 const agevalidation = function () {
     return body('age').trim().default('').isInt({min:18, max:99});
 }
-const idEscape = function () {
-    return param('id').trim().default(0);
+const idValidation = function () {
+    return param('id').trim().isInt();
 }
 const queryEscape = function () {
-    return [query('_name').default(''), query('_age').default(undefined), query('_skip').default(undefined)];
+    return [query('_name').trim().default('').escape(), query('_age').default(undefined), query('_skip').default(undefined)];
 }
 
 const bodyValidation = [ namevalidation(), agevalidation(), (req, res, next)=>{
@@ -23,13 +23,13 @@ const {getAll, add, edit, remove, notFound, subscribe} = require('./controllers/
 const {getAlls, adds, edits, removes} = require('./controllers/orm/mysql');
 
 //Get
-app.get('/',  getAlls);
+app.get('/', getAlls);
 //Insert
 app.post('/', bodyValidation, adds);
 //Update
-app.put('/:id', idEscape(), bodyValidation, edits);
+app.put('/:id', idValidation(), bodyValidation, edits);
 //Delete
-app.delete('/:id', idEscape(), removes);
+app.delete('/:id', idValidation(), removes);
 
 //test
 app.post('/sub/:name', (req, res, next)=>{

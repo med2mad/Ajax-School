@@ -2,7 +2,7 @@ const {User} = require('../../models/orm/Mongoose');
 require('../../configurations/mongoconnection');
 
 module.exports.getAll = async (req, res)=>{
-    const q = {name:{ $regex: '.*' + req.query._name + '.*' }};
+    const q = {name:{ $regex: '.*' + escapeRegExp(req.query._name) + '.*' }};
 
     const count = await User.find(q).countDocuments().exec();
 
@@ -53,3 +53,5 @@ module.exports.remove = (req, res)=>{
 module.exports.notFound = (req, res)=>{
     res.status(404).json("404 , no routes !");
 };
+
+function escapeRegExp(text) {return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');}
