@@ -1,4 +1,4 @@
-const {sequelizeMysql, SequelizeClass} = require('../../configurations/sequelizeconn');
+const {sequelizeMysql, SequelizeClass} = require('../../configurations/mysqlSequelizeconn');
 
 const User = sequelizeMysql.define('user', {
     _id:{

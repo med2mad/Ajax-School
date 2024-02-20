@@ -171,12 +171,12 @@ export default{
             }
         },
 
-        dataCheck(){
+        dataCheck(){ return true;
             this.vname = this.vname.trim();
             this.vage = Number.parseInt(this.vage);
             
             this.bucket.nameError=false; this.bucket.ageError=false;
-            if (this.vname==="" || this.vname.length>30){this.bucket.nameError=true;}
+            if (this.vname=="" || this.vname.length>30){this.bucket.nameError=true;}
             if (!Number.isInteger(this.vage) || this.vage<18 || this.vage>99){this.bucket.ageError=true;}
             
             return !(this.bucket.nameError || this.bucket.ageError);

@@ -1,6 +1,6 @@
 const {User, Op, fn, col} = require('../../models/orm/Mysql');
 
-module.exports.getAlls = async (req, res)=>{
+module.exports.getAll = async (req, res)=>{
     const whereClause = {name: {[Op.like]:'%'+req.query._name+'%'}};
     if (req.query._age) {whereClause.age = req.query._age;} 
     
@@ -17,7 +17,7 @@ module.exports.getAlls = async (req, res)=>{
     });
 };
 
-module.exports.adds = (req, res)=>{
+module.exports.add = (req, res)=>{
     const photo = req.PHOTO_PARSED;
 
     User.create({"name":req.body.name, "age":req.body.age, "photo":photo})
@@ -26,7 +26,7 @@ module.exports.adds = (req, res)=>{
     });
 };
 
-module.exports.edits = (req, res)=>{
+module.exports.edit = (req, res)=>{
     const photo = req.PHOTO_PARSED;
 
     User.update({"name":req.body.name, "age":req.body.age, "photo":photo}, {where:{_id: req.params.id}})
@@ -35,7 +35,7 @@ module.exports.edits = (req, res)=>{
     });
 };
 
-module.exports.removes = (req, res)=>{
+module.exports.remove = (req, res)=>{
     User.destroy({where:{_id: req.params.id}})
     .then(()=>{
         const whereClause = {

@@ -1,6 +1,6 @@
-const {sequelizeProgresql, SequelizeClass} = require('../../configurations/sequelizeconn');
+const {sequelizePostgresql, SequelizeClass} = require('../../configurations/postgresqlSequelizeconn');
 
-const User = sequelizeProgresql.define('user', {
+const User = sequelizePostgresql.define('user', {
     _id:{
         type: SequelizeClass.INTEGER,
         primaryKey: true,
