@@ -1,8 +1,8 @@
 const con = require('../../configurations/mysqlconnection');
 
-module.exports = class User {
+module.exports = class Profile {
 
-    static table='users';
+    static table='profiles';
     
     constructor(data) {
         this.name = data.name;
@@ -22,7 +22,7 @@ module.exports = class User {
 
     create() {
         return new Promise((myResolve, myReject)=>{
-            con.query("INSERT INTO "+User.table+" (name, age, photo) VALUES (?, ?, ?)", [this.name, this.age, this.photo] , (err, data)=>{
+            con.query("INSERT INTO "+Profile.table+" (name, age, photo) VALUES (?, ?, ?)", [this.name, this.age, this.photo] , (err, data)=>{
                 myResolve({"newId":data.insertId, "photo":this.photo});
             });
         }); 
@@ -30,7 +30,7 @@ module.exports = class User {
 
     static update(id, body, photo) {
         return new Promise(function(myResolve, myReject) {
-            con.query("UPDATE "+User.table+" SET name=?, age=?, photo=? WHERE _id=?", [body.name, body.age, photo, id], (err, data)=>{
+            con.query("UPDATE "+Profile.table+" SET name=?, age=?, photo=? WHERE _id=?", [body.name, body.age, photo, id], (err, data)=>{
                 myResolve({"photo":photo});
             }); 
         });
@@ -38,7 +38,7 @@ module.exports = class User {
     
     static delete(id, replacement) {
         return new Promise(function(myResolve, myReject) {
-            con.query("DELETE FROM "+User.table+" WHERE _id=?", [id], (err, data)=>{
+            con.query("DELETE FROM "+Profile.table+" WHERE _id=?", [id], (err, data)=>{
                 con.query(replacement, (err, rows)=>{
                     myResolve(rows)
                 });

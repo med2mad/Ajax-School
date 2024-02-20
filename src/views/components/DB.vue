@@ -25,10 +25,10 @@
                     <table>
                         <tr><th></th><th>#</th><th>Name</th><th>Age</th><th>Photo</th></tr>
                         <transition-group name="table">
-                        <tr v-for="user in bucket.rows" class="datarow" :class="{selectedrow:user._id==selectedId}" :key="user._id" @click="selectUser(user._id);">
-                            <td> <input type="radio" name="db" v-model="selectedId" :value="user._id"> </td>
-                            <td>{{user._id}}</td> <td :ref="'trName'+user._id">{{user.name}}</td><td :ref="'trAge'+user._id">{{user.age}}</td>
-                            <td><img :src="'uploads/'+(user.photo||'user.jpg')" :alt="'photo'+user._id" :ref="'trImg'+user._id"></td>
+                        <tr v-for="profile in bucket.rows" class="datarow" :class="{selectedrow:profile._id==selectedId}" :key="profile._id" @click="selectProfile(profile._id);">
+                            <td> <input type="radio" name="db" v-model="selectedId" :value="profile._id"> </td>
+                            <td>{{profile._id}}</td> <td :ref="'trName'+profile._id">{{profile.name}}</td><td :ref="'trAge'+profile._id">{{profile.age}}</td>
+                            <td><img :src="'uploads/'+(profile.photo||'profile.jpg')" :alt="'photo'+profile._id" :ref="'trImg'+profile._id"></td>
                         </tr>
                         </transition-group>
                     </table>
@@ -54,7 +54,7 @@
                 </td></tr>
                 <tr>
                     <td>
-                        <img ref="img" alt="img" @click="$refs[_db].click();" class="img" src="uploads/user.jpg"><br>
+                        <img ref="img" alt="img" @click="$refs[_db].click();" class="img" src="uploads/profile.jpg"><br>
                         <input type="button" @click="$refs[_db].click();" value="Browse Photo...">
                         <input type="button" value="Remove Photo" @click="removePhoto">
                         <input type="file" name="photo" :ref="_db" accept="image/*" @change="onFileChange" style="display:none;"><br>
@@ -103,7 +103,7 @@ export default{
             }
         },
         handlePut(){
-            if(!this.selectedId){this.popuptext='Select User !'; this.showpopup = true;}
+            if(!this.selectedId){this.popuptext='Select Profile !'; this.showpopup = true;}
             else if(this.dataCheck()){
                 let selectedTr;
                 for (let i = 0; i < this.bucket.rows.length; i++){//find <tr> to change
@@ -125,7 +125,7 @@ export default{
         handleDelete(){
             const lastTableId = this.bucket.rows[this.bucket.rows.length-1]["_id"];
 
-            if(!this.selectedId){this.popuptext='Select User !';this.showpopup = true;}
+            if(!this.selectedId){this.popuptext='Select Profile !';this.showpopup = true;}
             else{
                 if(this.back=='js')
                     this.$emit('clickDelete', 'DELETE', this.selectedId, '&lasttableid='+lastTableId, this.bucket);
@@ -140,7 +140,7 @@ export default{
             }
         },
 
-        selectUser(id){
+        selectProfile(id){
             this.selectedId = id;
             this.vname = this.$refs['trName'+id][0].innerHTML;
             this.vage = this.$refs['trAge'+id][0].innerHTML;
@@ -152,7 +152,7 @@ export default{
         },
         removePhoto(){
             this.selectedPhotoName='';
-            this.$refs.img.src='./uploads/user.jpg';
+            this.$refs.img.src='./uploads/profile.jpg';
             this.photoObject=null;
             this.$refs[this._db].value= null;
         },
@@ -160,7 +160,7 @@ export default{
             this.vname='';
             this.vage='';
             this.selectedPhotoName='';
-            this.$refs.img.src='./uploads/user.jpg';
+            this.$refs.img.src='./uploads/profile.jpg';
             this.photoObject=null;
             this.$refs[this._db].value= null;
         },

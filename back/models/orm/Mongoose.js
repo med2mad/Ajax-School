@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-// Define the User schema
-const userSchema = new mongoose.Schema({
+// Define the Profile schema
+const profileSchema = new mongoose.Schema({
     name: {
         type: String,
         required:true,
@@ -21,5 +21,5 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-// Create (and export) the User model using the schema
-module.exports.User = mongoose.model('User', userSchema, 'users');
+// Create (and export) the Profile model using the schema
+module.exports.Profile = mongoose.model('Profile', profileSchema, 'profiles');

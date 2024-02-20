@@ -1,7 +1,7 @@
 <template> <div style="margin-top:200px"></div>
 
-    <form ref="frmid" method="POST" action="http://localhost:5010/sub/ppp?name1=qqq" enctype="multipart/form-data" >
-    <!-- <form method="POST" action="http://127.0.0.1:8000/"> -->
+    <!-- <form ref="frmid" method="POST" action="http://localhost:5010/sub/ppp?name1=qqq" enctype="multipart/form-data" > -->
+    <form method="POST" action="http://127.0.0.1:8000/MysqlModel/">
         <input type="text" name="name" v-model="vname"> <br>
         <input type="text" name="age" v-model="vage"> <br>
         <input type="file" name="photo" @change="onFileChange"> <br>

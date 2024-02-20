@@ -1,6 +1,6 @@
 const {sequelizeMysql, SequelizeClass} = require('../../configurations/mysqlSequelizeconn');
 
-const User = sequelizeMysql.define('user', {
+const Profile = sequelizeMysql.define('profile', {
     _id:{
         type: SequelizeClass.INTEGER,
         primaryKey: true,
@@ -21,11 +21,15 @@ const User = sequelizeMysql.define('user', {
         type: SequelizeClass.STRING,
         defaultValue: '',
         allowNull: false,
-    }
+    },
+},
+{
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
 },
 );
 
-module.exports.User = User;
+module.exports.Profile = Profile;
 module.exports.Op = SequelizeClass.Op;
 module.exports.fn = SequelizeClass.fn;
 module.exports.col = SequelizeClass.col;

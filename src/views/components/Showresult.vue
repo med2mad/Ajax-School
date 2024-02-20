@@ -81,7 +81,7 @@ export default{
             },
 
     data(){return{
-                vback:'js', vname:'', vage:'', vlimit:10, 
+                vback:'php', vname:'', vage:'', vlimit:10, 
                 backpopup:false, 
                 DBs:[
                     {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} }, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")

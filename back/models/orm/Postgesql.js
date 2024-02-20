@@ -1,6 +1,6 @@
 const {sequelizePostgresql, SequelizeClass} = require('../../configurations/postgresqlSequelizeconn');
 
-const User = sequelizePostgresql.define('user', {
+const Profile = sequelizePostgresql.define('profile', {
     _id:{
         type: SequelizeClass.INTEGER,
         primaryKey: true,
@@ -21,11 +21,15 @@ const User = sequelizePostgresql.define('user', {
         type: SequelizeClass.STRING,
         defaultValue: '',
         allowNull: false,
-    }
+    },
+},
+{
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
 },
 );
 
-module.exports.User = User;
+module.exports.Profile = Profile;
 module.exports.Op = SequelizeClass.Op;
 module.exports.fn = SequelizeClass.fn;
 module.exports.col = SequelizeClass.col;

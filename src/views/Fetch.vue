@@ -15,7 +15,6 @@ export default {
             bucket.timeF = (performance.now() - time0).toFixed(2);  
             bucket.rows = response.rows;
             bucket.pagination = paginate(response.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
-          
           })
       },
 

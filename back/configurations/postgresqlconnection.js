@@ -13,10 +13,14 @@ client.connect().then((err) => {
     if (err){console.log("'PostgreSQL' initial connection error");}
     else{app.listen(5030, ()=>{console.log("PostgreSQL: " + 5030);
 
-    // client.query("SELECT * FROM users", (err, rows)=>{
+    // client.query("SELECT * FROM profiles", (err, rows)=>{
     //   console.log(rows.rows)
     // })
 
+    client.query("ALTER TABLE profiles RENAME COLUMN id TO _id", (err, rows)=>{
+      console.log(rows.rows)
+    })
+    
   });}
 })
 
