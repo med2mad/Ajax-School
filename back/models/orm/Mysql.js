@@ -33,3 +33,5 @@ module.exports.Profile = Profile;
 module.exports.Op = SequelizeClass.Op;
 module.exports.fn = SequelizeClass.fn;
 module.exports.col = SequelizeClass.col;
+module.exports.SequelizeClass = SequelizeClass;
+module.exports.sequelizeMysql = sequelizeMysql;

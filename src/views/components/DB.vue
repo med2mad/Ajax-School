@@ -113,7 +113,7 @@ export default{
                 const fd = new FormData(this.$refs.frmid);
                 fd.append('selectedPhotoName', this.selectedPhotoName);
                 
-                if(this.back=='js')
+                if(this.back=='js') //no PUT http method in PHP
                     this.$emit('clickPut', 'PUT', this.selectedId, fd, selectedTr, this.bucket);
                 else{
                     this.$emit('clickPut', 'POST', this.selectedId+'?_method=PUT', fd, selectedTr, this.bucket);
@@ -127,10 +127,10 @@ export default{
 
             if(!this.selectedId){this.popuptext='Select Profile !';this.showpopup = true;}
             else{
-                if(this.back=='js')
+                if(this.back=='js') //no DELETE http method in PHP
                     this.$emit('clickDelete', 'DELETE', this.selectedId, '&lasttableid='+lastTableId, this.bucket);
                 else{
-                    this.$emit('clickDelete', 'POST', this.selectedId+'?_method=DELETE&lasttableid='+lastTableId, this.bucket);
+                    this.$emit('clickDelete', 'POST', this.selectedId,'&_method=DELETE&lasttableid='+lastTableId, this.bucket);
                 }
                 
                 for (let i = 0; i < this.bucket.rows.length; i++){//find <tr> to remove
@@ -142,8 +142,8 @@ export default{
 
         selectProfile(id){
             this.selectedId = id;
-            this.vname = this.$refs['trName'+id][0].innerHTML;
-            this.vage = this.$refs['trAge'+id][0].innerHTML;
+            this.vname = this.$refs['trName'+id][0].innerText;
+            this.vage = this.$refs['trAge'+id][0].innerText;
             this.photoObject=null;            
             this.$refs[this._db].value= null;
             let src = this.$refs['trImg'+id][0].src;

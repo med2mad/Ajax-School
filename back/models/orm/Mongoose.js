@@ -7,7 +7,7 @@ const profileSchema = new mongoose.Schema({
     },
     age: {
         type: Number,
-        required: true,
+        required: [true, 'age is  required!'],
         min: [18, 'under aged !'],
         max: [99, 'over aged !'],
     },
