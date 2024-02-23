@@ -1,7 +1,5 @@
 const router = require('express').Router();
-
 const { bodyValidation, mongooseIdValidation, querySanitizer } = require('../configurations/validations');
-router.use(querySanitizer());
 const mongoSanitize = require('express-mongo-sanitize');
 router.use(mongoSanitize());
 
@@ -21,6 +19,6 @@ router.delete('/:id', mongooseIdValidation(),remove);
 //if app starts with index.js
 module.exports = router;
 
-//if app starts with mongoose.js
+//if app starts with routes>mongoose.js
 const {app} = require('../configurations/expressapp');
 app.use('/mongoose', router);
