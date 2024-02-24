@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('./multer');
+const cookieparser = require('cookie-parser');
 const { querySanitizer } = require('../configurations/validations');
 
 const app = express();
@@ -8,6 +9,7 @@ app.use(cors());
 app.use(express.json()); //req.body gets data from ajax requests payload
 app.use(multer);
 app.use(photoNameParser); //parses the name of the photo in a new variable called "req.PHOTO_PARSED"
+// app.use(cookieparser);
 app.use(querySanitizer());
 
 function photoNameParser(req, res, next){
