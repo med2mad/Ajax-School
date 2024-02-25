@@ -7,7 +7,7 @@ const sequelizePostgresql = new Sequelize('test', 'postgres', '5432', {
     logging: false, //no logs in console
 });
 
-sequelizePostgresql.authenticate() //test if connection works to start listening
+sequelizePostgresql.authenticate() //test connection before start listening (connection already made without "con" object)
 .then(()=>{
     app.listen(5030, ()=>{console.log("Postgresql: " + 5030);});
 })

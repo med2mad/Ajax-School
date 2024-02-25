@@ -1,15 +1,15 @@
 const {app} = require('./configurations/expressapp');
 
 
-/////////////////////mysql///////////////////////
+/////////////////////mysql 5010///////////////////////
 const mysqlRouter = require('./routes/mysql');
 app.use('/mysql', mysqlRouter);
 
-///////////////////mongoose//////////////////////
+///////////////////mongoose 5020//////////////////////
 const mongooseRouter = require('./routes/mongoose');
 app.use('/mongoose', mongooseRouter);
 
-//////////////////postgresql/////////////////////
+//////////////////postgresql 5030/////////////////////
 const postgresqlRouter = require('./routes/postgresql');
 app.use('/postgresql', postgresqlRouter);
 

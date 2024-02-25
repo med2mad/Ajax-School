@@ -3,9 +3,15 @@
     <header>
         <img src="imgs/hamburger-button.png" alt="hamburger-button back-end" class="hamburger-button" @click="backpopup=true;">
 
-        <div class="logo"><router-link to="/"><img src="imgs/usetest.png" alt="logo"></router-link></div> 
-
+        <div class="logo"><router-link to="/"><img src="imgs/logo.png" alt="logo"></router-link></div> 
+        
+        <Login @login="(username, password)=>{flogin('http://localhost:5010/mysql?_limit=1&_skip=0&name='+username + '&password='+password)}" @logout="()=>{this.id=''; this.name=''; this.photo='';}" />
+        <img :src="'uploads/'+(this.photo||'profile.jpg')" width="50"/>
+        {{userid}}
+        {{username}}
+        {{userphoto}}
         <p>Ajax tool</p>
+
         <nav>
             <!-- <router-link to="/sub"> <div class="btn">subscribe</div> </router-link> -->
             <router-link to="/xhr"> <div class="btn">XHR</div> </router-link>
@@ -17,7 +23,7 @@
 
     <div class="side">
         <h2>Back-end :</h2>
-        <div ref="back">
+        <div>
             <select name="vback" v-model="vback" id="">
                 <option value="js">Js-Express</option><option value="php">PHP-Laravel</option>
             </select>
@@ -72,16 +78,19 @@
 </template>
 
 <script>
+import Login from './Login.vue';
 
 export default{
 
-    props: {fpost:{type:Function},sub:{type:String},
-            fput:{type:Function}, fdelete:{type:Function},
-            fget:{type:Function}, fgetw:{type:Function},
+    props: {fpost:{type:Function}, flogin:{type:Function}, userid:{type:Number},
+            fput:{type:Function}, fdelete:{type:Function}, username:{type:String},
+            fget:{type:Function}, fgetw:{type:Function}, userphoto:{type:String},
             },
 
+    components: {Login},
+
     data(){return{
-                vback:'js', vname:'', vage:'', vlimit:10, 
+                vback:'js', vname:'', vage:'', vlimit:10, id:this.userid, name:this.username, photo:this.userphoto,
                 backpopup:false, 
                 DBs:[
                     {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} }, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
@@ -98,13 +107,10 @@ export default{
                 url += '?_limit='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?this.vlimit:0);
                 url += '&_skip='+((Number.isInteger(this.vlimit)&&this.vlimit>=0)?(currentpage-1)*this.vlimit:0);
                 url += '&_name='+this.vname;
-                if (Number.isInteger(this.vage))
-                {url += '&_age='+this.vage;}
+                if (Number.isInteger(this.vage)){url += '&_age='+this.vage;}
                 
                 return url;
             },
-
-        getVback(){return this.vback;},
 
         // burgerButton(){
         //     const bs = this.$refs.back.style;
