@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { bodyValidation, mongooseIdValidation, querySanitizer } = require('../configurations/validations');
+const { bodyValidation, mongooseIdValidation } = require('../configurations/validations');
 const mongoSanitize = require('express-mongo-sanitize');
 router.use(mongoSanitize());
 

@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");//CORS shit
 require 'vendor/autoload.php';
 $client = new MongoDB\Client("mongodb://localhost:27017");
-$db = $client->medDB;
+$db = $client->test;
 $usersCollection = $db->users;
 
 

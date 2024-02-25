@@ -17,9 +17,9 @@ client.connect().then((err) => {
     //   console.log(rows.rows)
     // })
 
-    client.query("ALTER TABLE profiles RENAME COLUMN id TO _id", (err, rows)=>{
-      console.log(rows.rows)
-    })
+    // client.query("ALTER TABLE profiles RENAME COLUMN id TO _id", (err, rows)=>{
+    //   console.log(rows.rows)
+    // })
     
   });}
 })
