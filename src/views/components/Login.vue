@@ -1,13 +1,21 @@
-<template >
+<template>
     <button @click="flogin">Log In</button> <br>
     <button @click="flogout">Log Out</button>
+    <a href="html/signup">Create an Account</a>
+    {{userid}}
+    {{username}}
+    <img :src="'uploads/'+userphoto" class="userphoto"/>
 </template>
 
 <script>
 import Swal from 'sweetalert2'
 
 export default{
-    emits:['login', 'logout'],
+    emits:['flogin', 'flogout'],
+
+    props:{
+        userid:0, username:'', userphoto:''
+    },
 
     methods:{
         flogin(){
@@ -31,18 +39,23 @@ export default{
                     if (!username || !password) {
                         Swal.showValidationMessage(`Please enter username and password`)
                     }
-                    this.$emit('login', username, password);
+                    this.$emit('flogin', 'http://localhost:5010/mysql?_limit=1&_skip=0&name='+username+'&password='+password);
                 },
             });
         },
 
         flogout(){
-            this.$emit('logout');
-        }
+            this.$emit('flogout');
+        },
+
+        fsignup(){
+            
+        },
     }
 }
 </script>
 
 <style>
     body { font-family: sans-serif; }
+    .userphoto {width:50px;}
 </style>

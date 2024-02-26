@@ -1,5 +1,6 @@
 <template>
-  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" :flogin="flogin" :userid="userid" :username="username" :userphoto="userphoto"/>
+  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" :flogin="flogin" :userid="userid" :username="username" :userphoto="userphoto"
+                @logout="userid=0; username=''; userphoto='';"/>
 </template>
 
 <script>
@@ -65,7 +66,6 @@ export default {
           })
     },
 
-
     flogin(uri){
       axios.get(uri)
       .then((response)=>{
@@ -73,7 +73,6 @@ export default {
             this.userid = response.data.rows[0]._id;
             this.username = response.data.rows[0].name;
             this.userphoto = response.data.rows[0].photo;
-            console.log(this.userid); console.log(this.username); console.log(this.userphoto);
           }
         })
     },

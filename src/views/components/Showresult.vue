@@ -5,11 +5,9 @@
 
         <div class="logo"><router-link to="/"><img src="imgs/logo.png" alt="logo"></router-link></div> 
         
-        <Login @login="(username, password)=>{flogin('http://localhost:5010/mysql?_limit=1&_skip=0&name='+username + '&password='+password)}" @logout="()=>{this.id=''; this.name=''; this.photo='';}" />
-        <img :src="'uploads/'+(this.photo||'profile.jpg')" width="50"/>
-        {{userid}}
-        {{username}}
-        {{userphoto}}
+        <Login :userphoto="userphoto" :username="username" :userid="userid" 
+            @login="(url)=>{flogin(url)}" @logout="this.$emit('logout');" />
+
         <p>Ajax tool</p>
 
         <nav>
@@ -55,9 +53,9 @@
                             @mountGet="(bucket)=>{fget(getUri(item._url[vback],1), bucket, vlimit, 1);}" 
                             @mountGetPage="(bucket, page)=>{fget(getUri(item._url[vback], page), bucket, vlimit, page);}" 
                             @mountGetw="async(bucket)=>{bucket.rows = await fgetw(getUri(item._url[vback]));}" 
-                            @clickPost="(body, bucket)=>{this.fpost(item._url[vback], body, bucket, vlimit);}" 
-                            @clickPut="(method, selectedId, body, selectedTr, bucket)=>{this.fput(method, item._url[vback]+selectedId, body, selectedTr, bucket);}"
-                            @clickDelete="(method, selectedId, lastTableId, bucket)=>{this.fdelete(method, getUri(item._url[vback]+selectedId)+lastTableId, bucket);}"
+                            @clickPost="(body, bucket)=>{fpost(item._url[vback], body, bucket, vlimit);}" 
+                            @clickPut="(method, selectedId, body, selectedTr, bucket)=>{fput(method, item._url[vback]+selectedId, body, selectedTr, bucket);}"
+                            @clickDelete="(method, selectedId, lastTableId, bucket)=>{fdelete(method, getUri(item._url[vback]+selectedId)+lastTableId, bucket);}"
         ></DB>
     </main>
 
@@ -82,15 +80,17 @@ import Login from './Login.vue';
 
 export default{
 
-    props: {fpost:{type:Function}, flogin:{type:Function}, userid:{type:Number},
-            fput:{type:Function}, fdelete:{type:Function}, username:{type:String},
-            fget:{type:Function}, fgetw:{type:Function}, userphoto:{type:String},
+    props: {fpost:Function, flogin:Function, userid:Number,
+            fput:Function, fdelete:Function, username:String,
+            fget:Function, fgetw:Function, userphoto:String,
             },
 
     components: {Login},
 
+    emits: ['logout'],
+
     data(){return{
-                vback:'js', vname:'', vage:'', vlimit:10, id:this.userid, name:this.username, photo:this.userphoto,
+                vback:'js', vname:'', vage:'', vlimit:10,
                 backpopup:false, 
                 DBs:[
                     {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} }, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")

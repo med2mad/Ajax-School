@@ -16,7 +16,7 @@ router.put('/:id', idValidation(), bodyValidation(), edit);
 router.delete('/:id', idValidation(), remove);
 
 
-/////////////////////test//////////////////////////////
+/////////////////////Sign Up//////////////////////////////
 const jwt = require('jsonwebtoken');
 const {hash, compare} = require('bcrypt');
 const user = {name:'null', pass:'null'}

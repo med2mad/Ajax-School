@@ -1,6 +1,6 @@
 <template>
     <transition name="popup">
-        <Popup v-if="showpopup" @close="this.showpopup=false" :text="popuptext" />
+        <Popup v-if="showpopup" @close="showpopup=false" :text="popuptext" />
     </transition>
     
     <div class="title"> <img :src="'tools\\'+_dblogofile" alt="DB logo">  </div>
@@ -79,14 +79,14 @@
 import Pagination from './Pagination.vue';
 
 export default{
-    props: { _db:{type:String}, _dblogofile:{type:String}, back:{type:String} },
+    props: { _db:String, _dblogofile:String, back:String },
 
     emits: ['mountGet', 'mountGetPage', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
 
     components: {Pagination},
 
     data(){return{
-                    bucket:{timeF:'',time0:0, rows:'', pagination:{}, nameError:false, ageError:false},
+                    bucket:{timeF:'', rows:'', pagination:{}, nameError:false, ageError:false},
                     selectedId:'', 
                     vname:'', vage:'', selectedPhotoName:'', photoObject:null,
                     showpopup:false, popuptext:'', 

@@ -1,4 +1,4 @@
-const {sequelizePostgresql, SequelizeClass} = require('../../configurations/postgresqlSequelizeconn');
+const {sequelizePostgresql, SequelizeClass} = require('../../configurations/postgresqlSequelizecon');
 
 const Profile = sequelizePostgresql.define('profile', {
     _id:{
