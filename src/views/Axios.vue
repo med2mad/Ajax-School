@@ -1,6 +1,6 @@
 <template>
-  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" :flogin="flogin" :userid="userid" :username="username" :userphoto="userphoto"
-                @logout="userid=0; username=''; userphoto='';"/>
+  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" 
+               />
 </template>
 
 <script>
@@ -8,13 +8,6 @@ import axios from "axios";
 import paginate from 'jw-paginate';//get function without package : https://jasonwatmore.com/post/2018/08/07/javascript-pure-pagination-logic-in-vanilla-js-typescript
 export default {
   
-  data(){return{
-          userid:0,
-          username:'',
-          userphoto:'',
-        }
-    },
-
   methods: {
       fget(uri, bucket, limit, currentpage){
         let time0 = performance.now();
@@ -66,16 +59,6 @@ export default {
           })
     },
 
-    flogin(uri){
-      axios.get(uri)
-      .then((response)=>{
-          if (response.data.rows.length>0) {
-            this.userid = response.data.rows[0]._id;
-            this.username = response.data.rows[0].name;
-            this.userphoto = response.data.rows[0].photo;
-          }
-        })
-    },
   }
 }
 </script>

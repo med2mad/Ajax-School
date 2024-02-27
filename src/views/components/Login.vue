@@ -57,5 +57,5 @@ export default{
 
 <style>
     body { font-family: sans-serif; }
-    .userphoto {width:50px;}
+    .userphoto {width:50px; border-radius:50px;}
 </style>
