@@ -1,18 +1,15 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const {User, Op, fn, col} = require('./model');
+const {User} = require('./model');
 
-
-
-
-
-
-//subscribe
-router.post('/sub', async (req, res, next)=>{
-    user.name = req.body.name;
-    user.pass = await bcrypt.hash(req.body.pass, 10);
-    res.send(user.name + " subscribed with password " + user.pass);
+//sign up
+router.post('/signup', async (req, res)=>{
+    const hash = await bcrypt.hash(req.body.password, 10);
+    User.create({"username":req.body.username, "password":hash, "userphoto":'thumbs up.jpg'})
+    .then(()=>{
+        res.redirect("/axios");
+    });
 });
 
 //login

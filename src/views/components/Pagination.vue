@@ -33,7 +33,7 @@ export default{
 <style>
 @font-face {
     font-family: Rajdhani-Regular;
-    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Regular.ttf');
+    src: url('/public/styles/fonts/Rajdhani-Regular.ttf');
 }
 
 .pagination{

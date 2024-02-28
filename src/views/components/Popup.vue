@@ -19,7 +19,7 @@ export default{
 <style>
 @font-face {
     font-family: Rajdhani-Light;
-    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Light.ttf');
+    src: url('/public/styles/fonts/Rajdhani-Light.ttf');
 }
 
 .popup{

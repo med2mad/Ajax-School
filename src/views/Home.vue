@@ -29,16 +29,16 @@
       <div class="carousel">
         <img class="crslbtn prevbtn" src="imgs/prev.png" @click="prev" alt="button prev">
         <transition :name="transName">
-          <img v-if="tools[tooli] == tools[0]" :src="'tools\\'+tools[0]" alt="">
-          <img v-else-if="tools[tooli] == tools[1]" :src="'tools\\'+tools[1]" alt="">
-          <img v-else-if="tools[tooli] == tools[2]" :src="'tools\\'+tools[2]" alt="">
-          <img v-else-if="tools[tooli] == tools[3]" :src="'tools\\'+tools[3]" alt="">
-          <img v-else-if="tools[tooli] == tools[4]" :src="'tools\\'+tools[4]" alt="">
-          <img v-else-if="tools[tooli] == tools[5]" :src="'tools\\'+tools[5]" alt="">
-          <img v-else-if="tools[tooli] == tools[6]" :src="'tools\\'+tools[6]" alt="">
-          <img v-else-if="tools[tooli] == tools[7]" :src="'tools\\'+tools[7]" alt="">
-          <img v-else-if="tools[tooli] == tools[8]" :src="'tools\\'+tools[8]" alt="">
-          <img v-else :src="'tools\\'+tools[9]" alt="">
+          <img v-if="tools[tooli] == tools[0]" :src="'imgs/tools/'+tools[0]" alt="">
+          <img v-else-if="tools[tooli] == tools[1]" :src="'imgs/tools/'+tools[1]" alt="">
+          <img v-else-if="tools[tooli] == tools[2]" :src="'imgs/tools/'+tools[2]" alt="">
+          <img v-else-if="tools[tooli] == tools[3]" :src="'imgs/tools/'+tools[3]" alt="">
+          <img v-else-if="tools[tooli] == tools[4]" :src="'imgs/tools/'+tools[4]" alt="">
+          <img v-else-if="tools[tooli] == tools[5]" :src="'imgs/tools/'+tools[5]" alt="">
+          <img v-else-if="tools[tooli] == tools[6]" :src="'imgs/tools/'+tools[6]" alt="">
+          <img v-else-if="tools[tooli] == tools[7]" :src="'imgs/tools/'+tools[7]" alt="">
+          <img v-else-if="tools[tooli] == tools[8]" :src="'imgs/tools/'+tools[8]" alt="">
+          <img v-else :src="'tools/'+tools[9]" alt="">
         </transition>
         <img class="crslbtn nextbtn" src="imgs/next.png" @click="next" alt="button next">
       </div>
@@ -97,13 +97,10 @@ export default {
 </script>
 
 <style>
+
 @font-face {
-    font-family: Rajdhani-Light;
-    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Light.ttf');
-}
-@font-face {
-    font-family: Rajdhani-Bold;
-    src: url('C:\Users\MED\Desktop\AJAX Paradise\public\fonts\Rajdhani-Bold.ttf');
+  font-family: Rajdhani-Bold;
+  src: url('/public/styles/fonts/Rajdhani-Bold.ttf');
 }
 
 .homelogo{

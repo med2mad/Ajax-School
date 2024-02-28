@@ -3,7 +3,7 @@
         <Popup v-if="showpopup" @close="showpopup=false" :text="popuptext" />
     </transition>
     
-    <div class="title"> <img :src="'tools\\'+_dblogofile" alt="DB logo">  </div>
+    <div class="title"> <img :src="'imgs/tools/'+_dblogofile" alt="DB logo">  </div>
 
     <div class="dbpaginate">
     <div class="db">
@@ -77,6 +77,7 @@
 
 <script>
 import Pagination from './Pagination.vue';
+import '/public/styles/db.css';
 
 export default{
     props: { _db:String, _dblogofile:String, back:String },
@@ -198,7 +199,3 @@ export default{
     },
 }
 </script>
-
-<style>
-    @import 'C:\Users\MED\Desktop\AJAX Paradise\public\styles\db.css';
-</style>

@@ -12,7 +12,7 @@ async function flogin (body, Swal, user){
         return false;
     }
 
-        // if (req.body.name !== user.name) { return res.send("wrong name"); }
+
         // const x = await bcrypt.compare(req.body.pass, user.pass);
         // if(!x){return res.send("wrong pass");}
         // const token = jwt.sign({"name":user.name, "pass":user.pass}, 'secret');

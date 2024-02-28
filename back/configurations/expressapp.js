@@ -5,8 +5,14 @@ const { querySanitizer } = require('../configurations/validations');
 
 const app = express();
 app.use(cors());
-app.use(express.json()); //req.body gets data from ajax requests payload
+
 app.post('*', multer); app.put('*', multer);
+app.use(express.json());
+app.use(express.urlencoded( {extended:false} )) ;
+
+app.use((req, res)=>{res.send(req.body)});
+
+
 app.post('*', photoParser); app.put('*', photoParser);//parses the name of the photo in a new variable called "req.PHOTO_PARSED"
 app.use(querySanitizer());
 

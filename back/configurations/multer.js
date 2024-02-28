@@ -2,13 +2,12 @@ const multer = require('multer');
 const fs = require('fs');
 const d = __dirname+'/../../public/uploads';
 
-const storg = multer.diskStorage({destination: (req,file,callback)=>{
-                                      fs.mkdirSync(d, {recursive:true});
-                                      callback(null, d);
-                                    }, 
+const storg = multer.diskStorage({destination: (req,file,callback)=>{ fs.mkdirSync(d, {recursive:true});
+                                                                      callback(null, d);
+                                                                    }, 
                                   filename: (req,file,callback)=>{
-                                      callback(null, file.originalname+Date.now()); //what to parse in req.file.filename
-                                    }
+                                                                  callback(null, file.originalname+Date.now()); //what to parse in req.file.filename
+                                                                }
                                 });
 
 const midleware = multer({storage: storg ,

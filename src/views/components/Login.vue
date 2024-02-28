@@ -1,7 +1,7 @@
 <template>
     <button @click="login">Log In</button> <br>
     <button @click="logout">Log Out</button>
-    <a href="html/signup">Create an Account</a>
+    <a href="auth/signup.html">Create an Account</a>
     {{user.id}}
     {{user.name}}
     <img :src="'uploads/'+user.photo" class="userphoto"/>
@@ -9,7 +9,6 @@
 
 <script>
 import Swal from 'sweetalert2'
-const axios = require('axios');
 import { flogin } from '../utils/auth';
 
 export default{
@@ -21,7 +20,7 @@ export default{
     methods:{
         login(){
             Swal.fire({
-                title: 'Login Form',
+                title: 'Login',
                 html:  `<input type="text" id="username" class="swal2-input" placeholder="Username">
                         <input type="password" id="password" class="swal2-input" placeholder="Password">`,
                 confirmButtonText: 'Log in',
@@ -41,18 +40,7 @@ export default{
                         Swal.showValidationMessage(`Please enter username and password`)
                     }
 
-                     await flogin({username, password}, Swal, this.user);
-Swal.showLoading();
-
-return false;
-
-                        // if (req.body.name !== user.name) { return res.send("wrong name"); }
-                        // const x = await bcrypt.compare(req.body.pass, user.pass);
-                        // if(!x){return res.send("wrong pass");}
-                        // const token = jwt.sign({"name":user.name, "pass":user.pass}, 'secret');
-                        // res.send({"message":'welcome back', "user":user, "token":token});
-
-
+                    return await flogin({username, password}, Swal, this.user);
                 },
             });
         },
