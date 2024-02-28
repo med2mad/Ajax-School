@@ -1,14 +1,15 @@
 <template>
-  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" 
-               />
+  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" />
 </template>
 
 <script>
 import axios from "axios";
-import paginate from 'jw-paginate';//get function without package : https://jasonwatmore.com/post/2018/08/07/javascript-pure-pagination-logic-in-vanilla-js-typescript
+import { paginate } from './utils/others';
+
 export default {
   
   methods: {
+    
       fget(uri, bucket, limit, currentpage){
         let time0 = performance.now();
         axios.get(uri)

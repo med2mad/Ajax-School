@@ -1,12 +1,23 @@
 const axios = require('axios');
 
-module.exports.flogin = async function flogin(uri) {
-    const response = await axios.get(uri);
-    if (response.data.rows.length>0) {
-        return {
-            "id":response.data.rows[0]._id,
-            "name":response.data.rows[0].name,
-            "photo":response.data.rows[0].photo,
-        }
+async function flogin (body, Swal, user){
+    const response = await axios.post('http://localhost:5010/auth/login/', body);
+    if (response.data.length>0) {
+        user.id = response.data[0].id;
+        user.name = response.data[0].username;
+        user.photo = response.data[0].userphoto;
+        return true;
+    }else{
+        Swal.showValidationMessage(`Wrong UserName or Password`);
+        return false;
     }
+
+        // if (req.body.name !== user.name) { return res.send("wrong name"); }
+        // const x = await bcrypt.compare(req.body.pass, user.pass);
+        // if(!x){return res.send("wrong pass");}
+        // const token = jwt.sign({"name":user.name, "pass":user.pass}, 'secret');
+        // res.send({"message":'welcome back', "user":user, "token":token});
+
 }
+
+module.exports = {flogin}

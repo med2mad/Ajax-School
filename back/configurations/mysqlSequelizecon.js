@@ -7,7 +7,7 @@ const sequelizeMysql = new Sequelize('test', 'root', '', {
     logging: false, //no logs in console
 });
 
-sequelizeMysql.authenticate() //test connection before start listening (connection already made without the "con" object)
+sequelizeMysql.authenticate() //test connection before start listening (connection already made without "con")
 .then(()=>{
     app.listen(5010, ()=>{console.log("Mysyql: " + 5010);});
 })

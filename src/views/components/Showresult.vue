@@ -5,8 +5,7 @@
 
         <div class="logo"><router-link to="/"><img src="imgs/logo.png" alt="logo"></router-link></div> 
         
-        <Login :userid="userid" :username="username" :userphoto="userphoto"
-            @flogin="(url)=>{login(url)}" @flogout="userid=0; username=''; userphoto='';" />
+        <Login />
 
         <p>Ajax tool</p>
 
@@ -77,7 +76,6 @@
 
 <script>
 import Login from './Login.vue';
-import { flogin } from '../utils/auth';
 
 export default{
 
@@ -88,11 +86,8 @@ export default{
 
     components: {Login},
 
-    emits: ['logout'],
-
     data(){return{
                 vback:'js', vname:'', vage:'', vlimit:10,
-                userid:0, username:'', userphoto:'',
                 backpopup:false, 
                 DBs:[
                     {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} }, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
@@ -112,13 +107,6 @@ export default{
                 if (Number.isInteger(this.vage)){url += '&_age='+this.vage;}
                 
                 return url;
-            },
-
-            async login(url){
-                const user = await flogin(url);
-                this.userid = user.id;
-                this.username = user.name;
-                this.userphoto = user.photo;
             },
 
         // burgerButton(){

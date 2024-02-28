@@ -1,7 +1,8 @@
 const {Profile} = require('../../models/orm/Mongoose');
 require('../../configurations/mongoconnection');
 
-module.exports.getAll = async (req, res)=>{
+module.exports.
+getAll = async (req, res)=>{
     const q = {name:{ $regex: '.*' + escapeRegExp(req.query._name) + '.*' }};
 
     const count = await Profile.find(q).countDocuments().exec();
@@ -15,7 +16,8 @@ module.exports.getAll = async (req, res)=>{
     }
 };
 
-module.exports.add = (req, res)=>{
+module.exports.
+add = (req, res)=>{
     const photo = req.PHOTO_PARSED; //by the time save() finishes there will be no more "req.body"
     req.body.photo = req.PHOTO_PARSED;
 
@@ -25,7 +27,8 @@ module.exports.add = (req, res)=>{
     });
 };
 
-module.exports.edit = (req, res)=>{
+module.exports.
+edit = (req, res)=>{
     Profile.findById(req.params.id).then((row)=>{
         row.name=req.body.name;
         row.age=req.body.age;
@@ -37,7 +40,8 @@ module.exports.edit = (req, res)=>{
     });
 };
 
-module.exports.remove = (req, res)=>{
+module.exports.
+remove = (req, res)=>{
     Profile.findOneAndDelete({"_id":req.params.id}).then(()=>{
         //GET replacement row
         const q = {_id: {$lt: req.query.lasttableid}};

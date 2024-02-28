@@ -1,6 +1,7 @@
 const {Profile, Op, fn, col} = require('../../models/orm/Mysql');
 
-module.exports.getAll = async (req, res)=>{
+module.exports.
+getAll = async (req, res)=>{
     const whereClause = {name: {[Op.like]:'%'+req.query._name+'%'}};
     if (req.query._age) {whereClause.age = req.query._age;}
     
@@ -17,7 +18,8 @@ module.exports.getAll = async (req, res)=>{
     });
 };
 
-module.exports.add = (req, res)=>{
+module.exports.
+add = (req, res)=>{
     const photo = req.PHOTO_PARSED;
 
     Profile.create({"name":req.body.name, "age":req.body.age, "photo":photo})
@@ -26,7 +28,8 @@ module.exports.add = (req, res)=>{
     });
 };
 
-module.exports.edit = (req, res)=>{
+module.exports.
+edit = (req, res)=>{
     const photo = req.PHOTO_PARSED;
 
     Profile.update({"name":req.body.name, "age":req.body.age, "photo":photo}, {where:{_id: req.params.id}})
@@ -35,7 +38,8 @@ module.exports.edit = (req, res)=>{
     });
 };
 
-module.exports.remove = (req, res)=>{
+module.exports.
+remove = (req, res)=>{
     Profile.destroy({where:{_id: req.params.id}})
     .then(()=>{
         const whereClause = {

@@ -1,12 +1,12 @@
 const mysql = require('mysql2');
+const {app} = require('./expressapp');
+
 var con = mysql.createConnection({
   host: "localhost", 
   user: "root",
   password: "",
   database: "test"
 });
-
-const {app} = require('./expressapp');
 
 con.connect((err) => {
   if (err){console.error("Mysyql initial connection error");}
