@@ -5,7 +5,7 @@ import Showresult from './views/components/Showresult.vue'
 import Popup from './views/components/Popup.vue'
 import DB from './views/components/DB.vue'
 import Vbackpopup from './views/components/Vbackpopup.vue'
-import Pagination from './views/components/Pagination.vue'
+
 
 
 const app = createApp(App)
@@ -14,6 +14,5 @@ app.component('Showresult',Showresult)
 app.component('Popup',Popup)
 app.component('DB',DB)
 app.component('Vbackpopup',Vbackpopup)
-app.component('Pagination',Pagination)
 
 app.mount('#app')

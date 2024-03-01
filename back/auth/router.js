@@ -8,7 +8,7 @@ router.post('/signup', async (req, res)=>{
     const hash = await bcrypt.hash(req.body.password, 10);
     User.create({"username":req.body.username, "password":hash, "userphoto":'thumbs up.jpg'})
     .then(()=>{
-        res.redirect("/axios");
+        res.send("Signed Up !");
     });
 });
 

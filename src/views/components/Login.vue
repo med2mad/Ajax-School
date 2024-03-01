@@ -1,10 +1,17 @@
 <template>
-    <button @click="login">Log In</button> <br>
-    <button @click="logout">Log Out</button>
-    <a href="auth/signup.html">Create an Account</a>
-    {{user.id}}
-    {{user.name}}
-    <img :src="'uploads/'+user.photo" class="userphoto"/>
+    <div>
+        <button @click="login">Log In</button><br>
+        <button @click="logout">Log Out</button><br>
+        <a href="auth/signup.html">Create an Account</a>
+    </div>
+    <div>
+        {{user.id}}
+        {{user.name}}
+        <img :src="'uploads/'+user.photo" class="userphoto"/>
+    </div>
+    <div>
+        <a href="auth/pricing.html">Uprade</a>
+    </div>
 </template>
 
 <script>
