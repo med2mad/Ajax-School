@@ -11,7 +11,7 @@ export default {
   methods: {
     
       fget(uri, bucket, limit, currentpage){
-        let time0 = performance.now();
+        let time0=performance.now();
         axios.get(uri)
         .then((response)=>{
             bucket.timeF = (performance.now() - time0).toFixed(2);

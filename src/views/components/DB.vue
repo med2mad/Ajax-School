@@ -99,6 +99,7 @@ export default{
             if(this.dataCheck()){
                 const fd = new FormData(this.$refs.frmid);
                 fd.append('selectedPhotoName', this.selectedPhotoName);
+                fd.append('token', localStorage.getItem('token'));
                 this.$emit('clickPost', fd, this.bucket);
                 this.clear();
             }

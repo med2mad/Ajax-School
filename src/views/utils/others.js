@@ -56,3 +56,5 @@ function paginate(totalItems, currentPage = 1, pageSize = 10, maxPages = 10) {
 }
 
 module.exports = {paginate};
+
+//https://jasonwatmore.com/post/2018/08/07/javascript-pure-pagination-logic-in-vanilla-js-typescript

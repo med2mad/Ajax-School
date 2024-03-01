@@ -6,7 +6,7 @@
     "start": "vue-cli-service serve | nodemon back/routes/mysql.js | nodemon back/routes/mongoose.js | nodemon back/routes/postgresql.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "index": "vue-cli-service serve | nodemon back/index.js"
+    "index": "nodemon back/index.js"
   },
   "dependencies": {
     "axios": "^1.4.0",

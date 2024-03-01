@@ -47,17 +47,14 @@ export default{
                         Swal.showValidationMessage(`Please enter username and password`)
                     }
 
-                    return await flogin({username, password}, Swal, this.user);
+                    await flogin({username, password}, Swal, this.user);
                 },
             });
         },
 
         logout(){
             this.user.id=''; this.user.name=''; this.user.photo='profile.jpg';
-        },
-
-        fsignup(){
-            
+            localStorage.removeItem('token');
         },
     }
 }

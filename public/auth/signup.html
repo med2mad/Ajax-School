@@ -156,7 +156,7 @@
         <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
 
 <main class="form-signin w-100 m-auto">
-  <form method="POST" id="frmid" onsubmit="signup" enctype="multipart/form-data" style="text-align:center;">
+  <form id="frmid" style="text-align:center;">
     <img class="mb-4" src="./assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
 
@@ -175,7 +175,7 @@
         Remember me
       </label>
     </div>
-    <button class="btn btn-primary w-100 py-2" type="submit">Sign Up</button>
+    <button id="btnid" class="btn btn-primary w-100 py-2">Sign Up</button>
     <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
   </form>
 </main>
@@ -185,12 +185,12 @@
       <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
   
   <script>
-    function signup(e){
-      e.preventDefault();
-      var payload = new FormData(document.getElementById("frmid"));
-      axios.post("http://localhost:5010/auth/signup", payload)
+      document.getElementById("btnid").addEventListener("click", function(event){
+        event.preventDefault();
+        var payload = new FormData(document.getElementById("frmid"));
+        axios.post("http://localhost:5010/auth/signup", payload)
         .then((response) => { window.location.href = 'http://localhost:8080/axios';})
-    }
+      });
   </script>
 
   </body>

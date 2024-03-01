@@ -10,7 +10,6 @@
         <p>Ajax tool</p>
 
         <nav>
-            <router-link to="/test"> <div class="btn">test</div> </router-link>
             <router-link to="/xhr"> <div class="btn">XHR</div> </router-link>
             <router-link to="/jquery"> <div class="btn">JQuery</div> </router-link>
             <router-link to="/fetch"> <div class="btn">Fetch</div> </router-link>
