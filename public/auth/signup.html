@@ -99,7 +99,7 @@
 
     
     <!-- Custom styles for this template -->
-    <link href="sign-in.css" rel="stylesheet">
+    <link href="./assets/sign-in.css" rel="stylesheet">
   </head>
   <body class="d-flex align-items-center py-4 bg-body-tertiary">
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -188,7 +188,7 @@
       document.getElementById("btnid").addEventListener("click", function(event){
         event.preventDefault();
         var payload = new FormData(document.getElementById("frmid"));
-        axios.post("http://localhost:5010/auth/signup", payload)
+        axios.post("http://localhost:5010/signup", payload)
         .then((response) => { window.location.href = 'http://localhost:8080/axios';})
       });
   </script>

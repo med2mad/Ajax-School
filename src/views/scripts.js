@@ -1,3 +1,18 @@
+const axios = require('axios');
+
+async function flogin (body, Swal, user){
+    const response = await axios.post('http://localhost:5010/login/', body);
+    if (response.data.user) {
+        user.id = response.data.user.id;
+        user.name = response.data.user.username;
+        user.photo = response.data.user.userphoto;
+        localStorage.setItem('token', response.data.token);
+        return true;
+    }
+    
+    Swal.showValidationMessage(`Wrong UserName or Password`);
+    return false;
+}
 
 function paginate(totalItems, currentPage = 1, pageSize = 10, maxPages = 10) {
     // calculate total pages
@@ -54,7 +69,7 @@ function paginate(totalItems, currentPage = 1, pageSize = 10, maxPages = 10) {
         pages: pages
     };
 }
-
-module.exports = {paginate};
-
 //https://jasonwatmore.com/post/2018/08/07/javascript-pure-pagination-logic-in-vanilla-js-typescript
+
+
+module.exports = {flogin, paginate}

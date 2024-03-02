@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { paginate } from './utils/others';
+import { paginate } from './scripts';
 
 export default {
   methods: {
@@ -45,12 +45,7 @@ export default {
           if(bucket.rows.length>limit){bucket.rows.pop();} //remove last row in <table> (respect _limit after add)
         }
         xhr.open("POST", uri, true);
-        //xhr.setRequestHeader('Content-Type', 'multipart/form-data');//throws "Multipart: Boundary not found" error
         xhr.send(body);
-
-        //using JSON data (no FormData = no photos)
-        // xhr.setRequestHeader('Content-Type', 'application/json');
-        // xhr.send(JSON.stringify(body));
       },
 
       fput(uri, body, i, bucket){
@@ -60,12 +55,7 @@ export default {
           bucket.rows[i].photo=response.photo; bucket.rows[i].name=body.get('name'); bucket.rows[i].age=body.get('age');
         }
         xhr.open("PUT", uri, true);
-        // xhr.setRequestHeader('Content-Type', 'multipart/form-data');//throws "Multipart: Boundary not found" error
         xhr.send(body);
-
-        //using JSON data (no FormData = no photos)
-        // xhr.setRequestHeader('Content-Type', 'application/json');
-        // xhr.send(JSON.stringify(body));
       },
       
       fdelete(uri, lastTableId, bucket){
@@ -78,6 +68,13 @@ export default {
         xhr.open("DELETE", uri+'?lasttableid='+lastTableId, true);
         xhr.send();
       }
-  }
+  },
+  mounted(){
+    //const xhr = new XMLHttpRequest(); //create an object to work with in all calls
+    //xhr.setRequestHeader('Content-Type', 'multipart/form-data');//throws "Multipart: Boundary not found" error
+    //using JSON data (no FormData = no photos)
+    //xhr.setRequestHeader('Content-Type', 'application/json');
+    //xhr.send(JSON.stringify(body));
+  },
 }
 </script>

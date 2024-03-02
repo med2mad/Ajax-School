@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import axios from "axios";
-import { paginate } from './utils/others';
+import axios from 'axios';
+import { paginate } from './scripts';
 
 export default {
   
@@ -60,6 +60,10 @@ export default {
           })
     },
 
-  }
+  },
+
+  mounted(){
+    // axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+  },
 }
 </script>

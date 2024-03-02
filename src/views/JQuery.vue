@@ -4,7 +4,7 @@
 
 <script>
 import $ from "jquery";
-import { paginate } from './utils/others';
+import { paginate } from './scripts';
 
 export default {
   methods: {
@@ -28,16 +28,9 @@ export default {
       fpost(uri, body, bucket, limit){
         $.ajax(
             {
-            type:'post',
-            url:uri,
-            data: body,
-            processData: false,
-            contentType: false //setting "Content-Type":"multipart/form-data" throws "Multipart: Boundary not found" error
-
-            //using JSON data (no FormData = no photos)
-            // url:uri+'?callback=?',
-            // contentType:"application/json",
-            // data:JSON.stringify(body)
+              type:'post',
+              url:uri,
+              data: body,
             }
           )
         .done(function(response){
@@ -50,16 +43,9 @@ export default {
       fput(uri, body, i, bucket){
         $.ajax(
             {
-            type:'put', 
-            url:uri, 
-            data:body,
-            processData: false,
-            contentType: false //setting "Content-Type":"multipart/form-data" throws "Multipart: Boundary not found" error
-
-            //using JSON data (no FormData = no photos)
-            // url:uri+'?callback=?', 
-            // contentType:"application/json", 
-            // data:JSON.stringify(body)
+              type:'put', 
+              url:uri, 
+              data:body,
             }
           )
         .done( function(response){
@@ -83,6 +69,17 @@ export default {
           { bucket.rows.push({"id":response[0].id, "_id":response[0]._id, "name":response[0].name, "age":response[0].age, "photo":response[0].photo}) }
         });
       }
-  }
+  },
+
+  mounted(){
+    $.ajaxSetup({contentType:false, processData:false,});
+
+    //setting "Content-Type":"multipart/form-data" throws "Multipart: Boundary not found" error
+
+    //using JSON data (no FormData = no photos)
+    // contentType:"application/json", 
+    // url:uri+'?callback=?', 
+    // data:JSON.stringify(body)
+  },
 }
 </script>

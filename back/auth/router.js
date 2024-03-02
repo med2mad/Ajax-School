@@ -16,14 +16,13 @@ router.post('/signup', async (req, res,)=>{
 router.post('/login', async (req, res)=>{
     User.findAll({
         where: {username:req.body.username},
-        attributes: ['username', 'userphoto', 'password', 'hash'],
         raw: true
     })
     .then(async (users)=>{
         if(users.length == 1){
             const match = await bcrypt.compare(req.body.password, users[0].hash)
             if(match){
-                const token = jwt.sign({"username":users[0].username, "hash":users[0].hash}, 'serversecret');
+                const token = jwt.sign({"username":users[0].username, "userphoto":users[0].userphoto}, 'serversecret');
                 res.json({"user":users[0], "token":token});
             }
             else{ res.json(false); }
@@ -31,5 +30,15 @@ router.post('/login', async (req, res)=>{
         else{ res.send(false); }
     });
 });
+
+//block unauthorized user actions
+router.post('*', verifyUser); router.put('*', verifyUser); router.delete('*', verifyUser);
+
+function verifyUser(req, res, next) {
+    jwt.verify(req.body.token, 'serversecret', (err, decoded)=>{
+        if (err) { res.status(401).send('Action fail (Not Authorized !!)'); }
+        else { next() }  
+    })
+}
 
 module.exports = router;

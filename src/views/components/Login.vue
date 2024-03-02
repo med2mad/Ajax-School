@@ -16,7 +16,7 @@
 
 <script>
 import Swal from 'sweetalert2'
-import { flogin } from '../utils/auth';
+import { flogin } from '../scripts';
 
 export default{
 

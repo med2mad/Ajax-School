@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 import Pagination from './Pagination.vue';
 import '/public/styles/db.css';
 
@@ -96,6 +97,10 @@ export default{
 
     methods:{
         handlePost(){
+            if(!localStorage.getItem('token')){
+                Swal.fire('Login Please.');
+                return false;
+            }
             if(this.dataCheck()){
                 const fd = new FormData(this.$refs.frmid);
                 fd.append('selectedPhotoName', this.selectedPhotoName);
@@ -114,6 +119,7 @@ export default{
                 }
                 const fd = new FormData(this.$refs.frmid);
                 fd.append('selectedPhotoName', this.selectedPhotoName);
+                fd.append('token', localStorage.getItem('token'));
                 
                 if(this.back=='js') //no PUT http method in PHP
                     this.$emit('clickPut', 'PUT', this.selectedId, fd, selectedTr, this.bucket);
@@ -173,9 +179,9 @@ export default{
             }
         },
 
-        dataCheck(){ return true;
+        dataCheck(){
             this.vname = this.vname.trim();
-            this.vage = Number.parseInt(this.vage);
+            if (this.vage!=""){this.vage = Number.parseInt(this.vage);}
             
             this.bucket.nameError=false; this.bucket.ageError=false;
             if (this.vname=="" || this.vname.length>30){this.bucket.nameError=true;}

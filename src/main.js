@@ -6,8 +6,6 @@ import Popup from './views/components/Popup.vue'
 import DB from './views/components/DB.vue'
 import Vbackpopup from './views/components/Vbackpopup.vue'
 
-
-
 const app = createApp(App)
 app.use(router)
 app.component('Showresult',Showresult)

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { paginate } from './utils/others';
+import { paginate } from './scripts';
 
 export default {
 
@@ -33,8 +33,7 @@ export default {
       fpost(url, body, bucket, limit){
         fetch(url, {
           method: "POST", 
-          body: body //setting "Content-Type":"multipart/form-data" throws "Multipart: Boundary not found" error
-          //body: JSON.stringify(body), headers: {"Content-Type":"application/json"} //if data send as JSON not as FormData (no photos)
+          body: body
           })
         .then((response)=> {return response.json()})
         .then((response)=>{
@@ -49,7 +48,6 @@ export default {
         fetch(uri, {
             method: 'PUT',
             body: body
-            //body: JSON.stringify(body), headers: {"Content-Type":"application/json"} //if data send as JSON not as FormData (no photos)
         })
         .then((response)=> {return response.json()})
         .then((response)=> {
@@ -74,6 +72,14 @@ export default {
           // }
         })
       }
-  }
+  },
+
+  mounted(){
+    // const defaultHeaders = new Headers(); //create an object to work with in all calls
+    // defaultHeaders.append('Content-Type', 'application/json; charset=utf-8');
+    //setting "Content-Type":"multipart/form-data" throws "Multipart: Boundary not found" error
+
+    //body: JSON.stringify(body), headers: {"Content-Type":"application/json"} //if data send as JSON not as FormData (no photos)
+  },
 }
 </script>
