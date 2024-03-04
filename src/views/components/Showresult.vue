@@ -5,7 +5,7 @@
 
         <div class="logo"><router-link to="/"><img src="imgs/logo.png" alt="logo"></router-link></div> 
         
-        <Login />
+        <Login ref="login" />
 
         <p>Ajax tool</p>
 
@@ -47,13 +47,14 @@
     </div>
 
     <main>
-        <DB v-for="item in DBs" :key="item._db+vback+vlimit+vname+vage" :back="vback" :_dblogofile="item._dblogofile" :_db="item._db"
+        <DB v-for="item in DBs" :key="item._db+vback+vlimit+vname+vage" :back="vback" :_dblogofile="item._dblogofile" :_db="item._db" @logout="this.$refs.login.fLogout();"
                             @mountGet="(bucket)=>{fget(getUri(item._url[vback],1), bucket, vlimit, 1);}" 
                             @mountGetPage="(bucket, page)=>{fget(getUri(item._url[vback], page), bucket, vlimit, page);}" 
                             @mountGetw="async(bucket)=>{bucket.rows = await fgetw(getUri(item._url[vback]));}" 
                             @clickPost="(body, bucket)=>{fpost(item._url[vback], body, bucket, vlimit);}" 
                             @clickPut="(method, selectedId, body, selectedTr, bucket)=>{fput(method, item._url[vback]+selectedId, body, selectedTr, bucket);}"
                             @clickDelete="(method, selectedId, lastTableId, bucket)=>{fdelete(method, getUri(item._url[vback]+selectedId)+lastTableId, bucket);}"
+        
         ></DB>
     </main>
 

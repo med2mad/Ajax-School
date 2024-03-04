@@ -15,7 +15,7 @@ const User = sequelizeAuth.define('user', {
     },
     username:{
         type: Sequelize.STRING,
-        validate:{ len:{args:[5,10], msg:"name from 5 to 10 chars !"} },
+        validate:{ len:{args:[5,10], msg:"name from 5 to 20 chars !"} },
         allowNull: false,
         unique: true,
     },
@@ -26,7 +26,7 @@ const User = sequelizeAuth.define('user', {
     },
     password:{
         type: Sequelize.STRING,
-        validate:{ len:{args:[5,200], msg:"password minimum 5 chars !"} },
+        validate:{ len:{args:[5,200], msg:"password from 5 to 20 chars !"} },
         allowNull: false,
     },
     hash:{

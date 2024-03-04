@@ -83,7 +83,7 @@ import '/public/styles/db.css';
 export default{
     props: { _db:String, _dblogofile:String, back:String },
 
-    emits: ['mountGet', 'mountGetPage', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete'],
+    emits: ['mountGet', 'mountGetPage', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete', 'logout'],
 
     components: {Pagination},
 
@@ -97,11 +97,7 @@ export default{
 
     methods:{
         handlePost(){
-            if(!localStorage.getItem('token')){
-                Swal.fire('Login Please.');
-                return false;
-            }
-            if(this.dataCheck()){
+            if(this.checkUser() && this.checkData()){
                 const fd = new FormData(this.$refs.frmid);
                 fd.append('selectedPhotoName', this.selectedPhotoName);
                 fd.append('token', localStorage.getItem('token'));
@@ -110,13 +106,16 @@ export default{
             }
         },
         handlePut(){
+            if(!this.checkUser()){return;}
+
             if(!this.selectedId){this.popuptext='Select Profile !'; this.showpopup = true;}
-            else if(this.dataCheck()){
+            else if(this.checkData()){
                 let selectedTr;
                 for (let i = 0; i < this.bucket.rows.length; i++){//find <tr> to change
                     if(this.bucket.rows[i]["_id"]==this.selectedId)
                     { selectedTr = i; }
                 }
+
                 const fd = new FormData(this.$refs.frmid);
                 fd.append('selectedPhotoName', this.selectedPhotoName);
                 fd.append('token', localStorage.getItem('token'));
@@ -131,16 +130,15 @@ export default{
             }
         },
         handleDelete(){
-            const lastTableId = this.bucket.rows[this.bucket.rows.length-1]["_id"];
+            if(!this.checkUser()){return;}
 
             if(!this.selectedId){this.popuptext='Select Profile !';this.showpopup = true;}
             else{
+                const lastTableId = this.bucket.rows[this.bucket.rows.length-1]["_id"];
                 if(this.back=='js') //no DELETE http method in PHP
                     this.$emit('clickDelete', 'DELETE', this.selectedId, '&lasttableid='+lastTableId, this.bucket);
-                else{
-                    this.$emit('clickDelete', 'POST', this.selectedId,'&_method=DELETE&lasttableid='+lastTableId, this.bucket);
-                }
-                
+                else{this.$emit('clickDelete', 'POST', this.selectedId,'&_method=DELETE&lasttableid='+lastTableId, this.bucket);}
+
                 for (let i = 0; i < this.bucket.rows.length; i++){//find <tr> to remove
                     if(this.bucket.rows[i]["_id"]==this.selectedId)
                     {this.bucket.rows.splice(i, 1);}
@@ -179,15 +177,24 @@ export default{
             }
         },
 
-        dataCheck(){
+        checkData(){
             this.vname = this.vname.trim();
             if (this.vage!=""){this.vage = Number.parseInt(this.vage);}
             
             this.bucket.nameError=false; this.bucket.ageError=false;
             if (this.vname=="" || this.vname.length>30){this.bucket.nameError=true;}
             if (!Number.isInteger(this.vage) || this.vage<18 || this.vage>99){this.bucket.ageError=true;}
-            
+
             return !(this.bucket.nameError || this.bucket.ageError);
+        },
+
+        checkUser(){
+            if(!localStorage.getItem('token')){
+                this.$emit('logout');
+                Swal.fire('Login Please.');
+                return false;
+            }
+            else {return true;}
         },
 
         changepage(i){

@@ -1,31 +1,30 @@
 <template>
     <div>
-        <button @click="login">Log In</button><br>
-        <button @click="logout">Log Out</button><br>
-        <a href="auth/signup.html">Create an Account</a>
+        <button @click="fLogin">Log In</button><br>
+        <button @click="fLogout">Log Out</button><br>
+        <a href="html/signup.html">Create an Account</a>
     </div>
     <div>
-        {{user.id}}
         {{user.name}}
-        <img :src="'uploads/'+user.photo" class="userphoto"/>
+        <img :src="'uploads/'+(user.photo?user.photo:'profile.jpg')" class="userphoto"/>
     </div>
     <div>
-        <a href="auth/pricing.html">Uprade</a>
+        <a href="html/pricing.html">Uprade</a>
     </div>
 </template>
 
 <script>
-import Swal from 'sweetalert2'
-import { flogin } from '../scripts';
+import Swal from 'sweetalert2';
+import { login, logout } from '../scripts';
 
 export default{
 
     data(){return{
-        user : {id:'', name:'', photo:'profile.jpg'}
+        user : {name:localStorage.getItem('username'), photo:localStorage.getItem('userphoto')}
     }},
 
     methods:{
-        login(){
+        fLogin(){
             Swal.fire({
                 title: 'Login',
                 html:  `<input type="text" id="username" class="swal2-input" placeholder="Username">
@@ -47,16 +46,15 @@ export default{
                         Swal.showValidationMessage(`Please enter username and password`)
                     }
 
-                    await flogin({username, password}, Swal, this.user);
+                    await login({username, password}, Swal, this.user);
                 },
             });
         },
 
-        logout(){
-            this.user.id=''; this.user.name=''; this.user.photo='profile.jpg';
-            localStorage.removeItem('token');
+        fLogout(){
+            logout(this.user);
         },
-    }
+    },
 }
 </script>
 

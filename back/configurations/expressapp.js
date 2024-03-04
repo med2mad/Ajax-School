@@ -11,6 +11,8 @@ app.post('*', multer, photoParser); app.put('*', multer, photoParser);
 
 app.use(querySanitizer());
 
+module.exports.app = app;
+
 
 
 function photoParser(req, res, next){//parses the name of the photo in a new variable called "req.PHOTO_PARSED"
@@ -18,5 +20,3 @@ function photoParser(req, res, next){//parses the name of the photo in a new var
     else{req.PHOTO_PARSED = req.body.selectedPhotoName;}
     next();
 }
-
-module.exports.app = app;
