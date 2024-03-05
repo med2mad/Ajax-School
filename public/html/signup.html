@@ -174,9 +174,9 @@
     </div>
     <div class="mb-3">
       <label for="formFile" class="form-label">Avatar</label>
-      <input id="formFile" name="photo" class="form-control" type="file">
+      <input id="formFile" name="photo" class="form-control" type="file" data-browse="Avatar">
     </div>
-    
+
     <div style="background-color: pink;">
       <div id="required" class="hide" style="color:rgb(221, 88, 110);">All Fields Are Required !</div>
       <div id="notmatch" class="hide" style="color:rgb(221, 88, 110);">Passwords Don't Match !</div>
@@ -184,7 +184,6 @@
       <div id="exists" class="hide" style="color:rgb(221, 88, 110);">UserName Already Exists !</div>
     </div>
     <button id="btnid" class="btn btn-primary w-100 py-2">Sign Up</button>
-    <p class="mt-5 mb-3 text-body-secondary">&copy; AJAX Profiler</p>
   </form>
 </main>
 
@@ -193,6 +192,9 @@
       <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
   
   <script>
+      const searchParams = new URLSearchParams(window.location.search);
+        
+
       document.getElementById("btnid").addEventListener("click", function(event){
         event.preventDefault();
 
@@ -217,17 +219,31 @@
         { length.className="show"; return; }
 
         var payload = new FormData(document.getElementById("frmid"));
-        axios.post("http://localhost:5010/signup", payload)
-        .then((response) => { 
-          if(response.data=='exists'){exists.className="show";}
-          else{
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('username', response.data.username);
-            localStorage.setItem('userphoto', response.data.userphoto);
 
-            window.location.href = 'http://localhost:8080/axios';
-          }
-        })
+        if(localStorage.getItem('token') && searchParams.has('edit') && searchParams.get('edit')=='1'){
+          payload.append('oldusername', localStorage.getItem('username'));
+          axios.put("http://localhost:5010/edit", payload)
+          .then((response) => { 
+            if(response.data=='exists'){exists.className="show";}
+            else{
+                localStorage.setItem('username', response.data.username);
+                localStorage.setItem('userphoto', response.data.userphoto);
+                window.location.href = 'http://localhost:8080/axios';
+              }
+          })
+        }
+        else{
+          axios.post("http://localhost:5010/signup", payload)
+          .then((response) => { 
+            if(response.data=='exists'){exists.className="show";}
+            else{
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('username', response.data.username);
+                localStorage.setItem('userphoto', response.data.userphoto);
+                window.location.href = 'http://localhost:8080/axios';
+              }
+          })
+        }
       });
   </script>
 

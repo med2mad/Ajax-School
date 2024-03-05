@@ -6,7 +6,7 @@
     </div>
     <div>
         {{user.name}}
-        <img :src="'uploads/'+(user.photo?user.photo:'profile.jpg')" class="userphoto"/>
+        <a href="html/signup.html?edit=1"><img :src="'uploads/'+(user.photo?user.photo:'profile.jpg')" class="userphoto"/></a>
     </div>
     <div>
         <a href="html/pricing.html">Uprade</a>
@@ -15,7 +15,7 @@
 
 <script>
 import Swal from 'sweetalert2';
-import { login, logout } from '../scripts';
+import { login, logout } from '../../../scripts';
 
 export default{
 

@@ -4,7 +4,7 @@
 
 <script>
 import $ from "jquery";
-import { paginate } from './scripts';
+import { paginate } from '../../scripts';
 
 export default {
   methods: {
