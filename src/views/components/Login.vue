@@ -2,11 +2,11 @@
     <div>
         <button @click="fLogin">Log In</button><br>
         <button @click="fLogout">Log Out</button><br>
-        <a href="html/signup.html">Create an Account</a>
+        <a href="html/signup.html?title=Sign Up">Create an Account</a>
     </div>
-    <div>
+    <div @click="editUser">
         {{user.name}}
-        <a href="html/signup.html?edit=1"><img :src="'uploads/'+(user.photo?user.photo:'profile.jpg')" class="userphoto"/></a>
+        <img :src="'uploads/'+(user.photo?user.photo:'profile.jpg')" class="userphoto"/>
     </div>
     <div>
         <a href="html/pricing.html">Uprade</a>
@@ -54,6 +54,11 @@ export default{
         fLogout(){
             logout(this.user);
         },
+
+        editUser(){
+            if(localStorage.getItem('token'))
+            window.location.href = 'html/signup.html?title=Edit Profile';
+        }
     },
 }
 </script>

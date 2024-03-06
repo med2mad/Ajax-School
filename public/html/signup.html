@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>Signin Template · Bootstrap v5.3</title>
+    <title>Profile</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
 
@@ -158,7 +158,7 @@
 <main class="form-signin w-100 m-auto">
   <form id="frmid" style="text-align:center;">
     <img class="mb-4" src="./assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-    <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
+    <h1 class="h3 mb-3 fw-normal" id="title">Sign Up</h1>
 
     <div class="form-floating">
       <input type="text" name="username" class="form-control" id="floatingInput" placeholder="UserName" maxlength ="20" autocomplete="off">
@@ -193,7 +193,9 @@
   
   <script>
       const searchParams = new URLSearchParams(window.location.search);
-        
+      title = searchParams.get('title');
+      document.getElementById("title").innerText = title;
+      document.getElementById("btnid").innerText = title;
 
       document.getElementById("btnid").addEventListener("click", function(event){
         event.preventDefault();
@@ -219,8 +221,8 @@
         { length.className="show"; return; }
 
         var payload = new FormData(document.getElementById("frmid"));
-
-        if(localStorage.getItem('token') && searchParams.has('edit') && searchParams.get('edit')=='1'){
+        
+        if(localStorage.getItem('token') && title=='Edit Profile'){
           payload.append('oldusername', localStorage.getItem('username'));
           axios.put("http://localhost:5010/edit", payload)
           .then((response) => { 
