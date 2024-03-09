@@ -220,7 +220,7 @@
         if(username.length>20 || username.length<5 || password.length>20 || password.length<5 )
         { length.className="show"; return; }
 
-        var payload = new FormData(document.getElementById("frmid"));
+        const payload = new FormData(document.getElementById("frmid"));
         
         if(localStorage.getItem('token') && title=='Edit Profile'){
           payload.append('oldusername', localStorage.getItem('username'));

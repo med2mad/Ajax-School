@@ -1,17 +1,19 @@
 const {Pool} = require('pg');
+
+// const pool = new Pool({
+//   host: "localhost",
+//   user: "postgres",
+//   port:5432, //not necessary
+//   password: "5432",
+//   database: "test"
+// })
+
+require('dotenv').config();
 const pool = new Pool({
-  host: "localhost",
-  user: "postgres",
-  port:5432, //not necessary
-  password: "5432",
-  database: "test"
+  connectionString: process.env.POSTGRES_URL ,
 })
 
-
-// require('dotenv').config();
-
 // const { Pool } = require('pg');
-
 // const pool = new Pool({
 //   user: 'default',
 //   host: 'ep-broad-breeze-a4dshuit-pooler.us-east-1.aws.neon.tech?sslmode=require',
@@ -20,10 +22,7 @@ const pool = new Pool({
 //   port: 5432,
 // });
 
-
 // const { Pool } = require('pg')
-// require('dotenv').config()
-
 // const pool = new Pool({
 //   connectionString: "postgres://default:CAQMU37XznxV@ep-broad-breeze-a4dshuit-pooler.us-east-1.aws.neon.tech:5432/test?sslmode=require",
 //   // connectionString: "postgres://test_qcuz_user:fyHIx6HJ51ZwqNvJOUQWCyVj7n0tiTz0@dpg-cnko356d3nmc73bo9pog-a.oregon-postgres.render.com/test_qcuz"

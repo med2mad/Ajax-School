@@ -2,8 +2,8 @@ const router = require('express').Router();
 const { bodyValidation, idValidation } = require('../configurations/validations');
 
 //controller functions
-const {getAll, add, edit, remove} = require('../controllers/orm/postgresql');
-// const {getAll, add, edit, remove} = require('../controllers/js/postgresql');
+// const {getAll, add, edit, remove} = require('../controllers/orm/postgresql');
+const {getAll, add, edit, remove} = require('../controllers/js/postgresql');
 
 //API endpoints
 //Get

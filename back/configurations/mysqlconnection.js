@@ -1,14 +1,14 @@
 const mysql = require('mysql2');
 const {app} = require('./expressapp');
 
-var con = mysql.createConnection({
+const con = mysql.createConnection({
   host: "localhost", 
   user: "root",
   password: "",
   database: "test"
 });
 
-// var con = mysql.createConnection({
+// const con = mysql.createConnection({
 //   host: "sql312.infinityfree.com", 
 //   user: "if0_36111463",
 //   password: "lj8gsdoraWCmI0S", 
