@@ -9,10 +9,9 @@ import { paginate } from '../../scripts';
 export default {
   methods: {
       fget(uri, bucket, limit, currentpage){ 
-        let time0 = performance.now();
         $.ajax({url:uri , method:'GET', dataType:'json'})
-          .done(function(response){ 
-              bucket.timeF = (performance.now() - time0).toFixed(2);  
+          .done(function(response, textStatus, jqXHR){
+              bucket.time = jqXHR.getResponseHeader('X-Response-Time');
               bucket.rows = response.rows;
               bucket.pagination = paginate(response.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
             });

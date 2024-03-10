@@ -1,17 +1,17 @@
-const {Pool} = require('pg');
+const {Client}= require('pg');
 
-// const pool = new Pool({
-//   host: "localhost",
-//   user: "postgres",
-//   port:5432, //not necessary
-//   password: "5432",
-//   database: "test"
-// })
-
-require('dotenv').config();
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL ,
+const pool = new Client({
+  host: "localhost",
+  user: "postgres",
+  port:5432, //not necessary
+  password: "5432",
+  database: "test"
 })
+
+// require('dotenv').config();
+// const pool = new Client({
+//   connectionString: process.env.POSTGRES_URL ,
+// })
 
 // const { Pool } = require('pg');
 // const pool = new Pool({
@@ -35,16 +35,16 @@ pool.connect().then((err) => {
     if (err){console.log("'PostgreSQL' initial connection error");}
     else{app.listen(5030, ()=>{console.log("PostgreSQL: " + 5030);
 
-    // const q = "CREATE TABLE profiles (id SERIAL PRIMARY KEY,name VARCHAR(255),age INTEGER, photo VARCHAR(255));"
+    // const q = "CREATE TABLE profiles (_id SERIAL PRIMARY KEY,name VARCHAR(255),age INTEGER, photo VARCHAR(255));"
     //     pool.query(q, (err, rows)=>{
     //   console.log(rows.rows)
     // });
 
     
 
-    pool.query("SELECT * FROM profiles", (err, rows)=>{
-      console.log(rows.rows)
-    })
+    // pool.query("SELECT * FROM profiles", (err, rows)=>{
+    //   console.log(rows.rows)
+    // })
 
     // pool.query("ALTER TABLE profiles RENAME COLUMN id TO _id", (err, rows)=>{
     //   console.log(rows.rows)

@@ -9,11 +9,12 @@ export default {
 
   methods: {
       fget(uri, bucket, limit, currentpage){ 
-        let time0 = performance.now();
         fetch(uri)
-        .then((response)=> {if(response.ok){ return response.json() } else {throw new Error("[!response.ok]")} })
+        .then((response)=> {
+            bucket.time = response.headers.get('X-Response-Time');
+            if(response.ok){ return response.json() } else {throw new Error("[!response.ok]")} 
+          })
         .then((response)=>{
-            bucket.timeF = (performance.now() - time0).toFixed(2);  
             bucket.rows = response.rows;
             bucket.pagination = paginate(response.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
           })

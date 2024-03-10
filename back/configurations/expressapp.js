@@ -2,9 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('./multer');
 const { querySanitizer } = require('../configurations/validations');
+const responseTime = require('response-time');
 
 const app = express();
-app.use(cors());
+
+app.use(cors({exposedHeaders: '*'}));
+app.use(responseTime({suffix:false}));
 
 app.use(express.json());
 app.post('*', multer, photoParser); app.put('*', multer, photoParser);

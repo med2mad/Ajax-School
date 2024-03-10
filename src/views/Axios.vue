@@ -7,16 +7,13 @@ import axios from 'axios';
 import { paginate } from '../../scripts';
 
 export default {
-  
   methods: {
-    
       fget(uri, bucket, limit, currentpage){
-        let time0=performance.now();
         axios.get(uri)
         .then((response)=>{
-            bucket.timeF = (performance.now() - time0).toFixed(2);
+            bucket.time = response.headers['x-response-time'];
             bucket.rows = response.data.rows;
-            bucket.pagination = paginate(response.data.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
+            bucket.pagination = paginate(response.data.total, currentpage, limit, 10);
           })
       },
 

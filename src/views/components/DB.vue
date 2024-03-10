@@ -10,9 +10,9 @@
 
         <div class="db1">
 
-            <div class="time" :class="{'green':bucket.timeF<100, 'orange':bucket.timeF>=100 && bucket.timeF<200, 'red':bucket.timeF>=200}">
-                <div v-if="bucket.timeF">
-                    <span class="timef">{{bucket.timeF}}</span><span class="ms">ms</span>
+            <div class="time" :class="{'green':bucket.time<100, 'orange':bucket.time>=100 && bucket.time<200, 'red':bucket.time>=200}">
+                <div v-if="bucket.time">
+                    <span class="timef">{{bucket.time}}</span><span class="ms">ms</span>
                 </div>
             </div>
 
@@ -88,7 +88,7 @@ export default{
     components: {Pagination},
 
     data(){return{
-                    bucket:{timeF:'', rows:'', pagination:{}, nameError:false, ageError:false},
+                    bucket:{time:'', rows:'', pagination:{}, nameError:false, ageError:false},
                     selectedId:'', 
                     vname:'', vage:'', selectedPhotoName:'', photoObject:null,
                     showpopup:false, popuptext:'', 
