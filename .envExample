@@ -1,6 +1,5 @@
-mysqlPORT=5010
-mongoosePORT=5020
-postgreSQLPORT=5030
-multerPORT=5999
-
 DB_table=users
+
+jwt_secret=serversecret
+
+POSTGRES_URL="postgres://default:R4bGpkZPsME3@ep-rapid-tree-a41dnde4-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
