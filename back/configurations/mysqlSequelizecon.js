@@ -1,9 +1,16 @@
 const Sequelize = require('sequelize');
 const {app} = require('./expressapp');
 
-const sequelizeMysql = new Sequelize('test', 'root', '', {
+// const sequelizeMysql = new Sequelize('test', 'root', '', {
+//     dialect:'mysql',
+//     host:'localhost',
+//     logging: false, //no logs in console
+// });
+
+//freesqldatabase.com
+const sequelizeMysql = new Sequelize('sql8692210', 'sql8692210', '3vbKb8G5nL', {
     dialect:'mysql',
-    host:'localhost',
+    host:'sql8.freesqldatabase.com',
     logging: false, //no logs in console
 });
 

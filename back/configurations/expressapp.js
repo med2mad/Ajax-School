@@ -6,8 +6,8 @@ const responseTime = require('response-time');
 
 const app = express();
 
-app.use(cors({exposedHeaders: '*'}));
-app.use(responseTime({suffix:false}));
+app.use(cors({origin:'http://localhost:8080', exposedHeaders: '*'}));//cors + access x-response-time header
+app.use(responseTime({suffix:false}));//add x-response-time to response headers
 
 app.use(express.json());
 app.post('*', multer, photoParser); app.put('*', multer, photoParser);

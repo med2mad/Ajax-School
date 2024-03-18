@@ -1,13 +1,16 @@
 const Sequelize = require('sequelize');
 const {app} = require('./expressapp');
 
-const sequelizePostgresql = new Sequelize('test', 'postgres', '5432', {
-    dialect:'postgres',
-    host:'localhost',
-    logging: false, //no logs in console
-});
+// const sequelizePostgresql = new Sequelize('test', 'postgres', '5432', {
+//     dialect:'postgres',
+//     host:'localhost',
+//     logging: false, //no logs in console
+// });
 
-sequelizePostgresql.authenticate() //test connection before start listening (connection already made without "con" object)
+//vercel.com
+const sequelizePostgresql = new Sequelize('postgres://default:R4bGpkZPsME3@ep-rapid-tree-a41dnde4-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require', {logging: false});
+
+sequelizePostgresql.authenticate() //test connection before start listening (connection already made without the "client" object)
 .then(()=>{
     app.listen(5030, ()=>{console.log("Postgresql: " + 5030);});
 })

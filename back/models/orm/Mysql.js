@@ -24,8 +24,8 @@ const Profile = sequelizeMysql.define('profile', {
     },
 },
 {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    createdAt:false,
+    updatedAt:false
 },
 );
 

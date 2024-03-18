@@ -1,17 +1,17 @@
 const {Client}= require('pg');
 
-const pool = new Client({
-  host: "localhost",
-  user: "postgres",
-  port:5432, //not necessary
-  password: "5432",
-  database: "test"
-})
-
-// require('dotenv').config();
 // const pool = new Client({
-//   connectionString: process.env.POSTGRES_URL ,
+//   host: "localhost",
+//   user: "postgres",
+//   port:5432, //not necessary
+//   password: "5432",
+//   database: "test"
 // })
+
+require('dotenv').config();
+const pool = new Client({
+  connectionString: process.env.POSTGRES_URL ,
+})
 
 // const { Pool } = require('pg');
 // const pool = new Pool({
@@ -42,9 +42,9 @@ pool.connect().then((err) => {
 
     
 
-    // pool.query("SELECT * FROM profiles", (err, rows)=>{
-    //   console.log(rows.rows)
-    // })
+    pool.query("SELECT * FROM profiles", (err, rows)=>{
+      console.log(rows.rows)
+    })
 
     // pool.query("ALTER TABLE profiles RENAME COLUMN id TO _id", (err, rows)=>{
     //   console.log(rows.rows)
