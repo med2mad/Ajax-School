@@ -8,7 +8,10 @@ const {app} = require('./expressapp');
 // });
 
 //vercel.com
-const sequelizePostgresql = new Sequelize('postgres://default:R4bGpkZPsME3@ep-rapid-tree-a41dnde4-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require', {logging: false});
+const sequelizePostgresql = new Sequelize(
+    'postgres://default:R4bGpkZPsME3@ep-rapid-tree-a41dnde4-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require',
+     {logging: false}
+    );
 
 sequelizePostgresql.authenticate() //test connection before start listening (connection already made without the "client" object)
 .then(()=>{

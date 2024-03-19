@@ -1,5 +1,5 @@
 const {Profile} = require('../../models/orm/Mongoose');
-require('../../configurations/mongoconnection');
+require('../../configurations/mongoconnection'); //mongoose does not need exporting connection object
 
 module.exports.
 getAll = async (req, res)=>{
