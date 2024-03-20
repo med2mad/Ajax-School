@@ -33,9 +33,9 @@ con.connect((err) => {
     
     
 
-    con.query("SELECT * FROM profiles", (err, rows)=>{
-      console.log(rows)
-    })
+    // con.query("SELECT * FROM profiles", (err, rows)=>{
+    //   console.log(rows)
+    // })
 
     
     // con.query("INSERT INTO profiles (name, age, photo) VALUES ('mohamed', 35, 'whatsapp.jpg');", (err, rows)=>{

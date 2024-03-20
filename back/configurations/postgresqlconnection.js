@@ -8,7 +8,6 @@ const {Client}= require('pg');
 //   database: "test"
 // })
 
-require('dotenv').config();
 const pool = new Client({
   connectionString: "postgres://default:R4bGpkZPsME3@ep-rapid-tree-a41dnde4-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require" ,
 })
@@ -40,11 +39,9 @@ pool.connect().then((err) => {
     //   console.log(rows.rows)
     // });
 
-    
-
-    pool.query("SELECT * FROM profiles", (err, rows)=>{
-      console.log(rows.rows)
-    })
+    // pool.query("SELECT * FROM profiles", (err, rows)=>{
+    //   console.log(rows.rows)
+    // })
 
     // pool.query("ALTER TABLE profiles RENAME COLUMN id TO _id", (err, rows)=>{
     //   console.log(rows.rows)

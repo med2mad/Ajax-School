@@ -7,11 +7,17 @@ const {app} = require('./expressapp');
 //     logging: false, //no logs in console
 // });
 
-//vercel.com
+//elephantsql.com
 const sequelizePostgresql = new Sequelize(
-    'postgres://default:R4bGpkZPsME3@ep-rapid-tree-a41dnde4-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require',
-     {logging: false}
-    );
+    'postgres://vwvnxbct:XNLTn1mvFz6q4vf0IS5c9iXoSALqn68q@surus.db.elephantsql.com/vwvnxbct',
+    {logging: false}
+);
+
+// //vercel.com
+// const sequelizePostgresql = new Sequelize(
+//     'postgres://default:R4bGpkZPsME3@ep-rapid-tree-a41dnde4-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require',
+//     {logging: false}
+// );
 
 sequelizePostgresql.authenticate() //test connection before start listening (connection already made without the "client" object)
 .then(()=>{
