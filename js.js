@@ -5,8 +5,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get('/', (req,res) => {
-  res.send('response');
+app.get('/a/:b/c', (req,res) => {
+  res.send('response : ' + req.params.b);
 });
 
 const port = process.env.PORT || 3000;

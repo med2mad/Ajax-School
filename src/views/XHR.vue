@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { paginate } from '../../scripts';
+import { paginate } from './scripts';
 
 export default {
   methods: {
