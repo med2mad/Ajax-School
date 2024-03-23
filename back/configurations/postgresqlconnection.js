@@ -35,8 +35,7 @@ pool.connect().then((err) => {
     else{
       app.listen(5030, ()=>{console.log("PostgreSQL: " + 5030);
 
-      // const q = "CREATE TABLE profiles (_id SERIAL PRIMARY KEY,name VARCHAR(255),age INTEGER, photo VARCHAR(255));"
-      //     pool.query(q, (err, rows)=>{
+      // pool.query("CREATE TABLE profiles (_id SERIAL PRIMARY KEY,name VARCHAR(255),age INTEGER, photo VARCHAR(255));", (err, rows)=>{
       //   console.log(rows.rows)
       // });
 
