@@ -89,9 +89,13 @@ export default{
                 vback:localStorage.getItem('back'), vname:'', vage:'', vlimit:10,
                 backpopup:false, 
                 DBs:[
-                    {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} }, //CORS shit ("http://localhost/mysql.php" and not just "mysql.php")
-                    {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'http://localhost:5020/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
-                    {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'http://localhost:5030/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
+                    // {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
+                    // {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'http://localhost:5020/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
+                    // {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'http://localhost:5030/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
+                    
+                    {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'https://node-backend-812w.onrender.com/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
+                    {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'https://node-backend-812w.onrender.com/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
+                    {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'https://node-backend-812w.onrender.com/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
                     ]
                 }
             },
