@@ -1,0 +1,216 @@
+@font-face {
+    font-family: Rajdhani-Light;
+    src: url('/public/styles/fonts/Rajdhani-Light.ttf');
+}
+
+header{
+    background-image: linear-gradient(180deg, rgb(85, 85, 85), rgb(36, 35, 35));
+    border-bottom: solid 2px #a5992a;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 70px;
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header .hamburger-button{
+    width:25px;
+    display:none;
+}
+
+header p{
+    font-family: Rajdhani-Light, sans-serif;
+    font-style: italic;
+    text-shadow: 0px 0px 9px blue;
+    color: white;
+    font-size: clamp( 0.2rem , 4vw + 0.2rem , 2rem );
+    font-weight: bold;
+    margin-left:auto;
+    margin-right:20px;
+}
+
+header .logo{
+    width:180px;
+    text-align: center;
+}
+header .logo img{
+    width: 130px; 
+}
+
+header nav{
+    width: 400px;
+    height: 100%;
+    display: flex; /* align links */
+}
+header nav a{
+    color: white;
+    font-family: Rajdhani-Light, sans-serif;
+    font-size: 1.4rem;font-weight: bold;
+    text-decoration: none;
+    border-left: solid 1px gray;
+    border-right: solid 1px gray;
+    flex:1;
+    position: relative;
+}
+header nav a .btn{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+header nav a:hover{
+    background-image: linear-gradient(180deg, rgb(133, 133, 133), rgb(59, 59, 59)) ;
+}
+header nav a.router-link-exact-active{
+    text-shadow: 0px 0px 9px blue;
+    background-image: linear-gradient(180deg, rgb(182, 182, 182), rgb(59, 59, 59));
+    cursor: default;
+    font-size: 2.1rem;
+    font-weight: bolder;
+    padding: 10px;
+}
+
+main{
+    margin-top: 70px;
+    margin-left: 182px;
+}
+
+.side{
+    font-family: Rajdhani-Light, sans-serif;
+    border-right: solid 3px;
+    border-bottom: solid 1px;
+    background-image: linear-gradient(90deg, rgb(49, 49, 49), rgb(36, 35, 35) 90%);
+    position: fixed;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100vh;
+    width: 180px;
+    padding-top: 2vh;
+}
+
+.side h2{
+    text-shadow: 0px 0px 5px blue;
+    color: white;
+    font-size: 1.5rem;
+    margin: 1px auto;/*not to have to change "marging-bottom" */
+    margin-top: 2vh;
+}
+
+.side .devider{
+    border-bottom: solid 1px #a5992a;
+    width : 75%;
+    margin: 3vh auto;
+    padding: 1vh 0px;
+}
+
+.side input{
+    border-radius: 20px;
+    text-align: center;
+}
+
+.limit:invalid{
+    background-color: pink;
+}
+
+.side .legend{
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 7fr;
+    align-items: center;
+    text-align: left;
+    grid-gap: 6px 10px;
+    margin-left:10px;
+    margin-top: 8px;
+}
+.side .legend div div{ /* colored blocks */
+    color: black;
+    width:20px;
+    height:20px;
+    border:solid 1px;
+}
+
+footer{
+    display: none;
+    background-image: linear-gradient(180deg,#787878 0%,
+                                            #b5b5b5 25%,
+                                            #e3e3e3 50%,
+                                            #b5b5b5 75%,
+                                            #787878 100%
+                                        ) ;
+    border-top: solid 2px black;
+    border-radius: 20px 20px 0px 0px ;
+}
+footer .span{
+    color:brown;font-weight: bold;
+}
+footer input{
+    border-radius: 20px;
+    text-align: center;
+}
+
+footer .footer1{
+    padding-bottom:2px; border-radius: 20px 20px 0px 0px ;
+    display: flex; justify-content: center; align-items:center; gap:10px;
+    background-image: linear-gradient(180deg,#787878 0%,
+                                            #b5b5b5 25%,
+                                            #e3e3e3 50%,
+                                            #b5b5b5 75%,
+                                            #787878 100%
+                                        ) ;
+}
+footer .footer1 .flex2{
+    text-align: right;
+}
+
+footer .footer2{ 
+    height:20px; padding-top:6px; border-top: solid 1px;
+    background-image: linear-gradient(180deg,#787878 0%,
+                                            #b5b5b5 25%,
+                                            #e3e3e3 50%,
+                                            #b5b5b5 75%,
+                                            #787878 100%
+                                        ) ;
+}
+
+/*---------------------media query------------------------------------------*/
+
+@media only screen and (max-width: 650px){
+    .side{
+        display: none;
+    }
+
+    main{
+        margin:auto;
+        padding-top: 70px;
+        padding-bottom: 50px;
+    }
+
+    footer{
+        display:block;
+        width: 100%;
+        position:fixed;
+        height:72px;
+        bottom: -4px;
+    }
+
+    header p{
+        display:none;
+    }
+    header .logo{
+        display:none;
+    }
+    header .hamburger-button{
+        display:block;
+        margin: 10px;
+    }
+    header nav{
+        width:100%;
+    }
+    header nav a{
+        flex:1;
+    }
+}
