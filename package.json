@@ -3,10 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "vue-cli-service serve | nodemon back/routes/mysql.js | nodemon back/routes/mongoose.js | nodemon back/routes/postgresql.js",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "index": "nodemon back/index.js"
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "axios": "^1.4.0",
