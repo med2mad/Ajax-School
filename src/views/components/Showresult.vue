@@ -92,10 +92,10 @@ export default{
                     {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
                     {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'http://localhost:5020/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
                     {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'http://localhost:5030/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
-                    //https://node-backend-812w.onrender.com
-                    // {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'https://super-seahorse-f7bc86.netlify.app.com/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
-                    // {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'https://super-seahorse-f7bc86.netlify.app/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
-                    // {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'https://super-seahorse-f7bc86.netlify.app/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
+                    
+                    {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'https://node-backend-812w.onrender.com/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
+                    {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'https://node-backend-812w.onrender.com/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
+                    {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'https://node-backend-812w.onrender.com/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
                     ]
                 }
             },
