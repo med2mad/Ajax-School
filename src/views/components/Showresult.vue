@@ -96,6 +96,11 @@ export default{
                     {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'https://node-backend-812w.onrender.com/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
                     {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'https://node-backend-812w.onrender.com/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
                     {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'https://node-backend-812w.onrender.com/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
+                    
+                    {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'wss://thrilling-yielding-hydrangea.glitch.me/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
+                    {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'ws://thrilling-yielding-hydrangea.glitch.me/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
+                    {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'https://thrilling-yielding-hydrangea.glitch.me/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
+                    
                     ]
                 }
             },
