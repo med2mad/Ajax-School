@@ -50,7 +50,6 @@
         <DB v-for="item in DBs" :key="item._db+vback+vlimit+vname+vage" :back="vback" :_dblogofile="item._dblogofile" :_db="item._db" @logout="this.$refs.login.fLogout();"
                             @mountGet="(bucket)=>{fget(getUri(item._url[vback],1), bucket, vlimit, 1);}" 
                             @mountGetPage="(bucket, page)=>{fget(getUri(item._url[vback], page), bucket, vlimit, page);}" 
-                            @mountGetw="async(bucket)=>{bucket.rows = await fgetw(getUri(item._url[vback]));}" 
                             @clickPost="(body, bucket)=>{fpost(item._url[vback], body, bucket, vlimit);}" 
                             @clickPut="(method, selectedId, body, selectedTr, bucket)=>{fput(method, item._url[vback]+selectedId, body, selectedTr, bucket);}"
                             @clickDelete="(method, selectedId, lastTableId, bucket)=>{fdelete(method, getUri(item._url[vback]+selectedId)+lastTableId, bucket);}"
@@ -71,6 +70,11 @@
         </div>
     </footer>
     
+    <img src="imgs/up.png" class="upbtn" alt="offcanvas trigger" @click="toggleOffCanvas('open')">
+    <div class="offcanvas" ref="offcanvas">
+        <button @click="toggleOffCanvas('close')">see offCanvas in bootstrap</button> <br>
+        <p> <pre>{{ snippet }}</pre> </p> 
+    </div>
 </template>
 
 <script>
@@ -78,7 +82,7 @@ import Login from './Login.vue';
 
 export default{
 
-    props: {fpost:Function, 
+    props: {fpost:Function, snippet:String,
             fput:Function, fdelete:Function,
             fget:Function, fgetw:Function, 
             },
@@ -93,14 +97,13 @@ export default{
                     {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'http://localhost:5020/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
                     {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'http://localhost:5030/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
                     
-                    {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'https://node-backend-812w.onrender.com/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
-                    {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'https://node-backend-812w.onrender.com/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
-                    {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'https://node-backend-812w.onrender.com/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
-                    
-                    {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'wss://thrilling-yielding-hydrangea.glitch.me/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
-                    {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'ws://thrilling-yielding-hydrangea.glitch.me/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
-                    {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'https://thrilling-yielding-hydrangea.glitch.me/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
-                    
+                    // {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'https://node-backend-812w.onrender.com/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
+                    // {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'https://node-backend-812w.onrender.com/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
+                    // {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'https://node-backend-812w.onrender.com/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
+
+                    // {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'https://thrilling-yielding-hydrangea.glitch.me/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
+                    // {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'https://thrilling-yielding-hydrangea.glitch.me/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
+                    // {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'https://thrilling-yielding-hydrangea.glitch.me/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
                     ]
                 }
             },
@@ -116,11 +119,15 @@ export default{
             },
         changeBack(event){
             localStorage.setItem('back', event.target.value);
+        },
+        toggleOffCanvas(x){
+            if(x=='open'){this.$refs.offcanvas.style.display=''}
+            else{this.$refs.offcanvas.style.display='none'}
         }
     }
 }
 </script>
 
 <style>
-    @import 'C:\Users\MED\Desktop\AJAX Paradise\public\styles\showresult.css';
+    @import '/public/styles/showresult.css';
 </style>

@@ -8,20 +8,15 @@ import { paginate } from './scripts';
 
 export default {
   methods: {
-      fget(uri, bucket, limit, currentpage){ 
+      fget(uri, bucket, limit, currentpage){
+        bucket.snippet = `$.ajax({url:${uri} , method:'GET', dataType:'json'}).done(function(response, textStatus, jqXHR){const data = response})`;
+
         $.ajax({url:uri , method:'GET', dataType:'json'})
           .done(function(response, textStatus, jqXHR){
-              bucket.time = jqXHR.getResponseHeader('X-Response-Time');
+              bucket.time = jqXHR.getResponseHeader('X-Response-Time') || 'Unavailable';
               bucket.rows = response.rows;
               bucket.pagination = paginate(response.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
             });
-      },
-      fgetw(uri){
-        //sorry! sync XHR not allowed any more (XMLHttpRequest and JQuery both use it)
-        //freezes browser and throws warning "synchronous xmlhttprequest on the main thread is deprecated")
-        
-        // let r =  $.ajax({url:uri, async: false , method:'GET', dataType:'json'});
-        return false;// return r;
       },
 
       fpost(uri, body, bucket, limit){

@@ -8,10 +8,12 @@ import { paginate } from './scripts';
 export default {
 
   methods: {
-      fget(uri, bucket, limit, currentpage){ 
+      fget(uri, bucket, limit, currentpage){
+        bucket.snippet = `fetch.get(${uri}).then((response)=>{return response.json()}).then((response)=>{const data = response})`;
+
         fetch(uri)
         .then((response)=> {
-            bucket.time = response.headers.get('X-Response-Time');
+            bucket.time = response.headers.get('X-Response-Time') || 'Unavailable';
             if(response.ok){ return response.json() } else {throw new Error("[!response.ok]")} 
           })
         .then((response)=>{
@@ -19,17 +21,6 @@ export default {
             bucket.pagination = paginate(response.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
           })
       },
-
-      async fgetw(uri){
-        try {
-          const response = await fetch(uri)
-          if(!response.ok){throw new Error("[!response.ok]")}
-          const data = await response.json()
-          return data
-        }
-        catch(err) {return 'err: ' + err.message}
-      },
-
 
       fpost(url, body, bucket, limit){
         fetch(url, {

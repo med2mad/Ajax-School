@@ -203,13 +203,7 @@ export default{
     },
 
     mounted(){
-        //pass empty objects by reference to get promise result(FAST) 
         this.$emit('mountGet', this.bucket);
-
-        //get function's return value(SLOW)
-        // (async ()=>{
-        //     this.$emit('mountGetw', this.bucket);
-        // })(); //async self invoking
     },
 }
 </script>

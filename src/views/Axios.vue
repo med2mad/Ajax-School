@@ -1,5 +1,5 @@
 <template>
-  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" />
+  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" :snippet="snippet" />
 </template>
 
 <script>
@@ -7,24 +7,23 @@ import axios from 'axios';
 import { paginate } from './scripts';
 
 export default {
+
+  data(){ return{snippet:''} },
+
   methods: {
       fget(uri, bucket, limit, currentpage){
         axios.get(uri)
         .then((response)=>{
-            bucket.time = response.headers['x-response-time'];
+            bucket.time = response.headers['x-response-time'] || 'Unavailable';
             bucket.rows = response.data.rows;
             bucket.pagination = paginate(response.data.total, currentpage, limit, 10);
+
+            this.snippet += `------ GET ---- ${response.headers['x-response-time']} ms --------
+            `;this.snippet += `axios.get(${uri})
+            `;this.snippet += `.then((response)=>{const data = response.data})
+            `;
           })
       },
-
-      async fgetw(uri){
-        try {
-          const response = await axios.get(uri)
-          return response.data
-        }
-        catch(err) {return 'err: ' + err.message}
-      },
-      
 
       fpost(uri, body, bucket, limit){
         axios.post(uri,body)

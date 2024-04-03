@@ -7,11 +7,14 @@ import { paginate } from './scripts';
 
 export default {
   methods: {
-      fget(uri, bucket, limit, currentpage){ 
+      fget(uri, bucket, limit, currentpage){
+        bucket.snippet = `const xhr = new XMLHttpRequest(); xhr.onload=function(){const data = JSON.parse(xhr.responseText)}`
+        bucket.snippet += `xhr.open("GET", ${uri}, true); xhr.send();`
+
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
         if (xhr.status===200){
-            bucket.time = xhr.getResponseHeader('X-Response-Time');
+            bucket.time = xhr.getResponseHeader('X-Response-Time') || 'Unavailable';
             const response = JSON.parse(xhr.responseText);
             bucket.rows = response.rows;
             bucket.pagination = paginate(response.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
@@ -19,21 +22,6 @@ export default {
         }
         xhr.open("GET", uri, true);
         xhr.send();
-      },
-      fgetw(uri){ 
-        //sorry! sync XHR not allowed any more (XMLHttpRequest and JQuery both use it)
-        //freezes browser and throws warning "synchronous xmlhttprequest on the main thread is deprecated")
-        
-        // let r; //cannot return directly (for some reason !!!)
-        // const xhr = new XMLHttpRequest();
-        // xhr.onload=function(){
-        // if (xhr.status===200){
-        //     r=JSON.parse(xhr.responseText); 
-        //     }
-        // }
-        // xhr.open("GET", uri, false);
-        // xhr.send();
-        return false;// return r;
       },
 
       fpost(uri, body, bucket, limit){
