@@ -96,9 +96,12 @@ export default{
                 vback:localStorage.getItem('back'), vajax:localStorage.getItem('ajax'),
                 vname:'', vage:'', vlimit:10, snippetbucket:{snippet:''}, o:{'Axios':axios, 'Fetch':fetch, 'JQuery':jquery, 'XHR':xhr},
                 DBs:[
-                    {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'http://localhost:5010/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
-                    {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'http://localhost:5020/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
-                    {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'http://localhost:5030/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
+                    {_db:'mysql', _dblogofile:'mysql.png', _url:{'js':'https://d7b9-196-117-169-40.ngrok-free.app/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
+                    {_db:'mongoose', _dblogofile:'mongodb.png', _url:{'js':'https://d7b9-196-117-169-40.ngrok-free.app/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
+                    {_db:'postgresql', _dblogofile:'postgresql.png', _url:{'js':'https://d7b9-196-117-169-40.ngrok-free.app/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
+                    
+                    
+                    
                     ]
                 }
             },
