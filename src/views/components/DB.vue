@@ -1,8 +1,4 @@
 <template>
-    <transition name="popup">
-        <Popup v-if="showpopup" @close="showpopup=false" :text="popuptext" />
-    </transition>
-    
     <div class="title"> <img :src="'imgs/tools/'+_dblogofile" alt="DB logo">  </div>
 
     <div class="dbpaginate">
@@ -91,7 +87,6 @@ export default{
                     bucket:{time:'', rows:'', pagination:{}, nameError:false, ageError:false},
                     selectedId:'', 
                     vname:'', vage:'', selectedPhotoName:'', photoObject:null,
-                    showpopup:false, popuptext:'', 
                 }
             },
 
@@ -108,7 +103,7 @@ export default{
         handlePut(){
             if(!this.checkUser()){return;}
 
-            if(!this.selectedId){this.popuptext='Select Profile !'; this.showpopup = true;}
+            if(!this.selectedId){Swal.fire('Select Profile !');}
             else if(this.checkData()){
                 let selectedTr;
                 for (let i = 0; i < this.bucket.rows.length; i++){//find <tr> to change
@@ -132,7 +127,7 @@ export default{
         handleDelete(){
             if(!this.checkUser()){return;}
 
-            if(!this.selectedId){this.popuptext='Select Profile !';this.showpopup = true;}
+            if(!this.selectedId){Swal.fire('Select Profile !');}
             else{
                 const lastTableId = this.bucket.rows[this.bucket.rows.length-1]["_id"];
                 if(this.back=='js') //no DELETE http method in PHP
@@ -198,12 +193,12 @@ export default{
         },
 
         changepage(i){
-            this.$emit('mountGetPage', this.bucket, i);
+            this.$emit('mountGet', this.bucket, i);
         }
     },
 
     mounted(){
-        this.$emit('mountGet', this.bucket);
+        this.$emit('mountGet', this.bucket, 1);
     },
 }
 </script>

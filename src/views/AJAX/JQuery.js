@@ -1,14 +1,7 @@
-<template>
-  <Showresult :fget="fget" :fgetw="fgetw" :fpost="fpost" :fdelete="fdelete" :fput="fput" />
-</template>
-
-<script>
 import $ from "jquery";
-import { paginate } from './scripts';
+import { paginate } from '../scripts';
 
-export default {
-  methods: {
-      fget(uri, bucket, limit, currentpage){
+function fget(uri, bucket, limit, currentpage){
         bucket.snippet = `$.ajax({url:${uri} , method:'GET', dataType:'json'}).done(function(response, textStatus, jqXHR){const data = response})`;
 
         $.ajax({url:uri , method:'GET', dataType:'json'})
@@ -17,12 +10,14 @@ export default {
               bucket.rows = response.rows;
               bucket.pagination = paginate(response.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
             });
-      },
+      }
 
-      fpost(uri, body, bucket, limit){
+function fpost(uri, body, bucket, limit){
         $.ajax(
             {
-              type:'post',
+              type:'POST',
+              contentType: false,
+              processData: false,
               url:uri,
               data: body,
             }
@@ -32,26 +27,27 @@ export default {
               bucket.rows.unshift(rowToInsert);
               if(bucket.rows.length>limit){bucket.rows.pop();} //remove last row in <table> (respect _limit after add)
         });
-      },
+      }
 
-      fput(uri, body, i, bucket){
+function fput(method, uri, body, selectedTr, bucket){
+        console.log('put jquery');
         $.ajax(
             {
-              type:'put', 
-              url:uri, 
-              data:body,
+              "type":method, 
+              "url":uri, 
+              "data":body,
             }
           )
         .done( function(response){
-            bucket.rows[i].name=body.get('name'); bucket.rows[i].age=body.get('age'); bucket.rows[i].photo=response.photo;
+            bucket.rows[selectedTr].name=body.get('name'); bucket.rows[selectedTr].age=body.get('age'); bucket.rows[selectedTr].photo=response.photo;
         });
-      },
+      }
       
-      fdelete(uri, lastTableId, bucket){
+function fdelete(method, uri, bucket){
         $.ajax(
             {
-            type:'delete', 
-            url:uri+'?lasttableid='+lastTableId
+            "type":method, 
+            "url":uri
 
             //using JSON data (no FormData = no photos)
             // url:uri+'?callback=?'
@@ -63,17 +59,10 @@ export default {
           { bucket.rows.push({"id":response[0].id, "_id":response[0]._id, "name":response[0].name, "age":response[0].age, "photo":response[0].photo}) }
         });
       }
-  },
 
-  mounted(){
-    $.ajaxSetup({contentType:false, processData:false,});
 
-    //setting "Content-Type":"multipart/form-data" throws "Multipart: Boundary not found" error
+ function  fixHeader(){
+    // $.ajaxSetup({contentType:false, processData:false,});
+  }
 
-    //using JSON data (no FormData = no photos)
-    // contentType:"application/json", 
-    // url:uri+'?callback=?', 
-    // data:JSON.stringify(body)
-  },
-}
-</script>
+  export default {fget, fpost, fput, fdelete}
