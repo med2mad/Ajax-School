@@ -19,7 +19,7 @@
                 <div v-else-if="bucket.rows" class="rows">
                     <form> <!--for input radio-->
                     <table>
-                        <tr><th></th><th>#</th><th>Name</th><th>Age</th><th>Photo</th></tr>
+                        <tr><th></th><th>#</th><th>Text</th><th>Number</th><th>Photo</th></tr>
                         <transition-group name="table">
                         <tr v-for="profile in bucket.rows" class="datarow" :class="{selectedrow:profile._id==selectedId}" :key="profile._id" @click="selectProfile(profile._id);">
                             <td> <input type="radio" name="db" v-model="selectedId" :value="profile._id"> </td>
@@ -66,27 +66,44 @@
         </div>
         </div>
 
+    <img src="imgs/up.png" class="upbtn" alt="offcanvas trigger" @click.self="toggleOffCanvas('open')">
     </div>
+
     <Pagination v-if="bucket.rows && bucket.rows.length>0" :pagination="bucket.pagination" @changepage="(i)=>{changepage(i);}"></Pagination>
+    </div>
+
+    <div class="offcanvas" ref="offcanvas">
+        <button @click="toggleOffCanvas('close')">see offCanvas in bootstrap</button> <br>
+        <p> {{bucket.snippet}} </p> 
     </div>
 </template>
 
 <script>
 import Swal from 'sweetalert2';
 import Pagination from './Pagination.vue';
+import axios from '../scripts/Axios';
+import fetch from '../scripts/Fetch';
+import jquery from '../scripts/JQuery';
+import xhr from '../scripts/XHR';
 import '/public/styles/db.css';
 
 export default{
-    props: { _db:String, _dblogofile:String, back:String },
+    props:{ _db:String, _dblogofile:String, _url:Object,
+            _vage:String, _vname:String, _vlimit:Number, 
+            _vajax:String, _vback:String, 
+            },
 
-    emits: ['mountGet', 'mountGetPage', 'mountGetw', 'clickPost', 'clickPut', 'clickDelete', 'logout'],
+    emits: ['mountGet', 'logout'],
 
     components: {Pagination},
 
     data(){return{
-                    bucket:{time:'', rows:'', pagination:{}, nameError:false, ageError:false},
-                    selectedId:'', 
-                    vname:'', vage:'', selectedPhotoName:'', photoObject:null,
+                    bucket:{ time:'', rows:'', pagination:{}, snippet:'',
+                             nameError:false, ageError:false,
+                            },
+                    ajaxes:{'Axios':axios, 'Fetch':fetch, 'JQuery':jquery, 'XHR':xhr},
+                    selectedId:'', selectedPhotoName:'', photoObject:null,
+                    vname:'', vage:'',
                 }
             },
 
@@ -96,7 +113,7 @@ export default{
                 const fd = new FormData(this.$refs.frmid);
                 fd.append('selectedPhotoName', this.selectedPhotoName);
                 fd.append('token', localStorage.getItem('token'));
-                this.$emit('clickPost', fd, this.bucket);
+                this.ajaxes[this._vajax].fpost(this._url[this._vback], fd, this.bucket, this._vlimit);
                 this.clear();
             }
         },
@@ -115,10 +132,10 @@ export default{
                 fd.append('selectedPhotoName', this.selectedPhotoName);
                 fd.append('token', localStorage.getItem('token'));
                 
-                if(this.back=='js') //no PUT http method in PHP
-                    this.$emit('clickPut', 'PUT', this.selectedId, fd, selectedTr, this.bucket);
+                if(this._vback=='js') //no PUT http method in PHP
+                    this.ajaxes[this._vajax].fput('PUT', this._url['js']+this.selectedId, fd, selectedTr, this.bucket);
                 else{
-                    this.$emit('clickPut', 'POST', this.selectedId+'?_method=PUT', fd, selectedTr, this.bucket);
+                    this.ajaxes[this._vajax].fput('POST', this._url['php']+this.selectedId+'?_method=PUT', fd, selectedTr, this.bucket);
                 }
                 
                 this.clear();
@@ -130,9 +147,9 @@ export default{
             if(!this.selectedId){Swal.fire('Select Profile !');}
             else{
                 const lastTableId = this.bucket.rows[this.bucket.rows.length-1]["_id"];
-                if(this.back=='js') //no DELETE http method in PHP
-                    this.$emit('clickDelete', 'DELETE', this.selectedId, '&lasttableid='+lastTableId, this.bucket);
-                else{this.$emit('clickDelete', 'POST', this.selectedId,'&_method=DELETE&lasttableid='+lastTableId, this.bucket);}
+                if(this._vback=='js') //no DELETE http method in PHP
+                    this.ajaxes[this._vajax].fdelete('DELETE', this._url['js']+this.selectedId+'?'+'&lasttableid='+lastTableId, this.bucket)
+                else this.ajaxes[this._vajax].fdelete('POST', this._url['php']+this.selectedId+'?'+'&lasttableid='+lastTableId+'&_method=DELETE', this.bucket)
 
                 for (let i = 0; i < this.bucket.rows.length; i++){//find <tr> to remove
                     if(this.bucket.rows[i]["_id"]==this.selectedId)
@@ -191,14 +208,26 @@ export default{
             }
             else {return true;}
         },
-
+        toggleOffCanvas(x){
+            if(x=='open'){this.$refs.offcanvas.style.display=''}
+            else{this.$refs.offcanvas.style.display='none'}
+        },
+        GETuri(str, currentpage){
+            str += '?_limit='+((Number.isInteger(this._vlimit)&&this._vlimit>=0)?this._vlimit:0);
+            str += '&_skip='+((Number.isInteger(this._vlimit)&&this._vlimit>=0)?(currentpage-1)*this._vlimit:0);
+            str += '&_name='+this._vname;
+            if (Number.isInteger(this._vage)){str += '&_age='+this._vage;}
+            
+            return str;
+        },
         changepage(i){
-            this.$emit('mountGet', this.bucket, i);
+            this.ajaxes[this._vajax].fget(this.GETuri(this._url[this._vback], i), this.bucket, this._vlimit, i);
         }
     },
 
     mounted(){
-        this.$emit('mountGet', this.bucket, 1);
+        this.ajaxes[this._vajax].fget(this.GETuri(this._url[this._vback], 1), this.bucket, this._vlimit, 1);
+        this.$refs.offcanvas.style.display='none';
     },
 }
 </script>

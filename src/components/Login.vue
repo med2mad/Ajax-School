@@ -6,16 +6,15 @@
     </div>
     <div @click="editUser">
         {{user.name}}
-        <img :src="'uploads/'+(user.photo?user.photo:'profile.jpg')" class="userphoto"/>
     </div>
-    <div>
-        <a href="html/pricing.html">Uprade</a>
+    <div @click="editUser">
+        <img :src="'uploads/'+(user.photo?user.photo:'profile.jpg')" class="userphoto"/>
     </div>
 </template>
 
 <script>
 import Swal from 'sweetalert2';
-import { login, logout } from '../scripts';
+import { login, logout } from '../scripts/others.js';
 
 export default{
 

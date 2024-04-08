@@ -1,4 +1,4 @@
-import { paginate } from '../scripts';
+import { paginate } from './others';
 
 function fget(uri, bucket, limit, currentpage){
         bucket.snippet = `const xhr = new XMLHttpRequest(); xhr.onload=function(){const data = JSON.parse(xhr.responseText)}`

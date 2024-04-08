@@ -19,7 +19,7 @@
         </p>
       </div>
       <div class="btn">
-          <router-link to="/axios"><div class="text">Start</div></router-link>
+          <router-link to="/Showresult"><div class="text">Start</div></router-link>
           <div class="flash"></div>
       </div>
     </div>
@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import '/public/styles/home.css';
+
 export default {
   
   data(){return{
@@ -95,186 +97,3 @@ export default {
     },
 }
 </script>
-
-<style>
-
-@font-face {
-  font-family: Rajdhani-Bold;
-  src: url('/public/styles/fonts/Rajdhani-Bold.ttf');
-}
-
-.homelogo{
-  background-color: black;
-  border-radius: 30px;
-  border: solid 8px #2c3e50; 
-  width: 30%;
-  min-width: 250px;
-  padding: 10px 0px;
-  margin: 5px auto;
-}
-
-.homelogo img{
-  width: 90%;
-}
-
-.home{
-  display: flex; /*align .start|.tools*/
-  flex-wrap: wrap;
-  gap:10px;
-}
-
-h1{
-  font-family: Rajdhani-Bold, sans-serif;
-  font-size: 3rem;
-  margin-top: 20px;
-  margin-bottom: 0px;
-}
-h1 span{
-  font-family: Rajdhani-Light, sans-serif;
-}
-
-.start{
-  flex: 1;
-}
-
-.start p{
-  font-family: Rajdhani-Light, sans-serif;
-  font-weight: bold;
-  font-size: 1.2rem;
-  text-align: justify;
-  padding-left: 10px;
-  margin-bottom: 15px;
-}
-
-.start .btn{
-  font-family: Rajdhani-Light, sans-serif;
-  border-radius: 20px;
-  transition: transform 250ms;
-  position: relative; /*position .flash*/
-  overflow: hidden; /*.flash*/
-  width: 200px;
-  margin: auto;
-}
-.start .btn a{
-  text-decoration: none;
-}
-.start .btn a .text{
-  font-size: 1.5rem;
-  font-weight: bold;
-  background-color: blue;
-  color: white;
-  border-radius: 5px;
-  height: 50px;
-  display: grid; place-content: center; /*center text vertically*/
-}
-.start .btn .flash{
-  background-image: linear-gradient(135deg , rgba(255, 255, 255, 0) , #ffffff 50%, rgba(255, 255, 255, 0));
-  transform: rotateZ(45deg);
-  position: absolute;
-  top: -150px;
-  left: -40px;
-  transition: top 250ms, left 250ms;
-  width: 40px;
-  height: 250px;
-}
-.start .btn:hover{
-  transform: scale(150%, 150%);
-}
-.start .btn:hover .flash{
-  top: 100%;
-  left:100%;
-}
-
-.tools{
-  flex:1;
-  border-left: solid 1px;
-}
-.tools p{
-  font-family: Rajdhani-Bold, sans-serif;
-  font-size: 1.5rem;
-  margin-bottom: 30px;
-}
-.tools .carousel{
-  display: flex; /*.prevbtn |<img>| .nextbtn*/
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  position: relative;/*position .crslbtn*/
-  height:50%;
-}
-.tools .carousel img{
-  width:50%;
-}
-.tools .carousel .crslbtn{
-  cursor: pointer;
-  position: absolute;
-  width: 20%;
-}
-.tools .carousel .prevbtn{
-  left:10px;
-  z-index: 1; /* slides go on prev button while sliding */
-}
-.tools .carousel .nextbtn{
-  right:10px;
-}
-/*-------------- animate carousel (using classes)-------------*/
-.next-leave-from{
-  transform: translateX(0); opacity: 1;
-}
-.next-leave-to{
-  transform: translateX(-100%); opacity: 0;
-}
-.next-leave-active{
-  transition-property:transform, opacity;
-  transition-duration: 250ms;
-  position: absolute;
-}
-.next-enter-from{
-  transform: translateX(100%); opacity: 0;
-}
-.next-enter-to{
-  transform: translateX(0); opacity: 1;
-}
-.next-enter-active{
-  transition-property:transform, opacity;
-  transition-duration: 250ms;
-}
-
-.prev-leave-from{
-  transform: translateX(0%); opacity: 1;
-}
-.prev-leave-to{
-  transform: translateX(100%); opacity: 0;
-}
-.prev-leave-active{
-  transition-property:transform, opacity;
-  transition-duration: 250ms;
-  position: absolute;
-}
-.prev-enter-from{
-  transform: translateX(-100%); opacity: 0;
-}
-.prev-enter-to{
-  transform: translateX(0%); opacity: 1;
-}
-.prev-enter-active{
-  transition-property:transform, opacity;
-  transition-duration: 250ms;
-}
-/*---------------------media query-------------------------*/
-@media only screen and (max-width: 650px){
-  .home{
-    flex-direction: column-reverse;
-  }
-  .start .ps{
-    display: none;
-  }
-  .tools .carousel{
-    height: 100px;
-    margin-bottom: 15px;
-  }
-  h1{
-    margin-bottom: 30px;
-  }
-}
-</style>

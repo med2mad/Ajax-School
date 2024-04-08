@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Axios from '../views/Axios.vue'
+import Showresult from '../views/Showresult.vue'
 
 const routes = [
   {
@@ -9,11 +9,10 @@ const routes = [
     component: Home
   },
   {
-    path: '/axios',
-    name: 'axios',
-    component: Axios
+    path: '/Showresult',
+    name: 'Showresult',
+    component: Showresult
   }
-
 ]
 
 const router = createRouter({

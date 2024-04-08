@@ -1,4 +1,4 @@
-import { paginate } from '../scripts';
+import { paginate } from './others';
 
 function fget(uri, bucket, limit, currentpage){
         bucket.snippet = `fetch.get(${uri}).then((response)=>{return response.json()}).then((response)=>{const data = response})`;

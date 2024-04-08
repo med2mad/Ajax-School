@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { paginate } from '../scripts';
+import { paginate } from './others';
 
 function fget(uri, bucket, limit, currentpage){
         bucket.snippet = `$.ajax({url:${uri} , method:'GET', dataType:'json'}).done(function(response, textStatus, jqXHR){const data = response})`;
