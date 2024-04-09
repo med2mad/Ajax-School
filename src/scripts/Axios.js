@@ -4,14 +4,14 @@ import { paginate } from './others';
 function fget(uri, bucket, limit, currentpage){
   axios.get(uri)
   .then((response)=>{
-    bucket.time = 0 || 'Unavailable';
-    bucket.rows = response.data.rows;
-    bucket.pagination = paginate(response.data.total, currentpage, limit, 10);
-
-    bucket.snippet += `------ GET ---- ${0} ms --------
+    let t = Date.now() - bucket.timeS;
+    bucket.time = t;
+    bucket.snippet += `------ GET ---- ${t} ms --------
     axios.get(${uri})
     .then((response)=>{const data = response.data})
     `;
+    bucket.rows = response.data.rows;
+    bucket.pagination = paginate(response.data.total, currentpage, limit, 10);
   });
 }
 

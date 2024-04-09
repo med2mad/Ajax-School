@@ -98,7 +98,7 @@ export default{
     components: {Pagination},
 
     data(){return{
-                    bucket:{ time:'', rows:'', pagination:{}, snippet:'',
+                    bucket:{ time:'', timeS:'', rows:'', pagination:{}, snippet:'',
                              nameError:false, ageError:false,
                             },
                     ajaxes:{'Axios':axios, 'Fetch':fetch, 'JQuery':jquery, 'XHR':xhr},
@@ -226,6 +226,7 @@ export default{
     },
 
     mounted(){
+        this.bucket.timeS = Date.now();
         this.ajaxes[this._vajax].fget(this.GETuri(this._url[this._vback], 1), this.bucket, this._vlimit, 1);
         this.$refs.offcanvas.style.display='none';
     },
