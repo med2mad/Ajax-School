@@ -81,6 +81,10 @@ export default{
                     {db:'mysql', dblogofile:'mysql.png', url:{'js':'http://localhost:5010/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
                     {db:'mongoose', dblogofile:'mongodb.png', url:{'js':'http://localhost:5020/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
                     {db:'postgresql', dblogofile:'postgresql.png', url:{'js':'http://localhost:5030/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
+                    
+                    {db:'mysql', dblogofile:'mysql.png', url:{'js':'https://4up51acm9h0l.share.zrok.io/mysql/', 'php':'https://mzixdnk026xo.share.zrok.io/MysqlModel/'} },
+                    {db:'mongoose', dblogofile:'mongodb.png', url:{'js':'https://4up51acm9h0l.share.zrok.io/mongoose/','php':'https://mzixdnk026xo.share.zrok.io/MongoModel/'} },
+                    {db:'postgresql', dblogofile:'postgresql.png', url:{'js':'https://4up51acm9h0l.share.zrok.io/postgresql/', 'php':'https://mzixdnk026xo.share.zrok.io/PostgreSQLModel/'} },
                     ]
                 }
             },
