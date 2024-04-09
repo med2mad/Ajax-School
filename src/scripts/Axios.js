@@ -8,7 +8,7 @@ function fget(uri, bucket, limit, currentpage){
     bucket.time = t;
     bucket.snippet += `------ GET ---- ${t} ms --------
     axios.get(${uri})
-    .then((response)=>{const data = response.data})
+    .then((response)=>{const data = response.data}) zzzzzzzzzzzzzzz
     `;
     bucket.rows = response.data.rows;
     bucket.pagination = paginate(response.data.total, currentpage, limit, 10);
