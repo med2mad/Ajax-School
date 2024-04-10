@@ -4,11 +4,11 @@ import { paginate } from './others';
 function fget(uri, bucket, limit, currentpage){
   axios.get(uri)
   .then((response)=>{
-
     bucket.snippet += `------ GET ---- ${Date.now() - bucket.timeS} ms --------
     axios.get(${uri})
     .then((response)=>{const data = response.data})
     `;
+    
     bucket.rows = response.data.rows;
     bucket.pagination = paginate(response.data.total, currentpage, limit, 10);
   });
