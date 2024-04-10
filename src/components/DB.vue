@@ -2,7 +2,7 @@
     <div class="title"> <img :src="'imgs/tools/'+_dblogofile" alt="DB logo">  </div>
 
     <div class="dbpaginate">
-    <div class="db">
+    <div class="db" ref="db">
 
         <div class="db1">
 
@@ -66,10 +66,12 @@
         </div>
         </div>
 
+    
     <img src="imgs/up.png" class="upbtn" alt="offcanvas trigger" @click.self="toggleOffCanvas('open')">
     </div>
 
     <Pagination v-if="bucket.rows && bucket.rows.length>0" :pagination="bucket.pagination" @changepage="(i)=>{changepage(i);}"></Pagination>
+    <input type="checkbox" v-model="venable" @change="changeEnable">
     </div>
 
     <div class="offcanvas" ref="offcanvas">
@@ -103,7 +105,7 @@ export default{
                             },
                     ajaxes:{'Axios':axios, 'Fetch':fetch, 'JQuery':jquery, 'XHR':xhr},
                     selectedId:'', selectedPhotoName:'', photoObject:null,
-                    vname:'', vage:'',
+                    vname:'', vage:'', venable:localStorage.getItem(this._db),
                 }
             },
 
@@ -220,14 +222,37 @@ export default{
             
             return str;
         },
+        
+        changeEnable(){
+            localStorage.setItem(this._db, this.venable);
+            if(this.venable){
+                this.$refs.db.style.display='';
+            }
+            else{
+                this.$refs.db.style.display='none';
+            }
+        },
+
         changepage(i){
+            this.bucket.timeS = Date.now();
             this.ajaxes[this._vajax].fget(this.GETuri(this._url[this._vback], i), this.bucket, this._vlimit, i);
-        }
+        },
+    },
+
+    beforeCreate(){
+        if(!localStorage.getItem(this._db)){localStorage.setItem(this._db, true)}
     },
 
     mounted(){
-        this.bucket.timeS = Date.now();
-        this.ajaxes[this._vajax].fget(this.GETuri(this._url[this._vback], 1), this.bucket, this._vlimit, 1);
+        if(this.venable=='true'){
+            this.bucket.timeS = Date.now();
+            this.ajaxes[this._vajax].fget(this.GETuri(this._url[this._vback], 1), this.bucket, this._vlimit, 1);
+
+            this.$refs.db.style.display='';
+        }else{
+            this.$refs.db.style.display='none';
+        }
+
         this.$refs.offcanvas.style.display='none';
     },
 }
