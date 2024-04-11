@@ -1,8 +1,8 @@
 <template>
     <div class="title"> <img :src="'imgs/tools/'+_dblogofile" alt="DB logo">  </div>
 
-    <div class="dbpaginate">
-    <div class="db" ref="db">
+    <div ref="db">
+    <div class="db">
 
         <div class="db1">
 
@@ -66,16 +66,15 @@
         </div>
         </div>
 
-    
-    <img src="imgs/up.png" class="upbtn" alt="offcanvas trigger" @click.self="toggleOffCanvas('open')">
+        <img src="imgs/up.png" class="upbtn" alt="offcanvas trigger" @click.self="toggleOffCanvas('open')">
     </div>
 
     <Pagination v-if="bucket.rows && bucket.rows.length>0" :pagination="bucket.pagination" @changepage="(i)=>{changepage(i);}"></Pagination>
-    <input type="checkbox" v-model="venable" @change="changeEnable">
+    
     </div>
-
+<input type="checkbox" v-model="venable" @change="changeEnable">
     <div class="offcanvas" ref="offcanvas">
-        <button @click="toggleOffCanvas('close')">see offCanvas in bootstrap</button> <br>
+        <button @click="toggleOffCanvas('close')">check offCanvas in bootstrap</button> <br>
         <p> {{bucket.snippet}} </p> 
     </div>
 </template>

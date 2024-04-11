@@ -77,6 +77,7 @@ header nav a.router-link-exact-active{
 main{
     margin-top: 70px;
     margin-left: 182px;
+    background-image: linear-gradient(90deg , #eaf2fb , #8a8a8a , #eaf2fb ) ;
 }
 
 .side{

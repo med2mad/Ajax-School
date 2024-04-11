@@ -8,11 +8,6 @@
     height:75px;
 }
 
-.dbpaginate{
-    background-image: linear-gradient(90deg , #eaf2fb , #8a8a8a , #eaf2fb ) ;
-    padding-bottom: 25px;
-}
-
 .db{
     display: flex; /* align .db1|.db2 */
     flex-wrap: wrap;
