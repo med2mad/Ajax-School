@@ -224,7 +224,7 @@
         
         if(localStorage.getItem('token') && title=='Edit Profile'){
           payload.append('oldusername', localStorage.getItem('username'));
-          axios.put("http://localhost:5010/edit", payload)
+          axios.put("http://localhost:5000/edit", payload)
           .then((response) => { 
             if(response.data=='exists'){exists.className="show";}
             else{
@@ -235,7 +235,7 @@
           })
         }
         else{
-          axios.post("http://localhost:5010/signup", payload)
+          axios.post("http://localhost:5000/signup", payload)
           .then((response) => { 
             if(response.data=='exists'){exists.className="show";}
             else{

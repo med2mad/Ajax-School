@@ -67,7 +67,7 @@
 
 <script>
 import DB from '../components/DB.vue';
-import Login from '../components/Login.vue';
+import Login from '../components/Auth.vue';
 import '/public/styles/showresult.css';
 
 export default{
@@ -78,9 +78,9 @@ export default{
                 vback:localStorage.getItem('back'), vajax:localStorage.getItem('ajax'), 
                 vname:'', vage:'', vlimit:10, 
                 DBs:[
-                    {db:'mysql', dblogofile:'mysql.png', url:{'js':'http://localhost:5010/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
-                    {db:'mongoose', dblogofile:'mongodb.png', url:{'js':'http://localhost:5020/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
-                    {db:'postgresql', dblogofile:'postgresql.png', url:{'js':'http://localhost:5030/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
+                    {db:'mysql', dblogofile:'mysql.png', url:{'js':'http://localhost:5000/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
+                    {db:'mongoose', dblogofile:'mongodb.png', url:{'js':'http://localhost:5000/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
+                    {db:'postgresql', dblogofile:'postgresql.png', url:{'js':'http://localhost:5000/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
                     ]
                 }
             },
