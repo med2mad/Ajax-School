@@ -69,7 +69,7 @@
     <input type="checkbox" v-model="venable" @change="changeEnable">
 
     <div class="offcanvas" ref="offcanvas">
-        <button @click="toggleOffCanvas('close')">check offCanvas in bootstrap</button> <br>
+        <button @click="toggleOffCanvas('close')">check offCanvas in getbootstrap.com</button> <br>
         <p> {{store.snippet}} </p> 
     </div>
 </template>
