@@ -1,6 +1,6 @@
 import { paginate } from '../pagination';
 
-function fget(uri, store, limit, currentpage){
+function fget(uri, store, limit, currentpage, back, ajax){
   fetch(uri)
   .then((response)=> {
     store.snippet += `------ GET ---- ${Date.now() - store.time} ms--------\nfetch.get(${uri})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
@@ -12,7 +12,7 @@ function fget(uri, store, limit, currentpage){
   })
 }
 
-function fpost(url, body, store, limit){
+function fpost(url, body, store, limit, back, ajax){
         fetch(url, {
           method: "POST", 
           body: body
@@ -25,7 +25,7 @@ function fpost(url, body, store, limit){
               })
       }
 
-function fput(method, uri, body, selectedTr, store){
+function fput(method, uri, body, selectedTr, store, back, ajax){
         fetch(uri, {
             method: method,
             body: body
@@ -36,7 +36,7 @@ function fput(method, uri, body, selectedTr, store){
         })
       }
 
-function fdelete(method, url, store){
+function fdelete(method, url, store, back, ajax){
         fetch(url, {method: method})
         .then((response)=>{return response.json()})
         .then((response)=>{
