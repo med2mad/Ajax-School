@@ -1,7 +1,7 @@
 import $ from "jquery";
 import { paginate } from '../pagination';
 
-function fget(uri, store, limit, currentpage){
+function fget(uri, store, limit, currentpage, back, ajax){
   
   $.ajax({url:uri , method:'GET', dataType:'json'})
     .done(function(response, textStatus, jqXHR){
@@ -13,7 +13,7 @@ function fget(uri, store, limit, currentpage){
     });
 }
 
-function fpost(uri, body, store, limit){
+function fpost(uri, body, store, limit, back, ajax){
         $.ajax(
             {
               type:'POST',
@@ -30,7 +30,7 @@ function fpost(uri, body, store, limit){
         });
       }
 
-function fput(method, uri, body, selectedTr, store){
+function fput(method, uri, body, selectedTr, store, back, ajax){
         console.log('put jquery');
         $.ajax(
             {
@@ -44,7 +44,7 @@ function fput(method, uri, body, selectedTr, store){
         });
       }
       
-function fdelete(method, uri, store){
+function fdelete(method, uri, store, back, ajax){
         $.ajax(
             {
             "type":method, 
@@ -62,7 +62,7 @@ function fdelete(method, uri, store){
       }
 
 
- function  fixHeader(){
+ function fixHeader(){
     // $.ajaxSetup({contentType:false, processData:false,});
   }
 
