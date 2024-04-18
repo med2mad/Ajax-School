@@ -1,6 +1,6 @@
 import { paginate } from '../pagination';
 
-function fget(uri, store, limit, currentpage){
+function fget(uri, store, limit, currentpage, back, ajax){
   const xhr = new XMLHttpRequest();
   xhr.onload=function(){
     store.snippet += `------ GET ---- ${Date.now() - store.time} ms --------\nconst xhr = new XMLHttpRequest();
@@ -16,7 +16,7 @@ function fget(uri, store, limit, currentpage){
   xhr.send();
 }
 
-function fpost(uri, body, store, limit){
+function fpost(uri, body, store, limit, back, ajax){
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
           const response = JSON.parse(xhr.responseText);
@@ -27,7 +27,7 @@ function fpost(uri, body, store, limit){
         xhr.send(body);
       }
 
-function fput(method, uri, body, selectedTr, store){
+function fput(method, uri, body, selectedTr, store, back, ajax){
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
           const response = JSON.parse(xhr.responseText);
@@ -37,7 +37,7 @@ function fput(method, uri, body, selectedTr, store){
         xhr.send(body);
       }
       
-function fdelete(method, uri, store){
+function fdelete(method, uri, store, back, ajax){
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
           const response = JSON.parse(xhr.responseText);
