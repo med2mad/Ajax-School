@@ -21,9 +21,9 @@ function fpost(uri, body, store, limit, back, ajax){
       response.data.errors.forEach(error => { if(error.path=='name'){store.nameError=true}else{store.ageError=true} });
     }
     else{
-        const rowToInsert = {"_id":response.data.newId, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
-        store.rows.unshift(rowToInsert);
-        if(store.rows.length>limit){store.rows.pop();}//remove last row in <table> (respect _limit after add)
+      const rowToInsert = {"_id":response.data.newId, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
+      store.rows.unshift(rowToInsert);
+      if(store.rows.length>limit){store.rows.pop();}//remove last row in <table> (respect _limit after add)
     }
   })
 }
