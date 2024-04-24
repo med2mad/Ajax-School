@@ -13,11 +13,12 @@ function fget(uri, store, limit, currentpage, back, ajax){
 }
 
 function fpost(url, body, store, limit, back, ajax){
-  fetch(url, {
-    method: "POST", 
-    body: body
+  fetch(url, {method:"POST", body:body})
+  .then((response)=> {
+    store.snippet += `------ POST -- ${back}:${ajax} -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+    fetch(${uri}, {"method":'POST', "body":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
+    return response.json()
   })
-  .then((response)=> {return response.json()})
   .then((response)=>{
     const rowToInsert = {"id":response.newId, "_id":response.newId, "photo":response.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get 
     store.rows.unshift(rowToInsert);
