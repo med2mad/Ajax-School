@@ -12,8 +12,8 @@ function fget(uri, store, limit, currentpage, back, ajax){
   })
 }
 
-function fpost(url, body, store, limit, back, ajax){
-  fetch(url, {method:"POST", body:body})
+function fpost(uri, body, store, limit, back, ajax){
+  fetch(uri, {method:"POST", body:body})
   .then((response)=> {
     store.snippet += `------ POST -- ${back}:${ajax} -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
     fetch(${uri}, {"method":'POST', "body":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
@@ -37,8 +37,8 @@ function fput(method, uri, body, selectedTr, store, back, ajax){
   })
 }
 
-function fdelete(method, url, store, back, ajax){
-  fetch(url, {method: method})
+function fdelete(method, uri, store, back, ajax){
+  fetch(uri, {method: method})
   .then((response)=>{return response.json()})
   .then((response)=>{
     //GET replacement row
