@@ -45,10 +45,7 @@ export default{
                         Swal.showValidationMessage(`Please enter username and password`)
                     }
 
-                    const fd = new FormData(); //with just "{username,password}" (no "fd") it needs "app.use(express.json())" in backEnd
-                    fd.append('username', username);
-                    fd.append('password', password);
-                    await login(fd, Swal, this.user);
+                    await login({username,password}, Swal, this.user);
                 },
             });
         },
