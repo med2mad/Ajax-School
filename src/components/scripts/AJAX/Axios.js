@@ -1,20 +1,20 @@
 import axios from 'axios';
 import { paginate } from '../pagination';
 
-function fget(uri, store, limit, currentpage, back, ajax){
+function fget(uri, store, limit, currentpage, back){
   axios.get(uri)
   .then((response)=>{
-    store.snippet += `------ GET -- ${back}:${ajax} -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+    store.snippet += `------ GET -- ${back}:Axios -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
     axios.get(${uri})\n.then((response)=>{const data = response.data})\n\n`;
     store.rows = response.data.rows;
     store.pagination = paginate(response.data.total, currentpage, limit, 10);
   });
 }
 
-function fpost(uri, body, store, limit, back, ajax){
+function fpost(uri, body, store, limit, back){
   axios.post(uri,body)
   .then((response) => {
-    store.snippet += `------ POST -- ${back}:${ajax} -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+    store.snippet += `------ POST -- ${back}:Axios -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
     axios.post(${uri})\n.then((response)=>{const data = response.data})\n\n`;
     store.nameError=false; store.ageError=false;
     if(response.data.errors){
@@ -28,19 +28,19 @@ function fpost(uri, body, store, limit, back, ajax){
   })
 }
 
-function fput(method, uri, body, selectedTr, store, back, ajax){
+function fput(method, uri, body, selectedTr, store, back){
   axios({"method": method, "url": uri, "data":body}, {headers: {"Content-Type": "multipart/form-data"}})
   .then((response) => {
-    store.snippet += `------ PUT -- ${back}:${ajax} -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+    store.snippet += `------ PUT -- ${back}:Axios -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
     axios({"method": ${method}, "url": ${uri}, "data":body}, {headers: {"Content-Type": "multipart/form-data"}})\n.then((response)=>{const data = response.data})\n\n`;
     store.rows[selectedTr].name=body.get('name'); store.rows[selectedTr].age=body.get('age'); store.rows[selectedTr].photo=response.data.photo;
   });
 }
 
-function fdelete(method, uri, store, back, ajax){
+function fdelete(method, uri, store, back){
   axios({"method": method, "url": uri})
   .then((response)=>{
-    store.snippet += `------ DELETE -- ${back}:${ajax} -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+    store.snippet += `------ DELETE -- ${back}:Axios -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
     axios({"method": ${method}, "url": ${uri}})\n.then((response)=>{const data = response.data})\n\n`;
     //GET replacement row
     if(response.data.length>0)
