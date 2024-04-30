@@ -1,6 +1,6 @@
 import { paginate } from '../pagination';
 
-function fget(uri, store, limit, currentpage, back, ajax){
+function fget(uri, store, limit, currentpage, back){
   fetch(uri)
   .then((response)=> {
     store.snippet += `------ GET ---- ${Date.now() - store.time} ms--------\nfetch.get(${uri})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
@@ -12,10 +12,10 @@ function fget(uri, store, limit, currentpage, back, ajax){
   })
 }
 
-function fpost(uri, body, store, limit, back, ajax){
+function fpost(uri, body, store, limit, back){
   fetch(uri, {method:"POST", body:body})
   .then((response)=> {
-    store.snippet += `------ POST -- ${back}:${ajax} -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+    store.snippet += `------ POST -- ${back}:Fetch -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
     fetch(${uri}, {"method":'POST', "body":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
     return response.json()
   })
@@ -26,7 +26,7 @@ function fpost(uri, body, store, limit, back, ajax){
   })
 }
 
-function fput(method, uri, body, selectedTr, store, back, ajax){
+function fput(method, uri, body, selectedTr, store, back){
   fetch(uri, {
     method: method,
     body: body
@@ -37,7 +37,7 @@ function fput(method, uri, body, selectedTr, store, back, ajax){
   })
 }
 
-function fdelete(method, uri, store, back, ajax){
+function fdelete(method, uri, store, back){
   fetch(uri, {method: method})
   .then((response)=>{return response.json()})
   .then((response)=>{
