@@ -31,7 +31,11 @@ function fput(method, uri, body, selectedTr, store, back){
     method: method,
     body: body
   })
-  .then((response)=> {return response.json()})
+  .then((response)=> {
+    store.snippet += `------ PUT -- ${back}:Fetch -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+    fetch(${uri}, {"method":${method}, "body":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
+    return response.json()
+  })
   .then((response)=> {
     store.rows[selectedTr].name=body.get('name'); store.rows[selectedTr].age=body.get('age');store.rows[selectedTr].photo=response.photo;
   })
