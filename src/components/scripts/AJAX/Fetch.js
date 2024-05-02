@@ -43,7 +43,11 @@ function fput(method, uri, body, selectedTr, store, back){
 
 function fdelete(method, uri, store, back){
   fetch(uri, {method: method})
-  .then((response)=>{return response.json()})
+  .then((response)=>{
+    store.snippet += `------ DELETE -- ${back}:Axios -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+    fetch(${uri}, {"method":${method}})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
+    return response.json()
+  })
   .then((response)=>{
     //GET replacement row
     if(response.length>0)
