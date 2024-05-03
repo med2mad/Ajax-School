@@ -48,8 +48,8 @@ function fdelete(method, uri, store, back){
   });
 }
 
-function fixHeader(){
+// function fixHeader(){
   // axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
-}
+// }
 
 export default {fget, fpost, fput, fdelete}
