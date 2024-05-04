@@ -55,12 +55,4 @@ function fdelete(method, uri, store, back){
   })
 }
 
-// function fixHeader(){
-  // const defaultHeaders = new Headers(); //create an object to work with in all calls
-  // defaultHeaders.append('Content-Type', 'application/json; charset=utf-8');
-  ////setting "Content-Type" to "multipart/form-data" throws "Multipart: Boundary not found" error
-
-  //body: JSON.stringify(body), headers: {"Content-Type":"application/json"} //if data send as JSON not as FormData (no photos)
-// }
-
 export default {fget, fpost, fput, fdelete}

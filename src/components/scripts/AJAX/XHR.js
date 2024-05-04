@@ -17,15 +17,15 @@ function fget(uri, store, limit, currentpage, back){
 }
 
 function fpost(uri, body, store, limit, back){
-        const xhr = new XMLHttpRequest();
-        xhr.onload=function(){
-          const response = JSON.parse(xhr.responseText);
-          store.rows.unshift({"id":response.newId, "_id":response.newId, "photo":response.photo, "name":body.get("name"), "age":body.get("age")});//FormData object use get
-          if(store.rows.length>limit){store.rows.pop();} //remove last row in <table> (respect _limit after add)
-        }
-        xhr.open("POST", uri, true);
-        xhr.send(body);
-      }
+  const xhr = new XMLHttpRequest();
+  xhr.onload=function(){
+    const response = JSON.parse(xhr.responseText);
+    store.rows.unshift({"id":response.newId, "_id":response.newId, "photo":response.photo, "name":body.get("name"), "age":body.get("age")});//FormData object use get
+    if(store.rows.length>limit){store.rows.pop();} //remove last row in <table> (respect _limit after add)
+  }
+  xhr.open("POST", uri, true);
+  xhr.send(body);
+}
 
 function fput(method, uri, body, selectedTr, store, back){
         const xhr = new XMLHttpRequest();
@@ -47,13 +47,5 @@ function fdelete(method, uri, store, back){
         xhr.open(method, uri, true);
         xhr.send();
       }
-
-  function  fixHeader(){
-    //const xhr = new XMLHttpRequest(); //create an object to work with in all calls
-    //xhr.setRequestHeader('Content-Type', 'multipart/form-data');//throws "Multipart: Boundary not found" error
-    //using JSON data (no FormData = no photos)
-    //xhr.setRequestHeader('Content-Type', 'application/json');
-    //xhr.send(JSON.stringify(body));
-  }
 
   export default {fget, fpost, fput, fdelete}

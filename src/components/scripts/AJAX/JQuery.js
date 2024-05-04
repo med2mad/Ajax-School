@@ -59,8 +59,4 @@ function fdelete(method, uri, store, back){
   });
 }
 
-// function fixHeader(){
-  // $.ajaxSetup({contentType:false, processData:false,});
-// }
-
 export default {fget, fpost, fput, fdelete}
