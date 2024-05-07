@@ -47,9 +47,6 @@ function fdelete(method, uri, store, back){
     {
     "type":method, 
     "url":uri
-
-    //using JSON data (no FormData = no photos)
-    // url:uri+'?callback=?'
     }
   )
   .done( function(response){
