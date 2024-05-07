@@ -13,11 +13,11 @@
                 <div v-else-if="store.rows" class="rows">
                     <form> <!--for input radio-->
                     <table>
-                        <tr><th></th><th>#</th><th>Text</th><th>Number</th><th>Photo</th></tr>
+                        <tr><th></th><th>#</th><th>Name</th><th>Age</th><th>Photo</th></tr>
                         <transition-group name="table">
                         <tr v-for="profile in store.rows" class="datarow" :class="{selectedrow:profile._id==selectedId}" :key="profile._id" @click="selectProfile(profile._id);">
                             <td> <input type="radio" name="db" v-model="selectedId" :value="profile._id"> </td>
-                            <td>{{profile._id}}</td> <td :ref="'trName'+profile._id">{{profile.name}}</td><td :ref="'trAge'+profile._id">{{profile.age}}</td>
+                            <td><!--{{profile._id}}--></td> <td :ref="'trName'+profile._id">{{profile.name}}</td><td :ref="'trAge'+profile._id">{{profile.age}}</td>
                             <td><img :src="'uploads/'+(profile.photo||'profile.jpg')" :alt="'photo'+profile._id" :ref="'trImg'+profile._id"></td>
                         </tr>
                         </transition-group>

@@ -8,7 +8,7 @@
         {{user.name}}
     </div>
     <div @click="editUser">
-        <img :src="'uploads/'+(user.photo?user.photo:'profile.jpg')" class="userphoto"/>
+        <img :src="'uploads/'+(user.photo?user.photo:'profile.jpg')" class="userphoto" />
     </div>
 </template>
 
