@@ -3,9 +3,9 @@ import { paginate } from '../pagination';
 
 function fget(uri, store, limit, currentpage, back){
   $.ajax({url:uri , method:'GET', dataType:'json'})
-    .done(function(response, textStatus, jqXHR){
+    .done(function(response){
       store.snippet += `------ GET -- ${back}:jQuery -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
-      $.ajax({url:${uri} , method:'GET', dataType:'json'})\n.done(function(response, textStatus, jqXHR){const data = response})\n\n`;
+      $.ajax({method:'GET', url:'${uri}', dataType:'json'})\n.done(function(response){const data = response})\n\n`;
 
       store.rows = response.rows;
       store.pagination = paginate(response.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
@@ -15,17 +15,17 @@ function fget(uri, store, limit, currentpage, back){
 function fpost(uri, body, store, limit, back){
   $.ajax(
     {
-      type:'POST',
-      contentType: false,
-      processData: false,
-      url:uri,
-      data: body,
+      "type":'POST',
+      "url":uri,
+      "data": body,
+      "contentType": false,
+      "processData": false,
     }
   )
   .done(function(response){
     store.snippet += `------ POST -- ${back}:jQuery -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
-    fetch(${uri}, {"method":'POST', "body":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
-    
+    $.ajax({"type":'POST', "url":'${uri}', "contentType":false, "processData":false, "data":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
+
     const rowToInsert = {"id":response.newId, "_id":response.newId, "photo":response.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
     store.rows.unshift(rowToInsert);
     if(store.rows.length>limit){store.rows.pop();} //remove last row in <table> (respect _limit after add)
