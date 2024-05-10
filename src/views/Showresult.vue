@@ -72,8 +72,8 @@
 </template>
 
 <script>
-import DB from '../components/DB.vue';
-import Login from '../components/Auth.vue';
+import DB from './components/DB.vue';
+import Login from './components/Auth.vue';
 import '/public/styles/showresult.css';
 
 export default{
