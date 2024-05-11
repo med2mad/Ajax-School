@@ -77,10 +77,10 @@
 <script>
 import Swal from 'sweetalert2';
 import Pagination from './Pagination.vue';
-import axios from './scripts/AJAX services/Axios';
-import fetch from './scripts/AJAX services/Fetch';
-import jquery from './scripts/AJAX services/JQuery';
-import xhr from './scripts/AJAX services/XHR';
+import axios from './AJAX services/Axios';
+import fetch from './AJAX services/Fetch';
+import jquery from './AJAX services/JQuery';
+import xhr from './AJAX services/XHR';
 import '/public/styles/db.css';
 
 export default{

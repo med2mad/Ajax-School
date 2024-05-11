@@ -14,7 +14,7 @@
 
 <script>
 import Swal from 'sweetalert2';
-import { login, logout } from './scripts/auth';
+import { login, logout } from './auth';
 
 export default{
 

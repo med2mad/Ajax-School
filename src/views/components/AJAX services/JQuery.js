@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { paginate } from '../pagination';
+import { paginate } from './pagination';
 
 function fget(uri, store, limit, currentpage, back){
   $.ajax({url:uri , method:'GET', dataType:'json'})

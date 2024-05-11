@@ -1,4 +1,4 @@
-import { paginate } from '../pagination';
+import { paginate } from './pagination';
 
 function fget(uri, store, limit, currentpage, back){
   const xhr = new XMLHttpRequest();
