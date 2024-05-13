@@ -70,7 +70,6 @@
 
     <div class="offcanvas" ref="offcanvas">
         <button @click="toggleOffCanvas('close')">check offCanvas in getbootstrap.com</button> <br>
-        <p> {{store.snippet}} </p> 
     </div>
 </template>
 
@@ -95,7 +94,7 @@ export default{
     components: {Pagination},
 
     data(){return{
-                    store:{ rows:'', pagination:{}, time:'', snippet:'',
+                    store:{ rows:'', pagination:{}, time:'',
                             nameError:false, ageError:false,
                         }, //sending states by reference (no state management library)
 

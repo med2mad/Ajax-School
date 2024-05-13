@@ -3,7 +3,7 @@ import { paginate } from './pagination';
 function fget(uri, store, limit, currentpage, back){
   fetch(uri)
   .then((response)=> {
-    store.snippet += `------ GET -- ${back}:Fetch -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+    store.snippet += `------ GET -- ${back}:Fetch [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
     fetch.get(${uri})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
     if(response.ok){ return response.json() } else {throw new Error("[!response.ok]")} 
   })
@@ -16,7 +16,7 @@ function fget(uri, store, limit, currentpage, back){
 function fpost(uri, body, store, limit, back){
   fetch(uri, {method:"POST", body:body})
   .then((response)=> {
-    store.snippet += `------ POST -- ${back}:Fetch -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+    store.snippet += `------ POST -- ${back}:Fetch [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
     fetch(${uri}, {"method":'POST', "body":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
     return response.json()
   })
@@ -33,7 +33,7 @@ function fput(method, uri, body, selectedTr, store, back){
     body: body
   })
   .then((response)=> {
-    store.snippet += `------ PUT -- ${back}:Fetch -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+    store.snippet += `------ PUT -- ${back}:Fetch [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
     fetch(${uri}, {"method":${method}, "body":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
     return response.json()
   })
@@ -45,7 +45,7 @@ function fput(method, uri, body, selectedTr, store, back){
 function fdelete(method, uri, store, back){
   fetch(uri, {method: method})
   .then((response)=>{
-    store.snippet += `------ DELETE -- ${back}:Fetch -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+    store.snippet += `------ DELETE -- ${back}:Fetch [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
     fetch(${uri}, {"method":${method}})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
     return response.json()
   })

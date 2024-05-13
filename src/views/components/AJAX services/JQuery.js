@@ -4,7 +4,7 @@ import { paginate } from './pagination';
 function fget(uri, store, limit, currentpage, back){
   $.ajax({url:uri , method:'GET', dataType:'json'})
     .done(function(response){
-      store.snippet += `------ GET -- ${back}:jQuery -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+      store.snippet += `------ GET -- ${back}:jQuery [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
       $.ajax({method:'GET', url:'${uri}', dataType:'json'})\n.done(function(response){const data = response})\n\n`;
 
       store.rows = response.rows;
@@ -23,7 +23,7 @@ function fpost(uri, body, store, limit, back){
     }
   )
   .done(function(response){
-    store.snippet += `------ POST -- ${back}:jQuery -- [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
+    store.snippet += `------ POST -- ${back}:jQuery [${Date.now() - store.time} ms] -------- ${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}
     $.ajax({"type":'POST', "url":'${uri}', "contentType":false, "processData":false, "data":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})\n\n`;
 
     const rowToInsert = {"id":response.newId, "_id":response.newId, "photo":response.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get

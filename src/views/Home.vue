@@ -22,6 +22,10 @@
           <router-link to="/Showresult"><div class="text">Start</div></router-link>
           <div class="flash"></div>
       </div>
+      <div class="btn">
+          <router-link to="/Calendar"><div class="text">calendar</div></router-link>
+          <div class="flash"></div>
+      </div>
     </div>
     
     <div class="tools">
