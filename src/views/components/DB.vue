@@ -91,11 +91,11 @@ export default{
 
     emits: ['mountGet', 'logout'],
 
-    components: {Pagination},
+    components: { Pagination },
 
     data(){return{
                     store:{ rows:'', pagination:{}, time:'',
-                            nameError:false, ageError:false,
+                            nameError:false, ageError:false, db:this._db
                         }, //sending states by reference (no state management library)
 
                     ajaxes:{'Axios':axios, 'Fetch':fetch, 'JQuery':jquery, 'XHR':xhr},

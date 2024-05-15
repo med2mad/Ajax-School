@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { paginate } from './pagination';
 
 function fget(uri, store, limit, currentpage, back){
@@ -38,6 +39,8 @@ function fput(method, uri, body, selectedTr, store, back){
       }
       
 function fdelete(method, uri, store, back){
+  alert('XHR');
+  
         const xhr = new XMLHttpRequest();
         xhr.onload=function(){
           const response = JSON.parse(xhr.responseText);

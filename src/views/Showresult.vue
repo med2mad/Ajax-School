@@ -1,13 +1,9 @@
 <template>
     <header><div class="logo"><router-link to="/"><img src="imgs/logo.png" alt="logo"></router-link></div> <Login ref="login" />
-                <nav>
-            <!-- <router-link to="/sub"> <div class="btn">subscribe</div> </router-link> -->
-            <router-link to="/xhr"> <div class="btn">Login</div> </router-link>
-            <router-link to="/jquery"> <div class="btn">Sign-up</div> </router-link>
-
+        <nav>
+            <router-link to="/Calendar"> <div class="btn">Login</div> </router-link>
+            <router-link to="/Showresult"> <div class="btn">Sign-up</div> </router-link>
         </nav>
-        
-        
     </header>
 
     <div class="side">
