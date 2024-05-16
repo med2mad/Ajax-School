@@ -46,7 +46,6 @@ function fdelete(method, uri, store, back){
   axios({"method":method, "url":uri})
   .then((response)=>{
     //GET replacement row
-    // alert(response.data.rows.length);
     if(response.data.rows.length>0)
     { store.rows.push({"_id":response.data.rows[0]._id, "name":response.data.rows[0].name, "age":response.data.rows[0].age, "photo":response.data.rows[0].photo}) }
 
@@ -57,8 +56,6 @@ function fdelete(method, uri, store, back){
 
 
 function saveSnippet(_id, back, uri, store, method, action){
-  // alert('Axios');
-
   const t = Date.now() - store.time;
   const d = `${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}`
   

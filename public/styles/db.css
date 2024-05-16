@@ -252,9 +252,9 @@ counter-reset: rowNumber -1;
 counter-increment: rowNumber;
 }
 /*---toggle--*/
-.db1 table tr td:nth-child(2)::before {
+/* .db1 table tr td:nth-child(2)::before {
 content: counter(rowNumber);
-}
+} */
 /* ------------- class declarations -------------*/
 .green{
     background-color: green;

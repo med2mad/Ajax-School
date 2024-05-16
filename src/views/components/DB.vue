@@ -17,7 +17,7 @@
                         <transition-group name="table">
                         <tr v-for="profile in store.rows" class="datarow" :class="{selectedrow:profile._id==selectedId}" :key="profile._id" @click="selectProfile(profile._id);">
                             <td> <input type="radio" name="db" v-model="selectedId" :value="profile._id"> </td>
-                            <td><!--{{profile._id}}--></td> <td :ref="'trName'+profile._id">{{profile.name}}</td><td :ref="'trAge'+profile._id">{{profile.age}}</td>
+                            <td>{{profile._id}}</td> <td :ref="'trName'+profile._id">{{profile.name}}</td><td :ref="'trAge'+profile._id">{{profile.age}}</td>
                             <td><img :src="'uploads/'+(profile.photo||'profile.jpg')" :alt="'photo'+profile._id" :ref="'trImg'+profile._id"></td>
                         </tr>
                         </transition-group>
@@ -120,6 +120,7 @@ export default{
 
             if(!this.selectedId){Swal.fire('Select Profile !');}
             else if(this.checkData()){
+                
                 let selectedTr;
                 for (let i = 0; i < this.store.rows.length; i++){//find <tr> to change
                     if(this.store.rows[i]["_id"]==this.selectedId)
@@ -132,8 +133,9 @@ export default{
                 
                 this.store.time = new Date();
                 if(this._vback=='js') //no PUT http method in PHP
+                {
                     this.ajaxes[this._vajax].fput('PUT', this._url['js']+this.selectedId, fd, selectedTr, this.store, this._vback, this._vajax);
-                else{
+                }else{
                     this.ajaxes[this._vajax].fput('POST', this._url['php']+this.selectedId+'?_method=PUT', fd, selectedTr, this.store, this._vback, this._vajax);
                 }
                 

@@ -53,8 +53,6 @@ function fdelete(method, uri, store, back){
 
 
 function saveSnippet(_id, back, uri, store, method, action){
-  // alert('JQuery');
-
   const t = Date.now() - store.time;
   const d = `${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}`
   
