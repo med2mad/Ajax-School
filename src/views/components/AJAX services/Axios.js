@@ -7,7 +7,7 @@ function fget(uri, store, limit, currentpage, back){
     store.rows = response.data.rows;
     store.pagination = paginate(response.data.total, currentpage, limit, 10);
 
-    saveSnippet(null, back, uri, store, 'GET', 'Read');
+    // saveSnippet(null, back, uri, store, 'GET', 'Read');
   });
 }
 
@@ -57,12 +57,12 @@ function fdelete(method, uri, store, back){
 
 function saveSnippet(_id, back, uri, store, method, action){
   const t = Date.now() - store.time;
-  const d = `${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}`
+  const d = `${store.time.getFullYear()}-${store.time.getMonth()+1}-${store.time.getDate()}T${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}`
   
   let snippet;
-  if(action == 'Read')
-    snippet = `axios.get('${uri}')\n.then((response)=>{const data = response.data})`;
-  else if(action == 'Create')
+  // if(action == 'Read')
+  //   snippet = `axios.get('${uri}')\n.then((response)=>{const data = response.data})`;
+  if(action == 'Create')
     snippet = `axios.post('${uri}', body)\n.then((response)=>{const data = response.data})`;
   else if (action == 'Update')
     snippet = `axios({"method":'${method}', "url":'${uri}', "data":body}, {"headers": {"Content-Type":'multipart/form-data'}})\n.then((response)=>{const data = response.data})`;

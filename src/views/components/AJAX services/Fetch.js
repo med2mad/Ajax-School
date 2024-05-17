@@ -10,7 +10,7 @@ function fget(uri, store, limit, currentpage, back){
     store.rows = response.rows;
     store.pagination = paginate(response.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
   
-    saveSnippet(null, back, uri, store, 'GET', 'Read');
+    // saveSnippet(null, back, uri, store, 'GET', 'Read');
   })
 }
 
@@ -60,14 +60,14 @@ function saveSnippet(_id, back, uri, store, method, action){
   const d = `${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}`
   
   let snippet;
-  if(action == 'Read')
-    snippet = `${back}:Fetch [${t} ms] -------- ${d}\nfetch.get('${uri}')\n.then((response)=>{return response.json()}).then((response)=>{const data = response})`
-  else if(action == 'Create')
-    snippet = `${back}:Fetch [${t} ms] -------- ${d}\nfetch('${uri}', {"method":'POST', "body":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
+  // if(action == 'Read')
+  //   snippet = `fetch.get('${uri}')\n.then((response)=>{return response.json()}).then((response)=>{const data = response})`
+  if(action == 'Create')
+    snippet = `fetch('${uri}', {"method":'POST', "body":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
   else if (action == 'Update')
-    snippet = `${back}:Fetch [${t} ms] -------- ${d}\nfetch('${uri}', {"method":'${method}', "body":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
+    snippet = `fetch('${uri}', {"method":'${method}', "body":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
   else if (action == 'Delete')
-    snippet = `${back}:Fetch [${t} ms] -------- ${d}\nfetch('${uri}', {"method":'${method}'})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
+    snippet = `fetch('${uri}', {"method":'${method}'})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
 
   axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
 }

@@ -12,6 +12,7 @@
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import axios from 'axios'
 
 export default {
 components: {FullCalendar},
@@ -30,13 +31,20 @@ data() {
   }},
 
   methods:{
-    handleDateClick: function(arg) {
-      this.calendarOptions.events.push({title:'sdfdsf', date: arg.dateStr+'T00:00:00'})
-    },
     handleEventClick: function(info) {
       alert('Event : ' + info.event.title);
     },
+  },
 
-  }
+  mounted(){
+    axios.get('http://localhost:5000/snippet')
+    .then((response)=>{
+      const data = response.data.rows;
+      data.forEach((row)=>{
+        console.log(row);
+        this.calendarOptions.events.push({title:row.ajax, date:row.date})
+      })
+    });
+  },
 }
 </script>
