@@ -53,9 +53,9 @@
             </table>
             </form>
             <div class="ppd">
-                <button class="post btn" @click="handlePost"> <div class="flash">POST</div> </button>
-                <button class="put btn" @click="handlePut"> <div class="flash">PUT</div> </button><!-- fuck -->
-                <button class="delete btn" @click="handleDelete"> <div class="flash">DELETE</div> </button>
+                <button class="post btn" @click="handlePost"> <div class="flash">Create</div> </button>
+                <button class="put btn" @click="handlePut"> <div class="flash">Update</div> </button><!-- fuck -->
+                <button class="delete btn" @click="handleDelete"> <div class="flash">Delete</div> </button>
             </div>
         </div>
         </div>
