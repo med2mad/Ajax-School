@@ -1,5 +1,5 @@
 
-function paginate(totalItems, currentPage = 1, pageSize = 10, maxPages = 10) {
+function paginate(totalItems, currentPage = 1, pageSize = 10, maxPages = 10) { //total selected rows count, current page number, per page, max pages
     // calculate total pages
     let totalPages = Math.ceil(totalItems / pageSize);
 

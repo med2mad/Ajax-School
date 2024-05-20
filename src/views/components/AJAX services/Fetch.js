@@ -8,9 +8,7 @@ function fget(uri, store, limit, currentpage, back){
   })
   .then((response)=>{
     store.rows = response.rows;
-    store.pagination = paginate(response.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
-  
-    // saveSnippet(null, back, uri, store, 'GET', 'Read');
+    store.pagination = paginate(response.total, currentpage, limit, 10);
   })
 }
 
@@ -60,14 +58,12 @@ function saveSnippet(_id, back, uri, store, method, action){
   const d = `${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}`
   
   let snippet;
-  // if(action == 'Read')
-  //   snippet = `fetch.get('${uri}')\n.then((response)=>{return response.json()}).then((response)=>{const data = response})`
   if(action == 'Create')
-    snippet = `fetch('${uri}', {"method":'POST', "body":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
+    snippet = `fetch('${uri}', {"method":'POST', "body":data})<br>.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
   else if (action == 'Update')
-    snippet = `fetch('${uri}', {"method":'${method}', "body":data})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
+    snippet = `fetch('${uri}', {"method":'${method}', "body":data})<br>.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
   else if (action == 'Delete')
-    snippet = `fetch('${uri}', {"method":'${method}'})\n.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
+    snippet = `fetch('${uri}', {"method":'${method}'})<br>.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
 
   axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
 }

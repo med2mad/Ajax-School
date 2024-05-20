@@ -6,7 +6,7 @@ function fget(uri, store, limit, currentpage, back){
   $.ajax({"url":uri , "method":'GET', "dataType":'json'})
     .done(function(response){
       store.rows = response.rows;
-      store.pagination = paginate(response.total, currentpage, limit, 10);//(number of filtered rows, current page, per page, max pages)
+      store.pagination = paginate(response.total, currentpage, limit, 10);
     
       saveSnippet(null, back, uri, store, 'GET', 'Read');
     });
@@ -57,14 +57,12 @@ function saveSnippet(_id, back, uri, store, method, action){
   const d = `${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}`
   
   let snippet;
-  // if(action == 'Read')
-  //   snippet = `$.ajax({"method":'GET', "url":'${uri}', "dataType":'json'})\n.done(function(response){const data = response})`;
   if(action == 'Create')
-    snippet = `$.ajax({"type":'POST', "url":'${uri}', "contentType":false, "processData":false, "data":data})\n.done(function(response){const data = response.data})`;
+    snippet = `$.ajax({"type":'POST', "url":'${uri}', "contentType":false, "processData":false, "data":data})<br>.done(function(response){const data = response.data})`;
   else if (action == 'Update')
-    snippet = `$.ajax({"type":'${method}', "url":'${uri}', "data":body})\n.done(function(response){const data = response.data})`;
+    snippet = `$.ajax({"type":'${method}', "url":'${uri}', "data":body})<br>.done(function(response){const data = response.data})`;
   else if (action == 'Delete')
-    snippet = `$.ajax({"type":${method}, "url":${uri}})\n.done(function(response){const data = response.data})`;
+    snippet = `$.ajax({"type":${method}, "url":${uri}})<br>.done(function(response){const data = response.data})`;
 
   axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
 }

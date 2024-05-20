@@ -57,14 +57,12 @@ function saveSnippet(_id, back, uri, store, method, action){
   const d = `${store.time.getDate()}/${store.time.getMonth()+1}/${store.time.getFullYear()} ${store.time.getHours()}:${store.time.getMinutes()}:${store.time.getSeconds()}`
   
   let snippet;
-  // if(action == 'Read')
-  //   snippet = `const xhr = new XMLHttpRequest();\nxhr.onload = function(){const data = JSON.parse(xhr.responseText)}\nxhr.open('GET', '${uri}', true);\nxhr.send();`
   if(action == 'Create')
-    snippet = `const xhr = new XMLHttpRequest();\nxhr.onload = function(){const response = JSON.parse(xhr.responseText);}\nxhr.open('POST', '${uri}', true);\nxhr.send(body);`;
+    snippet = `const xhr = new XMLHttpRequest();<br>xhr.onload = function(){const response = JSON.parse(xhr.responseText);}<br>xhr.open('POST', '${uri}', true);<br>xhr.send(body);`;
   else if (action == 'Update')
-    snippet = `const xhr = new XMLHttpRequest();\nxhr.onload = function(){const response = JSON.parse(xhr.responseText)}\nxhr.open('${method}', '${uri}', true);\nxhr.send(body);`;
+    snippet = `const xhr = new XMLHttpRequest();<br>xhr.onload = function(){const response = JSON.parse(xhr.responseText)}<br>xhr.open('${method}', '${uri}', true);<br>xhr.send(body);`;
   else if (action == 'Delete')
-    snippet = `const xhr = new XMLHttpRequest();\nxhr.onload = function(){const response = JSON.parse(xhr.responseText)}\nxhr.open('${method}', '${uri}', true);\nxhr.send();`;
+    snippet = `const xhr = new XMLHttpRequest();<br>xhr.onload = function(){const response = JSON.parse(xhr.responseText)}<br>xhr.open('${method}', '${uri}', true);<br>xhr.send();`;
   
   axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
 }
