@@ -83,20 +83,20 @@ data() {
     flex: 1;
   }
   .cal2 .fc-event {
-    margin-bottom: 6px;
+    /* margin-bottom: 6px; */
     overflow: auto;
   }
   .cal2 .fc-event .fc-event-title{
-    font-weight: bold;
+    /* font-weight: bold;
     border:solid 1px black;
-    width:100%;
     border-radius: 5px;
     background-color: rgb(160, 206, 214);
-    color:black;
+    color:black; */
+    width:100%;
     text-align: center;
   }
-  .cal2 .fc-event .subtitle{
+  /* .cal2 .fc-event .subtitle{
     text-decoration:underline;
     font-weight: bold;
-  }
+  } */
 </style>
