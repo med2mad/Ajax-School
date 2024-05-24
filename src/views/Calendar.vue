@@ -62,6 +62,7 @@ data() {
       const data = response.data.rows;
       for (let row of data) {
         let desc = '<p><span class="subtitle">Back:</span><br>' + row.back + '<br><br>'
+            desc += '<span class="subtitle">Time:</span> : ' + row.time + ' ms<br><br>'
             desc += '<span class="subtitle">Snippet:</span><br><span class="snippet">' + row.snippet + '</span></p>';
         this.$refs.cal1.calendar.addEvent( {"start":new Date(row.date).toISOString(), "title":row.ajax+' '+row.action, "description":desc, display:'block'} );
         this.$refs.cal2.calendar.addEvent( {"start":new Date(row.date).toISOString(), "title":row.ajax+' '+row.action + ' ' + new Date(row.date).getHours()+':'+new Date(row.date).getMinutes(), "description":desc, display:'block'} );
