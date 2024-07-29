@@ -1,8 +1,8 @@
 <template>
-    <header><div class="logo"><router-link to="/"><img src="imgs/logo.png" alt="logo"></router-link></div> <Login ref="login" />
+    <header><div class="logo"><router-link to="/"><img src="imgs/logo.png" alt="logo"></router-link></div> <Auth ref="Auth" />
         <nav>
             <router-link to="/Calendar"> <div class="btn">Login</div> </router-link>
-            <router-link to="/Showresult"> <div class="btn">Sign-up</div> </router-link>
+            <a href="html/signup.html?title=Sign Up"> <div class="btn">Sign-up</div> </a>
         </nav>
     </header>
 
@@ -36,18 +36,12 @@
         
         <div class="devider"></div>
 
-        <h2>Legend :</h2>
-        <div class="legend">
-            <div><div class="green"></div></div><div>Under 100 ms</div>
-            <div><div class="orange"></div></div><div>100 ms to 200 ms</div>
-            <div><div class="red"></div></div><div>Above 200 ms</div>
-        </div>
     </div>
 
     <main>
         <DB v-for="item in DBs" :key="item.db+vback+vajax+vlimit+vname+vage" :_url="item.url" :_dblogofile="item.dblogofile" :_db="item.db"
                                 :_vlimit="vlimit" :_vname="vname" :_vage="vage" :_vback="vback" :_vajax="vajax"
-                                @logout="this.$refs.login.fLogout();"
+                                @logout="this.$refs.Auth.fLogout();"
         ></DB>
     </main>
 
@@ -69,12 +63,12 @@
 
 <script>
 import DB from './components/DB.vue';
-import Login from './components/Auth.vue';
+import Auth from './components/Auth.vue';
 import '/public/styles/showresult.css';
 
 export default{
 
-    components: {DB, Login},
+    components: {DB, Auth},
 
     data(){return{
                 vback:localStorage.getItem('back'), vajax:localStorage.getItem('ajax'), 

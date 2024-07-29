@@ -1,6 +1,10 @@
 @font-face {
-    font-family: Rajdhani-Light;
-    src: url('/public/styles/fonts/Rajdhani-Light.ttf');
+    font-family: Rajdhani-Bold;
+    src: url('/public/styles/fonts/Rajdhani-Bold.ttf');
+}
+@font-face {
+  font-family: Rajdhani-Light;
+  src: url('/public/styles/fonts/Rajdhani-Light.ttf');
 }
 
 header{
