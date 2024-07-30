@@ -1,35 +1,24 @@
 <template>
   <div class="homelogo"><img src="imgs/logo.png" alt="logo"></div>
 
-  <h1><span>-</span> Welcome <span>-</span></h1>
-
   <div class="home">
-
     <div class="start">
-      <div class="ps">
+      <div class="ps2">
         <p>
-          "AJAX", a web developpement technique used to send requests to web servers Asynchronously using javascript.
-        </p>
-        <p>
-          This app's goal is to show off my technical skills by comparing AJAX tools on different database systems 
-          by calculating the time it takes for each of them to send and receive data (which can help you pick the right database system for your projects).
-        </p>
-        <p>
-          The app also shows my Front-End capabilities (UI/Styling/Animations).
+          An educational App providing code snippets for manipulating multiple database systems,
+          using different backend technologies with a selection of Ajax techniques.
         </p>
       </div>
       <div class="btn">
           <router-link to="/Showresult"><div class="text">Start</div></router-link>
           <div class="flash"></div>
       </div>
-      <div class="btn">
-          <router-link to="/Calendar"><div class="text">calendar</div></router-link>
-          <div class="flash"></div>
-      </div>
     </div>
     
+    <hr>
+
     <div class="tools">
-      <p>Tools used to make this app:</p>
+      <p>Build using :</p>
       <div class="carousel">
         <img class="crslbtn prevbtn" src="imgs/prev.png" @click="prev" alt="button prev">
         <transition :name="transName">

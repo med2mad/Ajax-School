@@ -1,9 +1,7 @@
 <template>
-    <header><div class="logo"><router-link to="/"><img src="imgs/logo.png" alt="logo"></router-link></div> <Auth ref="Auth" />
-        <nav>
-            <router-link to="/Calendar"> <div class="btn">Login</div> </router-link>
-            <a href="html/signup.html?title=Sign Up"> <div class="btn">Sign-up</div> </a>
-        </nav>
+    <header>
+        <div class="logo"><router-link to="/"><img src="imgs/logo.png" alt="logo"></router-link></div>
+        <Auth ref="Auth" />
     </header>
 
     <div class="side">

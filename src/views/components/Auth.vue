@@ -1,15 +1,17 @@
 <template>
-    <div>
-        <button @click="fLogin">Log In</button><br>
-        <button @click="fLogout">Log Out</button><br>
-        <a href="html/signup.html?title=Sign Up">Create an Account</a>
-    </div>
-    <div @click="editUser">
-        {{user.name}}
-    </div>
-    <div @click="editUser">
-        <img :src="'uploads/'+(user.photo?user.photo:'profile.jpg')" class="userphoto" />
-    </div>
+    <nav>
+        <a style="display:flex; flex: 1 1 auto; align-items:center; justify-content:space-evenly" href="javascript:void(0)" @click="profile">
+            <div class="username">
+                {{user.name}}
+            </div>
+            <div>
+                <img :src="'uploads/'+(user.photo?user.photo:'profile.jpg')" class="userphoto" />
+            </div>
+        </a>
+        <a v-if="!user.name" href="javascript:void(0)" @click="fLogin" style="flex:1;"> <div class="btn">LogIn</div> </a>
+        <a v-else href="javascript:void(0)" @click="fLogout" style="flex:1;"> <div class="btn">LogOut</div> </a>
+        <a href="javascript:void(0)" @click="fSignup" style="flex:1;"> <div class="btn">SignUp</div> </a>
+    </nav>
 </template>
 
 <script>
@@ -54,9 +56,16 @@ export default{
             logout(this.user);
         },
 
-        editUser(){
+        fSignup(){
+            window.location.href = 'html/signup.html?title=Sign Up';
+        },
+
+        profile(){
             if(localStorage.getItem('token'))
             window.location.href = 'html/signup.html?title=Edit Profile';
+            else{
+                this.fLogin();
+            }
         }
     },
 }
@@ -64,5 +73,5 @@ export default{
 
 <style>
     body { font-family: sans-serif; }
-    .userphoto {width:50px; height:50px; border-radius:50px; object-fit: cover;}
+    .userphoto {width:50px; height:50px; border-radius:50px; object-fit:cover;}
 </style>

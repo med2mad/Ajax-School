@@ -1,7 +1,7 @@
 <template>
     <div class="title"> <img :src="'imgs/tools/'+_dblogofile" alt="DB logo">  </div>
 
-    <div ref="db">
+    <div ref="db" style="padding-bottom:20px">
     <div class="db">
 
         <div class="db1">
@@ -66,7 +66,7 @@
     <Pagination v-if="store.rows && store.rows.length>0" :pagination="store.pagination" @changepage="(i)=>{changepage(i);}"></Pagination>
     </div>
 
-    <input type="checkbox" v-model="venable" @change="changeEnable">
+    <input v-if="false" type="checkbox" v-model="venable" @change="changeEnable">
 
     <div class="offcanvas" ref="offcanvas">
         <button @click="toggleOffCanvas('close')">check offCanvas in getbootstrap.com</button> <br>
