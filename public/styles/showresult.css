@@ -26,17 +26,14 @@ header .hamburger-button{
 }
 
 header .username{
-    font-family: Rajdhani-Light, sans-serif;
+    text-shadow: 0px 0px 4px blue;
     font-style: italic;
-    text-shadow: 0px 0px 9px blue;
     color: white;
-    font-size: clamp( 0.2rem , 4vw + 0.2rem , 1.5rem );
-    font-weight: bold;
+    font-size: clamp( 0.2rem , 4vw + 0.2rem , 1.3rem );
 }
 
 header .logo{
     width:180px;
-    /* text-align: center; */
     margin-right: auto;
 }
 header .logo img{

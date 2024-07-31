@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <a style="display:flex; flex: 1 1 auto; align-items:center; justify-content:space-evenly" href="javascript:void(0)" @click="profile">
+        <a style="display:flex; flex: 1 1 auto; align-items:center; justify-content:center; gap:8px;" href="javascript:void(0)" @click="profile">
             <div class="username">
                 {{user.name}}
             </div>
