@@ -83,7 +83,7 @@ export default{
             _vajax:String, //used to get the right "ajaxes" state
             },
 
-    emits: ['mountGet', 'logout'],
+    emits: ['mountGet', 'logout', 'emitSnippet'],
 
     components: { Pagination },
 
@@ -107,6 +107,7 @@ export default{
                 this.store.time = new Date();
                 this.ajaxes[this._vajax].fpost(this._url[this._vback], fd, this.store, this._vlimit, this._vback, this._vajax);
                 this.clear();
+                this.$emit('emitSnippet', localStorage.getItem('snippet'));
             }
         },
         handlePut(){
@@ -114,7 +115,6 @@ export default{
 
             if(!this.selectedId){Swal.fire('Select Profile !');}
             else if(this.checkData()){
-                
                 let selectedTr;
                 for (let i = 0; i < this.store.rows.length; i++){//find <tr> to change
                     if(this.store.rows[i]["_id"]==this.selectedId)
@@ -126,14 +126,14 @@ export default{
                 fd.append('token', localStorage.getItem('token'));
                 
                 this.store.time = new Date();
-                if(this._vback=='js') //no PUT http method in PHP
-                {
+                if(this._vback=='js'){//no PUT http method in PHP
                     this.ajaxes[this._vajax].fput('PUT', this._url['js']+this.selectedId, fd, selectedTr, this.store, this._vback, this._vajax);
                 }else{
                     this.ajaxes[this._vajax].fput('POST', this._url['php']+this.selectedId+'?_method=PUT', fd, selectedTr, this.store, this._vback, this._vajax);
                 }
                 
                 this.clear();
+                this.$emit('emitSnippet', localStorage.getItem('snippet'));
             }
         },
         handleDelete(){
@@ -153,6 +153,7 @@ export default{
                 }
 
                 this.selectedId = '';
+                this.$emit('emitSnippet', localStorage.getItem('snippet'));
             }
         },
 

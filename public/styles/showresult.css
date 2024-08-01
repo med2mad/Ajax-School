@@ -177,6 +177,24 @@ footer .footer2{
                                         ) ;
 }
 
+.offcanvas{
+    background-color: black;
+    color:white;
+    font-family: monospace;
+    white-space: pre-line;
+    text-align: left;
+    width: 100%;
+    height: 25%;
+    position: fixed;
+    bottom: 0px;
+    left: 180px;
+    overflow: auto;
+}
+.offcanvasbtn{
+    cursor: pointer;
+    width: 50px;
+}
+
 /*---------------------media query------------------------------------------*/
 
 @media only screen and (max-width: 650px){

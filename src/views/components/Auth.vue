@@ -10,13 +10,14 @@
         </a>
         <a v-if="!user.name" href="javascript:void(0)" @click="fLogin" style="flex:1;"> <div class="btn">LogIn</div> </a>
         <a v-else href="javascript:void(0)" @click="fLogout" style="flex:1;"> <div class="btn">LogOut</div> </a>
-        <a href="javascript:void(0)" @click="fSignup" style="flex:1;"> <div class="btn">SignUp</div> </a>
+        <a href="javascript:void(0)" @click="fSignup" @mouseover="handleHover" style="flex:1;"> <div class="btn">SignUp</div> </a>
     </nav>
 </template>
 
 <script>
 import Swal from 'sweetalert2';
 import { login, logout } from './auth';
+import $ from "jquery";
 
 export default{
 
@@ -55,7 +56,6 @@ export default{
         fLogout(){
             logout(this.user);
         },
-
         fSignup(){
             window.location.href = 'html/signup.html?title=Sign Up';
         },

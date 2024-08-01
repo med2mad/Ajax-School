@@ -34,20 +34,17 @@
         
         <div class="devider"></div>
 
-        <img src="imgs/up.png" class="upbtn" alt="offcanvas trigger" @click.self="toggleOffCanvas('open')">
-
+        <img src="imgs/up.png" class="offcanvasbtn" alt="offcanvas trigger" @click.self="toggleOffCanvas()">
     </div>
 
     <main>
         <DB v-for="item in DBs" :key="item.db+vback+vajax+vlimit+vname+vage" :_url="item.url" :_dblogofile="item.dblogofile" :_db="item.db"
                                 :_vlimit="vlimit" :_vname="vname" :_vage="vage" :_vback="vback" :_vajax="vajax"
-                                @logout="this.$refs.Auth.fLogout();"
+                                @logout="this.$refs.Auth.fLogout();" @emitSnippet="(arg)=>{showSnippet(arg);}"
         ></DB>
-    </main>
 
-    <div class="offcanvas" ref="offcanvas">
-        <button @click="toggleOffCanvas('close')">check offCanvas in getbootstrap.com</button> <br>
-    </div>
+        <div class="offcanvas" ref="offcanvas">{{this.snippet}}</div>
+    </main>
 
     <footer>
         <div class="footer1">
@@ -68,6 +65,7 @@
 <script>
 import DB from './components/DB.vue';
 import Auth from './components/Auth.vue';
+import $ from "jquery";
 import '/public/styles/showresult.css';
 
 export default{
@@ -77,6 +75,7 @@ export default{
     data(){return{
                 vback:localStorage.getItem('back'), vajax:localStorage.getItem('ajax'), 
                 vname:'', vage:'', vlimit:10, 
+                rotation:'0', snippet:'',
                 DBs:[
                     {db:'mysql', dblogofile:'mysql.png', url:{'js':'http://localhost:5000/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
                     {db:'mongoose', dblogofile:'mongodb.png', url:{'js':'http://localhost:5000/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
@@ -92,10 +91,15 @@ export default{
         changeAjax(event){
             localStorage.setItem('ajax', event.target.value);
         },
-        toggleOffCanvas(x){
-            if(x=='open'){this.$refs.offcanvas.style.display=''}
-            else{this.$refs.offcanvas.style.display='none'}
+        toggleOffCanvas(){
+            $('.offcanvas').slideToggle();
+
+            if(this.rotation==='0') this.rotation='180deg'; else this.rotation='0';
+            $('.offcanvasbtn').css('transform', 'rotate('+this.rotation+')')
         },
+        showSnippet(arg){
+            this.snippet = arg;
+        }
     },
     
     beforeCreate(){

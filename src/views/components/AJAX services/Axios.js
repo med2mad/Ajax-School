@@ -24,8 +24,6 @@ function fpost(uri, body, store, limit, back){
       const rowToInsert = {"_id":response.data.newId, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
       store.rows.unshift(rowToInsert);
       if(store.rows.length>limit){store.rows.pop();}//remove last row in <table> (respect _limit after add)
-
-      saveSnippet(response.data.newId, back, uri, store, 'POST', 'Create');
     }
   })
   .catch((err)=>{
@@ -33,6 +31,8 @@ function fpost(uri, body, store, limit, back){
       Swal.fire('Login again please.');
     }
   });
+
+  localStorage.setItem('snippet', saveSnippet('response.data.newId', back, uri, store, 'POST', 'Create'));
 }
 
 function fput(method, uri, body, selectedTr, store, back){
@@ -44,7 +44,6 @@ function fput(method, uri, body, selectedTr, store, back){
     }
     else{
       store.rows[selectedTr].name=body.get('name'); store.rows[selectedTr].age=body.get('age'); store.rows[selectedTr].photo=response.data.photo;
-      saveSnippet(response.data.editedId, back, uri, store, method, 'Update');
     }
   })
   .catch((err)=>{
@@ -52,6 +51,8 @@ function fput(method, uri, body, selectedTr, store, back){
       Swal.fire('Login again please.');
     }
   });
+
+  localStorage.setItem('snippet', saveSnippet('response.data.editedId', back, uri, store, method, 'Update'));
 }
 
 function fdelete(method, uri, store, back){
@@ -60,9 +61,9 @@ function fdelete(method, uri, store, back){
     //GET replacement row
     if(response.data.rows.length>0)
     { store.rows.push({"_id":response.data.rows[0]._id, "name":response.data.rows[0].name, "age":response.data.rows[0].age, "photo":response.data.rows[0].photo}) }
-
-    saveSnippet(response.data.deletedId, back, uri, store, method, 'Delete');
   })
+
+  localStorage.setItem('snippet', saveSnippet('response.data.deletedId', back, uri, store, method, 'Delete'))
 }
 
 
@@ -79,6 +80,7 @@ function saveSnippet(_id, back, uri, store, method, action){
   else if (action == 'Delete')
     snippet = `axios({"method":'${method}', "url":'${uri}'})<br>.then((response)=>{const data = response.data})`;
   
+  return snippet;
   // axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
 }
 
