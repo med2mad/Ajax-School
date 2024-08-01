@@ -59,18 +59,12 @@
             </div>
         </div>
         </div>
-
-        <img src="imgs/up.png" class="upbtn" alt="offcanvas trigger" @click.self="toggleOffCanvas('open')">
     </div>
 
     <Pagination v-if="store.rows && store.rows.length>0" :pagination="store.pagination" @changepage="(i)=>{changepage(i);}"></Pagination>
     </div>
 
     <input v-if="false" type="checkbox" v-model="venable" @change="changeEnable">
-
-    <div class="offcanvas" ref="offcanvas">
-        <button @click="toggleOffCanvas('close')">check offCanvas in getbootstrap.com</button> <br>
-    </div>
 </template>
 
 <script>
@@ -213,10 +207,6 @@ export default{
             }
             else {return true;}
         },
-        toggleOffCanvas(x){
-            if(x=='open'){this.$refs.offcanvas.style.display=''}
-            else{this.$refs.offcanvas.style.display='none'}
-        },
         GETuri(str, currentpage){
             str += '?_limit='+((Number.isInteger(this._vlimit)&&this._vlimit>=0)?this._vlimit:0);
             str += '&_skip='+((Number.isInteger(this._vlimit)&&this._vlimit>=0)?(currentpage-1)*this._vlimit:0);
@@ -255,8 +245,6 @@ export default{
         }else{
             this.$refs.db.style.display='none';
         }
-
-        this.$refs.offcanvas.style.display='none';
     },
 }
 </script>

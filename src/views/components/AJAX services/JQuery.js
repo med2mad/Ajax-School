@@ -1,5 +1,5 @@
 import $ from "jquery";
-import axios from 'axios';
+import Swal from 'sweetalert2';
 import { paginate } from './pagination';
 
 function fget(uri, store, limit, currentpage, back){
@@ -9,6 +9,9 @@ function fget(uri, store, limit, currentpage, back){
       store.pagination = paginate(response.total, currentpage, limit, 10);
     
       saveSnippet(null, back, uri, store, 'GET', 'Read');
+    })
+    .catch((err)=>{
+      console.log(err);
     });
 }
 
@@ -28,6 +31,11 @@ function fpost(uri, body, store, limit, back){
     if(store.rows.length>limit){store.rows.pop();} //remove last row in <table> (respect _limit after add)
 
     saveSnippet(response.newId, back, uri, store, 'POST', 'Create');
+  })
+  .catch((err)=>{
+    if(err.response && err.response.status == 401){
+      Swal.fire('Login again please.');
+    }
   });
 }
 
@@ -36,6 +44,11 @@ function fput(method, uri, body, selectedTr, store, back){
   .done( function(response){
     store.rows[selectedTr].name=body.get('name'); store.rows[selectedTr].age=body.get('age'); store.rows[selectedTr].photo=response.photo;
     saveSnippet(response.editedId, back, uri, store, method, 'Update');
+  })
+  .catch((err)=>{
+    if(err.response && err.response.status == 401){
+      Swal.fire('Login again please.');
+    }
   });
 }
 
@@ -47,7 +60,7 @@ function fdelete(method, uri, store, back){
     { store.rows.push({"id":response.rows[0].id, "_id":response.rows[0]._id, "name":response.rows[0].name, "age":response.rows[0].age, "photo":response.rows[0].photo}) }
   
     saveSnippet(response.deletedId, back, uri, store, method, 'Delete');
-  });
+  })
 }
 
 
@@ -64,7 +77,7 @@ function saveSnippet(_id, back, uri, store, method, action){
   else if (action == 'Delete')
     snippet = `$.ajax({"type":${method}, "url":${uri}})<br>.done(function(response){const data = response.data})`;
 
-  axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
+  // axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
 }
 
 export default {fget, fpost, fput, fdelete}

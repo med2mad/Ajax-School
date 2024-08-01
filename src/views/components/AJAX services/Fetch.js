@@ -1,4 +1,4 @@
-import axios from 'axios';
+import Swal from 'sweetalert2';
 import { paginate } from './pagination';
 
 function fget(uri, store, limit, currentpage, back){
@@ -10,6 +10,9 @@ function fget(uri, store, limit, currentpage, back){
     store.rows = response.rows;
     store.pagination = paginate(response.total, currentpage, limit, 10);
   })
+  .catch((err)=>{
+    console.log(err);
+  });
 }
 
 function fpost(uri, body, store, limit, back){
@@ -24,6 +27,11 @@ function fpost(uri, body, store, limit, back){
     
     saveSnippet(response.newId, back, uri, store, 'POST', 'Create');
   })
+  .catch((err)=>{
+    if(err.response && err.response.status == 401){
+      Swal.fire('Login again please.');
+    }
+  });
 }
 
 function fput(method, uri, body, selectedTr, store, back){
@@ -35,6 +43,11 @@ function fput(method, uri, body, selectedTr, store, back){
     store.rows[selectedTr].name=body.get('name'); store.rows[selectedTr].age=body.get('age');store.rows[selectedTr].photo=response.photo;
     saveSnippet(response.editedId, back, uri, store, method, 'Update');
   })
+  .catch((err)=>{
+    if(err.response && err.response.status == 401){
+      Swal.fire('Login again please.');
+    }
+  });
 }
 
 function fdelete(method, uri, store, back){
@@ -65,7 +78,7 @@ function saveSnippet(_id, back, uri, store, method, action){
   else if (action == 'Delete')
     snippet = `fetch('${uri}', {"method":'${method}'})<br>.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
 
-  axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
+  // axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
 }
 
 export default {fget, fpost, fput, fdelete}

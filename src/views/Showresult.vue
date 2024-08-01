@@ -34,6 +34,8 @@
         
         <div class="devider"></div>
 
+        <img src="imgs/up.png" class="upbtn" alt="offcanvas trigger" @click.self="toggleOffCanvas('open')">
+
     </div>
 
     <main>
@@ -42,6 +44,10 @@
                                 @logout="this.$refs.Auth.fLogout();"
         ></DB>
     </main>
+
+    <div class="offcanvas" ref="offcanvas">
+        <button @click="toggleOffCanvas('close')">check offCanvas in getbootstrap.com</button> <br>
+    </div>
 
     <footer>
         <div class="footer1">
@@ -86,11 +92,19 @@ export default{
         changeAjax(event){
             localStorage.setItem('ajax', event.target.value);
         },
+        toggleOffCanvas(x){
+            if(x=='open'){this.$refs.offcanvas.style.display=''}
+            else{this.$refs.offcanvas.style.display='none'}
+        },
     },
     
     beforeCreate(){
         if(!localStorage.getItem('ajax')){localStorage.setItem('ajax', 'Axios')}
         if(!localStorage.getItem('back')){localStorage.setItem('back', 'js')}
+    },
+    
+    mounted(){
+        this.$refs.offcanvas.style.display='none';
     },
 }
 </script>
