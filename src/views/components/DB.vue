@@ -45,7 +45,7 @@
                 <tr>
                     <td>
                         <img ref="img" alt="img" @click="$refs[_db].click();" class="img" src="uploads/profile.jpg"><br>
-                        <input type="button" @click="$refs[_db].click();" value="Browse Photo...">
+                        <input type="button" @click="$refs[_db].click();" value="choose Photo...">
                         <input type="button" value="Remove Photo" @click="removePhoto">
                         <input type="file" name="photo" :ref="_db" accept="image/*" @change="onFileChange" style="display:none;"><br>
                     </td>
@@ -157,6 +157,8 @@ export default{
                     if(this.store.rows[i]["_id"]==this.selectedId)
                     {this.store.rows.splice(i, 1);}
                 }
+
+                this.selectedId = '';
             }
         },
 
@@ -185,6 +187,7 @@ export default{
             this.$refs[this._db].value= null;
         },
         onFileChange(e){
+            this.$refs.img.src = './uploads/profile.jpg';
             if (e.target.files[0]) { //e.target.files is the same as this.$refs.[this._db].files
                 this.photoObject = e.target.files[0];
                 this.$refs.img.src = URL.createObjectURL(this.photoObject);

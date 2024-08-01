@@ -4,7 +4,6 @@ import { paginate } from './pagination';
 function fget(uri, store, limit, currentpage, back){
   axios.get(uri)
   .then((response)=>{
-    console.log(response.data.rows);
     store.rows = response.data.rows;
     store.pagination = paginate(response.data.total, currentpage, limit, 10);
   });
