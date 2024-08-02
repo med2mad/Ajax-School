@@ -43,7 +43,7 @@
                                 @logout="this.$refs.Auth.fLogout();" @emitSnippet="(arg)=>{showSnippet(arg);}"
         ></DB>
 
-        <div class="offcanvas" ref="offcanvas">{{this.snippet}}</div>
+        <div class="offcanvas" ref="offcanvas"><pre>{{this.snippet}}</pre></div>
     </main>
 
     <footer>
@@ -60,7 +60,6 @@
             <input type="number" min="0" class="limit" required v-model="vlimit" name="limit" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
         </div>
     </footer>
-
 </template>
 
 <script>
@@ -90,9 +89,11 @@ export default{
     methods:{
         changeBack(event){
             localStorage.setItem('back', event.target.value);
+            this.showSnippet(localStorage.setItem('snippet'));
         },
         changeAjax(event){
             localStorage.setItem('ajax', event.target.value);
+            this.showSnippet(localStorage.setItem('snippet'));
         },
         toggleOffCanvas(){
             if(this.rotation==='0') {

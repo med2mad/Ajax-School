@@ -11,6 +11,8 @@ function fget(uri, store, limit, currentpage, back){
   .catch((err)=>{
     console.log(err);
   });
+  
+  localStorage.setItem('snippet', saveSnippet('', back, uri, store, 'GET', 'Read', currentpage));
 }
 
 function fpost(uri, body, store, limit, back){
@@ -23,7 +25,7 @@ function fpost(uri, body, store, limit, back){
     else{
       const rowToInsert = {"_id":response.data.newId, "photo":response.data.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
       store.rows.unshift(rowToInsert);
-      if(store.rows.length>limit){store.rows.pop();}//remove last row in <table> (respect _limit after add)
+      if(store.rows.length>limit){store.rows.pop();}//remove last row in <table> (respect limit after add)
     }
   })
   .catch((err)=>{
@@ -68,23 +70,28 @@ function fdelete(method, uri, store, back){
 
 
 
-function saveSnippet(_id, back, uri, store, method, action){
+function saveSnippet(_id, back, uri, store, method, action, currentpage){
   const t = Date.now() - store.time;
   const d = new Date(store.time).toUTCString()
   
   let snippet;
-  if(action == 'Create')
+  if (action == 'Read'){
+    if(!currentpage){uri = uri.replace('/Mysql','').replace('/Mongoodb','').replace('/Postgresql','')}
+    snippet = `axios.get(${uri})
+    .then((response)=>{const data = response.data})`;
+  }
+  else if(action == 'Create')
     snippet = `axios.post('${uri}', body)
-  .then((response)=>{const data = response.data})`;
+    .then((response)=>{const data = response.data})`;
   else if (action == 'Update')
     snippet = `axios(
-  {"method":'${method}', "url":'${uri}', "data":body},
-  {"headers": {"Content-Type":'multipart/form-data'}}
-  )
-  .then((response)=>{const data = response.data})`;
+      {"method":'${method}', "url":'${uri}', "data":body},
+      {"headers": {"Content-Type":'multipart/form-data'}}
+    )
+    .then((response)=>{const data = response.data})`;
   else if (action == 'Delete')
     snippet = `axios({"method":'${method}', "url":'${uri}'})
-  .then((response)=>{const data = response.data})`;
+    .then((response)=>{const data = response.data})`;
   
   return snippet;
   // axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});

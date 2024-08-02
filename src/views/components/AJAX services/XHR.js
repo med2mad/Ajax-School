@@ -18,7 +18,7 @@ function fpost(uri, body, store, limit, back){
   xhr.onload=function(){
     const response = JSON.parse(xhr.responseText);
     store.rows.unshift({"id":response.newId, "_id":response.newId, "photo":response.photo, "name":body.get("name"), "age":body.get("age")});//FormData object use get
-    if(store.rows.length>limit){store.rows.pop();} //remove last row in <table> (respect _limit after add)
+    if(store.rows.length>limit){store.rows.pop();} //remove last row in <table> (respect limit after add)
   
     saveSnippet(response.data.newId, back, uri, store, 'POST', 'Create');
   }

@@ -28,7 +28,7 @@ function fpost(uri, body, store, limit, back){
   .done(function(response){
     const rowToInsert = {"id":response.newId, "_id":response.newId, "photo":response.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get
     store.rows.unshift(rowToInsert);
-    if(store.rows.length>limit){store.rows.pop();} //remove last row in <table> (respect _limit after add)
+    if(store.rows.length>limit){store.rows.pop();} //remove last row in <table> (respect limit after add)
 
     saveSnippet(response.newId, back, uri, store, 'POST', 'Create');
   })

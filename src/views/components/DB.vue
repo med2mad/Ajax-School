@@ -209,18 +209,21 @@ export default{
             else {return true;}
         },
         GETuri(str, currentpage){
-            str += '?_limit='+((Number.isInteger(this._vlimit)&&this._vlimit>=0)?this._vlimit:0);
-            str += '&_skip='+((Number.isInteger(this._vlimit)&&this._vlimit>=0)?(currentpage-1)*this._vlimit:0);
-            str += '&_name='+this._vname;
-            if (Number.isInteger(this._vage)){str += '&_age='+this._vage;}
+            let query = '';
+            if (Number.isInteger(this._vlimit)&&this._vlimit>=0){query += '&limit='+this._vlimit};
+            if (currentpage>1){query += '&page='+currentpage}
+            if (this._vname.trim()){query += '&name='+this._vname;}
+            if (Number.isInteger(this._vage)){query += '&age='+this._vage;}
             
-            return str;
+            query = '?' + query.slice(1); //replace the first '&' with '?'
+            return str+query;
         },
         
         changeEnable(){
             localStorage.setItem(this._db, this.venable);
             if(this.venable){
                 this.$refs.db.style.display='';
+                this.$emit('emitSnippet', localStorage.getItem('snippet'));
             }
             else{
                 this.$refs.db.style.display='none';
@@ -230,6 +233,7 @@ export default{
         changepage(i){
             this.store.time = new Date();
             this.ajaxes[this._vajax].fget(this.GETuri(this._url[this._vback], i), this.store, this._vlimit, i, this._vback, this._vajax);
+            this.$emit('emitSnippet', localStorage.getItem('snippet'));
         },
     },
 
@@ -241,8 +245,8 @@ export default{
         if(this.venable=='true'){
             this.store.time = new Date();
             this.ajaxes[this._vajax].fget(this.GETuri(this._url[this._vback], 1), this.store, this._vlimit, 1, this._vback, this._vajax);
-
             this.$refs.db.style.display='';
+            this.$emit('emitSnippet', localStorage.getItem('snippet'));
         }else{
             this.$refs.db.style.display='none';
         }
