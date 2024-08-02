@@ -17,7 +17,6 @@
 <script>
 import Swal from 'sweetalert2';
 import { login, logout } from './auth';
-import $ from "jquery";
 
 export default{
 
@@ -62,10 +61,9 @@ export default{
 
         profile(){
             if(localStorage.getItem('token'))
-            window.location.href = 'html/signup.html?title=Edit Profile';
-            else{
+                window.location.href = 'html/signup.html?title=Edit Profile';
+            else
                 this.fLogin();
-            }
         }
     },
 }

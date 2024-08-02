@@ -77,9 +77,9 @@ export default{
                 vname:'', vage:'', vlimit:10, 
                 rotation:'0', snippet:'',
                 DBs:[
-                    {db:'mysql', dblogofile:'mysql.png', url:{'js':'http://localhost:5000/mysql/', 'php':'http://127.0.0.1:8000/MysqlModel/'} },
-                    {db:'mongoose', dblogofile:'mongodb.png', url:{'js':'http://localhost:5000/mongoose/','php':'http://127.0.0.1:8000/MongoModel/'} },
-                    {db:'postgresql', dblogofile:'postgresql.png', url:{'js':'http://localhost:5000/postgresql/', 'php':'http://127.0.0.1:8000/PostgreSQLModel/'} },
+                    {db:'mysql', dblogofile:'mysql.png', url:{'js':'http://localhost:5000/Mysql/', 'php':'http://127.0.0.1:8000/Mysql/'} },
+                    {db:'mongoose', dblogofile:'mongodb.png', url:{'js':'http://localhost:5000/Mongoodb/','php':'http://127.0.0.1:8000/Mongoodb/'} },
+                    {db:'postgresql', dblogofile:'postgresql.png', url:{'js':'http://localhost:5000/Postgresql/', 'php':'http://127.0.0.1:8000/Postgresql/'} },
                     ]
                 }
             },

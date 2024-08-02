@@ -72,11 +72,14 @@ function saveSnippet(_id, back, uri, store, method, action){
   
   let snippet;
   if(action == 'Create')
-    snippet = `fetch('${uri}', {"method":'POST', "body":data})<br>.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
+    snippet = `fetch('${uri}', {"method":'POST', "body":data})
+  .then((response)=>{return response.json()}).then((response)=>{const data = response})`;
   else if (action == 'Update')
-    snippet = `fetch('${uri}', {"method":'${method}', "body":data})<br>.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
+    snippet = `fetch('${uri}', {"method":'${method}', "body":data})
+  .then((response)=>{return response.json()}).then((response)=>{const data = response})`;
   else if (action == 'Delete')
-    snippet = `fetch('${uri}', {"method":'${method}'})<br>.then((response)=>{return response.json()}).then((response)=>{const data = response})`;
+    snippet = `fetch('${uri}', {"method":'${method}'})
+  .then((response)=>{return response.json()}).then((response)=>{const data = response})`;
 
   // axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
 }

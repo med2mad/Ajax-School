@@ -13,7 +13,7 @@
                 <div v-else-if="store.rows" class="rows">
                     <form> <!--for input radio-->
                     <table>
-                        <tr><th></th><th>#</th><th>Name</th><th>Age</th><th>Photo</th></tr>
+                        <tr><th></th><th>id</th><th>Name</th><th>Age</th><th>Photo</th></tr>
                         <transition-group name="table">
                         <tr v-for="profile in store.rows" class="datarow" :class="{selectedrow:profile._id==selectedId}" :key="profile._id" @click="selectProfile(profile._id);">
                             <td> <input type="radio" name="db" v-model="selectedId" :value="profile._id"> </td>

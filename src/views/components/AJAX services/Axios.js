@@ -74,11 +74,17 @@ function saveSnippet(_id, back, uri, store, method, action){
   
   let snippet;
   if(action == 'Create')
-    snippet = `axios.post('${uri}', body)<br>.then((response)=>{const data = response.data})`;
+    snippet = `axios.post('${uri}', body)
+  .then((response)=>{const data = response.data})`;
   else if (action == 'Update')
-    snippet = `axios(<br>{"method":'${method}', "url":'${uri}', "data":body},<br>{"headers": {"Content-Type":'multipart/form-data'}}<br>)<br>.then((response)=>{const data = response.data})`;
+    snippet = `axios(
+  {"method":'${method}', "url":'${uri}', "data":body},
+  {"headers": {"Content-Type":'multipart/form-data'}}
+  )
+  .then((response)=>{const data = response.data})`;
   else if (action == 'Delete')
-    snippet = `axios({"method":'${method}', "url":'${uri}'})<br>.then((response)=>{const data = response.data})`;
+    snippet = `axios({"method":'${method}', "url":'${uri}'})
+  .then((response)=>{const data = response.data})`;
   
   return snippet;
   // axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
