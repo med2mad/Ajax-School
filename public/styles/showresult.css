@@ -184,15 +184,20 @@ footer .footer2{
     white-space: pre-line;
     text-align: left;
     width: 100%;
-    height: 25%;
+    height: 150px;
     position: fixed;
     bottom: 0px;
     left: 180px;
     overflow: auto;
+    padding: 4px;
 }
 .offcanvasbtn{
     cursor: pointer;
     width: 50px;
+}
+.offcanvasbtn2{
+    cursor: pointer;
+    width: 30px;
 }
 
 /*---------------------media query------------------------------------------*/
@@ -231,5 +236,13 @@ footer .footer2{
     }
     header nav a{
         flex:1;
+        border-radius: 0 0 0 0;
+    }
+    .offcanvas{
+        left: 0px;
+        height: 200px;
+    }
+    .page-item-arrow{
+        display:none;
     }
 }

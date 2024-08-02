@@ -1,13 +1,11 @@
 <template >
-
     <nav>
         <ul class="pagination">
-            <li class="page-item" @click="changeCurrent(current-1)"><span class="page-link">&laquo;</span></li>
+            <li class="page-item page-item-arrow" @click="changeCurrent(current-1)"><span class="page-link">&laquo;</span></li>
             <li v-for="i in pagination.pages" :key="i" class="page-item" :class="{currentStyle: current==i}" @click="changeCurrent(i)"><span class="page-link">{{i}}</span></li>
-            <li class="page-item" @click="changeCurrent(current+1)"><span class="page-link">&raquo;</span></li>
+            <li class="page-item page-item-arrow" @click="changeCurrent(current+1)"><span class="page-link">&raquo;</span></li>
         </ul>
     </nav>
-
 </template>
 
 <script>

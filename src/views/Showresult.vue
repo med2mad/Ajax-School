@@ -37,7 +37,7 @@
         <img src="imgs/up.png" class="offcanvasbtn" alt="offcanvas trigger" @click.self="toggleOffCanvas()">
     </div>
 
-    <main>
+    <main ref="main">
         <DB v-for="item in DBs" :key="item.db+vback+vajax+vlimit+vname+vage" :_url="item.url" :_dblogofile="item.dblogofile" :_db="item.db"
                                 :_vlimit="vlimit" :_vname="vname" :_vage="vage" :_vback="vback" :_vajax="vajax"
                                 @logout="this.$refs.Auth.fLogout();" @emitSnippet="(arg)=>{showSnippet(arg);}"
@@ -48,6 +48,7 @@
 
     <footer>
         <div class="footer1">
+            <img src="imgs/up.png" class="offcanvasbtn2" alt="offcanvas trigger" @click.self="toggleOffCanvas()">
             <div class="span">Filter :</div>
             <div class="flex2">
             Name : <input type="text" v-model="vname" name="name" autocomplete="off" spellcheck="false"><br>
@@ -66,7 +67,9 @@
 import DB from './components/DB.vue';
 import Auth from './components/Auth.vue';
 import $ from "jquery";
+import Swal from 'sweetalert2';
 import '/public/styles/showresult.css';
+
 
 export default{
 
@@ -92,10 +95,15 @@ export default{
             localStorage.setItem('ajax', event.target.value);
         },
         toggleOffCanvas(){
-            $('.offcanvas').slideToggle();
-
-            if(this.rotation==='0') this.rotation='180deg'; else this.rotation='0';
-            $('.offcanvasbtn').css('transform', 'rotate('+this.rotation+')')
+            if(this.rotation==='0') {
+                $('.offcanvas', ()=>{this.$refs.main.style.marginBottom='150px'}).slideToggle();
+                this.rotation='180deg';
+            }
+            else {
+                $('.offcanvas', ()=>{this.$refs.main.style.marginBottom='0'}).slideToggle();
+                this.rotation='0';
+            }
+            $('.offcanvasbtn').css('transform', 'rotate('+this.rotation+')');
         },
         showSnippet(arg){
             this.snippet = arg;
