@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { paginate } from './pagination';
+import { paginate } from '../utils';
 
 function fget(uri, store, limit, currentpage, back){
   axios.get(uri)
@@ -12,7 +12,7 @@ function fget(uri, store, limit, currentpage, back){
     console.log(err);
   });
   
-  localStorage.setItem('snippet', saveSnippet('', back, uri, store, 'GET', 'Read', currentpage));
+  localStorage.setItem('snippet', saveSnippet('', back, uri, store, 'GET', 'Read'));
 }
 
 function fpost(uri, body, store, limit, back){
@@ -76,25 +76,26 @@ function saveSnippet(_id, back, uri, store, method, action, currentpage){
   
   let snippet;
   if (action == 'Read'){
-    if(!currentpage){uri = uri.replace('/Mysql','').replace('/Mongoodb','').replace('/Postgresql','')}
+    uri = uri.replace('/Mysql','').replace('/Mongoodb','').replace('/Postgresql','')
     snippet = `axios.get(${uri})
-    .then((response)=>{const data = response.data})`;
+    .then((response)=>{const Result = response.data})`;
   }
-  else if(action == 'Create')
-    snippet = `axios.post('${uri}', body)
-    .then((response)=>{const data = response.data})`;
-  else if (action == 'Update')
+  else if(action == 'Create'){
+    snippet = `axios.post('${uri}', payload)
+    .then((response)=>{const Result = response.data})`;
+  }
+  else if (action == 'Update'){
     snippet = `axios(
-      {"method":'${method}', "url":'${uri}', "data":body},
+      {"method":'${method}', "url":'${uri}', "data":payload},
       {"headers": {"Content-Type":'multipart/form-data'}}
     )
-    .then((response)=>{const data = response.data})`;
-  else if (action == 'Delete')
-  {
+    .then((response)=>{const Result = response.data})`;
+  }
+  else if (action == 'Delete'){
     snippet = `axios({"method":'${method}', "url":'${uri.substring(0,uri.indexOf('?'))}`;
-    if(uri.indexOf('&')!=-1){ snippet += '?_method=DELETE})'} else {snippet += '})'}
+    if(uri.indexOf('&')!=-1){ snippet += `?_method=DELETE'` } else {snippet += `'`}
     snippet += `
-    .then((response)=>{const data = response.data})`;
+    .then((response)=>{ const Result = response.data })`;
   }
   
   return snippet;
