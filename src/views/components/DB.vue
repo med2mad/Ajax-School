@@ -144,8 +144,8 @@ export default{
                 const lastTableId = this.store.rows[this.store.rows.length-1]["_id"];
                 this.store.time = new Date();
                 if(this._vback=='js') //no DELETE http method in PHP
-                    this.ajaxes[this._vajax].fdelete('DELETE', this._url['js']+this.selectedId+'?'+'&lasttableid='+lastTableId, this.store, this._vback, this._vajax)
-                else this.ajaxes[this._vajax].fdelete('POST', this._url['php']+this.selectedId+'?'+'&lasttableid='+lastTableId+'&_method=DELETE', this.store, this._vback, this._vajax)
+                    this.ajaxes[this._vajax].fdelete('DELETE', this._url['js']+this.selectedId+'?'+'lasttableid='+lastTableId, this.store, this._vback, this._vajax)
+                else this.ajaxes[this._vajax].fdelete('POST', this._url['php']+this.selectedId+'?'+'lasttableid='+lastTableId+'&_method=DELETE', this.store, this._vback, this._vajax)
 
                 for (let i = 0; i < this.store.rows.length; i++){//find <tr> to remove
                     if(this.store.rows[i]["_id"]==this.selectedId)

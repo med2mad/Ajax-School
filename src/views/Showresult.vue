@@ -66,7 +66,6 @@
 import DB from './components/DB.vue';
 import Auth from './components/Auth.vue';
 import $ from "jquery";
-import Swal from 'sweetalert2';
 import '/public/styles/showresult.css';
 
 
@@ -89,11 +88,11 @@ export default{
     methods:{
         changeBack(event){
             localStorage.setItem('back', event.target.value);
-            this.showSnippet(localStorage.setItem('snippet'));
+            this.showSnippet(localStorage.getItem('snippet'));
         },
         changeAjax(event){
             localStorage.setItem('ajax', event.target.value);
-            this.showSnippet(localStorage.setItem('snippet'));
+            this.showSnippet(localStorage.getItem('snippet'));
         },
         toggleOffCanvas(){
             if(this.rotation==='0') {

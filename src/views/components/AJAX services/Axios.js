@@ -90,8 +90,12 @@ function saveSnippet(_id, back, uri, store, method, action, currentpage){
     )
     .then((response)=>{const data = response.data})`;
   else if (action == 'Delete')
-    snippet = `axios({"method":'${method}', "url":'${uri}'})
+  {
+    snippet = `axios({"method":'${method}', "url":'${uri.substring(0,uri.indexOf('?'))}`;
+    if(uri.indexOf('&')!=-1){ snippet += '?_method=DELETE})'} else {snippet += '})'}
+    snippet += `
     .then((response)=>{const data = response.data})`;
+  }
   
   return snippet;
   // axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
