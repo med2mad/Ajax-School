@@ -44,8 +44,8 @@ function fdelete(method, uri, store, back){
   const xhr = new XMLHttpRequest();
   xhr.onload=function(){
     const response = JSON.parse(xhr.responseText);
-    if(response.length>0)
-    { store.rows.push({"id":response[0].id, "_id":response[0]._id, "name":response[0].name, "age":response[0].age, "photo":response[0].photo}) }
+    if(response.rows.length>0)
+    { store.rows.push({"id":response.rows[0].id, "_id":response.rows[0]._id, "name":response.rows[0].name, "age":response.rows[0].age, "photo":response.rows[0].photo}) }
   }
   xhr.open(method, uri, true);
   xhr.send();
