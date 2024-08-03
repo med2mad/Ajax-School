@@ -2,35 +2,33 @@
     <div class="title"> <img :src="'imgs/tools/'+_dblogofile" alt="DB logo">  </div>
 
     <div ref="db" style="padding-bottom:20px">
+        
     <div class="db">
 
         <div class="db1">
-
-            <div class="data">
-                <div v-if="store.rows && store.rows.length===0" class="nodata">
-                    <h2 class="nodata">No Data !</h2>
-                </div>
-                <div v-else-if="store.rows" class="rows">
-                    <form> <!--for input radio-->
-                    <table>
-                        <tr><th></th><th>id</th><th>Name</th><th>Age</th><th>Photo</th></tr>
-                        <transition-group name="table">
-                        <tr v-for="profile in store.rows" class="datarow" :class="{selectedrow:profile._id==selectedId}" :key="profile._id" @click="selectProfile(profile._id);">
-                            <td> <input type="radio" name="db" v-model="selectedId" :value="profile._id"> </td>
-                            <td>{{profile._id}}</td> <td :ref="'trName'+profile._id">{{profile.name}}</td><td :ref="'trAge'+profile._id">{{profile.age}}</td>
-                            <td><img :src="'uploads/'+(profile.photo||'profile.jpg')" :alt="'photo'+profile._id" :ref="'trImg'+profile._id"></td>
-                        </tr>
-                        </transition-group>
-                    </table>
-                    </form>
-                </div>
-                <div v-else class="loading">Loading ....</div>
-                
+        <div class="data">
+            <div v-if="store.rows && store.rows.length===0" class="nodata">
+                <h2 class="nodata">No Data !</h2>
             </div>
-            
+            <div v-else-if="store.rows" class="rows">
+                <form> <!--for input radio-->
+                <table>
+                    <tr><th></th><th>id</th><th>Name</th><th>Age</th><th>Photo</th></tr>
+                    <transition-group name="table">
+                    <tr v-for="profile in store.rows" class="datarow" :class="{selectedrow:profile._id==selectedId}" :key="profile._id" @click="selectProfile(profile._id);">
+                        <td> <input type="radio" name="db" v-model="selectedId" :value="profile._id"> </td>
+                        <td>{{profile._id}}</td> <td :ref="'trName'+profile._id">{{profile.name}}</td><td :ref="'trAge'+profile._id">{{profile.age}}</td>
+                        <td><img :src="'uploads/'+(profile.photo||'profile.jpg')" :alt="'photo'+profile._id" :ref="'trImg'+profile._id"></td>
+                    </tr>
+                    </transition-group>
+                </table>
+                </form>
+            </div>
+            <div v-else class="loading">Loading ....</div>
+        </div>
         </div>
         
-        <div class="db2">
+        <div class="db2" :id="this._db">
         <div class="form"> 
             <form ref="frmid" class="data" enctype="multipart/form-data">
             <table cellspacing="0">
@@ -46,7 +44,7 @@
                     <td>
                         <img ref="img" alt="img" @click="$refs[_db].click();" class="img" src="uploads/profile.jpg"><br>
                         <input type="button" @click="$refs[_db].click();" value="choose Photo...">
-                        <input type="button" value="Remove Photo" @click="removePhoto">
+                        <input type="button" value="No Photo" @click="removePhoto">
                         <input type="file" name="photo" :ref="_db" accept="image/*" @change="onFileChange" style="display:none;"><br>
                     </td>
                 </tr>
@@ -59,9 +57,15 @@
             </div>
         </div>
         </div>
+
     </div>
 
     <Pagination v-if="store.rows && store.rows.length>0" :pagination="store.pagination" @changepage="(i)=>{changepage(i);}"></Pagination>
+    
+    <div class="add" @click="toggleForm">
+        <a href="javascript:void(0)"><div class="text">+</div></a>
+    </div>
+
     </div>
 
     <input v-if="false" type="checkbox" v-model="venable" @change="changeEnable">
@@ -69,6 +73,7 @@
 
 <script>
 import Swal from 'sweetalert2';
+import $ from "jquery";
 import Pagination from './Pagination.vue';
 import axios from './AJAX services/Axios';
 import fetch from './AJAX services/Fetch';
@@ -235,6 +240,10 @@ export default{
             this.ajaxes[this._vajax].fget(this.GETuri(this._url[this._vback], i), this.store, this._vlimit, i, this._vback, this._vajax);
             this.$emit('emitSnippet', localStorage.getItem('snippet'));
         },
+
+        toggleForm(){
+            $('#'+this._db).slideToggle();
+        }
     },
 
     beforeCreate(){

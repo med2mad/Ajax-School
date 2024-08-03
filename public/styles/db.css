@@ -212,6 +212,25 @@ table{
     border-color: rgb(207, 72, 72);
     background-color: rgb(221, 221, 221);  
 }
+.add{ /*media query*/
+    display: none;
+    border-bottom: solid 1px black;
+}
+.add a{
+    text-decoration: none;
+}
+.add a .text{
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: green;
+    cursor: pointer;
+    color: white;
+    border-radius: 10px;
+    height: 30px;
+    width:80%;
+    margin: 5px auto;
+    display: grid; place-content: center; /*center text vertically*/
+}
 
 /*-------------- animate popup-------------*/
 @keyframes anim{
@@ -256,4 +275,15 @@ content: counter(rowNumber);
 }
 .orange{
     background-color: orange;
+}
+
+/*---------------------media query------------------------------------------*/
+
+@media only screen and (max-width: 650px){
+    .db2{
+        display: none; /*responsivness using jQuery*/
+    }
+    .add{
+        display: block; /*responsivness using jQuery*/
+    }
 }
