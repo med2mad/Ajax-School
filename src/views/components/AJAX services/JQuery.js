@@ -77,7 +77,7 @@ function saveSnippet(_id, back, uri, store, method, action){
       "type":'${method}',
       "url":'${uri.substring(0,uri.indexOf('?'))}`;
       if(uri.indexOf('&')!=-1){ snippet += `?_method=DELETE'
-        })`} else {snippet += `'
+    })`} else {snippet += `'
     })`}
     snippet += `
     .done((response)=>{ const Result = response })`;

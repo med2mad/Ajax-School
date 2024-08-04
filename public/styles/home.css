@@ -147,3 +147,11 @@
   transition-property:transform, opacity;
   transition-duration: 250ms;
 }
+
+.devider{
+  border-bottom: solid 4px #a5992a;
+  border-radius: 2px;
+  width : 75%;
+  margin: 3vh auto;
+  padding: 1vh 0px;
+}

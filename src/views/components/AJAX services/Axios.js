@@ -95,7 +95,8 @@ function saveSnippet(_id, back, uri, store, method, action, currentpage){
     snippet = `axios({
       "method":'${method}',
       "url":'${uri.substring(0,uri.indexOf('?'))}`;
-      if(uri.indexOf('&')!=-1){ snippet += `?_method=DELETE'})` } else {snippet += `'
+      if(uri.indexOf('&')!=-1){ snippet += `?_method=DELETE'
+    })` } else {snippet += `'
     })`}
     snippet += `
     .then((response)=>{ const Result = response.data })`;

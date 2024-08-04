@@ -116,6 +116,7 @@ export default{
                 this.rotation='0';
             }
             $('.offcanvasbtn').css('transform', 'rotate('+this.rotation+')');
+            $('.offcanvasbtn2').css('transform', 'rotate('+this.rotation+')');
         },
         showSnippet(arg){
             document.getElementById('editor').value = arg;

@@ -5,8 +5,9 @@
     <div class="start">
       <div>
         <p>
-          An educational App providing code snippets for manipulating multiple database systems,
-          using different backend technologies with a selection of Ajax techniques.
+          A practicing ground for Ajax techniques. It provides different backend technologies to test with multiple database systems.
+          <!-- teaching Ajax techniques, providing code snippets and for manipulating multiple database systems,
+          using different backend technologies with a selection of Ajax techniques. -->
         </p>
       </div>
       <div class="btn">
@@ -15,7 +16,7 @@
       </div>
     </div>
     
-    <hr>
+    <div class="devider"></div>
 
     <div class="tools">
       <p>Build using :</p>
