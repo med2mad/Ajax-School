@@ -44,7 +44,7 @@
         ></DB>
 
         <div class="offcanvas" ref="offcanvas">
-            <button id="copybtn" @click="copy">Copy</button>
+            <button class="copybtn" @click="copy">Copy</button>
             <textarea id="editor"></textarea>
         </div>
     </main>

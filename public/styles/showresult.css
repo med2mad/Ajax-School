@@ -199,7 +199,9 @@ footer .footer2{
     cursor: pointer;
     width: 30px;
 }
-
+.copybtn{
+    font-size: 1rem;
+}
 /*---------------------media query------------------------------------------*/
 
 @media only screen and (max-width: 650px){

@@ -19,7 +19,7 @@
   width: 30%;
   min-width: 250px;
   padding: 10px 0px;
-  margin: 5px auto;
+  margin: 20px auto;
 }
 
 .homelogo img{
@@ -31,7 +31,7 @@
   font-weight: bold;
   font-size: 1.2rem;
   text-align: justify;
-  padding-left: 10px;
+  padding: 0 10px;
   margin-bottom: 15px;
 }
 
@@ -42,7 +42,7 @@
   position: relative; /*position .flash*/
   overflow: hidden; /*.flash*/
   width: 200px;
-  margin: auto;
+  margin: 20px auto;
 }
 .start .btn a{
   text-decoration: none;
@@ -77,16 +77,16 @@
 .tools p{
   font-family: Rajdhani-Bold, sans-serif;
   font-size: 1.5rem;
-  margin-bottom: 30px;
+  margin-top: 20px;
 }
 .tools .carousel{
   max-width:400px;
   display: flex; /*.prevbtn |<img>| .nextbtn*/
-  align-content: center;
   justify-content: center;
   align-items: center;
   position: relative;/*position .crslbtn*/
   height:100px;
+  margin: auto;
 }
 .tools .carousel img{
   width:50%;

@@ -3,7 +3,7 @@
 
   <div class="home">
     <div class="start">
-      <div class="ps2">
+      <div>
         <p>
           An educational App providing code snippets for manipulating multiple database systems,
           using different backend technologies with a selection of Ajax techniques.
