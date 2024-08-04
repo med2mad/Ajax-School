@@ -44,6 +44,7 @@
         ></DB>
 
         <div class="offcanvas" ref="offcanvas">
+            <button id="copybtn" @click="copy">Copy</button>
             <textarea id="editor"></textarea>
         </div>
     </main>
@@ -73,6 +74,7 @@ import * as CodeMirror from '/codemirror';
 import '/codemirror/lib/codemirror.js'
 import '/codemirror/lib/codemirror.css'
 import '/codemirror/mode/javascript/javascript.js'
+import '/codemirror/theme/rubyblue.css'
 
 export default{
 
@@ -116,8 +118,15 @@ export default{
             CodeMirror.fromTextArea(document.getElementById('editor'), {
                 lineNumbers: true,
                 mode:'javascript',
+                theme:'rubyblue'
             });
-        }
+        },
+        copy(){
+            var copyText = document.getElementById("editor");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+        },
     },
     
     beforeCreate(){
