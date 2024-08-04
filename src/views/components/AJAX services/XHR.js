@@ -2,7 +2,7 @@ import { paginate } from '../utils';
 
 function fget(uri, store, limit, currentpage, back){
   const xhr = new XMLHttpRequest();
-  xhr.onload=function(){
+  xhr.onload=()=>{
     if(xhr.status===200){
       const response = JSON.parse(xhr.responseText);
       store.rows = response.rows;
@@ -17,7 +17,7 @@ function fget(uri, store, limit, currentpage, back){
 
 function fpost(uri, body, store, limit, back){
   const xhr = new XMLHttpRequest();
-  xhr.onload=function(){
+  xhr.onload=()=>{
     const response = JSON.parse(xhr.responseText);
     store.rows.unshift({"id":response.newId, "_id":response.newId, "photo":response.photo, "name":body.get("name"), "age":body.get("age")});//FormData object use get
     if(store.rows.length>limit){store.rows.pop();} //remove last row in <table> (respect limit after add)
@@ -30,7 +30,7 @@ function fpost(uri, body, store, limit, back){
 
 function fput(method, uri, body, selectedTr, store, back){
   const xhr = new XMLHttpRequest();
-  xhr.onload=function(){
+  xhr.onload=()=>{
     const response = JSON.parse(xhr.responseText);
     store.rows[selectedTr].photo=response.photo; store.rows[selectedTr].name=body.get('name'); store.rows[selectedTr].age=body.get('age');
   }
@@ -42,7 +42,7 @@ function fput(method, uri, body, selectedTr, store, back){
 
 function fdelete(method, uri, store, back){
   const xhr = new XMLHttpRequest();
-  xhr.onload=function(){
+  xhr.onload=()=>{
     const response = JSON.parse(xhr.responseText);
     if(response.rows.length>0)
     { store.rows.push({"id":response.rows[0].id, "_id":response.rows[0]._id, "name":response.rows[0].name, "age":response.rows[0].age, "photo":response.rows[0].photo}) }
@@ -63,29 +63,33 @@ function saveSnippet(_id, back, uri, store, method, action){
   if (action == 'Read'){
     uri = uri.replace('/Mysql','').replace('/Mongodb','').replace('/Postgresql','')
     snippet = `const xhr = new XMLHttpRequest()
-    xhr.onload = function(){ const Result = JSON.parse(xhr.responseText) }
+    xhr.onload = ()=>{ const Result = JSON.parse(xhr.responseText) }
     xhr.open('GET', '${uri}', true)
     xhr.send()`;
   }
   else if (action == 'Create'){
     snippet = `const xhr = new XMLHttpRequest()
-    xhr.onload = function(){ const Result = JSON.parse(xhr.responseText) }
+    xhr.onload = ()=>{ const Result = JSON.parse(xhr.responseText) }
     xhr.open('POST', '${uri}', true)
     xhr.send(Value)`;
   }
   else if (action == 'Update'){
     snippet = `const xhr = new XMLHttpRequest()
-    xhr.onload = function(){ const Result = JSON.parse(xhr.responseText) }
+    xhr.onload = ()=>{ const Result = JSON.parse(xhr.responseText) }
     xhr.open('${method}', '${uri}', true)
     xhr.send(Value)`;
   }
   else if (action == 'Delete'){
-    snippet = `const xhr = new XMLHttpRequest()
-    xhr.onload = function(){ const Result = JSON.parse(xhr.responseText) }
-    xhr.open('${method}', '${uri.substring(0,uri.indexOf('?'))}`
-    if(uri.indexOf('&')!=-1){ snippet += `?_method=DELETE'})` } else {snippet += `'})`}
-    snippet +=`, true)
-    xhr.send()`;
+  snippet = `const xhr = new XMLHttpRequest()
+xhr.onload = ()=>{ const Result = JSON.parse(xhr.responseText) }
+xhr.open(
+  '${method}',
+  '${uri.substring(0,uri.indexOf('?'))}`
+  if(uri.indexOf('&')!=-1){ snippet += `?_method=DELETE'` } else {snippet += `'`}
+  snippet +=`,
+  true
+)
+xhr.send()`;
   }
   
   return snippet;

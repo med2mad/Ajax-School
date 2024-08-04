@@ -44,7 +44,8 @@
         ></DB>
 
         <div class="offcanvas" ref="offcanvas">
-            <button class="copybtn" @click="copy">Copy</button>
+            <button class="copybtn" @click="copy">Copy</button> | 
+            <select v-model="vtheme" @change="changetheme" class="codetheme"><option value="default">Light</option><option value="rubyblue">Dark</option></select>
             <textarea id="editor"></textarea>
         </div>
     </main>
@@ -83,7 +84,7 @@ export default{
     data(){return{
                 vback:localStorage.getItem('back'), vajax:localStorage.getItem('ajax'), 
                 vname:'', vage:'', vlimit:10, 
-                rotation:'0', 
+                rotation:'0', vtheme:'rubyblue',
                 DBs:[
                     {db:'mysql', dblogofile:'mysql.png', url:{'js':'http://localhost:5000/Mysql/', 'php':'http://127.0.0.1:8000/Mysql/'} },
                     {db:'mongoose', dblogofile:'mongodb.png', url:{'js':'http://localhost:5000/Mongoodb/','php':'http://127.0.0.1:8000/Mongoodb/'} },
@@ -99,6 +100,10 @@ export default{
         },
         changeAjax(event){
             localStorage.setItem('ajax', event.target.value);
+            this.showSnippet(localStorage.getItem('snippet'));
+        },
+        changetheme(event){
+            localStorage.setItem('theme', event.target.value);
             this.showSnippet(localStorage.getItem('snippet'));
         },
         toggleOffCanvas(){
@@ -118,7 +123,7 @@ export default{
             CodeMirror.fromTextArea(document.getElementById('editor'), {
                 lineNumbers: true,
                 mode:'javascript',
-                theme:'rubyblue'
+                theme:localStorage.getItem('theme')
             });
         },
         copy(){
@@ -132,10 +137,12 @@ export default{
     beforeCreate(){
         if(!localStorage.getItem('ajax')){localStorage.setItem('ajax', 'Axios')}
         if(!localStorage.getItem('back')){localStorage.setItem('back', 'js')}
+        if(!localStorage.getItem('theme')){localStorage.setItem('theme', 'rubyblue')}
     },
     
     mounted(){
         this.$refs.offcanvas.style.display='none';
+        this.vtheme = localStorage.getItem('theme');
     },
 }
 </script>
