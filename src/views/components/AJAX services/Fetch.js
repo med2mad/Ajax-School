@@ -75,18 +75,18 @@ function saveSnippet(_id, back, uri, store, method, action){
   
   let snippet;
   if (action == 'Read'){
-    uri = uri.replace('/Mysql','').replace('/Mongoodb','').replace('/Postgresql','')
-    snippet = `fetch(${uri})
+    uri = uri.replace('/Mysql','').replace('/Mongodb','').replace('/Postgresql','')
+    snippet = `fetch('${uri}')
     .then((response)=>{ return response.json() })
     .then((response)=>{ const Result = response })`;
   }
   else if (action == 'Create'){
-    snippet = `fetch('${uri}', {"method":'POST', "body":payload})
+    snippet = `fetch('${uri}', {"method":'POST', "body":Value})
     .then((response)=>{ return response.json() })
     .then((response)=>{ const Result = response })`;
   }
   else if (action == 'Update'){
-    snippet = `fetch('${uri}', {"method":'${method}', "body":payload})
+    snippet = `fetch('${uri}', {"method":'${method}', "body":Value})
     .then((response)=>{ return response.json() })
     .then((response)=>{ const Result = response })`;
   }

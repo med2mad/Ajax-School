@@ -61,7 +61,7 @@ function saveSnippet(_id, back, uri, store, method, action){
   
   let snippet;
   if (action == 'Read'){
-    uri = uri.replace('/Mysql','').replace('/Mongoodb','').replace('/Postgresql','')
+    uri = uri.replace('/Mysql','').replace('/Mongodb','').replace('/Postgresql','')
     snippet = `const xhr = new XMLHttpRequest()
     xhr.onload = function(){ const Result = JSON.parse(xhr.responseText) }
     xhr.open('GET', '${uri}', true)
@@ -71,19 +71,19 @@ function saveSnippet(_id, back, uri, store, method, action){
     snippet = `const xhr = new XMLHttpRequest()
     xhr.onload = function(){ const Result = JSON.parse(xhr.responseText) }
     xhr.open('POST', '${uri}', true)
-    xhr.send(payload)`;
+    xhr.send(Value)`;
   }
   else if (action == 'Update'){
     snippet = `const xhr = new XMLHttpRequest()
     xhr.onload = function(){ const Result = JSON.parse(xhr.responseText) }
     xhr.open('${method}', '${uri}', true)
-    xhr.send(payload)`;
+    xhr.send(Value)`;
   }
   else if (action == 'Delete'){
     snippet = `const xhr = new XMLHttpRequest()
     xhr.onload = function(){ const Result = JSON.parse(xhr.responseText) }
     xhr.open('${method}', '${uri.substring(0,uri.indexOf('?'))}`
-    if(uri.indexOf('&')!=-1){ snippet += `?_method=DELETE'` } else {snippet += `'`}
+    if(uri.indexOf('&')!=-1){ snippet += `?_method=DELETE'})` } else {snippet += `'})`}
     snippet +=`, true)
     xhr.send()`;
   }

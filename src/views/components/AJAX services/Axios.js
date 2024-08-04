@@ -76,24 +76,27 @@ function saveSnippet(_id, back, uri, store, method, action, currentpage){
   
   let snippet;
   if (action == 'Read'){
-    uri = uri.replace('/Mysql','').replace('/Mongoodb','').replace('/Postgresql','')
-    snippet = `axios.get(${uri})
+    uri = uri.replace('/Mysql','').replace('/Mongodb','').replace('/Postgresql','')
+    snippet = `axios.get('${uri}')
     .then((response)=>{const Result = response.data})`;
   }
   else if(action == 'Create'){
-    snippet = `axios.post('${uri}', payload)
+    snippet = `axios.post('${uri}', Value)
     .then((response)=>{const Result = response.data})`;
   }
   else if (action == 'Update'){
     snippet = `axios(
-      {"method":'${method}', "url":'${uri}', "data":payload},
+      {"method":'${method}', "url":'${uri}', "data":Value},
       {"headers": {"Content-Type":'multipart/form-data'}}
     )
     .then((response)=>{const Result = response.data})`;
   }
   else if (action == 'Delete'){
-    snippet = `axios({"method":'${method}', "url":'${uri.substring(0,uri.indexOf('?'))}`;
-    if(uri.indexOf('&')!=-1){ snippet += `?_method=DELETE'` } else {snippet += `'`}
+    snippet = `axios({
+      "method":'${method}',
+      "url":'${uri.substring(0,uri.indexOf('?'))}`;
+      if(uri.indexOf('&')!=-1){ snippet += `?_method=DELETE'})` } else {snippet += `'
+    })`}
     snippet += `
     .then((response)=>{ const Result = response.data })`;
   }

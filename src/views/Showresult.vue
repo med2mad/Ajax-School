@@ -43,7 +43,9 @@
             @logout="this.$refs.Auth.fLogout();" @emitSnippet="(arg)=>{showSnippet(arg);}"
         ></DB>
 
-        <div class="offcanvas" ref="offcanvas"><pre>{{this.snippet}}</pre></div>
+        <div class="offcanvas" ref="offcanvas">
+            <textarea id="editor"></textarea>
+        </div>
     </main>
 
     <footer>
@@ -67,7 +69,10 @@ import DB from './components/DB.vue';
 import Auth from './components/Auth.vue';
 import $ from "jquery";
 import '/public/styles/showresult.css';
-
+import * as CodeMirror from '/codemirror';
+import '/codemirror/lib/codemirror.js'
+import '/codemirror/lib/codemirror.css'
+import '/codemirror/mode/javascript/javascript.js'
 
 export default{
 
@@ -76,7 +81,7 @@ export default{
     data(){return{
                 vback:localStorage.getItem('back'), vajax:localStorage.getItem('ajax'), 
                 vname:'', vage:'', vlimit:10, 
-                rotation:'0', snippet:'',
+                rotation:'0', 
                 DBs:[
                     {db:'mysql', dblogofile:'mysql.png', url:{'js':'http://localhost:5000/Mysql/', 'php':'http://127.0.0.1:8000/Mysql/'} },
                     {db:'mongoose', dblogofile:'mongodb.png', url:{'js':'http://localhost:5000/Mongoodb/','php':'http://127.0.0.1:8000/Mongoodb/'} },
@@ -106,7 +111,12 @@ export default{
             $('.offcanvasbtn').css('transform', 'rotate('+this.rotation+')');
         },
         showSnippet(arg){
-            this.snippet = arg;
+            document.getElementById('editor').value = arg;
+            
+            CodeMirror.fromTextArea(document.getElementById('editor'), {
+                lineNumbers: true,
+                mode:'javascript',
+            });
         }
     },
     
