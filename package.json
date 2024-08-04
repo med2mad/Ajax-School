@@ -8,6 +8,9 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.2",
+    "@codemirror/state": "^6.4.1",
+    "@codemirror/view": "^6.29.1",
     "@fullcalendar/bootstrap5": "^6.1.11",
     "@fullcalendar/core": "^6.1.11",
     "@fullcalendar/daygrid": "^6.1.11",
@@ -16,6 +19,7 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "codemirror": "^6.0.1",
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
     "jquery": "^3.7.1",
