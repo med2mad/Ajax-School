@@ -71,11 +71,11 @@ import DB from './components/DB.vue';
 import Auth from './components/Auth.vue';
 import $ from "jquery";
 import '/public/styles/showresult.css';
-// import * as CodeMirror from '/codemirror';
-// import './../../codemirror/lib/codemirror.js'
-// import './../../codemirror/lib/codemirror.css'
-// import './../../codemirror/mode/javascript/javascript.js'
-// import './../../codemirror/theme/rubyblue.css'
+import * as CodeMirror from './../../codemirror';
+import './../../codemirror/lib/codemirror.js'
+import './../../codemirror/lib/codemirror.css'
+import './../../codemirror/mode/javascript/javascript.js'
+import './../../codemirror/theme/rubyblue.css'
 
 export default{
 
