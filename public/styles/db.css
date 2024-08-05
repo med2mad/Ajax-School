@@ -6,6 +6,10 @@
   font-family: Rajdhani-Light;
   src: url('/public/styles/fonts/Rajdhani-Light.ttf');
 }
+@font-face {
+  font-family: opensans;
+  src: url('/public/styles/fonts/OpenSans-Light.ttf');
+}
 
 .title{
     background-image: linear-gradient(45deg , white 5% , #c5c5c5 50%, white  ) ;
@@ -74,10 +78,11 @@ table{
     
 }
 .db1 table td{
-    font-family: Rajdhani-Regular, sans-serif;
-    font-weight: bold;
+    font-family: opensans, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
     border: solid 1px;
-    color:rgb(61, 61, 61);
+    color:#6b6b6b;
 }
 .db1 table td img{
     background-color: black;

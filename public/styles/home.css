@@ -6,6 +6,10 @@
   font-family: Rajdhani-Light;
   src: url('/public/styles/fonts/Rajdhani-Light.ttf');
 }
+@font-face {
+  font-family: opensans;
+  src: url('/public/styles/fonts/OpenSans-Light.ttf');
+}
 
 .home{
   max-width: 500px;
@@ -13,12 +17,11 @@
 }
 
 .homelogo{
-  background-color: black;
-  border-radius: 30px;
-  border: solid 8px #2c3e50; 
-  width: 30%;
-  min-width: 250px;
-  padding: 10px 0px;
+  background-image: linear-gradient(180deg, rgb(53, 53, 53), rgb(0, 0, 0));
+  border-radius: 20px;
+  border: solid 4px #a5992a; 
+  max-width: 400px;
+  padding: 4px 0;
   margin: 20px auto;
 }
 
@@ -27,22 +30,25 @@
 }
 
 .start p{
-  font-family: Rajdhani-Light, sans-serif;
+  font-family: opensans, sans-serif;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-align: justify;
+  color:#6b6b6b;
+  font-weight: 600;
+  max-width: 400px;
   padding: 0 10px;
-  margin-bottom: 15px;
+  margin: 25px auto;
 }
 
 .start .btn{
   font-family: Rajdhani-Light, sans-serif;
-  border-radius: 10px;
+  border-radius: 3px;
   transition: transform 250ms;
   position: relative; /*position .flash*/
   overflow: hidden; /*.flash*/
   width: 200px;
-  margin: 20px auto;
+  margin: 20px auto 40px  auto;
 }
 .start .btn a{
   text-decoration: none;
@@ -50,9 +56,8 @@
 .start .btn a .text{
   font-size: 1.5rem;
   font-weight: bold;
-  background-color: blue;
+  background-color: #a5992a;
   color: white;
-  border-radius: 5px;
   height: 50px;
   display: grid; place-content: center; /*center text vertically*/
 }
