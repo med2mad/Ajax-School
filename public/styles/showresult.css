@@ -183,10 +183,11 @@ footer .footer2{
     white-space: pre-line;
     text-align: left;
     width: 100%;
-    height: 150px;
+    height: 160px;
     position: fixed;
     bottom: 0px;
     left: 180px;
+    right:0;
     overflow: auto;
     padding: 4px;
 }
@@ -200,6 +201,10 @@ footer .footer2{
 }
 .copybtn{
     font-size: 1rem;
+}
+.CodeMirror{
+    height: 130px !important;
+    border-bottom: white double 2px;
 }
 /*---------------------media query------------------------------------------*/
 
@@ -242,6 +247,7 @@ footer .footer2{
     .offcanvas{
         left: 0px;
         height: 200px;
+        
     }
     .page-item-arrow{
         display:none;

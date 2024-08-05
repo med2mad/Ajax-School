@@ -76,6 +76,8 @@ import '/codemirror/lib/codemirror.js'
 import '/codemirror/lib/codemirror.css'
 import '/codemirror/mode/javascript/javascript.js'
 import '/codemirror/theme/rubyblue.css'
+import '/codemirror/addon/scroll/simplescrollbars.js'
+import '/codemirror/addon/scroll/simplescrollbars.css'
 
 export default{
 
@@ -85,10 +87,12 @@ export default{
                 vback:localStorage.getItem('back'), vajax:localStorage.getItem('ajax'), 
                 vname:'', vage:'', vlimit:10, 
                 rotation:'0', vtheme:'rubyblue',
+                mysql_js: process.env.VUE_APP_mysql_js, mongodb_js: process.env.VUE_APP_mongodb_js, postgresql_js: process.env.VUE_APP_postgresql_js, 
+                mysql_php: process.env.VUE_APP_mysql_php, mongodb_php: process.env.VUE_APP_mongodb_php, postgresql_php: process.env.VUE_APP_postgresql_php, 
                 DBs:[
-                    {db:'mysql', dblogofile:'mysql.png', url:{'js':'http://localhost:5000/Mysql/', 'php':'http://127.0.0.1:8000/Mysql/'} },
-                    {db:'mongoose', dblogofile:'mongodb.png', url:{'js':'http://localhost:5000/Mongoodb/','php':'http://127.0.0.1:8000/Mongoodb/'} },
-                    {db:'postgresql', dblogofile:'postgresql.png', url:{'js':'http://localhost:5000/Postgresql/', 'php':'http://127.0.0.1:8000/Postgresql/'} },
+                    {db:'mysql', dblogofile:'mysql.png', url:{'js':this.mysql_js, 'php':this.mysql_php} },
+                    {db:'mongoose', dblogofile:'mongodb.png', url:{'js':this.mongodb_js,'php':this.mongodb_php} },
+                    {db:'postgresql', dblogofile:'postgresql.png', url:{'js':this.postgresql_js, 'php':this.postgresql_php} },
                     ]
                 }
             },
@@ -124,7 +128,8 @@ export default{
             CodeMirror.fromTextArea(document.getElementById('editor'), {
                 lineNumbers: true,
                 mode:'javascript',
-                theme:localStorage.getItem('theme')
+                theme:localStorage.getItem('theme'),
+                scrollbarStyle:'overlay'
             });
         },
         copy(){
@@ -144,6 +149,8 @@ export default{
     mounted(){
         this.$refs.offcanvas.style.display='none';
         this.vtheme = localStorage.getItem('theme');
+        console.log(this.mysql_js);
+        
     },
 }
 </script>
