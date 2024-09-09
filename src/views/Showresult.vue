@@ -1,6 +1,6 @@
 <template>
     <header>
-        <div class="logo"><router-link to="/"><img src="imgs/logo.png" alt="logo"></router-link></div>
+        <div class="logo"><router-link to="/"><img src="imgs/logo2.png" alt="logo"></router-link></div>
         <Auth ref="Auth" />
     </header>
 
@@ -87,12 +87,10 @@ export default{
                 vback:localStorage.getItem('back'), vajax:localStorage.getItem('ajax'), 
                 vname:'', vage:'', vlimit:10, 
                 rotation:'0', vtheme:'rubyblue',
-                mysql_js: process.env.VUE_APP_mysql_js, mongodb_js: process.env.VUE_APP_mongodb_js, postgresql_js: process.env.VUE_APP_postgresql_js, 
-                mysql_php: process.env.VUE_APP_mysql_php, mongodb_php: process.env.VUE_APP_mongodb_php, postgresql_php: process.env.VUE_APP_postgresql_php, 
                 DBs:[
-                    {db:'mysql', dblogofile:'mysql.png', url:{'js':this.mysql_js, 'php':this.mysql_php} },
-                    {db:'mongoose', dblogofile:'mongodb.png', url:{'js':this.mongodb_js,'php':this.mongodb_php} },
-                    {db:'postgresql', dblogofile:'postgresql.png', url:{'js':this.postgresql_js, 'php':this.postgresql_php} },
+                    {db:'mysql', dblogofile:'mysql.png', url:{'js':'http://localhost:5000/Mysql/', 'php':'http://127.0.0.1:8000/Mysql/'} },
+                    {db:'mongodb', dblogofile:'mongodb.png', url:{'js':'http://localhost:5000/Mongodb/','php':'http://127.0.0.1:8000/Mongodb/'} },
+                    {db:'postgresql', dblogofile:'postgresql.png', url:{'js':'http://localhost:5000/Postgresql/', 'php':'http://127.0.0.1:8000/Postgresql/'} },
                     ]
                 }
             },
@@ -149,8 +147,6 @@ export default{
     mounted(){
         this.$refs.offcanvas.style.display='none';
         this.vtheme = localStorage.getItem('theme');
-        console.log(this.mysql_js);
-        
     },
 }
 </script>
