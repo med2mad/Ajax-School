@@ -20,7 +20,7 @@
   border-radius: 20px;
   max-width: 400px;
   padding: 4px 0;
-  margin: 20px auto;
+  margin: 10px auto;
 }
 
 .homelogo img{
@@ -35,7 +35,7 @@
   font-weight: 600;
   max-width: 400px;
   padding: 0 10px;
-  margin: 25px auto;
+  margin: 0px auto;
 }
 
 .start .btn{
@@ -53,7 +53,7 @@
 .start .btn a .text{
   font-size: 1.5rem;
   font-weight: bold;
-  background-color: #a5992a;
+  background-color: #9390af;
   color: white;
   height: 50px;
   display: grid; place-content: center; /*center text vertically*/
@@ -153,7 +153,7 @@
 }
 
 .devider{
-  border-bottom: solid 4px #a5992a;
+  border-bottom: solid 4px #9390af;
   border-radius: 2px;
   width : 75%;
   margin: 3vh auto;
