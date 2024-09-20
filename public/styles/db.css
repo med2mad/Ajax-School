@@ -25,13 +25,12 @@
     display: flex; /* align .db1|.db2 */
     flex-wrap: wrap;
     justify-content: center;
-    min-height: 500px; /* changing limit / deleting makes the next .title go up and down */
+    min-height: 488px; /* changing limit / deleting makes the next .title go up and down */
 }
 
 .db .db1{
     background-color: white;
-    max-height: 500px;
-    min-height: 90px; /* 'No Data!!' shows timeF out of bounds (optional ?)*/
+    height: 488px;
     flex: 1;
     display:flex; /* align .time|.data */ 
 }
@@ -77,6 +76,7 @@ table{
     width:100%; /* makes the table columns responsive because .db{display:flex} and .db2 is fixed */
     
 }
+
 .db1 table td{
     font-family: opensans, sans-serif;
     font-size: 0.875rem;
@@ -91,19 +91,21 @@ table{
     border: solid 1px;
 }
 
-.db1 table th{
+.db1 table .headerrow{
+    height: 35px;
+}
+.db1 table .headerrow th{
     font-family: Rajdhani-Regular, sans-serif;
     text-shadow: 0px 0px 3px blue;
     font-size: 1.1em;
     background-image: linear-gradient(180deg, rgb(85, 85, 85), rgb(36, 35, 35));
     color: white;
     border: solid 1px grey;
-    padding: 7px;
  }
 
 .db1 table .datarow{
     background-color: rgb(238, 238, 238);
-    height: 46px;
+    height: 45px;
 }
 .db1 table .datarow:nth-child(odd){
     background-color: white;
@@ -118,6 +120,9 @@ table{
 
 .db2{
     width:auto; /*which is a fixed size because .db{display:flex} makes .db2 intrensic ([width:max-content] does the same)*/
+}
+.x{
+    display: none;
 }
 .db2 .form{
     font-family: Rajdhani-Regular;
@@ -156,6 +161,14 @@ table{
     font-family: Rajdhani-Regular;
     font-weight: bold;
     font-size: 0.9rem;
+    padding: 3px 0;
+}
+.clearbutton{
+    color:red;
+    background-color:rgb(255, 195, 195);
+    margin: 2px 0;
+    font-size: 1rem !important;
+    padding: 5px 0;
 }
 .form .data table .error{
     color: pink;
@@ -217,25 +230,6 @@ table{
     border-color: rgb(207, 72, 72);
     background-color: rgb(221, 221, 221);  
 }
-.add{ /*media query*/
-    display: none;
-    border-bottom: solid 1px black;
-}
-.add a{
-    text-decoration: none;
-}
-.add a .text{
-    font-size: 1.5rem;
-    font-weight: bold;
-    background-color: green;
-    cursor: pointer;
-    color: white;
-    border-radius: 10px;
-    height: 30px;
-    width:80%;
-    margin: 5px auto;
-    display: grid; place-content: center; /*center text vertically*/
-}
 
 /*-------------- animate popup-------------*/
 @keyframes anim{
@@ -285,10 +279,51 @@ content: counter(rowNumber);
 /*---------------------media query------------------------------------------*/
 
 @media only screen and (max-width: 650px){
-    .db2{
-        display: none; /*responsivness using jQuery*/
+    .db{
+        display: block; /* align .db1|.db2 */
     }
-    .add{
-        display: block; /*responsivness using jQuery*/
+
+    .db2{
+        position: fixed;
+        top: -1000px;
+        left: 0;
+        right: 0;
+        display: flex; justify-content: center; align-items: center; /* center form on screen */
+        background-color: rgba(128, 128, 128, 0.5);
+        transition-property: top;
+        transition-duration: 150ms;
+        transition-timing-function: linear;
+    }
+    .showdb2{
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(128, 128, 128, 0.5);
+        display: flex; justify-content: center; align-items: center; /* center form on screen */
+        transition-property : top;
+        transition-duration: 150ms;
+        transition-timing-function: linear;
+    }
+
+    .db2 .form{
+        border-radius: 0px 0px 0px 0px;
+    }
+    .ppd{
+        border-radius: 0px 0px 0px 0px !important;
+    }
+    .showx{
+        display: block;
+        position: fixed;
+        font-size: 1.2rem;
+        top: 100px;
+        right: 5px;
+        width: 35px;
+        height: 35px;
+        color: red;
+        background-color: rgb(248, 68, 137);
+        border : solid 3px red;
+        border-radius: 50%;
+        display:flex; align-items: center; justify-content: center;
     }
 }

@@ -71,13 +71,13 @@ function saveSnippet(_id, back, uri, store, method, action){
     snippet = `const xhr = new XMLHttpRequest()
     xhr.onload = ()=>{ const Result = JSON.parse(xhr.responseText) }
     xhr.open('POST', '${uri}', true)
-    xhr.send(Value)`;
+    xhr.send(Values)`;
   }
   else if (action == 'Update'){
     snippet = `const xhr = new XMLHttpRequest()
     xhr.onload = ()=>{ const Result = JSON.parse(xhr.responseText) }
     xhr.open('${method}', '${uri}', true)
-    xhr.send(Value)`;
+    xhr.send(Values)`;
   }
   else if (action == 'Delete'){
   snippet = `const xhr = new XMLHttpRequest()

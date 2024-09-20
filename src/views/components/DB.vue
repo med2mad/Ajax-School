@@ -1,5 +1,5 @@
 <template>
-    <div class="title"> <img :src="'imgs/tools/'+_dblogofile" alt="DB logo">  </div>
+    <div class="title"> <img :src="'imgs/tools/'+_dblogofile" alt="DB logo"> </div>
 
     <div ref="db" style="padding-bottom:20px">
         
@@ -13,7 +13,7 @@
             <div v-else-if="store.rows" class="rows">
                 <form> <!--for input radio-->
                 <table>
-                    <tr><th></th><th>id</th><th>Name</th><th>Age</th><th>Photo</th></tr>
+                    <tr class="headerrow"><th></th><th>id</th><th>Name</th><th>Age</th><th>Photo</th></tr>
                     <transition-group name="table">
                     <tr v-for="profile in store.rows" class="datarow" :class="{selectedrow:profile._id==selectedId}" :key="profile._id" @click="selectProfile(profile._id);">
                         <td> <input type="radio" name="db" v-model="selectedId" :value="profile._id"> </td>
@@ -28,7 +28,9 @@
         </div>
         </div>
         
-        <div class="db2" :id="this._db">
+        <div class="x" ref="x">X</div>
+
+        <div class="db2" ref="db2" :id="this._db" @click.self="toggleForm">
         <div class="form"> 
             <form ref="frmid" class="data" enctype="multipart/form-data">
             <table cellspacing="0">
@@ -41,11 +43,14 @@
                     <div v-if="store.ageError" class="error">Enter age from 18 to 99</div>
                 </td></tr>
                 <tr>
-                    <td>
-                        <img ref="img" alt="img" @click="$refs[_db].click();" class="img" src="uploads/profile.jpg"><br>
-                        <input type="button" @click="$refs[_db].click();" value="choose Photo...">
-                        <input type="button" value="No Photo" @click="removePhoto">
-                        <input type="file" name="photo" :ref="_db" accept="image/*" @change="onFileChange" style="display:none;"><br>
+                    <td style="    padding-bottom: 0 !important;">
+                        <input type="file" name="photo" :ref="_db" accept="image/*" @change="onFileChange" style="display:none;">
+                        <img ref="img" alt="img" @click="$refs[_db].click();" class="img" src="uploads/profile.jpg">
+                        <div style="display:flex;">
+                            <input type="button" @click="$refs[_db].click();" value="choose Photo...">
+                            <input type="button" value="No Photo" @click="removePhoto">
+                        </div>
+                        <input type="button" value="Clear" class="clearbutton" @click="clear">
                     </td>
                 </tr>
             </table>
@@ -61,10 +66,6 @@
     </div>
 
     <Pagination v-if="store.rows && store.rows.length>0" :pagination="store.pagination" @changepage="(i)=>{changepage(i);}"></Pagination>
-    
-    <div class="add" @click="toggleForm">
-        <a href="javascript:void(0)"><div class="text">+</div></a>
-    </div>
 
     </div>
 
@@ -73,7 +74,6 @@
 
 <script>
 import Swal from 'sweetalert2';
-import $ from "jquery";
 import Pagination from './Pagination.vue';
 import axios from './AJAX services/Axios';
 import fetch from './AJAX services/Fetch';
@@ -171,6 +171,7 @@ export default{
             let src = this.$refs['trImg'+id][0].src;
             this.$refs.img.src = src;
             this.selectedPhotoName = src?src.split("/")[src.split("/").length-1]:''; 
+            this.toggleForm();
         },
         removePhoto(){
             this.selectedPhotoName='';
@@ -242,7 +243,8 @@ export default{
         },
 
         toggleForm(){
-            $('#'+this._db).slideToggle();
+            this.$refs.db2.classList.toggle('showdb2');
+            this.$refs.x.classList.toggle('showx');
         }
     },
 
@@ -252,10 +254,8 @@ export default{
 
     mounted(){
         if(this.venable=='true'){
-            this.store.time = new Date();
-            this.ajaxes[this._vajax].fget(this.GETuri(this._url[this._vback], 1), this.store, this._vlimit, 1, this._vback, this._vajax);
+            this.changepage(1);
             this.$refs.db.style.display='';
-            this.$emit('emitSnippet', localStorage.getItem('snippet'));
         }else{
             this.$refs.db.style.display='none';
         }

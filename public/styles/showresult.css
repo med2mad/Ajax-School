@@ -17,19 +17,22 @@ header{
     height: 70px;
     z-index: 200;
     display: flex;
-    justify-content: flex-end;
+    justify-content:flex-start;
     align-items: center;
 }
-header .hamburger-button{
-    width:25px;
-    display:none;
-}
 
-header .username{
-    text-shadow: 0px 0px 4px blue;
-    font-style: italic;
+header .hamburgerButton{
+    cursor: pointer;
+    width: 50px;
+    height: 100%;
+    padding: 10px 10px;
     color: white;
-    font-size: clamp( 0.2rem , 4vw + 0.2rem , 1.3rem );
+    border: solid 1px white;
+    font-size: 2rem;
+    display: none;
+}
+header .hamburgerButton:hover{
+    background-image: linear-gradient(180deg, rgb(133, 133, 133), rgb(59, 59, 59)) ;
 }
 
 header .logo{
@@ -40,10 +43,27 @@ header .logo img{
     width: 110px; 
 }
 
+.user{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 8px;
+    width: 230px;
+}
+
+header .username{
+    text-shadow: 0px 0px 4px blue;
+    font-style: italic;
+    color: white;
+    font-size: clamp( 0.2rem , 4vw + 0.2rem , 1.3rem );
+}
+
 header nav{
     height: 100%;
     display: flex; /* align links */
     justify-content: flex-end;
+    align-items: center;
+
 }
 header nav a{
     color: white;
@@ -52,32 +72,17 @@ header nav a{
     text-decoration: none;
     border-left: solid 1px gray;
     border-radius: 10px 0 0 0;
-    width:130px;
     position: relative;
+    height: 100%;
+    display:flex; align-items: center; /* align text in links */
+    text-align: center;
 }
-header nav a .btn{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-}
-
 header nav a:hover{
     background-image: linear-gradient(180deg, rgb(133, 133, 133), rgb(59, 59, 59)) ;
 }
-header nav a.router-link-exact-active{
-    text-shadow: 0px 0px 9px blue;
-    background-image: linear-gradient(180deg, rgb(182, 182, 182), rgb(59, 59, 59));
-    cursor: default;
-    font-size: 2.1rem;
-    font-weight: bolder;
-    padding: 10px;
-}
 
-main{
-    margin-top: 70px;
+main {
     margin-left: 182px;
-    background-image: linear-gradient(90deg , #eaf2fb , #8a8a8a , #eaf2fb ) ;
 }
 
 .side{
@@ -117,90 +122,36 @@ main{
     background-color: pink;
 }
 
-.side .legend{
-    color: white;
-    display: grid;
-    grid-template-columns: 1fr 7fr;
-    align-items: center;
-    text-align: left;
-    grid-gap: 6px 10px;
-    margin-left:10px;
-    margin-top: 8px;
-}
-.side .legend div div{ /* colored blocks */
-    color: black;
-    width:20px;
-    height:20px;
-    border:solid 1px;
-}
-
-footer{
-    display: none;
-    background-image: linear-gradient(180deg,#787878 0%,
-                                            #b5b5b5 25%,
-                                            #ce9c9c 50%,
-                                            #b5b5b5 75%,
-                                            #787878 100%
-                                        ) ;
-    border-top: solid 2px black;
-    border-radius: 20px 20px 0px 0px ;
-}
-footer .span{
-    color:brown;font-weight: bold;
-}
-footer input{
-    border-radius: 20px;
-    text-align: center;
-}
-
-footer .footer1{
-    padding-bottom:2px; border-radius: 20px 20px 0px 0px ;
-    display: flex; justify-content: center; align-items:center; gap:10px;
-    background-image: linear-gradient(180deg,#787878 0%,
-                                            #b5b5b5 25%,
-                                            #e3e3e3 50%,
-                                            #b5b5b5 75%,
-                                            #787878 100%
-                                        ) ;
-}
-footer .footer1 .flex2{
-    text-align: right;
-}
-
-footer .footer2{ 
-    height:20px; padding-top:6px; border-top: solid 1px;
-    background-image: linear-gradient(180deg,#787878 0%,
-                                            #b5b5b5 25%,
-                                            #e3e3e3 50%,
-                                            #b5b5b5 75%,
-                                            #787878 100%
-                                        ) ;
-}
-
 .offcanvas{
     background-color: black;
     color:white;
     white-space: pre-line;
     text-align: left;
-    width: 100%;
     height: 160px;
     position: fixed;
     bottom: 0px;
     left: 180px;
     right:0;
     overflow: auto;
-    padding: 4px;
 }
 .offcanvasbtn{
     cursor: pointer;
     width: 50px;
 }
-.offcanvasbtn2{
-    cursor: pointer;
-    width: 30px;
-}
-.copybtn{
+.copybtn, .closebtn, .codetheme{
+    padding:2px;
     font-size: 1rem;
+    color:rgb(75, 75, 75)
+}
+.copybtn:hover, .closebtn:hover, .codetheme:hover{
+    color:black;
+}
+.copybtn:active{
+    background-color:rgb(151, 196, 199);
+}
+.closebtn{
+    background-color:rgb(214, 177, 183);
+    color: rgb(240, 75, 75);
 }
 .CodeMirror{
     height: 130px !important;
@@ -209,22 +160,31 @@ footer .footer2{
 /*---------------------media query------------------------------------------*/
 
 @media only screen and (max-width: 650px){
+
     .side{
-        display: none;
+        font-family: Rajdhani-Light, sans-serif;
+        border-right: solid 3px;
+        border-bottom: solid 1px;
+        background-image: linear-gradient(90deg, #31313180, #24232380 90%);
+        position: fixed;
+        left:-1000px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 100vh;
+        width: 180px;
+        padding-top: 2vh;
+        transition-duration: 250ms;
+        transition-property: left;
+    }
+    .nosidebar{
+        left:0;
+        transition-duration: 250ms;
+        transition-property: left;
     }
 
     main{
         margin:auto;
-        padding-top: 70px;
-        padding-bottom: 50px;
-    }
-
-    footer{
-        display:block;
-        width: 100%;
-        position:fixed;
-        height:72px;
-        bottom: -4px;
+        margin-left:'0px';
     }
 
     header p{
@@ -233,23 +193,26 @@ footer .footer2{
     header .logo{
         display:none;
     }
-    header .hamburger-button{
+    header .hamburgerButton{
         display:block;
-        margin: 10px;
     }
     header nav{
         width:100%;
+        gap:4px;
     }
     header nav a{
-        flex:1;
         border-radius: 0 0 0 0;
     }
     .offcanvas{
         left: 0px;
-        height: 200px;
-        
+        height: 160px;
     }
     .page-item-arrow{
         display:none;
+    }
+
+    .user{
+        border-left:none;
+        width: auto; 
     }
 }

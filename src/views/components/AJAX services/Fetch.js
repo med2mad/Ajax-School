@@ -81,12 +81,12 @@ function saveSnippet(_id, back, uri, store, method, action){
     .then((response)=>{ const Result = response })`;
   }
   else if (action == 'Create'){
-    snippet = `fetch('${uri}', {"method":'POST', "body":Value})
+    snippet = `fetch('${uri}', {"method":'POST', "body":Values})
     .then((response)=>{ return response.json() })
     .then((response)=>{ const Result = response })`;
   }
   else if (action == 'Update'){
-    snippet = `fetch('${uri}', {"method":'${method}', "body":Value})
+    snippet = `fetch('${uri}', {"method":'${method}', "body":Values})
     .then((response)=>{ return response.json() })
     .then((response)=>{ const Result = response })`;
   }

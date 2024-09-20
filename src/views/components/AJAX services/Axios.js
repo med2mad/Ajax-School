@@ -81,12 +81,12 @@ function saveSnippet(_id, back, uri, store, method, action, currentpage){
     .then((response)=>{const Result = response.data})`;
   }
   else if(action == 'Create'){
-    snippet = `axios.post('${uri}', Value)
+    snippet = `axios.post('${uri}', Values)
     .then((response)=>{const Result = response.data})`;
   }
   else if (action == 'Update'){
     snippet = `axios(
-      {"method":'${method}', "url":'${uri}', "data":Value},
+      {"method":'${method}', "url":'${uri}', "data":Values},
       {"headers": {"Content-Type":'multipart/form-data'}}
     )
     .then((response)=>{const Result = response.data})`;

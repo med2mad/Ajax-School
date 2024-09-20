@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <a style="display:flex; flex: 1 1 auto; align-items:center; justify-content:center; gap:8px;" href="javascript:void(0)" @click="profile">
+        <a class="user" href="javascript:void(0)" @click="profile">
             <div class="username">
                 {{user.name}}
             </div>
@@ -8,9 +8,9 @@
                 <img :src="'uploads/'+(user.photo?user.photo:'profile.jpg')" class="userphoto" />
             </div>
         </a>
-        <a v-if="!user.name" href="javascript:void(0)" @click="fLogin" style="flex:1;"> <div class="btn">LogIn</div> </a>
-        <a v-else href="javascript:void(0)" @click="fLogout" style="flex:1;"> <div class="btn">LogOut</div> </a>
-        <a href="javascript:void(0)" @click="fSignup" style="flex:1;"> <div class="btn">SignUp</div> </a>
+        <a v-if="!user.name" href="javascript:void(0)" @click="fLogin"> <div class="btn" style="width:90px">LogIn</div> </a>
+        <a v-else href="javascript:void(0)" @click="fLogout"> <div class="btn" style="width:90px">LogOut</div> </a>
+        <a href="javascript:void(0)" @click="fSignup"> <div class="btn" style="width:90px">SignUp</div> </a>
     </nav>
 </template>
 
@@ -56,12 +56,12 @@ export default{
             logout(this.user);
         },
         fSignup(){
-            window.location.href = 'html/signup.html?title=Sign Up';
+            window.location.href = 'html/signup.html?title=Sign Up&photo=profile.jpg';
         },
 
         profile(){
             if(localStorage.getItem('token'))
-                window.location.href = 'html/signup.html?title=Edit Profile';
+                window.location.href = 'html/signup.html?title=Edit Profile&photo='+(this.user.photo?this.user.photo:'profile.jpg');
             else
                 this.fLogin();
         }
@@ -72,4 +72,5 @@ export default{
 <style>
     body { font-family: sans-serif; }
     .userphoto {width:50px; height:50px; border-radius:50px; object-fit:cover;}
+    .user{margin: auto;}
 </style>

@@ -59,7 +59,7 @@ function saveSnippet(_id, back, uri, store, method, action){
       "type":'POST', 
       "url":'${uri}', 
       "contentType":false, "processData":false,
-      "data":Value
+      "data":Values
     })
     .done((response)=>{ const Result = response })`;
   }
@@ -68,7 +68,7 @@ function saveSnippet(_id, back, uri, store, method, action){
       "type":'${method}',
       "url":'${uri}',
       "contentType":false, "processData":false,
-      "data":Value
+      "data":Values
     })
     .done((response)=>{ const Result = response })`;
   }
