@@ -5,9 +5,9 @@
     <div class="start">
       <div>
         <p>
-          A practicing ground for Ajax techniques. It provides different backend technologies to test with multiple database systems.
-          <!-- teaching Ajax techniques, providing code snippets and for manipulating multiple database systems,
-          using different backend technologies with a selection of Ajax techniques. -->
+          A code builder making queries and Ajax code snipppets. The app supports multiple database systems,
+          and allows the use of different backend technologies with a selection of various Ajax APIs.
+          Also includes a tutorial with challenges to start off quickly.
         </p>
       </div>
       <div class="btn">

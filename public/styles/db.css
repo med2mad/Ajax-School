@@ -25,12 +25,12 @@
     display: flex; /* align .db1|.db2 */
     flex-wrap: wrap;
     justify-content: center;
-    min-height: 488px; /* changing limit / deleting makes the next .title go up and down */
+    min-height: 489px; /* changing limit / deleting makes the next .title go up and down */
 }
 
 .db .db1{
     background-color: white;
-    height: 488px;
+    height: 489px;
     flex: 1;
     display:flex; /* align .time|.data */ 
 }
@@ -164,8 +164,7 @@ table{
     padding: 3px 0;
 }
 .clearbutton{
-    color:red;
-    background-color:rgb(255, 195, 195);
+    color:rgb(255, 51, 85);
     margin: 2px 0;
     font-size: 1rem !important;
     padding: 5px 0;
@@ -231,6 +230,9 @@ table{
     background-color: rgb(221, 221, 221);  
 }
 
+.form .touchableinput{
+    height:26px;
+}
 /*-------------- animate popup-------------*/
 @keyframes anim{
     0%{transform: translateY(-50px); opacity: 0;}

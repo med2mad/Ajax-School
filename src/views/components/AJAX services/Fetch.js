@@ -1,70 +1,57 @@
 import Swal from 'sweetalert2';
 import { paginate } from '../utils';
+import axios from 'axios';
 
-function fget(uri, store, limit, currentpage, back){
-  fetch(uri)
-  .then((response)=> {
-    if(response.ok){ return response.json() } else {throw new Error("[!response.ok]")} 
-  })
-  .then((response)=>{
-    store.rows = response.rows;
-    store.pagination = paginate(response.total, currentpage, limit, 10);
-  })
-  .catch((err)=>{
-    console.log(err);
-  });
+async function fget(uri, store, limit, currentpage, back){
+  await axios.get('http://localhost:5000/table_name?table_name=profiles_'+localStorage.getItem('username'))
 
-  localStorage.setItem('snippet', saveSnippet('', back, uri, store, 'GET', 'Read'));
+  const response = await fetch(uri)
+  if (!response.ok) { throw new Error("[!response.ok] " + response.status); }
+  const data = await response.json();
+  store.rows = data.rows;
+  store.pagination = paginate(data.total, currentpage, limit, 10);
+  codemirror(data.rawSQL, saveSnippet('', back, uri, store, 'GET', 'Read'));
 }
 
-function fpost(uri, body, store, limit, back){
-  fetch(uri, {"method":'POST', "body":body})
-  .then((response)=> {
-    return response.json()
-  })
-  .then((response)=>{
-    const rowToInsert = {"id":response.newId, "_id":response.newId, "photo":response.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get 
+async function fpost(uri, body, store, limit, back){
+  try {
+    const response = await fetch(uri, {"method":'POST', "body":body})
+    if (!response.ok) { throw new Error("[!response.ok] " + response.status); }
+    const data = await response.json()
+    const rowToInsert = {"id":data.newId, "_id":data.newId, "photo":data.photo, "name":body.get("name"), "age":body.get("age")};//FormData object use get 
     store.rows.unshift(rowToInsert);
     if(store.rows.length>limit){store.rows.pop();} //remove last row in <table> (respect limit after add)
-  })
-  .catch((err)=>{
-    if(err.response && err.response.status == 401){
+    codemirror(data.rawSQL, saveSnippet('', back, uri, store, 'POST', 'Create'));
+  } catch (error) {
+    if(error.response && error.response.status == 401){
       Swal.fire('Login again please.');
     }
-  });
-
-  localStorage.setItem('snippet', saveSnippet('', back, uri, store, 'POST', 'Create'));
+  }
 }
 
-function fput(method, uri, body, selectedTr, store, back){
-  fetch(uri, {"method":method, "body": body})
-  .then((response)=> {
-    return response.json()
-  })
-  .then((response)=> {
-    store.rows[selectedTr].name=body.get('name'); store.rows[selectedTr].age=body.get('age');store.rows[selectedTr].photo=response.photo;
-  })
-  .catch((err)=>{
-    if(err.response && err.response.status == 401){
+async function fput(method, uri, body, selectedTr, store, back){
+  try {
+    const response = await fetch(uri, {"method":method, "body": body})
+    if (!response.ok) { throw new Error("[!response.ok] " + response.status); }
+    const data = await response.json()
+    store.rows[selectedTr].name=body.get('name'); store.rows[selectedTr].age=body.get('age');store.rows[selectedTr].photo=data.photo;
+    codemirror(data.rawSQL, saveSnippet('data.editedId', back, uri, store, method, 'Update'));
+  } catch (error) {
+    if(error.response && error.response.status == 401){
       Swal.fire('Login again please.');
     }
-  });
-
-  localStorage.setItem('snippet', saveSnippet('', back, uri, store, method, 'Update'));
+  }
 }
 
-function fdelete(method, uri, store, back){
-  fetch(uri, {"method": method})
-  .then((response)=>{
-    return response.json()
-  })
-  .then((response)=>{
-    //GET replacement row
-    if(response.rows.length>0)
-    { store.rows.push({"id":response.rows[0].id, "_id":response.rows[0]._id, "name":response.rows[0].name, "age":response.rows[0].age, "photo":response.rows[0].photo}) }
-  })
+async function fdelete(method, uri, store, back){
+  const response = await fetch(uri, {"method": method})
+  if (!response.ok) { throw new Error("[!response.ok] " + response.status); }
+  const data = await response.json()
+  //GET replacement row
+  if(data.rows.length>0)
+  { store.rows.push({"id":data.rows[0].id, "_id":data.rows[0]._id, "name":data.rows[0].name, "age":data.rows[0].age, "photo":data.rows[0].photo}) }
 
-  localStorage.setItem('snippet', saveSnippet('', back, uri, store, method, 'Delete'));
+  codemirror(data.rawSQL, saveSnippet('', back, uri, store, method, 'Delete'));
 }
 
 
@@ -100,6 +87,18 @@ function saveSnippet(_id, back, uri, store, method, action){
 
   return snippet;
   //axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
+}
+
+function codemirror(rawSQL, snippet){
+  const x = rawSQL.replaceAll('_id', 'id').replaceAll('`', '"').replace('"profile"','"profiles"')
+  .replace('"id", "name", "age", "photo"', '*')
+  .replaceAll(' OFFSET 0','')
+  + `
+  --------------------
+
+` + snippet;
+
+  localStorage.setItem('snippet', x);
 }
 
 export default {fget, fpost, fput, fdelete}

@@ -1,6 +1,9 @@
 import { paginate } from '../utils';
+import axios from 'axios';
 
-function fget(uri, store, limit, currentpage, back){
+async function fget(uri, store, limit, currentpage, back){
+  await axios.get('http://localhost:5000/table_name?table_name=profiles_'+localStorage.getItem('username'))
+  
   const xhr = new XMLHttpRequest();
   xhr.onload=()=>{
     if(xhr.status===200){
@@ -94,6 +97,18 @@ xhr.send()`;
   
   return snippet;
   // axios.post('http://localhost:5000/snippet/', {"_id":_id, "snippet":snippet, "back":back, "ajax":'Axios', "uri":uri, "action":action, "db":store.db, "date":d, "time":t, "username":localStorage.getItem('username')});
+}
+
+function codemirror(rawSQL, snippet){
+  const x = rawSQL.replaceAll('_id', 'id').replaceAll('`', '"').replace('"profile"','"profiles"')
+  .replace('"id", "name", "age", "photo"', '*')
+  .replaceAll(' OFFSET 0','')
+  + `
+  --------------------
+
+` + snippet;
+
+  localStorage.setItem('snippet', x);
 }
 
 export default {fget, fpost, fput, fdelete}

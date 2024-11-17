@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head><script src="./assets/js/color-modes.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.122.0">
+    <title>Challenges</title>
+    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    tr{height: 70px;}
+    td{vertical-align: middle;}
+    table {
+      border: solid 1px;
+      counter-reset: rowNumber -1;
+    }
+    table tr {
+      counter-increment: rowNumber;
+    }
+    table tr td:nth-child(1)::before {
+      content: counter(rowNumber);
+    }
+    .div{margin-left:50px;}
+    @media only screen and (max-width: 650px){
+      .div{margin-left:5px;}
+    }
+    </style>
+  </head>
+  <body class="py-4 bg-body-tertiary">
+  <div class="div">
+    <h1 style="font-size:3rem; margin-bottom:50px; border-bottom: solid 1px;">
+      <a href="http://localhost:8080/showresult">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+          <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+        </svg>
+        Challenges
+      </a>
+    </h1>
+    <div style="display:flex; align-items:center; flex-wrap:wrap; margin-bottom:30px;">
+      <h1 style="width:190px;">Filtering</h1>
+      <table class="table table-success table-striped">
+        <tr><td></td><td>Filter all rows with age of 30.</td></tr>
+        <tr><td></td><td>Filter only 3 rows with age of 40.
+        <br><strong>Hint :</strong> use the "Per page" feature</td></tr>
+        <tr><td></td><td>Filter out the row named "AjAx".
+        <br><strong>Problem :</strong> in PostgresSql, filtering is case sensitive, so your filter characters should match the case.</td></tr>
+        <tr><td></td><td>Filter all rows with names starting with "Avalon".
+        <br><strong>Hint :</strong> use the "%" character in the filter to replace any string.</td></tr>
+        <tr><td></td><td>Filter all rows with names ending with "Avalon" (using "%").</td></tr>
+        <tr><td></td><td>Filter all rows that contains "el" in 1 page.
+        <br><strong>Hint :</strong> use "%" in both sides, also use the "Per page" feature.</td></tr>
+        <tr><td></td><td>Filter all rows with names "Lamar1" and "Lamar2" without using the "%" character.
+        <br><strong>Hint :</strong> use the "_" character in the filter to filter any single character.</td></tr>
+        <tr><td></td><td>Filter all rows with names with only 10 characters.</td></tr>
+        <!-- <tr><td></td><td>Filter all rows with a first name that has exactly 10 characters.
+        <br><strong>Hint :</strong> use the "_" for the first name, then a space character that indicates the start of the last name.</td></tr> -->
+        <!-- <tr><td></td><td>Filter all rows with first names with 5 characters and last names with 6 characters.
+        <br><strong>Problem :</strong> using "_" with space between the first and last names is not recommended.</td></tr> -->
+        <tr><td></td><td>Filter out only the row with the name 66%.
+        <br><strong>Problem :</strong> Mysql and PostgresSQL use "%" with the LIKE operator, so you need to escape it (using "\").</td></tr>
+        <tr><td></td><td>Filter out only the row with the name 66_.
+        <br><strong>Problem :</strong> Mysql and PostgresSQL use "_" with the LIKE operator, so you need to escape it (using "\").</td></tr>
+        <tr><td></td><td>Filter rows with names that contain 2 specific strings, skipping the first 5 rows.
+        <br><strong>Hint :</strong> use the "%" character with the "Per page" feature and the pagination.</td></tr>
+        <tr><td></td><td>Update a row's name by adding multiple spaces to the start, then filter it alone using 1 "%" to filter all the space characters.</td></tr>
+        <!-- <tr><td></td><td>add a row with the name "<{!@&- %$'#:^_(".?;*" then filter that row alone.</td></tr> -->
+      </table>
+    </div>
+    <div style="display:flex; align-items:center; flex-wrap:wrap;">
+        <h1 style="width:190px;">PHP vs JS</h1>
+        <table class="table table-success table-striped">
+          <tr><td></td><td>Make an Insert/Update/Delete operations and notice the speed difference.</td></tr>
+          <tr><td></td><td>Make a Filter and notice the speed difference.</td></tr>
+          <tr><td></td><td>Check the code in github to learn how the app is coded using both frameworks.</td></tr>
+        </table>
+    </div>
+  </div>
+
+  </body>
+</html>

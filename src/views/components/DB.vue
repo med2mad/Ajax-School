@@ -2,12 +2,12 @@
     <div class="title"> <img :src="'imgs/tools/'+_dblogofile" alt="DB logo"> </div>
 
     <div ref="db" style="padding-bottom:20px">
-        
+    
     <div class="db">
-
+        
         <div class="db1">
         <div class="data">
-            <div v-if="store.rows && store.rows.length===0" class="nodata">
+            <div v-if="(store.rows && store.rows.length===0)" class="nodata">
                 <h2 class="nodata">No Data !</h2>
             </div>
             <div v-else-if="store.rows" class="rows">
@@ -18,7 +18,7 @@
                     <tr v-for="profile in store.rows" class="datarow" :class="{selectedrow:profile._id==selectedId}" :key="profile._id" @click="selectProfile(profile._id);">
                         <td> <input type="radio" name="db" v-model="selectedId" :value="profile._id"> </td>
                         <td>{{profile._id}}</td> <td :ref="'trName'+profile._id">{{profile.name}}</td><td :ref="'trAge'+profile._id">{{profile.age}}</td>
-                        <td><img :src="'uploads/'+(profile.photo||'profile.jpg')" :alt="'photo'+profile._id" :ref="'trImg'+profile._id"></td>
+                        <td><img :src="'uploads/'+ encodeURIComponent(profile.photo||'profile.jpg').replace(/%2520/g, ' ')" :alt="'photo'+profile._id" :ref="'trImg'+profile._id"></td>
                     </tr>
                     </transition-group>
                 </table>
@@ -35,18 +35,18 @@
             <form ref="frmid" class="data" enctype="multipart/form-data">
             <table cellspacing="0">
                 <tr><td id="name">
-                    Name<input type="text" v-model="vname" name="name" maxlength ="30" autocomplete="off" spellcheck="false">
+                    Name<input type="text" class="touchableinput" v-model="vname" name="name" maxlength ="30" autocomplete="off" spellcheck="false">
                     <div v-if="store.nameError" class="error">Enter a name from 1 to 30 characters</div>
                 </td></tr>
                 <tr class="agetr"><td id="age2">
-                    Age<input type="number" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+                    Age<input type="number" class="touchableinput" v-model="vage" name="age" min="18" max="99" autocomplete="off" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
                     <div v-if="store.ageError" class="error">Enter age from 18 to 99</div>
                 </td></tr>
                 <tr>
                     <td style="    padding-bottom: 0 !important;">
                         <input type="file" name="photo" :ref="_db" accept="image/*" @change="onFileChange" style="display:none;">
                         <img ref="img" alt="img" @click="$refs[_db].click();" class="img" src="uploads/profile.jpg">
-                        <div style="display:flex;">
+                        <div style="margin-top:2px; display:flex;">
                             <input type="button" @click="$refs[_db].click();" value="choose Photo...">
                             <input type="button" value="No Photo" @click="removePhoto">
                         </div>
@@ -86,7 +86,7 @@ export default{
             _vage:String, _vname:String, _vlimit:Number, 
             _vback:String, //used to get the right "_url" prop
             _vajax:String, //used to get the right "ajaxes" state
-            },
+        },
 
     emits: ['mountGet', 'logout', 'emitSnippet'],
 
@@ -104,18 +104,18 @@ export default{
             },
 
     methods:{
-        handlePost(){
+        async handlePost(){
             if(this.checkUser() && this.checkData()){
                 const fd = new FormData(this.$refs.frmid);
                 fd.append('selectedPhotoName', this.selectedPhotoName);
                 fd.append('token', localStorage.getItem('token'));
                 this.store.time = new Date();
-                this.ajaxes[this._vajax].fpost(this._url[this._vback], fd, this.store, this._vlimit, this._vback, this._vajax);
+                await this.ajaxes[this._vajax].fpost(this._url[this._vback], fd, this.store, this._vlimit, this._vback, this._vajax);
                 this.clear();
                 this.$emit('emitSnippet', localStorage.getItem('snippet'));
             }
         },
-        handlePut(){
+        async handlePut(){
             if(!this.checkUser()){return;}
 
             if(!this.selectedId){Swal.fire('Select Profile !');}
@@ -132,16 +132,16 @@ export default{
                 
                 this.store.time = new Date();
                 if(this._vback=='js'){//no PUT http method in PHP
-                    this.ajaxes[this._vajax].fput('PUT', this._url['js']+this.selectedId, fd, selectedTr, this.store, this._vback, this._vajax);
+                    await this.ajaxes[this._vajax].fput('PUT', this._url['js']+this.selectedId, fd, selectedTr, this.store, this._vback, this._vajax);
                 }else{
-                    this.ajaxes[this._vajax].fput('POST', this._url['php']+this.selectedId+'?_method=PUT', fd, selectedTr, this.store, this._vback, this._vajax);
+                    await this.ajaxes[this._vajax].fput('POST', this._url['php']+this.selectedId+'?_method=PUT', fd, selectedTr, this.store, this._vback, this._vajax);
                 }
                 
                 this.clear();
                 this.$emit('emitSnippet', localStorage.getItem('snippet'));
             }
         },
-        handleDelete(){
+        async handleDelete(){
             if(!this.checkUser()){return;}
 
             if(!this.selectedId){Swal.fire('Select Profile !');}
@@ -149,8 +149,9 @@ export default{
                 const lastTableId = this.store.rows[this.store.rows.length-1]["_id"];
                 this.store.time = new Date();
                 if(this._vback=='js') //no DELETE http method in PHP
-                    this.ajaxes[this._vajax].fdelete('DELETE', this._url['js']+this.selectedId+'?'+'lasttableid='+lastTableId, this.store, this._vback, this._vajax)
-                else this.ajaxes[this._vajax].fdelete('POST', this._url['php']+this.selectedId+'?'+'lasttableid='+lastTableId+'&_method=DELETE', this.store, this._vback, this._vajax)
+                    await this.ajaxes[this._vajax].fdelete('DELETE', this._url['js']+this.selectedId+'?'+'lasttableid='+lastTableId, this.store, this._vback, this._vajax)
+                else 
+                    await this.ajaxes[this._vajax].fdelete('POST', this._url['php']+this.selectedId+'?'+'lasttableid='+lastTableId+'&_method=DELETE', this.store, this._vback, this._vajax)
 
                 for (let i = 0; i < this.store.rows.length; i++){//find <tr> to remove
                     if(this.store.rows[i]["_id"]==this.selectedId)
@@ -236,10 +237,12 @@ export default{
             }
         },
 
-        changepage(i){
-            this.store.time = new Date();
-            this.ajaxes[this._vajax].fget(this.GETuri(this._url[this._vback], i), this.store, this._vlimit, i, this._vback, this._vajax);
-            this.$emit('emitSnippet', localStorage.getItem('snippet'));
+        async changepage(i){
+            if(localStorage.getItem('username')){
+                this.store.time = new Date();
+                await this.ajaxes[this._vajax].fget(this.GETuri(this._url[this._vback], i), this.store, this._vlimit, i, this._vback, this._vajax);
+                this.$emit('emitSnippet', localStorage.getItem('snippet'));
+            }
         },
 
         toggleForm(){
@@ -253,12 +256,14 @@ export default{
     },
 
     mounted(){
-        if(this.venable=='true'){
-            this.changepage(1);
-            this.$refs.db.style.display='';
-        }else{
-            this.$refs.db.style.display='none';
+        if(localStorage.getItem('username')){
+            if(this.venable=='true'){
+                this.changepage(1);
+                this.$refs.db.style.display='';
+            }else{
+                this.$refs.db.style.display='none';
+            }
         }
-    },
+    }
 }
 </script>
