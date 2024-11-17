@@ -10,9 +10,7 @@
             <div v-if="(store.rows && store.rows.length===0)" class="nodata">
                 <h2 class="nodata">No Data !</h2>
             </div>
-            <div v-else-if="!u()" class="rows">
-
-            </div>
+            <div v-else-if="!logedIn()" class="loading">Login please !</div>
             <div v-else-if="store.rows" class="rows">
                 <form> <!--for input radio-->
                 <table>
@@ -253,7 +251,7 @@ export default{
             this.$refs.x.classList.toggle('showx');
         },
 
-        u(){
+        logedIn(){
             return localStorage.getItem("username");
         }
     },
