@@ -48,12 +48,14 @@ export default{
                     }
 
                     await login({username,password}, Swal, this.user);
+                    window.location.reload()
                 },
             });
         },
 
         fLogout(){
             logout(this.user);
+            window.location.reload()
         },
         fSignup(){
             window.location.href = 'html/signup.html?title=Sign Up&photo=profile.jpg';

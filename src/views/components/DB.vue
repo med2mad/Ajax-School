@@ -10,6 +10,9 @@
             <div v-if="(store.rows && store.rows.length===0)" class="nodata">
                 <h2 class="nodata">No Data !</h2>
             </div>
+            <div v-else-if="!u()" class="rows">
+
+            </div>
             <div v-else-if="store.rows" class="rows">
                 <form> <!--for input radio-->
                 <table>
@@ -248,6 +251,10 @@ export default{
         toggleForm(){
             this.$refs.db2.classList.toggle('showdb2');
             this.$refs.x.classList.toggle('showx');
+        },
+
+        u(){
+            return localStorage.getItem("username");
         }
     },
 
