@@ -17,7 +17,7 @@
         <h2>Ajax :</h2>
         <div>
             <select v-model="vajax" @change="changeAjax" class="touchableinput">
-                <option value="Axios">Axios</option><option value="JQuery">JQuery</option><option value="Fetch">Fetch</option><option value="XHR">XHR</option>
+                <option value="Axios">Axios</option><option value="Fetch">Fetch</option><option value="JQuery">JQuery</option><option value="XHR">XHR</option>
             </select>
         </div>
         
